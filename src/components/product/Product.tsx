@@ -54,6 +54,9 @@ const ProductComponent = () => {
         </button>
       ))}
       <div>
+        <input />
+      </div>
+      <div>
         {product
           .filter((item) => item.category.includes(category))
           .map((item) => (
