@@ -15,6 +15,14 @@ interface Product {
   category: string;
 }
 
+const productCategory = [
+  { value: "", label: "전체" },
+  { value: "", label: "욕실" },
+  { value: "", label: "주방" },
+  { value: "", label: "식품" },
+  { value: "", label: "기타" },
+];
+
 const ProductComponent = () => {
   const [product, setProduct] = useState<Product[]>([]);
 
@@ -35,6 +43,13 @@ const ProductComponent = () => {
   return (
     <>
       <Header />
+      {productCategory.map((category) => (
+        <button
+          style={{ width: "50px", background: "lightgray", margin: "10px" }}
+        >
+          {category.label}
+        </button>
+      ))}
       <div>
         {product.map((item) => (
           <div key={item.id}>
@@ -42,7 +57,7 @@ const ProductComponent = () => {
             <p>{item.company}</p>
             <p>{item.name}</p>
             <p>{item.context}</p>
-            <p>{item.sales}%</p>
+            {item.sales ? <p>{item.sales}%</p> : null}
             <p>{item.price.toLocaleString("ko-KR")}원</p>
           </div>
         ))}
