@@ -28,7 +28,7 @@ export interface Database {
           number_comments?: number | null
           post_uid?: string
           title?: string
-          updated_date: string
+          updated_date?: string
         }
         Update: {
           author_uid?: string
@@ -110,6 +110,7 @@ export interface Database {
           category: string | null
           company: string | null
           context: string | null
+          createdAt: string | null
           id: string
           img: string | null
           liked: Json | null
@@ -117,12 +118,13 @@ export interface Database {
           name: string | null
           price: number | null
           sales: number | null
-          webstie: string | null
+          website: string | null
         }
         Insert: {
           category?: string | null
           company?: string | null
           context?: string | null
+          createdAt?: string | null
           id?: string
           img?: string | null
           liked?: Json | null
@@ -130,12 +132,13 @@ export interface Database {
           name?: string | null
           price?: number | null
           sales?: number | null
-          webstie?: string | null
+          website?: string | null
         }
         Update: {
           category?: string | null
           company?: string | null
           context?: string | null
+          createdAt?: string | null
           id?: string
           img?: string | null
           liked?: Json | null
@@ -143,7 +146,7 @@ export interface Database {
           name?: string | null
           price?: number | null
           sales?: number | null
-          webstie?: string | null
+          website?: string | null
         }
         Relationships: []
       }

@@ -6,8 +6,10 @@ import AddPost from "@/components/community/AddPost";
 const Write: NextPage = () => {
   return (
     <>
-      <h1>write page</h1>
-      <AddPost />
+      <div className="flex flex-col items-center w-11/12 mx-auto mt-10">
+        <h1 className="text-2xl">게시글 작성 페이지</h1>
+        <AddPost />
+      </div>
     </>
   )
 }
