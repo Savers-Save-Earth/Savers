@@ -74,13 +74,20 @@
   transition: opacity 0.3s ease;
 }
 
-/* .main-text-container {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 100px;
-  font-weight: bold;
-  color: white;
-  transition: opacity 0.1s ease;
-} */
+/* swiper */
+.swiper-button-next {
+  background: url("https://i.ibb.co/VqjGnw1/rightBtn.png") no-repeat;
+  background-size: 100% auto;
+  background-position: center;
+}
+
+.swiper-button-prev {
+  background: url("https://i.ibb.co/qdJYds2/leftBtn.png") no-repeat;
+  background-size: 100% auto;
+  background-position: center;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  display: none;
+}

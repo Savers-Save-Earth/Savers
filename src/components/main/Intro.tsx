@@ -21,8 +21,9 @@ const Intro = () => {
         <div
           className="fade-element background-image"
           style={{
-            position: scrollY < 5000 ? "fixed" : "absolute",
-            top: scrollY < 5000 ? 0 : 5000,
+            position: scrollY < 4000 ? "fixed" : "absolute",
+            display: scrollY > 4000 ? "none" : "block",
+            top: scrollY < 4000 ? 0 : 4000,
             opacity:
               scrollY > 3000 ? Math.max(0, 1 - (scrollY - 3000) / 500) : 1,
             transition: "opacity 0.3s ease", // Add transition for smooth effect
@@ -85,7 +86,7 @@ const Intro = () => {
           자연에는 잘못이 없다."
         </div>
       </div>
-      <div style={{ height: "3000px" }}></div>
+      <div style={{ height: "2300px" }}></div>
     </>
   );
 };
