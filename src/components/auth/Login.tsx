@@ -1,7 +1,8 @@
 "use client";
+import supabase from "@/libs/supabase";
 import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { supabase } from "../../libs/supabase";
+// import { supabase } from "../../libs/supabase";
 
 interface FormValue {
   email: string;

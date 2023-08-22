@@ -1,7 +1,7 @@
 import React from "react";
 
 const ProductPost = () => {
-  return <></>;
+  return <>Product</>;
 };
 
 export default ProductPost;
