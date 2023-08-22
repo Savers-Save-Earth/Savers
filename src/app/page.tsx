@@ -1,13 +1,19 @@
 import React from "react";
+import HeaderForMain from "@/components/HeaderForMain";
 import Intro from "@/components/main/Intro";
-import Header from "@/components/Header";
+import PostList from "@/components/main/PostList";
+import ProductList from "@/components/main/ProductList";
+import RestaurantList from "@/components/main/RestaurantList";
 import Link from "next/link";
 
 const Home = () => {
   return (
     <div>
-      <Header />
+      <HeaderForMain />
       <Intro />
+      <ProductList />
+      <RestaurantList />
+      <PostList />
       <Link href={"/profile/temporaltestuid"}>Profile</Link>
     </div>
   );

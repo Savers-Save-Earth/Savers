@@ -1,12 +1,29 @@
 "use client";
 import React from "react";
 import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 
-const Header = () => {
+const HeaderForMain = () => {
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   const router = useRouter();
   return (
     <>
-      <header className=" text-gray-600 body-font">
+      <header
+        className="fixed z-10 text-gray-600 body-font"
+        style={{ color: scrollY < 3000 ? "white" : "black" }}
+      >
         <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
           <a className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
             <svg
@@ -26,6 +43,7 @@ const Header = () => {
                 router.push("/");
               }}
               className="ml-3 text-xl"
+              style={{ color: scrollY < 3000 ? "white" : "black" }}
             >
               Savers
             </span>
@@ -61,6 +79,7 @@ const Header = () => {
               router.push("/login");
             }}
             className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0"
+            style={{ background: scrollY < 3000 ? "gray" : "white" }}
           >
             로그인
             <svg
@@ -80,6 +99,7 @@ const Header = () => {
               router.push("/signup");
             }}
             className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0"
+            style={{ background: scrollY < 3000 ? "gray" : "white" }}
           >
             회원가입
             <svg
@@ -100,4 +120,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default HeaderForMain;
