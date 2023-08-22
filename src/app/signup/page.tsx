@@ -4,7 +4,6 @@ import Header from "@/components/Header";
 const signup = () => {
   return (
     <>
-      <Header />
       <div>signup</div>
     </>
   );
