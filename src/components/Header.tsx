@@ -1,10 +1,45 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/libs/supabase";
+import supabase from "@/libs/supabase";
 
 const Header = () => {
   const router = useRouter();
+  const [user, setUser] = useState<any>(null);
+
+  const getUser = async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      setUser(false);
+    } else {
+      setUser(user);
+      console.log(user.id);
+    }
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  const loginLogoutSwitcher = () => {
+    if (user) {
+      supabase.auth.signOut();
+    } else {
+      router.push("/login");
+    }
+  };
+
+  const signupProfileSwitcher = () => {
+    if (user) {
+      router.push("/profile");
+    } else {
+      router.push("/signup");
+    }
+  };
+
   return (
     <>
       <header className="text-gray-600 body-font">
@@ -57,13 +92,12 @@ const Header = () => {
               커뮤니티
             </a>
           </nav>
+
           <button
-            onClick={() => {
-              router.push("/login");
-            }}
+            onClick={loginLogoutSwitcher}
             className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0"
           >
-            로그인
+            {user ? "로그아웃" : "로그인"}
             <svg
               fill="none"
               stroke="currentColor"
@@ -76,19 +110,54 @@ const Header = () => {
               <path d="M5 12h14M12 5l7 7-7 7"></path>
             </svg>
           </button>
+          {user ? (
+            <button
+              onClick={signupProfileSwitcher}
+              className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0"
+            >
+              마이페이지
+              <svg
+                fill="none"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                className="w-4 h-4 ml-1"
+                viewBox="0 0 24 24"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7"></path>
+              </svg>
+            </button>
+          ) : (
+            <button
+              onClick={signupProfileSwitcher}
+              className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0"
+            >
+              회원가입
+              <svg
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                className="w-4 h-4 ml-1"
+                viewBox="0 0 24 24"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7"></path>
+              </svg>
+            </button>
+          )}
           <button
-            onClick={() => {
-              router.push("/signup");
-            }}
+            onClick={signupProfileSwitcher}
             className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0"
           >
-            회원가입
+            다크모드
             <svg
               fill="none"
               stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
               className="w-4 h-4 ml-1"
               viewBox="0 0 24 24"
             >
