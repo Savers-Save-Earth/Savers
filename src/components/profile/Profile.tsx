@@ -30,35 +30,35 @@ interface Community {
   title: string
   updated_date: string
 }
-
-const Profile = () => {
+interface ProfileProps {
+  profileId: string;
+}
+const Profile = ( { profileId }: ProfileProps ) => {
   const [selectedMenu, setSelectedMenu] = useState<string>("profile");
   const [showMission, setShowMission] = useState<string>("missionDoing");
   const [showActivity, setShowActivity] = useState<string>("myPost");
-  const [userData, setUserData] = useState<Profile>({});
+  const [userData, setUserData] = useState<Profile | null>(null);
   const [userPost, setUserPost] = useState<Community[]>([]);
-
   useEffect(() => {
     fetchProfile()
     fetchCommunity()
   }, []);
-  console.log("userData=>", userData);
 
   const fetchProfile = async () => {
-    let { data: user, error } = await supabase.from("user").select();
-    console.log("user==>", user);
-    //나중에 필터로 가져오거나 처음부터 select에서 user.uid로 가져와야 함
-    const userData = user![0];
-    setUserData(userData);
+    let { data: user, error } = await supabase.from("user").select().match({"uid" : profileId})
+    if(error) {
+      return false
+    }
+    setUserData(user![0]);
   };
   const fetchCommunity = async () => {
     // temporaltestuid 대신 params든 뭐든 현재 user uid로 가져오게 해야 함.
-    let { data: community, error } = await supabase.from('community').select().eq("author_uid", "temporaltestuid")
+    // 달린 댓글 개수랑 좋아요는 어떻게 기입되는지 로직을 여쭤봐야 함 : supabase 내부적으로 댓글갯수를 count하여 다른 db에 넣는 방법이 있다고 함. 
+    // 해당 기능 개발과정을 본 후에 community에서 바로 끌고 올 지 판단
+    let { data: community, error } = await supabase.from('community').select().match({"author_uid": profileId})
     setUserPost(community || [])
   }
-  console.log("userPost=>",userPost)
-
-
+  
   const handleSelectMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
     setSelectedMenu(event.currentTarget.value);
   };
@@ -80,7 +80,7 @@ const Profile = () => {
               alt="이미지"
             />
           </div>
-          <h5>{userData!.nickname}</h5>
+          <h5>{userData && userData.nickname}</h5>
           {/* 요거 수정 모달창으로 한다고 했나?? */}
           <button
             className="mb-2 text-blue-500 hover:text-blue-700 hover:underline decoration-double"
@@ -181,7 +181,7 @@ const Profile = () => {
              <>
              <div>내가 쓴 글이 나와야 함</div>
              {userPost.map((post) => (
-              <div key={post.post_uid}>
+              <div className="border-solid border-2 border-blue-900 p-5 m-5" key={post.post_uid}>
               <p>글 uid : {post.post_uid}</p>
               <p>글 제목 : {post.title}</p>
               <p>등록일: {post.updated_date.slice(0,10)}</p>
