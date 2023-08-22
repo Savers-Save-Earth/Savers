@@ -123,10 +123,10 @@ const Profile = ( { profileId }: ProfileProps ) => {
         {selectedMenu === "profile" && (
           <>
             <div className="w-1/2 p-4 border-dashed border-2 border-green-600 mx-3">
-              일일미션 완료현황
+              일일미션 완료현황(잔디밭)
             </div>
             <div className="w-1/2 p-4 border-dashed border-2 border-purple-600 mx-3">
-              잔디밭
+              내가 획득한 뱃지
             </div>
           </>
         )}
