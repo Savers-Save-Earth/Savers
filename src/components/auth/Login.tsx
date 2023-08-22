@@ -20,7 +20,12 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  return <div>Login</div>;
+  return (
+    <>
+      <div>Login</div>
+      <div>kakao</div>
+    </>
+  );
 };
 
 export default Login;
