@@ -4,6 +4,7 @@ import Intro from "@/components/main/Intro";
 import PostList from "@/components/main/PostList";
 import ProductList from "@/components/main/ProductList";
 import RestaurantList from "@/components/main/RestaurantList";
+import Link from "next/link";
 
 const Home = () => {
   return (
@@ -13,6 +14,7 @@ const Home = () => {
       <ProductList />
       <RestaurantList />
       <PostList />
+      <Link href={"/profile/temporaltestuid"}>Profile</Link>
     </div>
   );
 };
