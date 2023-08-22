@@ -13,6 +13,7 @@ interface Product {
   img: string;
   category: string;
   webstie: string;
+  liked_num: number;
 }
 
 const productCategory = [
@@ -23,14 +24,22 @@ const productCategory = [
   { value: "else", label: "기타" },
 ];
 
+const selectOptions = [
+  { value: "최신순", label: "최신순" },
+  { value: "인기순", label: "인기순" },
+  { value: "가격 적은순", label: "가격 적은 순" },
+  { value: "가격 높은순", label: "가격 높은 순" },
+];
+
 const ProductComponent = () => {
   const [product, setProduct] = useState<Product[]>([]);
   const [category, setCategory] = useState("");
   const [search, setSearch] = useState("");
+  const [select, setSelect] = useState("");
 
   const fetchProduct = async () => {
     try {
-      const { data, error } = await supabase.from("product").select();
+      const { data } = await supabase.from("product").select();
       console.log(data);
       setProduct(data || []);
     } catch (error) {
@@ -44,6 +53,13 @@ const ProductComponent = () => {
 
   return (
     <>
+      <select value={select} onChange={(e) => setSelect(e.target.value)}>
+        {selectOptions.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
       {productCategory.map((category) => (
         <button
           style={{ width: "50px", background: "lightgray", margin: "10px" }}

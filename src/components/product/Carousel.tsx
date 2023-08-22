@@ -32,7 +32,15 @@ const Carousel = () => {
         <SwiperSlide>
           <img
             src={
-              "https://images.unsplash.com/photo-1588514912908-8f5891714f8d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80"
+              "https://images.unsplash.com/photo-1577962272294-564f38f71d90?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80"
+            }
+            style={{ width: "100%", height: "500px" }}
+          />
+        </SwiperSlide>
+        <SwiperSlide>
+          <img
+            src={
+              "https://images.unsplash.com/photo-1544468266-6a8948003cd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1474&q=80"
             }
             style={{ width: "100%", height: "500px" }}
           />
