@@ -20,22 +20,45 @@ interface Profile {
   writePosts: string | null;
 }
 
+interface Community {
+  author_uid: string
+  category: string
+  content: string
+  created_date: string
+  number_comments: number | null
+  post_uid: string
+  title: string
+  updated_date: string
+}
+
 const Profile = () => {
   const [selectedMenu, setSelectedMenu] = useState<string>("profile");
   const [showMission, setShowMission] = useState<string>("missionDoing");
   const [showActivity, setShowActivity] = useState<string>("myPost");
   const [userData, setUserData] = useState<Profile>({});
+  const [userPost, setUserPost] = useState<Community[]>([]);
+
   useEffect(() => {
-    const fetchProfile = async () => {
-      let { data: user, error } = await supabase.from("user").select();
-      console.log("user==>", user);
-      //나중에 필터로 가져오거나 처음부터 select에서 user.uid로 가져와야 함
-      const userData = user![0];
-      setUserData(userData);
-    };
-    fetchProfile();
+    fetchProfile()
+    fetchCommunity()
   }, []);
   console.log("userData=>", userData);
+
+  const fetchProfile = async () => {
+    let { data: user, error } = await supabase.from("user").select();
+    console.log("user==>", user);
+    //나중에 필터로 가져오거나 처음부터 select에서 user.uid로 가져와야 함
+    const userData = user![0];
+    setUserData(userData);
+  };
+  const fetchCommunity = async () => {
+    // temporaltestuid 대신 params든 뭐든 현재 user uid로 가져오게 해야 함.
+    let { data: community, error } = await supabase.from('community').select().eq("author_uid", "temporaltestuid")
+    setUserPost(community || [])
+  }
+  console.log("userPost=>",userPost)
+
+
   const handleSelectMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
     setSelectedMenu(event.currentTarget.value);
   };
@@ -157,7 +180,13 @@ const Profile = () => {
            {showActivity === "myPost" && (
              <>
              <div>내가 쓴 글이 나와야 함</div>
-             <div>나중에 Carousel을 추가해야 함</div>
+             {userPost.map((post) => (
+              <div key={post.post_uid}>
+              <p>글 uid : {post.post_uid}</p>
+              <p>글 제목 : {post.title}</p>
+              <p>등록일: {post.updated_date.slice(0,10)}</p>
+              </div>
+             ))}
            </>
            )}
            {showActivity === "myComment" && 
