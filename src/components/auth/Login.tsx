@@ -9,6 +9,8 @@ interface FormValue {
   confirmingPw: string;
 }
 
+type Provider = "google" | "kakao" | "facebook";
+
 const Login = () => {
   const {
     register,
@@ -20,10 +22,23 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const signInWithOAuthAndLog = async (provider: Provider) => {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: provider,
+    });
+  };
+
   return (
     <>
       <div>Login</div>
-      <div>kakao</div>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          signInWithOAuthAndLog("kakao");
+        }}
+      >
+        <button>kakao</button>
+      </form>
     </>
   );
 };

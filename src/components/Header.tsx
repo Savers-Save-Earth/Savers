@@ -16,7 +16,7 @@ const Header = () => {
       setUser(false);
     } else {
       setUser(user);
-      console.log(user.id);
+      console.log(user);
     }
   };
 
