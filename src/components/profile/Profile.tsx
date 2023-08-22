@@ -23,19 +23,27 @@ interface Profile {
 const Profile = () => {
   const [selectedMenu, setSelectedMenu] = useState<string>("profile");
   const [showMission, setShowMission] = useState<string>("missionDoing");
+  const [showActivity, setShowActivity] = useState<string>("myPost");
   const [userData, setUserData] = useState<Profile>({});
   useEffect(() => {
     const fetchProfile = async () => {
       let { data: user, error } = await supabase.from("user").select();
-      console.log("user==>", user)
-      const userData = user![0]
-      setUserData(userData)
+      console.log("user==>", user);
+      //나중에 필터로 가져오거나 처음부터 select에서 user.uid로 가져와야 함
+      const userData = user![0];
+      setUserData(userData);
     };
-    fetchProfile()
+    fetchProfile();
   }, []);
-console.log("userData=>",userData)
+  console.log("userData=>", userData);
   const handleSelectMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
     setSelectedMenu(event.currentTarget.value);
+  };
+  const handleSelectMission = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setShowMission(event.currentTarget.value);
+  };
+  const handleSelectActivity = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setShowActivity(event.currentTarget.value);
   };
 
   return (
@@ -50,6 +58,7 @@ console.log("userData=>",userData)
             />
           </div>
           <h5>{userData!.nickname}</h5>
+          {/* 요거 수정 모달창으로 한다고 했나?? */}
           <button
             className="mb-2 text-blue-500 hover:text-blue-700 hover:underline decoration-double"
             value="profile"
@@ -88,27 +97,92 @@ console.log("userData=>",userData)
         </div>
       </div>
       <div className="w-3/4 p-4 border-dashed border-2 border-red-600 flex">
-        {selectedMenu === "profile" && 
-        <>
-        <div className="w-1/2 p-4 border-dashed border-2 border-green-600 mx-3">일일미션 완료현황</div>
-        <div className="w-1/2 p-4 border-dashed border-2 border-purple-600 mx-3">잔디밭</div>
-        </>
+        {selectedMenu === "profile" && (
+          <>
+            <div className="w-1/2 p-4 border-dashed border-2 border-green-600 mx-3">
+              일일미션 완료현황
+            </div>
+            <div className="w-1/2 p-4 border-dashed border-2 border-purple-600 mx-3">
+              잔디밭
+            </div>
+          </>
+        )}
+        {selectedMenu === "mymission" && (
+          <div className="flex flex-col w-full border-dashed border-2 border-orange-600 p-5">
+            <h3>나의 미션</h3>
+            <div className="flex items-center gap-10">
+              <button value="missionDoing" className="hover:font-bold focus:font-bold focus:underline decoration" onClick={handleSelectMission}>
+                진행중인 미션
+              </button>
+              <button value="missionDone" className="hover:font-bold focus:font-bold focus:underline decoration" onClick={handleSelectMission}>
+                완료한 미션
+              </button>
+            </div>
+            <div className="border-dashed border-2 border-yellow-600 w-full h-full p-5">
+              {showMission === "missionDoing" && (
+                <>
+                <div>진행중인 미션이 나오게 됨</div>
+                <div>나중에 Carousel을 추가해야 함</div>
+              </>
+              )}
+              {showMission === "missionDone" && 
+              <>
+              <div>완료한 미션이 나오게 됨</div>
+              <div>나중에 Carousel이나 로그? "내가 쓴 글"처럼 리스트를 추가해야 함</div>
+              </>}
+            </div>
+          </div>
+        )}
+        {selectedMenu === "activity" && 
+         <div className="flex flex-col w-full border-dashed border-2 border-orange-600 p-5">
+         <h3>커뮤니티 활동</h3>
+         <div className="flex items-center gap-10">
+           <button value="myPost" className="hover:font-bold focus:font-bold focus:underline decoration" onClick={handleSelectActivity}>
+             내가 쓴 글
+           </button>
+           <button value="myComment" className="hover:font-bold focus:font-bold focus:underline decoration" onClick={handleSelectActivity}>
+             내가 쓴 댓글
+           </button>
+           <button value="bookedPost" className="hover:font-bold focus:font-bold focus:underline decoration" onClick={handleSelectActivity}>
+             북마크한 글
+           </button>
+           <button value="bookedRestaurant" className="hover:font-bold focus:font-bold focus:underline decoration" onClick={handleSelectActivity}>
+             북마크한 식당
+           </button>
+           <button value="bookedProduct" className="hover:font-bold focus:font-bold focus:underline decoration" onClick={handleSelectActivity}>
+             북마크한 제품
+           </button>
+         </div>
+         <div className="border-dashed border-2 border-yellow-600 w-full h-full p-5 mt-5">
+           {showActivity === "myPost" && (
+             <>
+             <div>내가 쓴 글이 나와야 함</div>
+             <div>나중에 Carousel을 추가해야 함</div>
+           </>
+           )}
+           {showActivity === "myComment" && 
+           <>
+           <div>내가 쓴 댓글과 댓글단 글이 나와야 함</div>
+           <div>나중에 Carousel이나 로그? "내가 쓴 글"처럼 리스트를 추가해야 함</div>
+           </>}
+           {showActivity === "bookedPost" && 
+           <>
+           <div>내가 북마크한 글이 나와야 함</div>
+           <div>나중에 Carousel이나 로그? "내가 쓴 글"처럼 리스트를 추가해야 함</div>
+           </>}
+           {showActivity === "bookedRestaurant" && 
+           <>
+           <div>내가 북마크한 식당이 나와야 함</div>
+           <div>나중에 Carousel이나 로그? "내가 쓴 글"처럼 리스트를 추가해야 함</div>
+           </>}
+           {showActivity === "bookedProduct" && 
+           <>
+           <div>내가 북마크한 제품이 나와야 함</div>
+           <div>나중에 Carousel이나 로그? "내가 쓴 글"처럼 리스트를 추가해야 함</div>
+           </>}
+         </div>
+       </div>
         }
-        {selectedMenu === "mymission" && 
-<div className="flex flex-col items-center">
-  <h3>나의 미션</h3>
-<div className="flex items-center gap-10">
-  <h4 id="missionDoing">진행중인 미션</h4>
-  <h4 id="missionDone">완료한 미션</h4>
-</div>
-<div>
-        보여주면 될 거 같은데?
-  </div>
-</div>
-
-        }
-        {selectedMenu === "activity" && <div>커뮤니티 활동 페이지</div>}
-        {selectedMenu === "changeInfo" && <div>회원정보 수정 페이지</div>}
       </div>
     </section>
   );
