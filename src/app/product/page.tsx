@@ -5,7 +5,6 @@ import Carousel from "@/components/product/Carousel";
 const ProductList = () => {
   return (
     <>
-      <Header />
       <Carousel />
       <Product />
     </>

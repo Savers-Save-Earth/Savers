@@ -5,7 +5,6 @@ import Login from "@/components/auth/Login";
 const login = () => {
   return (
     <>
-      <Header />
       <Login />
     </>
   );
