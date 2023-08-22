@@ -28,7 +28,7 @@ const productCategory = [
 const selectOptions = [
   { value: "newest", label: "최신순" },
   { value: "popular", label: "인기순" },
-  { value: "cheap", label: "가격 적은 순" },
+  { value: "cheap", label: "가격 낮은 순" },
   { value: "expensive", label: "가격 높은 순" },
   { value: "sales", label: "할인순" },
 ];
