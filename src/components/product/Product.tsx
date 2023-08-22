@@ -1,21 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import supabase from "@/libs/supabase";
-
-interface Product {
-  id: string;
-  name: string;
-  company: string;
-  price: number;
-  sales: number;
-  context: string;
-  liked: any;
-  img: string;
-  category: string;
-  website: string;
-  liked_num: number;
-  createdAt: number;
-}
+import { Product } from "@/types/types";
 
 const productCategory = [
   { value: "", label: "전체" },
