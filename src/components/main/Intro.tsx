@@ -19,12 +19,14 @@ const Intro = () => {
     <>
       <div className="app-container">
         <div
-          className="background-image"
+          className="fade-element background-image"
           style={{
-            position: scrollY < 2500 ? "fixed" : "absolute",
-            top: scrollY < 2500 ? 0 : 2500,
+            position: scrollY < 4000 ? "fixed" : "absolute",
+            display: scrollY > 4000 ? "none" : "block",
+            top: scrollY < 4000 ? 0 : 4000,
             opacity:
-              scrollY > 300 ? Math.max(0, 1 - (scrollY - 300) / 2000) : 1,
+              scrollY > 3000 ? Math.max(0, 1 - (scrollY - 3000) / 500) : 1,
+            transition: "opacity 0.3s ease", // Add transition for smooth effect
           }}
         />
 
@@ -36,31 +38,55 @@ const Intro = () => {
         </div>
 
         <div
-          className="absolute top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-6xl font-bold transition-opacity duration-100 ease-in-out"
-          style={{ opacity: Math.min(1, scrollY / 300) }}
+          className="fade-element fixed  left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-4xl font-bold transition-opacity duration-100 ease-in-out"
+          style={{
+            textAlign: "center",
+            top: "calc(25% - 30px)",
+            opacity: Math.min(1, scrollY / 1000),
+            transform: `translate(-50%, calc(-50% - ${Math.min(
+              20,
+              (scrollY - 1000) / 15,
+            )}px))`,
+          }}
         >
-          내가 사는 친환경 제품이,
+          "자연과 가까울수록 병은 멀어지고,
+          <br />
+          자연과 멀수록 병은 가까워진다."
         </div>
         <div
-          className="absolute top-2/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-6xl font-bold transition-opacity duration-100 ease-in-out"
-          style={{ opacity: Math.min(1, scrollY / 500) }}
+          className="fade-element fixed left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-4xl font-bold transition-opacity duration-100 ease-in-out"
+          style={{
+            textAlign: "center",
+            top: "calc(50% - 20px)",
+            opacity: Math.min(1, scrollY / 2000),
+            transform: `translate(-50%, calc(-50% - ${Math.min(
+              20,
+              (scrollY - 2000) / 15,
+            )}px))`,
+          }}
         >
-          내가 먹는 한끼의 채식이,
+          "자연은 결코 배신하지 않는다.
+          <br />
+          우리 자신을 배신하는 것은 항상 우리들이다."
         </div>
         <div
-          className="absolute top-3/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-6xl font-bold text-white transition-opacity duration-300 ease"
-          style={{ opacity: Math.min(1, scrollY / 1100) }}
+          className="fade-element fixed left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl font-bold text-white transition-opacity duration-100 ease-in-out"
+          style={{
+            textAlign: "center",
+            top: "calc(75% - 20px)",
+            opacity: Math.min(1, scrollY / 3000),
+            transform: `translate(-50%, calc(-50% - ${Math.min(
+              20,
+              (scrollY - 3000) / 15,
+            )}px))`,
+          }}
         >
-          지구를 행복하게 합니다.
-        </div>
-        <div
-          className="text-container4"
-          style={{ opacity: Math.min(1, scrollY / 1500) }}
-        >
-          지금, SAVERS 와 함께하세요.
+          "예술에는 오류가 있을지 모르나,
+          <br />
+          자연에는 잘못이 없다."
         </div>
       </div>
-      <div style={{ height: "5000px" }}></div>
+      <div style={{ height: "2300px" }}></div>
     </>
   );
 };
