@@ -1,4 +1,4 @@
 npm i
 yarn
 
-yarn add @supabase/supabase-js 
+yarn add @supabase/supabase-js swiper
