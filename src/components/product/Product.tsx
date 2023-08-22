@@ -1,8 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import supabase from "@/libs/supabase";
-import Header from "../Header";
-import Swiper from "./Swiper";
 
 interface Product {
   id: string;
@@ -46,8 +44,6 @@ const ProductComponent = () => {
 
   return (
     <>
-      <Header />
-      <Swiper />
       {productCategory.map((category) => (
         <button
           style={{ width: "50px", background: "lightgray", margin: "10px" }}
@@ -67,7 +63,11 @@ const ProductComponent = () => {
       <div>
         {product
           // 검색어 필터 및 카테고리 필터
-          .filter((item) => item.name.includes(search.trim()))
+          .filter(
+            (item) =>
+              item.name.includes(search.trim()) ||
+              item.company.includes(search.trim()),
+          )
           .filter((item) => item.category.includes(category))
           .map((item) => (
             <div key={item.id}>
