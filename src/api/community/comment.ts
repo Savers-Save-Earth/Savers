@@ -1,2 +1,2 @@
 import supabase from "@/libs/supabase";
-// import { CommentType } from "@/types/types";
+import { Database } from "@/types/supabase";
