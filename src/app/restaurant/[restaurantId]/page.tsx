@@ -6,7 +6,6 @@ const RestaurantPost = () => {
   return (
     <div>
       <div>Restaurant</div>
-      <Maps />
     </div>
   );
 };

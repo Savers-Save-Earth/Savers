@@ -1,9 +1,31 @@
-import React from 'react'
+"use client";
+import supabase from "@/libs/supabase";
+import React, { useState } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
 
-const Login = () => {
-  return (
-    <div>Login</div>
-  )
+interface FormValue {
+  email: string;
+  password: string;
+  confirmingPw: string;
 }
 
-export default Login
+const Login = () => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<FormValue>();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  return (
+    <>
+      <div>Login</div>
+      <div>kakao</div>
+    </>
+  );
+};
+
+export default Login;
