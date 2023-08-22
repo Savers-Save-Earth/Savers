@@ -14,6 +14,7 @@ interface Product {
   category: string;
   website: string;
   liked_num: number;
+  createdAt: number;
 }
 
 const productCategory = [
@@ -25,17 +26,18 @@ const productCategory = [
 ];
 
 const selectOptions = [
-  { value: "최신순", label: "최신순" },
-  { value: "인기순", label: "인기순" },
-  { value: "가격 적은순", label: "가격 적은 순" },
-  { value: "가격 높은순", label: "가격 높은 순" },
+  { value: "newest", label: "최신순" },
+  { value: "popular", label: "인기순" },
+  { value: "cheap", label: "가격 적은 순" },
+  { value: "expensive", label: "가격 높은 순" },
+  { value: "sales", label: "할인순" },
 ];
 
 const ProductComponent = () => {
   const [product, setProduct] = useState<Product[]>([]);
   const [category, setCategory] = useState("");
   const [search, setSearch] = useState("");
-  const [select, setSelect] = useState("");
+  const [select, setSelect] = useState("newest");
 
   const fetchProduct = async () => {
     try {
@@ -50,6 +52,19 @@ const ProductComponent = () => {
   useEffect(() => {
     fetchProduct();
   }, []);
+
+  // 셀렉트 내용으로 정렬
+  let sortedData = product.slice(); // 초기화
+
+  if (select === "expensive") {
+    sortedData = product.slice().sort((a, b) => b.price - a.price);
+  } else if (select === "cheap") {
+    sortedData = product.slice().sort((a, b) => a.price - b.price);
+  } else if (select === "sales") {
+    sortedData = product.slice().sort((a, b) => b.sales - a.sales);
+  } else if (select === "newest") {
+    sortedData = product.slice().sort((a, b) => b.createdAt - a.createdAt);
+  }
 
   return (
     <>
@@ -77,7 +92,7 @@ const ProductComponent = () => {
         />
       </form>
       <div>
-        {product
+        {sortedData
           // 검색어 필터 및 카테고리 필터
           .filter(
             (item) =>
@@ -86,8 +101,8 @@ const ProductComponent = () => {
           )
           .filter((item) => item.category.includes(category))
           .map((item) => (
-            <div key={item.id}>
-              <img src={item.img} style={{ width: "300px" }} />
+            <div key={item.id} className="inline-table">
+              <img src={item.img} style={{ height: "300px" }} />
               <p>{item.company}</p>
               <p>{item.name}</p>
               <p>{item.context}</p>
