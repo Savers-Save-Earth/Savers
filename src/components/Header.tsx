@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { useRouter } from "next/navigation";
+import { supabase } from "@/libs/supabase";
 
 const Header = () => {
   const router = useRouter();
