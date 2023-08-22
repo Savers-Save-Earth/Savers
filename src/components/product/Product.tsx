@@ -12,7 +12,7 @@ interface Product {
   liked: any;
   img: string;
   category: string;
-  webstie: string;
+  website: string;
   liked_num: number;
 }
 
@@ -91,6 +91,7 @@ const ProductComponent = () => {
               <p>{item.company}</p>
               <p>{item.name}</p>
               <p>{item.context}</p>
+              <a href={item.website}>상세보기</a>
               {item.sales ? <p>{item.sales}%</p> : null}
               <p>{item.price.toLocaleString("ko-KR")}원</p>
             </div>
