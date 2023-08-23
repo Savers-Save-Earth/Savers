@@ -23,7 +23,7 @@ const ProductComponent = () => {
   const [product, setProduct] = useState<Product[]>([]);
   const [category, setCategory] = useState("");
   const [search, setSearch] = useState("");
-  const [select, setSelect] = useState("newest");
+  const [select, setSelect] = useState("cheap");
   const [user, setUser] = useState<any>(null);
   const [likedByUser, setLikedByUser] = useState<any[]>([]);
 
@@ -56,7 +56,7 @@ const ProductComponent = () => {
     }
   };
 
-  // 유저의 좋아요 목록을 불러오는 로직
+  // 유저의 기존에 있던 좋아요 목록을 불러오는 로직 -> 로그인 이후에 실행되는 함수
   const fetchUserLike = async (user: any) => {
     const { data: existingLikeData, error: existingLikeError } = await supabase
       .from("like_product")
@@ -137,8 +137,8 @@ const ProductComponent = () => {
           .update({ like_count: currentLikeCount![0].like_count + 1 })
           .eq("id", id);
       }
-      fetchProduct(); // 데이터 갱신
-      fetchUser();
+      fetchProduct(); // 데이터 갱신 [숫자]
+      fetchUser(); // 데이터 갱신 [좋아요]
     }
   };
 
