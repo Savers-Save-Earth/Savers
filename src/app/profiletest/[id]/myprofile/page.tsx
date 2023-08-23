@@ -8,7 +8,7 @@ const MyProfile = async ({ params }: { params: { id: string } }) => {
   // let { data: user, error } = await supabase.from("user").select("*").eq("uid", "bd2125b8-d852-485c-baf3-9c7a8949beed")
   let { data: user, error } = await supabase.from("user").select("*").eq("uid", params.id);
   if (error) throw error;
-  console.log("params.id=>", params.id);
+  // console.log("params.id=>", params.id);
 
   return (
     <div className="flex w-full h-full">

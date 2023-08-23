@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Router } from "next/router";
 
-export default function MymissionLayout ({
+export default function MycommunityLayout ({
   children,
 }: {
   children: React.ReactNode;
@@ -9,20 +9,20 @@ export default function MymissionLayout ({
 
 {
   const searchId = children!.props.segmentPath[3][1]
-  console.log("children.props.mission+++==>",searchId)
+  console.log("children.props.community+++==>",searchId)
   return (
     <div className="h-screen">
-        <h1>마이미션 레이아웃</h1>
+        <h1>마이커뮤니티 레이아웃</h1>
         <div className="flex gap-10">
         <Link
-          href={`/profiletest/${searchId}/mymission/missiondoing`}
+          href={`/profiletest/${searchId}/mycommunity/myposts`}
         >
-          진행중인 미션
+          내가 쓴 글
         </Link>
         <Link
-          href={`/profiletest/${searchId}/mymission/missiondone`}
+          href={`/profiletest/${searchId}/mycommunity/mycomments`}
         >
-          완료한 미션
+          내가 쓴 댓글
         </Link>
       </div>
       <section className="border-dashed border-2 border-indigo-600">{children}</section>
