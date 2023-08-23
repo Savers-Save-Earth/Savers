@@ -26,7 +26,8 @@ const Header = () => {
 
   const loginLogoutSwitcher = () => {
     if (user) {
-      supabase.auth.signOut();
+      supabase.auth.signOut()
+      router.refresh()
     } else {
       router.push("/login");
     }
