@@ -39,33 +39,36 @@ const ProductComponent = () => {
 
   // 현재 유저정보 fetch
   const fetchUser = async () => {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+    try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
 
-    if (!user) {
-      setUser(false);
-    } else {
-      setUser(user);
-      console.log(user);
+      if (!user) {
+        setUser(false);
+      } else {
+        setUser(user);
+        console.log(user);
+        fetchUserLike(user); // 유저 정보를 가져온 후에 fetchUserLike 함수 호출
+      }
+    } catch (error) {
+      console.error("Error fetching user:", error);
     }
   };
 
   // 유저의 좋아요 목록을 불러오는 로직
-  const fetchUserLike = async () => {
+  const fetchUserLike = async (user: any) => {
     const { data: existingLikeData, error: existingLikeError } = await supabase
       .from("like_product")
       .select()
-      .eq("user_id", user?.id);
-
+      .eq("user_id", user.id);
     setLikedByUser(existingLikeData!);
-    console.log(likedByUser);
+    console.log(existingLikeData);
   };
 
   useEffect(() => {
     fetchProduct();
     fetchUser();
-    fetchUserLike();
   }, []);
 
   // 셀렉트 내용으로 정렬
@@ -86,7 +89,7 @@ const ProductComponent = () => {
   const likeHandler = async (id: string) => {
     const userId = user.id;
 
-    if (user === null) {
+    if (!user) {
       alert("로그인 후 이용 가능합니다.");
       return;
     } else {
@@ -101,7 +104,8 @@ const ProductComponent = () => {
           .eq("product_uid", id)
           .eq("user_id", userId);
 
-      console.log(existingLikeData!);
+      const { data: existingLikeListData, error: existingLikeListError } =
+        await supabase.from("like_product").select().eq("user_id", userId);
 
       const { data: currentLikeCount } = await supabase
         .from("product")
@@ -134,6 +138,7 @@ const ProductComponent = () => {
           .eq("id", id);
       }
       fetchProduct(); // 데이터 갱신
+      fetchUser();
     }
   };
 
@@ -210,7 +215,7 @@ const ProductComponent = () => {
               <button
                 onClick={() => likeHandler(item.id)}
                 className={`${
-                  likedByUser.find(
+                  likedByUser.some(
                     (likedItem) => likedItem.product_uid === item.id,
                   )
                     ? "bg-red-500 text-white"
