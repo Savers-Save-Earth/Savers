@@ -9,7 +9,7 @@ export default function MycommunityLayout ({
 
 {
   const searchId = children!.props.segmentPath[3][1]
-  console.log("children.props.community+++==>",searchId)
+  // console.log("children.props.community+++==>",searchId)
   return (
     <div className="h-screen">
         <h1>마이커뮤니티 레이아웃</h1>

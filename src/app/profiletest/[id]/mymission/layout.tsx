@@ -9,7 +9,7 @@ export default function MymissionLayout ({
 
 {
   const searchId = children!.props.segmentPath[3][1]
-  console.log("children.props.mission+++==>",searchId)
+  // console.log("children.props.mission+++==>",searchId)
   return (
     <div className="h-screen">
         <h1>마이미션 레이아웃</h1>
