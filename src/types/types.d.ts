@@ -12,11 +12,10 @@ export interface Product {
   price: number;
   sales: number;
   context: string;
-  liked: any;
   img: string;
   category: string;
   website: string;
-  liked_num: number;
+  like_count: number;
   createdAt: number;
 }
 

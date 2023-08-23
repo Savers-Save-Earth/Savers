@@ -24,19 +24,48 @@ const ProductComponent = () => {
   const [category, setCategory] = useState("");
   const [search, setSearch] = useState("");
   const [select, setSelect] = useState("newest");
+  const [user, setUser] = useState<any>(null);
+  const [likedByUser, setLikedByUser] = useState<any[]>([]);
 
+  // 물품 리스트 fetch
   const fetchProduct = async () => {
     try {
       const { data } = await supabase.from("product").select();
-      console.log(data);
       setProduct(data || []);
     } catch (error) {
       console.error("Error fetching products:", error);
     }
   };
 
+  // 현재 유저정보 fetch
+  const fetchUser = async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      setUser(false);
+    } else {
+      setUser(user);
+      console.log(user);
+    }
+  };
+
+  // 유저의 좋아요 목록을 불러오는 로직
+  const fetchUserLike = async () => {
+    const { data: existingLikeData, error: existingLikeError } = await supabase
+      .from("like_product")
+      .select()
+      .eq("user_id", user?.id);
+
+    setLikedByUser(existingLikeData!);
+    console.log(likedByUser);
+  };
+
   useEffect(() => {
     fetchProduct();
+    fetchUser();
+    fetchUserLike();
   }, []);
 
   // 셀렉트 내용으로 정렬
@@ -51,6 +80,62 @@ const ProductComponent = () => {
   } else if (select === "newest") {
     sortedData = product.slice().sort((a, b) => b.createdAt - a.createdAt);
   }
+
+  // 좋아요 눌렀을 때, 물품 및 유저에 좋아요 데이터 업데이트
+
+  const likeHandler = async (id: string) => {
+    const userId = user.id;
+
+    if (user === null) {
+      alert("로그인 후 이용 가능합니다.");
+      return;
+    } else {
+      const isLiked = likedByUser.some(
+        (likedItem) => likedItem.product_uid === id,
+      );
+
+      const { data: existingLikeData, error: existingLikeError } =
+        await supabase
+          .from("like_product")
+          .select()
+          .eq("product_uid", id)
+          .eq("user_id", userId);
+
+      console.log(existingLikeData!);
+
+      const { data: currentLikeCount } = await supabase
+        .from("product")
+        .select()
+        .eq("id", id);
+
+      // 좋아요 이미 눌렀으면 삭제하는 로직
+      if (!existingLikeError && existingLikeData!.length > 0) {
+        await supabase
+          .from("like_product")
+          .delete()
+          .eq("user_id", userId)
+          .eq("product_uid", id);
+
+        // 좋아요 count 내리는 로직
+        const { error: likeCountError } = await supabase
+          .from("product")
+          .update({ like_count: currentLikeCount![0].like_count - 1 })
+          .eq("id", id);
+      } else {
+        // 좋아요 구현하는 로직
+        const { error: insertError } = await supabase
+          .from("like_product")
+          .insert([{ product_uid: id, user_id: userId }]);
+
+        // 좋아요 count 올리는 로직
+        const { error: likeCountError } = await supabase
+          .from("product")
+          .update({ like_count: currentLikeCount![0].like_count + 1 })
+          .eq("id", id);
+      }
+      fetchProduct(); // 데이터 갱신
+    }
+  };
 
   return (
     <>
@@ -122,6 +207,19 @@ const ProductComponent = () => {
               <span className="font-bold">
                 {item.price.toLocaleString("ko-KR")}원
               </span>
+              <button
+                onClick={() => likeHandler(item.id)}
+                className={`${
+                  likedByUser.find(
+                    (likedItem) => likedItem.product_uid === item.id,
+                  )
+                    ? "bg-red-500 text-white"
+                    : "bg-gray-200 text-gray-700"
+                } px-3 py-1 rounded-full transition-colors duration-300`}
+              >
+                🤍
+              </button>
+              <p>{item.like_count}</p>
             </div>
           ))}
       </div>
