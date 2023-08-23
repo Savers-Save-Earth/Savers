@@ -1,5 +1,4 @@
 npm i
 yarn
 
-yarn add @supabase/supabase-js swiper react-hook-form
-yarn add swiper
+yarn add @supabase/supabase-js swiper react-hook-form @supabase/auth-helpers-nextjs react-query

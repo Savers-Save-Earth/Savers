@@ -1,5 +1,8 @@
-export interface Example {
-  id: string;
+export interface NewPostType {
+  author_uid: string;
+  category: string;
+  title: string;
+  content: string;
 }
 
 export interface Product {

@@ -80,10 +80,10 @@ const TextEditor = ({content, setContent}: EditorProps) => {
 
   return (
     <QuillWrapper
-      className='h-96'
+      className="h-5/6"
       forwardedRef={quillInstance}
-      // value={}
-      // onChange={}
+      value={content}
+      onChange={setContent}
       modules={modules}
       formats={formats}
       theme="snow"
