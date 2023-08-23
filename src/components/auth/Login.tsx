@@ -1,5 +1,3 @@
-"use client";
-import supabase from "@/libs/supabase";
 import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
@@ -9,9 +7,8 @@ interface FormValue {
   confirmingPw: string;
 }
 
-type Provider = "google" | "kakao" | "facebook";
-
 const Login = () => {
+
   const {
     register,
     handleSubmit,
@@ -22,25 +19,10 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const signInWithOAuthAndLog = async (provider: Provider) => {
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: provider,
-    });
-  };
 
   return (
-    <>
-      <div>Login</div>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          signInWithOAuthAndLog("kakao");
-        }}
-      >
-        <button>kakao</button>
-      </form>
-    </>
-  );
-};
+    <div>Login</div>
+  )
+}
 
-export default Login;
+export default Login
