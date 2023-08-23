@@ -21,9 +21,9 @@ const Intro = () => {
         <div
           className="fade-element background-image"
           style={{
-            position: scrollY < 4000 ? "fixed" : "absolute",
-            display: scrollY > 4000 ? "none" : "block",
-            top: scrollY < 4000 ? 0 : 4000,
+            position: scrollY < 4600 ? "fixed" : "absolute",
+            display: scrollY > 3600 ? "none" : "block",
+            top: scrollY < 3600 ? 0 : 3600,
             opacity:
               scrollY > 3000 ? Math.max(0, 1 - (scrollY - 3000) / 500) : 1,
             transition: "opacity 0.3s ease", // Add transition for smooth effect
@@ -32,7 +32,10 @@ const Intro = () => {
 
         <div
           className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-8xl font-bold transition-opacity duration-100 ease-in-out"
-          style={{ opacity: Math.max(0, 1 - scrollY / 100) }}
+          style={{
+            opacity: Math.max(0, 1 - scrollY / 100),
+            display: scrollY > 3000 ? "none" : "block",
+          }}
         >
           SAVERS
         </div>
@@ -47,6 +50,7 @@ const Intro = () => {
               20,
               (scrollY - 1000) / 15,
             )}px))`,
+            display: scrollY > 3600 ? "none" : "block",
           }}
         >
           "자연과 가까울수록 병은 멀어지고,
@@ -63,6 +67,7 @@ const Intro = () => {
               20,
               (scrollY - 2000) / 15,
             )}px))`,
+            display: scrollY > 3600 ? "none" : "block",
           }}
         >
           "자연은 결코 배신하지 않는다.
@@ -79,6 +84,7 @@ const Intro = () => {
               20,
               (scrollY - 3000) / 15,
             )}px))`,
+            display: scrollY > 3600 ? "none" : "block",
           }}
         >
           "예술에는 오류가 있을지 모르나,
