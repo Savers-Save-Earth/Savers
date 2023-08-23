@@ -1,35 +1,11 @@
 "use client";
 import supabase from "@/libs/supabase";
 import React, { useEffect, useState } from "react";
+import { Database } from "@/types/supabase"
 
-interface Profile {
-  activePoint: number | null;
-  badges: string | null;
-  commentPosts: string | null;
-  email: string | null;
-  isActiveDone: boolean | null;
-  likedPosts: string | null;
-  likePosts: string | null;
-  likeProducts: string | null;
-  likeRestaurants: string | null;
-  nickname: string | null;
-  password: string | null;
-  profileImage: string | null;
-  provider: string | null;
-  uid: string;
-  writePosts: string | null;
-}
+type Profile = Database["public"]["Tables"]["user"]["Row"]
+type CommunityActivity = Database["public"]["Tables"]["community"]["Row"]
 
-interface Community {
-  author_uid: string
-  category: string
-  content: string
-  created_date: string
-  number_comments: number | null
-  post_uid: string
-  title: string
-  updated_date: string
-}
 interface ProfileProps {
   profileId: string;
 }
@@ -38,7 +14,7 @@ const Profile = ( { profileId }: ProfileProps ) => {
   const [showMission, setShowMission] = useState<string>("missionDoing");
   const [showActivity, setShowActivity] = useState<string>("myPost");
   const [userData, setUserData] = useState<Profile | null>(null);
-  const [userPost, setUserPost] = useState<Community[]>([]);
+  const [userPost, setUserPost] = useState<CommunityActivity[]>([]);
   const [loadCount, setLoadCount] = useState<number>(2)
   useEffect(() => {
     fetchProfile()
