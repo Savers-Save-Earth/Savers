@@ -54,6 +54,20 @@ const ProductComponent = () => {
 
   return (
     <>
+      {/* 카테고리 선택 로직 */}
+      <div className="flex justify-center items-center mt-10">
+        {productCategory.map((category) => (
+          <button
+            key={category.value}
+            onClick={() => setCategory(category.value)}
+            className="flex flex-col items-center space-y-2"
+          >
+            <svg className="text-gray-300 bg-gray-400 w-40 m-2"></svg>
+            <p>{category.label}</p>
+          </button>
+        ))}
+      </div>
+      {/* 셀렉트바 선택 로직  */}
       <select value={select} onChange={(e) => setSelect(e.target.value)}>
         {selectOptions.map((option) => (
           <option key={option.value} value={option.value}>
@@ -61,23 +75,21 @@ const ProductComponent = () => {
           </option>
         ))}
       </select>
-      {productCategory.map((category) => (
-        <button
-          style={{ width: "50px", background: "lightgray", margin: "10px" }}
-          onClick={() => setCategory(category.value)}
-        >
-          {category.label}
-        </button>
-      ))}
-      <form>
+
+      <form
+        className="rounded-lg flex p-2 items-center gap-2 bg-gray-100"
+        style={{ width: "350px", float: "right", marginRight: "22px" }}
+      >
         <input
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          style={{ width: "200px", border: "1px solid gray" }}
+          className=" bg-gray-100"
+          style={{ width: "300px", outline: "none" }}
+          placeholder="검색어를 입력하세요."
         />
       </form>
-      <div>
+      <div className="mt-5 ">
         {sortedData
           // 검색어 필터 및 카테고리 필터
           .filter(
@@ -87,14 +99,29 @@ const ProductComponent = () => {
           )
           .filter((item) => item.category.includes(category))
           .map((item) => (
-            <div key={item.id} className="inline-table">
-              <img src={item.img} style={{ height: "300px" }} />
-              <p>{item.company}</p>
+            <div key={item.id} className="inline-table m-3">
+              <img
+                src={item.img}
+                style={{
+                  height: "406px",
+                  width: "406px",
+                  borderRadius: "16px",
+                }}
+              />
+              <p className="text-gray-500">{item.company}</p>
               <p>{item.name}</p>
               <p>{item.context}</p>
-              <a href={item.website}>상세보기</a>
-              {item.sales ? <p>{item.sales}%</p> : null}
-              <p>{item.price.toLocaleString("ko-KR")}원</p>
+              <p>
+                <a href={item.website}>상세보기</a>
+              </p>
+              {item.sales ? (
+                <span className="text-green-500 font-bold mr-2">
+                  {item.sales}%
+                </span>
+              ) : null}
+              <span className="font-bold">
+                {item.price.toLocaleString("ko-KR")}원
+              </span>
             </div>
           ))}
       </div>

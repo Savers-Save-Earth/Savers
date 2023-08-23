@@ -91,3 +91,21 @@
 .swiper-button-prev::after {
   display: none;
 }
+
+.swiper .swiper-pagination-bullet {
+  background-color: white; /* 비활성화 색상 */
+  opacity: 0.5; /* 비활성화된 불릿의 투명도 */
+}
+
+.swiper .swiper-pagination-bullet-active {
+  background-color: rgb(62, 61, 61); /* 활성화 색상 */
+  opacity: 1; /* 활성화된 불릿의 투명도 */
+}
+
+/* .swiper-pagination-bullet::after {
+  display: none;
+}
+
+.swiper .swiper-pagination-bullet-:active::after {
+  display: none;
+} */
