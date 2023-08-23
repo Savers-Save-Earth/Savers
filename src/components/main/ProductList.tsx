@@ -43,7 +43,7 @@ const ProductList = () => {
         >
           {sortedData.map((item) => (
             <SwiperSlide key={item.id}>
-              <img src={item.img} style={{ width: "300px", height: "300px" }} />
+              <img src={item.img} className="w-300 h-300" />
               <p>{item.company}</p>
               <p>{item.name}</p>
               {item.sales ? <p>{item.sales}%</p> : null}

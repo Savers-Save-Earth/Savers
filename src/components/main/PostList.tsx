@@ -19,13 +19,18 @@ const PostList = () => {
   useEffect(() => {
     fetchPost();
   }, []);
+
   return (
     <div>
       <h1>인기있는 글</h1>
       {post.map((item) => (
-        <div key={item.post_uid}>
-          <p>{item.title}</p>
-          <p>{item.content}</p>
+        <div key={item.post_uid} className="border border-black">
+          <p className="font-bold">{item.title}</p>
+          <p>
+            {item.content.length > 20
+              ? `${item.content.slice(0, 20)}...`
+              : item.content}
+          </p>
           <p>{item.created_date}</p>
         </div>
       ))}
