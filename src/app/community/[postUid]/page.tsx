@@ -10,7 +10,7 @@ const CommunityPostDetail = () => {
   const { postUid } = useParams();
 
   const { data: postDetail } = useQuery<PostType>(
-    ["communityAllPosts"],
+    ["postDetail"],
     () => getPostDetail(postUid),
   );
 
