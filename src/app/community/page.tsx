@@ -1,4 +1,5 @@
 "use client";
+import GetPosts from "@/components/community/GetPosts";
 import { useRouter } from "next/navigation";
 
 const Community = () => {
@@ -14,6 +15,7 @@ const Community = () => {
           글쓰기
         </button>
       </div>
+      <GetPosts />
     </>
   );
 };
