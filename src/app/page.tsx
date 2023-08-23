@@ -14,7 +14,7 @@ const Home = () => {
       <ProductList />
       <RestaurantList />
       <PostList />
-      <Link href={"/profile/temporaltestuid"}>Profile</Link>
+      <Link href={"/profile/bd2125b8-d852-485c-baf3-9c7a8949beee"}>Profile</Link>
     </div>
   );
 };

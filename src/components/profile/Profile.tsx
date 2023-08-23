@@ -16,9 +16,9 @@ const Profile = ( { profileId }: ProfileProps ) => {
   const [userData, setUserData] = useState<Profile | null>(null);
   const [userPost, setUserPost] = useState<CommunityActivity[]>([]);
   const [loadCount, setLoadCount] = useState<number>(2)
+
   useEffect(() => {
     fetchProfile()
-    
   }, []);
   useEffect(() => {
     fetchCommunity()
@@ -26,15 +26,14 @@ const Profile = ( { profileId }: ProfileProps ) => {
 
   const fetchProfile = async () => {
     let { data: user, error } = await supabase.from("user").select().match({"uid" : profileId})
-    if(error) {
-      return false
-    }
+    if(error) throw error
     setUserData(user![0]);
   };
   const fetchCommunity = async () => {
     // 달린 댓글 개수랑 좋아요는 어떻게 기입되는지 로직을 여쭤봐야 함 : supabase 내부적으로 댓글갯수를 count하여 다른 db에 넣는 방법이 있다고 함. 
     // 해당 기능 개발과정을 본 후에 community에서 바로 끌고 올 지 판단
     let { data: community, error } = await supabase.from('community').select().match({"author_uid": profileId}).range(0, loadCount - 1)
+    if (error) throw error
     setUserPost(community || [])
   }
 

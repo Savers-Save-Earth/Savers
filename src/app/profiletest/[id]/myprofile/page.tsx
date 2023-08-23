@@ -1,0 +1,12 @@
+import React from 'react'
+
+const MyProfile = ({ params }: { params: { id: string } }) => {
+  return (
+    <>
+    <div>MyProfile</div>
+    <h1>파람스 {params.id}</h1>
+    </>
+  )
+}
+
+export default MyProfile
