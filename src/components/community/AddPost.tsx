@@ -77,7 +77,7 @@ const AddPost: NextComponentType = () => {
           className="w-1/5"
         >
           <option value="" disabled selected>
-            카테고리를 선택해주세요
+            카테고리
           </option>
           <option value="제품">제품</option>
           <option value="식당">식당</option>
