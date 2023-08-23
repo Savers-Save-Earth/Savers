@@ -1,13 +1,16 @@
 "use client";
 import supabase from "@/libs/supabase";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import NicknameMaker from "@/components/auth/NicknameMaker";
 import { Database } from "@/types/supabase";
+import { useRouter } from "next/navigation";
 
 type Provider = "google" | "kakao" | "facebook";
 
 const SocialLogin = () => {
   const [user, setUser] = useState<user | null>(null);
+  const router = useRouter();
+  const [nickname, setNickname] = useState<string | null>(null);
 
   const signInWithOAuthAndLog = async (provider: Provider) => {
     const { data, error } = await supabase.auth.signInWithOAuth({
@@ -17,9 +20,10 @@ const SocialLogin = () => {
     if (error) {
       alert(`${provider} 로그인 에러:`, error);
     } else {
-      alert("로그인⚡️");
       getUser();
       getUserInfo();
+      alert("로그인⚡️");
+      router.push("/");
     }
   };
 
@@ -37,10 +41,16 @@ const SocialLogin = () => {
     }
   };
 
+  useEffect(() => {
+    getUser();
+    getUserInfo();
+  }, []);
+
   const getUserInfo = async () => {
     const { data: userInfo } = await supabase
-      .from("users")
+      .from("user")
       .select("id")
+      .eq("uid", user!.id)
       .single();
     if (userInfo) {
       console.log("유저정보등록되어있음");
@@ -52,11 +62,18 @@ const SocialLogin = () => {
 
   const updateUserInfo = async () => {
     await supabase.from("user").insert({
-      id: user!.id,
+      uid: user!.id,
       email: user!.user_metadata["email"],
-      grade: "basic",
-      nickname: user!.user_metadata["name"],
+      nickname: generatedNickname,
     });
+    console.log("userInfo반영");
+    setNickname(generatedNickname);
+  };
+
+  const generateNickname = () => {
+    const nickname = NicknameMaker();
+    return nickname;
+    console.log(nickname);
   };
 
   return (
