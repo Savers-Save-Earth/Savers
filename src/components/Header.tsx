@@ -16,7 +16,7 @@ const Header = () => {
       setUser(false);
     } else {
       setUser(user);
-      console.log(user.id);
+      console.log(user);
     }
   };
 
@@ -24,9 +24,11 @@ const Header = () => {
     getUser();
   }, []);
 
-  const loginLogoutSwitcher = () => {
+  const loginLogoutSwitcher = async () => {
     if (user) {
-      supabase.auth.signOut();
+      await supabase.auth.signOut();
+      location.reload();
+      alert("로그아웃되었습니다");
     } else {
       router.push("/login");
     }
