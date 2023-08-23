@@ -24,10 +24,11 @@ const Header = () => {
     getUser();
   }, []);
 
-  const loginLogoutSwitcher = () => {
+  const loginLogoutSwitcher = async () => {
     if (user) {
-      supabase.auth.signOut()
-      router.refresh()
+      await supabase.auth.signOut();
+      location.reload();
+      alert("로그아웃되었습니다");
     } else {
       router.push("/login");
     }
