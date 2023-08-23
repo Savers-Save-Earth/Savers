@@ -1,19 +1,34 @@
-import Link from "next/link"
-import { Router } from "next/router"
+import Link from "next/link";
+import { Router } from "next/router";
 
-export default function ProfiletestLayout({
+export default function ProfiletestLayout ({
   children,
 }: {
-  children: React.ReactNode
-}) {
-  return (
-    <>
-    <h1>프로필테스트 레이아웃</h1>
-    <Link href={"/profiletest/bd2125b8-d852-485c-baf3-9c7a8949beee/myprofile"}>나의 프로필</Link>
-    <Link href={"/profiletest/bd2125b8-d852-485c-baf3-9c7a8949beee/mymission"}>나의 미션</Link>
-    <Link href={"/profiletest/bd2125b8-d852-485c-baf3-9c7a8949beee/mycommunity"}>커뮤니티 활동</Link>
-    <section>{children}</section>
-    </>
-  )
+  children: React.ReactNode;
+}) 
 
+{
+  return (
+    <div className="flex gap-2 h-screen">
+      <div className="w-1/4 p-4 border-dashed border-2 border-indigo-600 flex flex-col">
+        <h1>프로필테스트 레이아웃</h1>
+        <Link
+          href={"/profiletest/temporaltestuid/myprofile"}
+        >
+          나의 프로필
+        </Link>
+        <Link
+          href={"/profiletest/temporaltestuid/mymission"}
+        >
+          나의 미션
+        </Link>
+        <Link
+          href={"/profiletest/temporaltestuid/mycommunity"}
+        >
+          커뮤니티 활동
+        </Link>
+      </div>
+      <section className="w-3/4 p-4 border-dashed border-2 border-red-600 flex">{children}</section>
+    </div>
+  );
 }
