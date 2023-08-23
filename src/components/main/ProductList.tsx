@@ -30,8 +30,8 @@ const ProductList = () => {
   const sortedData = product.slice().sort((a, b) => a.price - b.price);
 
   return (
-    <div>
-      <h1>인기있는 친환경제품</h1>
+    <div className="p-24 items-start gap-16 self-stretch">
+      <h1 className="text-2xl pb-4">인기있는 친환경제품</h1>
       <div>
         <Swiper
           // install Swiper modules
@@ -39,15 +39,21 @@ const ProductList = () => {
           spaceBetween={10}
           slidesPerView={4}
           navigation
-          style={{ width: "1200px" }}
+          autoplay={{ delay: 2000 }}
         >
           {sortedData.map((item) => (
             <SwiperSlide key={item.id}>
-              <img src={item.img} className="w-300 h-300" />
-              <p>{item.company}</p>
+              <img src={item.img} className="rounded-lg" />
+              <p className="text-gray-500">{item.company}</p>
               <p>{item.name}</p>
-              {item.sales ? <p>{item.sales}%</p> : null}
-              <p>{item.price.toLocaleString("ko-KR")}원</p>
+              {item.sales ? (
+                <span className="text-green-500 font-bold mr-2">
+                  {item.sales}%
+                </span>
+              ) : null}
+              <span className="font-bold">
+                {item.price.toLocaleString("ko-KR")}원
+              </span>
             </SwiperSlide>
           ))}
         </Swiper>
