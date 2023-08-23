@@ -6,6 +6,9 @@ import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createPost } from "@/api/community/post";
 import { convertTimestamp } from "@/libs/util";
+import { Database } from "@/types/supabase";
+
+type NewPost = Database["public"]["Tables"]["community"]["Insert"];
 
 const AddPost: NextComponentType = () => {
   const [category, setCategory] = useState("");
@@ -22,20 +25,20 @@ const AddPost: NextComponentType = () => {
   const queryClient = useQueryClient();
   const createMutation = useMutation(createPost, {
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['post'] });
+      queryClient.invalidateQueries({ queryKey: ["post"] });
       window.alert("게시글이 정상적으로 등록되었습니다.");
     },
     onError: (error) => {
-      console.error('게시글 등록 에러:', error);
-      window.alert('글이 정상적으로 등록되지 않았습니다.');
+      console.error("게시글 등록 에러:", error);
+      window.alert("게시글이 정상적으로 등록되지 않았습니다. 다시 시도해주세요!");
     },
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const writtenTime = new Date();
-    const newPost = {
-      author_uid: 'bd2125b8-d852-485c-baf3-9c7a8949beee',
+    const newPost: NewPost = {
+      author_uid: "bd2125b8-d852-485c-baf3-9c7a8949beee",
       category,
       title,
       content,

@@ -1,9 +1,8 @@
 import supabase from "@/libs/supabase";
 import { Database } from "@/types/supabase";
-import { NewPostType } from "@/types/types";
 
-  // 전체 게시글 조회
-export const getPosts = async () => { };
+type PostType = Database["public"]["Tables"]["community"]["Row"];
+type NewPostType = Database["public"]["Tables"]["community"]["Insert"];
 
 // 게시글 등록
 export const createPost = async (newPost: NewPostType) => {
@@ -15,12 +14,12 @@ export const createPost = async (newPost: NewPostType) => {
 export const updatePost = async () => { };
 
 // 게시글 삭제
-export const deletePost = async (post_uid: Database): Promise<void> => {
+export const deletePost = async (post_uid: string): Promise<void> => {
   await supabase.from("community").delete().eq("post_uid", post_uid);
  };
 
- // 게시글 상세내용 조회
-export const getPostDetail = async (post_uid: Database): Promise<Database> => {
+// 게시글 상세내용 조회
+export const getPostDetail = async (post_uid: string): Promise<PostType> => {
   const { data } = await supabase.from("community").select("*").eq('post_uid', post_uid).single();
   return data;
  };
