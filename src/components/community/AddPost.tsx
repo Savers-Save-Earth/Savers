@@ -7,7 +7,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createPost } from "@/api/community/post";
 import { convertTimestamp } from "@/libs/util";
 import { Database } from "@/types/supabase";
-import { useRouter } from "next/navigation";
 
 type NewPost = Database["public"]["Tables"]["community"]["Insert"];
 
@@ -15,8 +14,6 @@ const AddPost: NextComponentType = () => {
   const [category, setCategory] = useState("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-
-  const router = useRouter();
 
   const selectChangeHandler = (
     e: React.ChangeEvent<HTMLSelectElement>,
@@ -28,7 +25,7 @@ const AddPost: NextComponentType = () => {
   const queryClient = useQueryClient();
   const createMutation = useMutation(createPost, {
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["post"] });
+      queryClient.invalidateQueries({ queryKey: ["communityAllPosts"] });
       window.alert("게시글이 정상적으로 등록되었습니다.");
       location.href = "/community";
     },
@@ -36,8 +33,8 @@ const AddPost: NextComponentType = () => {
       console.error("게시글 등록 에러:", error);
       window.alert("게시글이 정상적으로 등록되지 않았습니다. 다시 시도해주세요!");
     },
-  });
-
+  })
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const writtenTime = new Date();
@@ -98,7 +95,7 @@ const AddPost: NextComponentType = () => {
         </div>
         <button
           type="submit"
-          className="rounded-md bg-green-200 w-52 py-3">
+          className="rounded-md bg-green-200 w-48 py-3 mx-auto hover:bg-green-300">
           게시글 등록
         </button>
       </form>
