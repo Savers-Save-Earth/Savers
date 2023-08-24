@@ -8,6 +8,7 @@ const Maps = () => {
     lng: 126.79581,
   });
 
+  //현재 위치
   const getCurrentLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -28,11 +29,8 @@ const Maps = () => {
     getCurrentLocation();
   }, []);
 
-  // const KakaoMapLib = `//dapi.kakao.com/v2/maps/sdk.js?appkey=20943b4a22719502dc157b55da145827&libraries=services`;
-
   return (
     <div>
-      {/* <script type="text/javascript" src={KakaoMapLib}></script> */}
       <Map
         center={currentLocation}
         style={{ width: "100%", height: "500px" }}
