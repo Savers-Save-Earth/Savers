@@ -9,8 +9,9 @@ type PostType = Database["public"]["Tables"]["community"]["Row"];
 const DetailPost = () => {
   const { postUid } = useParams();
   const { data: postDetail } = useQuery<PostType>(
-    ["postDetail"],
+    ["postDetail", postUid],
     () => getPostDetail(postUid),
+    { cacheTime: 0 },
   );
   const router = useRouter();
 
