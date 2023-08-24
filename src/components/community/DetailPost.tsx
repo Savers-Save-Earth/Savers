@@ -23,19 +23,19 @@ const DetailPost = () => {
       location.href = "/community";
     },
     onError: (error) => {
-      console.error("게시글 등록 에러:", error);
+      console.error("게시글 삭제 에러:", error);
       window.alert("게시글이 정상적으로 삭제되지 않았습니다. 다시 시도해주세요!");
     },
   });
-
-  const handleEdit = () => {
-    // 수정 로직
-  }
 
   const handleDelete = () => {
     const ok = window.confirm("게시글을 정말 삭제하시겠습니까?");
     if (!ok) return false;
     if (ok) deleteMutation.mutate(postUid);
+  };
+
+  const handleEditClick = () => {
+    router.push(`/community/${postUid}/edit`);
   };
 
   return (
@@ -54,7 +54,7 @@ const DetailPost = () => {
           </h1>
           <div className="flex space-x-3">
             <button
-              onClick={handleEdit}
+              onClick={handleEditClick}
               className="w-20 text-sm border-b-4 border-blue-300 px-5 pb-1 shadow-sm hover:-translate-y-1 transition ease-in-out duration-200">
               수정
             </button>
