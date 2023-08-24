@@ -18,7 +18,7 @@ const Header = () => {
       setUser(false);
     } else {
       setUser(user);
-      console.log(user.id);
+      console.log("헤더에 찍힌 유저아이디==>",user.id);
     }
   };
 
@@ -73,12 +73,11 @@ const Header = () => {
 
   const signupProfileSwitcher = () => {
     if (user) {
-      router.push("/profile");
+      router.push(`/profiletest/${user.id}/myprofile`);
     } else {
       router.push("/signup");
     }
   };
-
   return (
     <>
       <header className=" text-gray-600 body-font">
