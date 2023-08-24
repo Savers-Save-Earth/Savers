@@ -11,6 +11,7 @@ export interface Database {
     Tables: {
       community: {
         Row: {
+          author_name: string
           author_uid: string
           category: string
           content: string
@@ -21,6 +22,7 @@ export interface Database {
           updated_date: string
         }
         Insert: {
+          author_name?: string
           author_uid?: string
           category?: string
           content?: string
@@ -31,6 +33,7 @@ export interface Database {
           updated_date?: string
         }
         Update: {
+          author_name?: string
           author_uid?: string
           category?: string
           content?: string
@@ -48,15 +51,17 @@ export interface Database {
           content: string
           created_date: string
           post_uid: string
-          updated_date: string | null
+          updated_date: string
+          writer_name: string
           writer_uid: string
         }
         Insert: {
           comment_uid?: string
           content?: string
-          created_date?: string
+          created_date: string
           post_uid?: string
-          updated_date?: string | null
+          updated_date: string
+          writer_name: string
           writer_uid?: string
         }
         Update: {
@@ -64,7 +69,8 @@ export interface Database {
           content?: string
           created_date?: string
           post_uid?: string
-          updated_date?: string | null
+          updated_date?: string
+          writer_name?: string
           writer_uid?: string
         }
         Relationships: []
@@ -105,6 +111,27 @@ export interface Database {
         }
         Relationships: []
       }
+      like_product: {
+        Row: {
+          createdAt: string | null
+          number_likes: number | null
+          product_uid: string
+          user_id: string | null
+        }
+        Insert: {
+          createdAt?: string | null
+          number_likes?: number | null
+          product_uid: string
+          user_id?: string | null
+        }
+        Update: {
+          createdAt?: string | null
+          number_likes?: number | null
+          product_uid?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       product: {
         Row: {
           category: string | null
@@ -113,8 +140,7 @@ export interface Database {
           createdAt: string | null
           id: string
           img: string | null
-          liked: Json | null
-          liked_num: number | null
+          like_count: number | null
           name: string | null
           price: number | null
           sales: number | null
@@ -127,8 +153,7 @@ export interface Database {
           createdAt?: string | null
           id?: string
           img?: string | null
-          liked?: Json | null
-          liked_num?: number | null
+          like_count?: number | null
           name?: string | null
           price?: number | null
           sales?: number | null
@@ -141,8 +166,7 @@ export interface Database {
           createdAt?: string | null
           id?: string
           img?: string | null
-          liked?: Json | null
-          liked_num?: number | null
+          like_count?: number | null
           name?: string | null
           price?: number | null
           sales?: number | null
@@ -159,7 +183,7 @@ export interface Database {
           isActiveDone: boolean | null
           likedPosts: string | null
           likePosts: string | null
-          likeProducts: string | null
+          likeProducts: Json | null
           likeRestaurants: string | null
           nickname: string | null
           password: string | null
@@ -176,7 +200,7 @@ export interface Database {
           isActiveDone?: boolean | null
           likedPosts?: string | null
           likePosts?: string | null
-          likeProducts?: string | null
+          likeProducts?: Json | null
           likeRestaurants?: string | null
           nickname?: string | null
           password?: string | null
@@ -193,7 +217,7 @@ export interface Database {
           isActiveDone?: boolean | null
           likedPosts?: string | null
           likePosts?: string | null
-          likeProducts?: string | null
+          likeProducts?: Json | null
           likeRestaurants?: string | null
           nickname?: string | null
           password?: string | null

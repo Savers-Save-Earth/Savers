@@ -25,7 +25,7 @@ const Community = () => {
     <>
       <h1 className="text-xl flex justify-center items-center mx-auto mt-10">전체 카테고리 게시글 목록</h1>
       {
-        <div className="flex flex-col my-10 mx-auto items-center justify-center">
+        <div className="flex flex-col max-w-7xl my-10 mx-auto items-center justify-center">
         {Array.isArray(posts) && posts.map((post: PostType) => (
             <div
               key={post.post_uid}
