@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-// import { Map, MapMarker } from "react-kakao-maps-sdk";
+import { Map, MapMarker } from "react-kakao-maps-sdk";
 
 declare global {
   interface Window {
@@ -30,11 +30,9 @@ const getCurrentCoordinate = async () => {
 };
 
 const TestMaps = () => {
-  const [map, setMap] = useState<any>();
+  const [info, setInfo] = useState();
   const [pointer, setPointer] = useState<any>();
-
-  const CATEGORY_NAMES = ["헬스장", "필라테스"];
-  const [searchSubmitValue, setSearchSubmitValue] = useState(null);
+  const [markers, setMarkers] = useState([]);
 
   //카카오맵 불러오기
   useEffect(() => {
@@ -48,7 +46,7 @@ const TestMaps = () => {
       };
 
       //지도 생성 및 객체 리턴 / 마커 생성
-      setMap(new window.kakao.maps.Map(container, options));
+      const map = new window.kakao.maps.Map(container, options);
       setPointer(new window.kakao.maps.Marker());
     });
 
@@ -65,7 +63,34 @@ const TestMaps = () => {
 
     //
     //warning!!!
-    //여기부터 오류 또는 문제 발생
+    //여기부터 오류 또는 문제 발생코드
+    //keyword marker 작동안되무ㅜㅜㅠㅜㅠㅜㅠㅜㅜㅠㅜㅠㅜㅠㅜ진짜 빠가사리임...ㅠㅜㅠㅜㅠㅜ
+    ps.keywordSearch("비건푸드", (data, status, _pagination) => {
+      if (status === window.kakao.maps.services.Status.OK) {
+        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+        // LatLngBounds 객체에 좌표를 추가합니다
+        const bounds = new window.kakao.maps.LatLngBounds();
+        let markers = [];
+
+        for (var i = 0; i < data.length; i++) {
+          // @ts-ignore
+          markers.push({
+            position: {
+              lat: data[i].y,
+              lng: data[i].x,
+            },
+            content: data[i].place_name,
+          });
+          // @ts-ignore
+          bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+        }
+        setMarkers(markers);
+
+        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+        map.setBounds(bounds);
+      }
+    });
+    //
   }, []);
 
   //현재 위치 가져와서 표시 및 기본 위치 변경
@@ -111,7 +136,23 @@ const TestMaps = () => {
 
   return (
     <div>
-      <div id="map" style={{ width: "100%", height: "400px" }}></div>
+      <Map
+        center={getCurrentCoordinate}
+        style={{ width: "100%", height: "500px" }}
+        level={4}
+      >
+        {markers.map((marker) => (
+          <MapMarker
+            key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
+            position={marker.position}
+            onClick={() => setInfo(marker)}
+          >
+            {info && info.content === marker.content && (
+              <div style={{ color: "#000" }}>{marker.content}</div>
+            )}
+          </MapMarker>
+        ))}
+      </Map>
       <div onClick={getCurrentPosBtn}>현재 위치</div>
     </div>
   );
