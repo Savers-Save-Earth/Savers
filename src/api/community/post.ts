@@ -14,11 +14,8 @@ export const createPost = async (newPost: NewPostType) => {
 export const updatePost = async () => { };
 
 // 게시글 삭제
-export const deletePost = async (post_uid: string): Promise<void> => {
-  await supabase
-    .from("community")
-    .delete()
-    .eq("post_uid", post_uid);
+export const deletePost = async (post_uid: string | string[]): Promise<void> => {
+  await supabase.from("community").delete().eq("post_uid", post_uid);
 };
  
 // 게시글 전체 조회
