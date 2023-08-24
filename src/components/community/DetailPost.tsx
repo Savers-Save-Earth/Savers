@@ -28,6 +28,10 @@ const DetailPost = () => {
     },
   });
 
+  const handleEdit = () => {
+    // 수정 로직
+  }
+
   const handleDelete = () => {
     const ok = window.confirm("게시글을 정말 삭제하시겠습니까?");
     if (!ok) return false;
@@ -49,7 +53,9 @@ const DetailPost = () => {
             {postDetail?.title}
           </h1>
           <div className="flex space-x-3">
-            <button className="w-20 text-sm border-b-4 border-blue-300 px-5 pb-1 shadow-sm hover:-translate-y-1 transition ease-in-out duration-200">
+            <button
+              onClick={handleEdit}
+              className="w-20 text-sm border-b-4 border-blue-300 px-5 pb-1 shadow-sm hover:-translate-y-1 transition ease-in-out duration-200">
               수정
             </button>
             <button
