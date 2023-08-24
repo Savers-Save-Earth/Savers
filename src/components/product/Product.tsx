@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import supabase from "@/libs/supabase";
 import { Product } from "@/types/types";
+import { useRouter } from "next/navigation";
 
 const productCategory = [
   { value: "", label: "전체" },
@@ -26,6 +27,8 @@ const ProductComponent = () => {
   const [select, setSelect] = useState("popular");
   const [user, setUser] = useState<any>(null);
   const [likedByUser, setLikedByUser] = useState<any[]>([]);
+
+  const router = useRouter();
 
   // 물품 리스트 fetch
   const fetchProduct = async () => {
@@ -207,7 +210,9 @@ const ProductComponent = () => {
               <p>{item.name}</p>
               <p>{item.context}</p>
               <p>
-                <a href={item.website}>상세보기</a>
+                <button onClick={() => router.push(`/product/${item.id}`)}>
+                  상세보기
+                </button>
               </p>
               {item.sales ? (
                 <span className="text-green-500 font-bold mr-2">
