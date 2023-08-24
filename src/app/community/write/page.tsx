@@ -6,8 +6,7 @@ import AddPost from "@/components/community/AddPost";
 const Write: NextPage = () => {
   return (
     <>
-      <div className="flex flex-col items-center w-11/12 mx-auto mt-10">
-        <h1 className="text-2xl">게시글 작성 페이지</h1>
+      <div className="flex flex-col items-center w-full max-w-6xl mx-auto mt-10">
         <AddPost />
       </div>
     </>
