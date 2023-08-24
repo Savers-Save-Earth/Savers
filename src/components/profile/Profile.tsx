@@ -1,35 +1,11 @@
 "use client";
 import supabase from "@/libs/supabase";
 import React, { useEffect, useState } from "react";
+import { Database } from "@/types/supabase"
 
-interface Profile {
-  activePoint: number | null;
-  badges: string | null;
-  commentPosts: string | null;
-  email: string | null;
-  isActiveDone: boolean | null;
-  likedPosts: string | null;
-  likePosts: string | null;
-  likeProducts: string | null;
-  likeRestaurants: string | null;
-  nickname: string | null;
-  password: string | null;
-  profileImage: string | null;
-  provider: string | null;
-  uid: string;
-  writePosts: string | null;
-}
+type Profile = Database["public"]["Tables"]["user"]["Row"]
+type CommunityActivity = Database["public"]["Tables"]["community"]["Row"]
 
-interface Community {
-  author_uid: string
-  category: string
-  content: string
-  created_date: string
-  number_comments: number | null
-  post_uid: string
-  title: string
-  updated_date: string
-}
 interface ProfileProps {
   profileId: string;
 }
@@ -38,25 +14,31 @@ const Profile = ( { profileId }: ProfileProps ) => {
   const [showMission, setShowMission] = useState<string>("missionDoing");
   const [showActivity, setShowActivity] = useState<string>("myPost");
   const [userData, setUserData] = useState<Profile | null>(null);
-  const [userPost, setUserPost] = useState<Community[]>([]);
+  const [userPost, setUserPost] = useState<CommunityActivity[]>([]);
+  const [loadCount, setLoadCount] = useState<number>(2)
+
   useEffect(() => {
     fetchProfile()
-    fetchCommunity()
   }, []);
+  useEffect(() => {
+    fetchCommunity()
+  }, [loadCount])
 
   const fetchProfile = async () => {
     let { data: user, error } = await supabase.from("user").select().match({"uid" : profileId})
-    if(error) {
-      return false
-    }
+    if(error) throw error
     setUserData(user![0]);
   };
   const fetchCommunity = async () => {
-    // temporaltestuid 대신 params든 뭐든 현재 user uid로 가져오게 해야 함.
     // 달린 댓글 개수랑 좋아요는 어떻게 기입되는지 로직을 여쭤봐야 함 : supabase 내부적으로 댓글갯수를 count하여 다른 db에 넣는 방법이 있다고 함. 
     // 해당 기능 개발과정을 본 후에 community에서 바로 끌고 올 지 판단
-    let { data: community, error } = await supabase.from('community').select().match({"author_uid": profileId})
+    let { data: community, error } = await supabase.from('community').select().match({"author_uid": profileId}).range(0, loadCount - 1)
+    if (error) throw error
     setUserPost(community || [])
+  }
+
+  const handleLoadMore = () => {
+    setLoadCount(prev => prev + 2)
   }
   
   const handleSelectMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -157,7 +139,7 @@ const Profile = ( { profileId }: ProfileProps ) => {
           </div>
         )}
         {selectedMenu === "activity" && 
-         <div className="flex flex-col w-full border-dashed border-2 border-orange-600 p-5">
+         <div className="flex flex-col w-full border-dashed border-2 border-orange-600 h-full p-5">
          <h3>커뮤니티 활동</h3>
          <div className="flex items-center gap-10">
            <button value="myPost" className="hover:font-bold focus:font-bold focus:underline decoration" onClick={handleSelectActivity}>
@@ -176,10 +158,10 @@ const Profile = ( { profileId }: ProfileProps ) => {
              북마크한 제품
            </button>
          </div>
-         <div className="border-dashed border-2 border-yellow-600 w-full h-full p-5 mt-5">
+         <div className="border-dashed border-2 border-yellow-900 w-full h-4/5">
            {showActivity === "myPost" && (
              <>
-             <div>내가 쓴 글이 나와야 함</div>
+             <div className="border-solid border-2 border-green-900 overflow-y-auto h-3/4">내가 쓴 글이 나와야 함
              {userPost.map((post) => (
               <div className="border-solid border-2 border-blue-900 p-5 m-5" key={post.post_uid}>
               <p>글 uid : {post.post_uid}</p>
@@ -187,6 +169,8 @@ const Profile = ( { profileId }: ProfileProps ) => {
               <p>등록일: {post.updated_date.slice(0,10)}</p>
               </div>
              ))}
+             <button onClick={handleLoadMore}>더 보기</button>
+             </div>
            </>
            )}
            {showActivity === "myComment" && 

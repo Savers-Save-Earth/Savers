@@ -2,12 +2,10 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import supabase from "@/libs/supabase";
-// import NicknameMaker from "@/components/auth/NicknameMaker";
 
 const Header = () => {
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
-  // const [nickname, setNickname] = useState<string | null>(null);
 
   const getUser = async () => {
     const {
@@ -18,48 +16,13 @@ const Header = () => {
       setUser(false);
     } else {
       setUser(user);
-      console.log(user.id);
+      console.log("헤더에 찍힌 유저아이디==>", user.id);
     }
   };
 
   useEffect(() => {
     getUser();
-    // getUserInfo();
   }, []);
-
-  // const getUserInfo = async () => {
-  //   const { data: userInfo } = await supabase
-  //     .from("user")
-  //     .select("uid")
-  //     .eq("uid", user!.id)
-  //     .single();
-
-  //   console.log(userInfo);
-
-  //   if (userInfo) {
-  //     console.log("유저정보등록되어있음");
-  //     return;
-  //   } else {
-  //     updateUserInfo();
-  //   }
-  // };
-
-  // const updateUserInfo = async () => {
-  //   const generatedNickname = generateNickname();
-  //   await supabase.from("user").insert({
-  //     uid: user!.id,
-  //     email: user!.user_metadata["email"],
-  //     nickname: generatedNickname,
-  //   });
-  //   console.log("userInfo반영");
-  //   setNickname(generatedNickname);
-  // };
-
-  // const generateNickname = () => {
-  //   const nickname = NicknameMaker();
-  //   return nickname;
-  //   console.log(nickname);
-  // };
 
   const loginLogoutSwitcher = async () => {
     if (user) {
@@ -73,12 +36,11 @@ const Header = () => {
 
   const signupProfileSwitcher = () => {
     if (user) {
-      router.push("/profile");
+      router.push(`/profiletest/${user.id}/myprofile`);
     } else {
       router.push("/signup");
     }
   };
-
   return (
     <>
       <header className=" text-gray-600 body-font">
