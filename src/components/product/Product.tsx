@@ -93,6 +93,8 @@ const ProductComponent = () => {
       alert("로그인 후 이용 가능합니다.");
       return;
     } else {
+      // 현재 유저가 해당 게시물에 대해 좋아요를 눌렀는지 안눌렀는지에 대한 데이터
+      // => 빈값인경우 좋아요누르면 추가, 데이터가있을경우 좋아요누르면 삭제
       const { data: existingLikeData, error: existingLikeError } =
         await supabase
           .from("like_product")
@@ -100,16 +102,21 @@ const ProductComponent = () => {
           .eq("product_uid", id)
           .eq("user_id", userId);
 
-      const { data: existingLikeListData, error: existingLikeListError } =
-        await supabase.from("like_product").select().eq("user_id", userId);
+      console.log(existingLikeData);
 
+      // const { data: existingLikeListData, error: existingLikeListError } =
+      //   await supabase.from("like_product").select().eq("user_id", userId);
+
+      // 현재 아이템의 좋아요 수 객체를 가져오는 로직
       const { data: currentLikeCount } = await supabase
         .from("product")
         .select()
         .eq("id", id);
 
+      console.log(currentLikeCount);
+
       // 좋아요 이미 눌렀으면 삭제하는 로직
-      if (!existingLikeError && existingLikeData!.length > 0) {
+      if (!existingLikeError && existingLikeData.length > 0) {
         await supabase
           .from("like_product")
           .delete()
@@ -125,7 +132,7 @@ const ProductComponent = () => {
         // 좋아요 구현하는 로직
         const { error: insertError } = await supabase
           .from("like_product")
-          .insert([{ product_uid: id, user_id: userId }]);
+          .insert({ product_uid: id, user_id: userId });
 
         // 좋아요 count 올리는 로직
         const { error: likeCountError } = await supabase
