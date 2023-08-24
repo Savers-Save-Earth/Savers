@@ -90,7 +90,7 @@ const SocialLogin = () => {
   };
 
   return (
-    <>
+    <div>
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -99,7 +99,7 @@ const SocialLogin = () => {
       >
         <button className="pt-20">kakao</button>
       </form>
-    </>
+    </div>
   );
 };
 
