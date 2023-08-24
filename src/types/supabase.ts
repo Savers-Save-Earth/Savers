@@ -114,19 +114,19 @@ export interface Database {
       like_product: {
         Row: {
           createdAt: string | null
-          number_likes: number | null
+          like_id: string
           product_uid: string
           user_id: string | null
         }
         Insert: {
           createdAt?: string | null
-          number_likes?: number | null
+          like_id?: string
           product_uid: string
           user_id?: string | null
         }
         Update: {
           createdAt?: string | null
-          number_likes?: number | null
+          like_id?: string
           product_uid?: string
           user_id?: string | null
         }

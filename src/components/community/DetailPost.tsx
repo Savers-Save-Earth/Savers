@@ -29,10 +29,10 @@ const DetailPost = () => {
   });
 
   const handleDelete = () => {
-    const ok = window.confirm("게시글을 정말 삭제하시겠습니까?")
+    const ok = window.confirm("게시글을 정말 삭제하시겠습니까?");
     if (!ok) return false;
     if (ok) deleteMutation.mutate(postUid);
-  }
+  };
 
   return (
     <div className="flex flex-col max-w-7xl mt-10 px-10 mx-auto">
@@ -42,22 +42,33 @@ const DetailPost = () => {
       >
         뒤로가기
       </button>
-      <div className="flex space-x-3 mb-10">
-        <button className="w-20 text-sm border-b-4 border-blue-300 px-5 pb-1 shadow-sm hover:-translate-y-1 transition ease-in-out duration-200">
-          수정
-        </button>
-        <button
-          onClick={handleDelete}
-          className="w-20 text-sm border-b-4 border-blue-300 px-5 pb-1 shadow-sm hover:-translate-y-1 transition ease-in-out duration-200">
-          삭제
-        </button>
-      </div>
       <div className="flex flex-col">
+        <h2 className="text-lg mb-3 text-gray-400 font-semibold">{postDetail?.category}</h2>
         <div className="flex items-end justify-between space-x-5 pb-5 border-b">
           <h1 className="text-3xl text-gray-700 font-semibold">
             {postDetail?.title}
           </h1>
-          <span className="text-sm">{postDetail?.updated_date}</span>
+          <div className="flex space-x-3">
+            <button className="w-20 text-sm border-b-4 border-blue-300 px-5 pb-1 shadow-sm hover:-translate-y-1 transition ease-in-out duration-200">
+              수정
+            </button>
+            <button
+              onClick={handleDelete}
+              className="w-20 text-sm border-b-4 border-blue-300 px-5 pb-1 shadow-sm hover:-translate-y-1 transition ease-in-out duration-200">
+              삭제
+            </button>
+          </div>
+        </div>
+        <div className="flex justify-between mt-3">
+          <div className="flex space-x-5 items-center">
+            <span>{postDetail?.author_name}</span>
+            <span className="text-sm">{postDetail?.updated_date}</span>
+          </div>
+          <div className="flex space-x-3">
+            <span>조회수 0</span>
+            <span>댓글 {postDetail?.number_comments ?? 0}</span>
+            <span>좋아요 0</span>
+          </div>
         </div>
         {
           postDetail &&

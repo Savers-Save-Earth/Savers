@@ -34,11 +34,14 @@ const GetPosts = () => {
             >
               <div className="flex">
                 <span className="w-32">{post.category}</span>
-                <h4 className="cursor-pointer hover:text-green-400">
-                  <Link href={`/community/${post.post_uid}`}>
-                    {post.title}
-                  </Link>
-                </h4>
+              <div
+                onClick={()=>router.push(`/community/${post.post_uid}`)}
+                className="flex items-center space-x-2 cursor-pointer hover:text-green-400">
+                  <h4>{post.title}</h4>
+                  <span className="text-sm text-gray-500">
+                    ({post.number_comments})
+                  </span>
+                </div>
               </div>
               <span>{post.created_date}</span>
             </div>
