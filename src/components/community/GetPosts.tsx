@@ -14,7 +14,10 @@ const GetPosts = () => {
   const { isLoading, data: posts, error } = useQuery<PostType[]>(
     ["communityAllPosts"],
     () => getPosts(),
-    { cacheTime: 5000 },
+    {
+      staleTime: 60000,
+      cacheTime: 120000
+    },
   );
 
   if (isLoading) return "커뮤니티 게시글 로딩중";

@@ -10,7 +10,10 @@ const CommunityProduct = () => {
   const { isLoading, data: productPosts, error } = useQuery<PostType[]>(
     ["productPosts"],
     () => getProductPosts(),
-    { cacheTime: 5000 }
+    {
+      staleTime: 60000,
+      cacheTime: 120000
+    },
   );  
 
 if (isLoading) return "제품 카테고리 게시글 로딩중";
