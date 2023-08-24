@@ -21,7 +21,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <QueryProvider>
-          {!hideHeader && <Header />}
+          {hideHeader ? null : <Header />}
           {children}
         </QueryProvider>
       </body>

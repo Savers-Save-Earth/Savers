@@ -6,6 +6,7 @@ import supabase from "@/libs/supabase";
 interface FormValues {
   email: string;
   password: string;
+  nickname: string;
 }
 
 const SignUp: React.FC = () => {
@@ -38,6 +39,18 @@ const SignUp: React.FC = () => {
         return;
       }
 
+      const { data: existingNickname, error: existingNicknameError } =
+        await supabase
+          .from("user")
+          .select("uid")
+          .eq("nickname", nickname)
+          .single();
+
+      if (existingNickname) {
+        alert("이미 사용 중인 닉네임입니다");
+        return;
+      }
+
       // Sign up the user
       const { data, error } = await supabase.auth.signUp({
         email: formData.email,
@@ -66,6 +79,7 @@ const SignUp: React.FC = () => {
         setUserData(loginData);
         userInfoUpdater(loginData, nickname);
         router.push("/");
+        alert("로그인되었습니다!");
       }
     } catch (error) {
       console.error("가입 및 로그인 에러:", error);
