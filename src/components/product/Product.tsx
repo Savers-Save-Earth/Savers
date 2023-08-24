@@ -104,9 +104,6 @@ const ProductComponent = () => {
 
       console.log(existingLikeData);
 
-      // const { data: existingLikeListData, error: existingLikeListError } =
-      //   await supabase.from("like_product").select().eq("user_id", userId);
-
       // 현재 아이템의 좋아요 수 객체를 가져오는 로직
       const { data: currentLikeCount } = await supabase
         .from("product")
