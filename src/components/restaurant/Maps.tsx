@@ -28,28 +28,19 @@ const Maps = () => {
     getCurrentLocation();
   }, []);
 
-  const getKeywordMarker = () => {};
-
-  // const KakaoMapLib = `//dapi.kakao.com/v2/maps/sdk.js?appkey==${process.env.NEXT_PUBLIC_KAKAOMAP_KEY}&libraries=services,clusterer,drawing`;
+  // const KakaoMapLib = `//dapi.kakao.com/v2/maps/sdk.js?appkey=20943b4a22719502dc157b55da145827&libraries=services`;
 
   return (
     <div>
-      <script type="text/javascript" src={KakaoMapLib}></script>
-      <Map center={currentLocation} style={{ width: "100%", height: "500px" }}>
+      {/* <script type="text/javascript" src={KakaoMapLib}></script> */}
+      <Map
+        center={currentLocation}
+        style={{ width: "100%", height: "500px" }}
+        level={4}
+      >
         <MapMarker position={currentLocation}>
           <div>현재위치</div>
         </MapMarker>
-        {/* {markers.map((marker) => (
-          <MapMarker
-            key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
-            position={marker.position}
-            onClick={() => setInfo(marker)}
-          >
-            {info && info.content === marker.content && (
-              <div style={{ color: "#000" }}>{marker.content}</div>
-            )}
-          </MapMarker>
-        ))} */}
       </Map>
     </div>
   );

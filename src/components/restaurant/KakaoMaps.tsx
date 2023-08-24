@@ -44,44 +44,19 @@ const KakaoMaps = () => {
   //       )}
   //     </>
   //   );
-  const [currentLocation, setCurrentLocation] = useState({
-    lat: 33.5563,
-    lng: 126.79581,
-  });
-
-  const getCurrentLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          setCurrentLocation({ lat: latitude, lng: longitude });
-        },
-        (error) => {
-          console.error("Error getting current location:", error);
-        },
-      );
-    } else {
-      console.error("Geolocation is not supported by this browser.");
-    }
-  };
-
-  useEffect(() => {
-    getCurrentLocation();
-  }, []);
-
   const [info, setInfo] = useState();
   const [markers, setMarkers] = useState([]);
   const [map, setMap] = useState();
 
   useEffect(() => {
     if (!map) return;
-    const ps = new kakao.maps.services.Places();
+    const ps = new window.kakao.maps.services.Places();
 
     ps.keywordSearch("비건푸드", (data, status, _pagination) => {
-      if (status === kakao.maps.services.Status.OK) {
+      if (status === window.kakao.maps.services.Status.OK) {
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
         // LatLngBounds 객체에 좌표를 추가합니다
-        const bounds = new kakao.maps.LatLngBounds();
+        const bounds = new window.kakao.maps.LatLngBounds();
         let markers = [];
 
         for (var i = 0; i < data.length; i++) {
@@ -106,7 +81,10 @@ const KakaoMaps = () => {
 
   return (
     <Map // 로드뷰를 표시할 Container
-      center={currentLocation}
+      center={{
+        lat: 37.566826,
+        lng: 126.9786567,
+      }}
       style={{
         width: "100%",
         height: "350px",
@@ -114,10 +92,6 @@ const KakaoMaps = () => {
       level={3}
       onCreate={setMap}
     >
-      {/* <script
-        type="text/javascript"
-        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=20943b4a22719502dc157b55da145827&libraries=services"
-      ></script> */}
       {markers.map((marker) => (
         <MapMarker
           key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
