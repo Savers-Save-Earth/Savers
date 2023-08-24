@@ -10,6 +10,7 @@ const CommunityRestaurant = () => {
   const { isLoading, data: restaurantPosts, error } = useQuery<PostType[]>(
     ["restaurantPosts"],
     () => getRestaurantPosts(),
+    { cacheTime: 5000 }
   );  
 
 if (isLoading) return "식당 카테고리 게시글 로딩중";
