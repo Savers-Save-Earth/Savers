@@ -97,7 +97,7 @@ const SocialLogin = () => {
           signInWithOAuthAndLog("kakao");
         }}
       >
-        <button>kakao</button>
+        <button className="pt-20">kakao</button>
       </form>
     </>
   );

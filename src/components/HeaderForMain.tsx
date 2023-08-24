@@ -1,11 +1,27 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import supabase from "@/libs/supabase";
 
 const HeaderForMain = () => {
   const [scrollY, setScrollY] = useState(0);
+  const [user, setUser] = useState<any>(null);
+
+  const getUser = async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      setUser(false);
+    } else {
+      setUser(user);
+      console.log("헤더에 찍힌 유저아이디==>", user.id);
+    }
+  };
 
   useEffect(() => {
+    getUser();
     const handleScroll = () => {
       setScrollY(window.scrollY);
     };
@@ -15,6 +31,24 @@ const HeaderForMain = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  const loginLogoutSwitcher = async () => {
+    if (user) {
+      await supabase.auth.signOut();
+      location.reload();
+      alert("로그아웃되었습니다");
+    } else {
+      router.push("/login");
+    }
+  };
+
+  const signupProfileSwitcher = () => {
+    if (user) {
+      router.push(`/profiletest/${user.id}/myprofile`);
+    } else {
+      router.push("/signup");
+    }
+  };
 
   const router = useRouter();
 
@@ -69,35 +103,33 @@ const HeaderForMain = () => {
           </nav>
           <div className="flex items-center space-x-4">
             <button
-              onClick={() => {
-                router.push("/login");
-              }}
-              className="border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base"
-              style={{
-                background: scrollY < 3000 ? "none" : "white",
-                color: scrollY < 3000 ? "white" : "black",
-              }}
+              onClick={loginLogoutSwitcher}
+              className="border-0 py-1 px-3 focus:outline-nonerounded text-base"
+              style={{ color: scrollY < 3000 ? "white" : "black" }}
             >
-              로그인
+              {user ? "로그아웃" : "로그인"}
             </button>
+            {user ? (
+              <button
+                onClick={signupProfileSwitcher}
+                className="border-0 py-1 px-3 focus:outline-none rounded text-base"
+                style={{ color: scrollY < 3000 ? "white" : "black" }}
+              >
+                마이페이지
+              </button>
+            ) : (
+              <button
+                onClick={signupProfileSwitcher}
+                className="border-0 py-1 px-3 focus:outline-nonerounded text-base"
+                style={{ color: scrollY < 3000 ? "white" : "black" }}
+              >
+                회원가입
+              </button>
+            )}
             <button
-              onClick={() => {
-                router.push("/signup");
-              }}
-              className="border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base"
-              style={{
-                background: scrollY < 3000 ? "none" : "white",
-                color: scrollY < 3000 ? "white" : "black",
-              }}
-            >
-              회원가입
-            </button>
-            <button
-              className="border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base"
-              style={{
-                background: scrollY < 3000 ? "none" : "white",
-                color: scrollY < 3000 ? "white" : "black",
-              }}
+              onClick={signupProfileSwitcher}
+              className="border-0 py-1 px-3 focus:outline-none rounded text-base"
+              style={{ color: scrollY < 3000 ? "white" : "black" }}
             >
               다크모드
             </button>
