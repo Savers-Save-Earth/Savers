@@ -13,17 +13,25 @@ const SocialLogin = () => {
   const [nickname, setNickname] = useState<string | null>(null);
 
   const signInWithOAuthAndLog = async (provider: Provider) => {
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: provider,
-    });
+    try {
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: provider,
+        options: {
+          redirectTo: "http://localhost:3000/login/loginloading",
+        },
+      });
 
-    if (error) {
-      alert(`${provider} 로그인 에러:`, error);
-    } else {
-      getUser();
-      getUserInfo();
+      console.log(data);
+      if (error) {
+        throw error;
+      }
+
+      await getUser();
+      // await getUserInfo();
       alert("로그인⚡️");
-      router.push("/");
+      // await router.push("/");
+    } catch (error) {
+      alert(`${provider} 로그인 에러: ${error.message}`);
     }
   };
 
@@ -32,6 +40,7 @@ const SocialLogin = () => {
       data: { user },
     } = await supabase.auth.getUser();
 
+    console.log();
     if (!user) {
       setUser(null);
     } else {
@@ -42,9 +51,13 @@ const SocialLogin = () => {
   };
 
   useEffect(() => {
-    getUser();
-    getUserInfo();
-  }, []);
+    if (user) {
+      async function exeGetUserInfo() {
+        await getUserInfo();
+      }
+      exeGetUserInfo();
+    }
+  }, [user]);
 
   const getUserInfo = async () => {
     const { data: userInfo } = await supabase

@@ -11,7 +11,6 @@ const PostList = () => {
   const fetchPost = async () => {
     try {
       const { data } = await supabase.from("community").select();
-      console.log(data);
       setPost(data || []);
     } catch (error) {
       console.error("Error fetching products:", error);
