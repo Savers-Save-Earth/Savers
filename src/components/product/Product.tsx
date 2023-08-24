@@ -93,10 +93,6 @@ const ProductComponent = () => {
       alert("로그인 후 이용 가능합니다.");
       return;
     } else {
-      const isLiked = likedByUser.some(
-        (likedItem) => likedItem.product_uid === id,
-      );
-
       const { data: existingLikeData, error: existingLikeError } =
         await supabase
           .from("like_product")
@@ -140,6 +136,13 @@ const ProductComponent = () => {
       fetchProduct(); // 데이터 갱신 [숫자]
       fetchUser(); // 데이터 갱신 [좋아요]
     }
+  };
+
+  // 공유하기 눌렀을 때
+  const shareHandler = (website: string) => {
+    navigator.clipboard.writeText(website).then(() => {
+      alert("링크가 복사되었습니다.");
+    });
   };
 
   return (
@@ -225,6 +228,9 @@ const ProductComponent = () => {
                 🤍
               </button>
               <p>{item.like_count}</p>
+              <button onClick={() => shareHandler(item.website)}>
+                공유하기
+              </button>
             </div>
           ))}
       </div>
