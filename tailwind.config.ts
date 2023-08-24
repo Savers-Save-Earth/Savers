@@ -1,5 +1,36 @@
 import type { Config } from "tailwindcss";
 
+const plugin = require("tailwindcss/plugin");
+//@ts-ignore import
+const MyRotation = plugin(function ({ addUtilities}) {
+  addUtilities({
+    ".my-rotate-y-180" : {
+      transform: "rotateY(180deg)",
+      animation: "flip 1.5s ease-in-out forwards",
+    },
+    ".my-rotate-y-180-withoutkey" : {
+      transform: "rotateY(180deg)",
+    },
+    ".preserve-3d": {
+      transformStyle: "preserve-3d"
+    },
+    ".perspective": {
+      perspective:"1000px"
+    },
+    ".backface-hidden": {
+      backfaceVisibility : "hidden"
+    },
+    "@keyframes flip": {
+      "0%": {
+        transform: "rotateY(0)",
+      },
+      "100%": {
+        transform: "rotateY(-180deg)",
+      },
+    },
+  })
+})
+
 const config: Config = {
   content: [
     // Tailwind CSS가 적용될 수 있게끔 적용함.
@@ -16,6 +47,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [MyRotation],
 };
 export default config;
