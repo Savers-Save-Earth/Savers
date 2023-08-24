@@ -16,7 +16,7 @@ const Header = () => {
       setUser(false);
     } else {
       setUser(user);
-      console.log("헤더에 찍힌 유저아이디==>", user.id);
+      console.log("헤더에 찍힌 유저아이디==>", user!.id);
     }
   };
 
