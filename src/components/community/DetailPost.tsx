@@ -14,7 +14,6 @@ const DetailPost = () => {
   );
   const router = useRouter();
 
-
   const queryClient = useQueryClient();
   const deleteMutation = useMutation(deletePost, {
     onSuccess: () => {
