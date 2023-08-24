@@ -42,7 +42,7 @@ const PwLogin: React.FC = () => {
   };
 
   return (
-    <>
+    <div className="pt-20">
       <form onSubmit={handleSubmit(loginButtonHandler)}>
         <div>
           <input
@@ -80,7 +80,7 @@ const PwLogin: React.FC = () => {
 
         <button>로그인</button>
       </form>
-    </>
+    </div>
   );
 };
 

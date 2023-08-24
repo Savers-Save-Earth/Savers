@@ -96,7 +96,7 @@ const SignUp: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="pt-20">
       <h1>Sign Up</h1>
       <form onSubmit={handleSubmit(signupHandler)}>
         <div>
