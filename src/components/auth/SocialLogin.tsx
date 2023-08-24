@@ -90,16 +90,16 @@ const SocialLogin = () => {
   };
 
   return (
-    <>
+    <div>
       <form
         onSubmit={(e) => {
           e.preventDefault();
           signInWithOAuthAndLog("kakao");
         }}
       >
-        <button>kakao</button>
+        <button className="pt-20">kakao</button>
       </form>
-    </>
+    </div>
   );
 };
 

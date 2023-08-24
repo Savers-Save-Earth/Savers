@@ -35,8 +35,8 @@ const PostList = () => {
           <p className="font-bold text-lg ">{item.title}</p>
           <p className="text-base text-gray-500">
             {item.content.length > 20
-              ? `${item.content.slice(0, 20)}...`
-              : item.content}
+              ? `${item.content.replace(/<[^>]*>/g, "").slice(0, 20)}...`
+              : item.content.replace(/<[^>]*>/g, "")}
           </p>
           <p className="mt-2 text-gray-500">{item.created_date}</p>
         </div>
