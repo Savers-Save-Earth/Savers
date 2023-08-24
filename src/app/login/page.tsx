@@ -1,11 +1,11 @@
 import React from "react";
-import Header from "@/components/Header";
-import Login from "@/components/auth/Login";
+import SocialLogin from "@/components/auth/SocialLogin";
+import NicknameMaker from "@/components/auth/NicknameMaker";
 
 const login = () => {
   return (
     <>
-      <Login />
+      <SocialLogin />
     </>
   );
 };

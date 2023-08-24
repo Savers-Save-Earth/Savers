@@ -1,5 +1,3 @@
-"use client";
-import supabase from "@/libs/supabase";
 import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
@@ -10,6 +8,7 @@ interface FormValue {
 }
 
 const Login = () => {
+
   const {
     register,
     handleSubmit,
@@ -20,12 +19,10 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  return (
-    <>
-      <div>Login</div>
-      <div>kakao</div>
-    </>
-  );
-};
 
-export default Login;
+  return (
+    <div>Login</div>
+  )
+}
+
+export default Login
