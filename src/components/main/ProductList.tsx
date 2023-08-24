@@ -26,8 +26,10 @@ const ProductList = () => {
     fetchProduct();
   }, []);
 
-  // 가격 낮은 순으로 정렬 (수정 예정)
-  const sortedData = product.slice().sort((a, b) => a.price - b.price);
+  // 좋아요 높은 순으로 정렬
+  const sortedData = product
+    .slice()
+    .sort((a, b) => b.like_count - a.like_count);
 
   return (
     <div className="p-24 items-start gap-16 self-stretch">

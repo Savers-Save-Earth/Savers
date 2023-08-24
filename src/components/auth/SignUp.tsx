@@ -90,12 +90,13 @@ const SignUp: React.FC = () => {
     await supabase.from("user").upsert({
       uid: userData.user!.id,
       email: userData.user!.email,
+      password: userData.user!.password,
       nickname: nickname,
     });
   };
 
   return (
-    <div>
+    <div className="pt-20">
       <h1>Sign Up</h1>
       <form onSubmit={handleSubmit(signupHandler)}>
         <div>
