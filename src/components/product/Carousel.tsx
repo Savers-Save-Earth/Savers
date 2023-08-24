@@ -20,6 +20,7 @@ const Carousel = () => {
         // onSwiper={(swiper) => console.log(swiper)}
         // onSlideChange={() => console.log('slide change')}
         autoplay={{ delay: 2000 }}
+        className="rounded-2xl"
       >
         <SwiperSlide>
           <img
