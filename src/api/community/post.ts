@@ -3,16 +3,19 @@ import { Database } from "@/types/supabase";
 
 type PostType = Database["public"]["Tables"]["community"]["Row"];
 type NewPostType = Database["public"]["Tables"]["community"]["Insert"];
+type EditPostType = Database["public"]["Tables"]["community"]["Update"];
 
 // 게시글 등록
 export const createPost = async (newPost: NewPostType) => {
-  const { error } = await supabase.from('community').insert(newPost);
+  const { error } = await supabase.from("community").insert(newPost);
   if (error) return error;
  };
 
 // 게시글 수정
-export const updatePost = async (editPost: NewPostType) => {
-  await supabase.from("community").update(editPost).eq("post_uid", editPost.author_name);
+export const updatePost = async (editPost: EditPostType) => {
+  const { data, error } = await supabase.from("community").update(editPost).eq("post_uid", editPost.post_uid);
+  if (error) return error;
+  return data;
  };
 
 // 게시글 삭제
