@@ -198,9 +198,9 @@ const SideBar = () => {
           </button>
           <button
             onClick={() => {
-							// 일일미션 뽑기 함수
+              // 일일미션 뽑기 함수
               insertMissionListData();
-							// 일일미션 모달 띄우기
+              // 일일미션 모달 띄우기
               setShowModal(true);
             }}
           >
@@ -209,7 +209,10 @@ const SideBar = () => {
 
           {showModal && (
             <>
-              <div onClick={() => setShowModal(false)} className="h-screen flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+              <div
+                onClick={() => setShowModal(false)}
+                className="h-screen flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
+              >
                 <div className="relative w-screen my-6 mx-auto max-w-3xl ">
                   <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                     {/* 모달 body */}
