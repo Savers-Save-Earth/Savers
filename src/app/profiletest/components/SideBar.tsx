@@ -148,7 +148,7 @@ const SideBar = () => {
               setShowModal(true);
             }}
           >
-            미션뽑기
+            일일미션 뽑기
           </button>
 
           {showModal && (
