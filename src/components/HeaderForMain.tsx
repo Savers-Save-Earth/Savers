@@ -55,9 +55,8 @@ const HeaderForMain = () => {
   const signupProfileSwitcher = () => {
     if (user) {
       // router.push(`/profiletest/${user.id}/myprofile`);
-      // const queryEncode = encodeURIComponent(userNickname)
-      // router.push(`/profiletest/${queryEncode}/myprofile`);
-      router.push(`/profiletest/${userNickname}/myprofile`);
+      const queryEncode = encodeURIComponent(userNickname)
+      router.push(`/profiletest/${queryEncode}/myprofile`);
     } else {
       router.push("/signup");
     }
