@@ -20,3 +20,12 @@ export interface Post {
   content: string;
   created_date: number;
 }
+
+export interface ListMission {
+  id: string;
+  uid: number;
+  point: number;
+  title: string;
+  content: string;
+  doingYn: boolean;
+}

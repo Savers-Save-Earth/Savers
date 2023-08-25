@@ -8,7 +8,7 @@ import Loading from "@/app/loading";
 import { convertDate } from "@/libs/util";
 
 type Profile = Database["public"]["Tables"]["user"]["Row"];
-interface DailyMission {
+export interface DailyMission {
   id: string;
   uid: number;
   point: number;
@@ -16,6 +16,9 @@ interface DailyMission {
   content: string;
   doingYn: boolean;
 }
+
+export const currentDate = convertDate(new Date());
+
 const SideBar = () => {
   const params = useParams().id as string;
   const decodedParams = decodeURIComponent(params);
@@ -51,7 +54,7 @@ const SideBar = () => {
 
   // const testId = "userId4"
   const insertMissionListData = async () => {
-    const currentDate = convertDate(new Date());
+    // const currentDate = convertDate(new Date());
     console.log("currentDate=>", currentDate);
     // let { data: missionListData, error } = await supabase.from("missionList").select("dailyMission").eq("createdAt", currentDate).eq("userId", testId)
     let { data: missionListData, error } = await supabase

@@ -1,19 +1,41 @@
-import React from 'react'
+import supabase from "@/libs/supabase";
+import { convertDate } from "@/libs/util";
+import { ListMission } from "@/types/types";
+import React from "react";
 
-const MissionDoing = () => {
-  return (
-    <>
-    <div>진행중인 일일미션 carousel 페이지</div>
-    <div>진행중인 일일미션 carousel 페이지</div>
-    <div>진행중인 일일미션 carousel 페이지</div>
-    <div>진행중인 일일미션 carousel 페이지</div>
-    <div>진행중인 일일미션 carousel 페이지</div>
-    <div>진행중인 일일미션 carousel 페이지</div>
-    <div>진행중인 일일미션 carousel 페이지</div>
-    <div>진행중인 일일미션 carousel 페이지</div>
-    <div>진행중인 일일미션 carousel 페이지</div>
-    </>
+export const currentDate = convertDate(new Date());
+
+const MissionDoing = async ({ params }: { params: { id: string } }) => {
+  const searchId = decodeURIComponent(params.id);
+  console.log("searchId==>", searchId);
+  let { data, error } = await supabase
+    .from("missionList")
+    .select("*")
+    .eq("createdAt", currentDate)
+    .eq("userId", searchId);
+  if (error) console.log("데이터가져올 때 에러남");
+  if (data!.length === 0) return (
+    <div>일일미션을 받아주세요!</div>
   )
-}
+  const dailyMission = data![0].dailyMission;
+  console.log("missionDoing==>", data![0].dailyMission);
+  return (
+    <div className="bg-green-200 h-full flex justify-center items-center gap-x-16 text-white">
+      {
+        dailyMission.filter((mission: ListMission) => mission.doingYn === true)
+        .map((mission: ListMission) => {
+          return (
+            <div className="bg-slate-500" key={mission.id}>
+              <p>{mission.id}</p>
+              <p>{mission.title}</p>
+              <p>{mission.content}</p>
+              <p>{mission.doingYn.toString()}</p>
+            </div>
+          )
+        })
+      }
+    </div>
+  );
+};
 
-export default MissionDoing
+export default MissionDoing;
