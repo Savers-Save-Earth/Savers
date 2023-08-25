@@ -4,10 +4,10 @@ import Header from "@/components/Header";
 import supabase from "@/libs/supabase";
 import { useRouter } from "next/navigation";
 import NicknameMaker from "@/components/auth/NicknameMaker";
-import { User } from "@supabase/supabase-js";
+// import { User } from "@supabase/supabase-js";
 
 const LoginLoading = () => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<any>(null);
   const router = useRouter();
   const [nickname, setNickname] = useState<string | null>(null);
 
@@ -16,10 +16,12 @@ const LoginLoading = () => {
       const {
         data: { user },
       } = await supabase.auth.getUser();
-      console.log("user", user);
-      loginUpdater();
-      setUser(user);
-      getUserInfo(user);
+
+      console.log("getUser>>>", user);
+
+      // loginUpdater();
+      await setUser(user);
+      await getUserInfo(user);
       router.push("/");
     }
     exe();
@@ -27,13 +29,13 @@ const LoginLoading = () => {
 
   console.log("getUser확인", user?.id);
 
-  const loginUpdater = async () => {
-    await supabase.from("user").upsert({
-      isLogin: true,
-    });
-  };
+  // const loginUpdater = async () => {
+  //   await supabase.from("user").upsert({
+  //     isLogin: true,
+  //   });
+  // };
 
-  const getUserInfo = async () => {
+  const getUserInfo = async (user: any) => {
     if (!user) {
       console.log("getUerInfo User 없음");
       return;
@@ -41,19 +43,20 @@ const LoginLoading = () => {
 
     const { data: userInfo } = await supabase
       .from("user")
-      .select("uid")
+      .select("*")
       .eq("uid", user!.id)
       .single();
 
-    if (userInfo) {
-      console.log("유저정보등록되어있음");
+    if (userInfo.nickname) {
+      console.log("닉네임등록되어있음", userInfo.nickname);
       return;
     } else {
       updateUserInfo(user);
+      console.log("닉네임 및 유저정보 등록하러감");
     }
   };
 
-  const updateUserInfo = async (user: User | null) => {
+  const updateUserInfo = async (user: any) => {
     const generatedNickname = generateNickname();
     console.log("nickname>>", generatedNickname);
     console.log("user가져왔나?>>>", user);
