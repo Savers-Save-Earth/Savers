@@ -90,7 +90,6 @@ const SignUp: React.FC = () => {
     await supabase.from("user").upsert({
       uid: userData.user!.id,
       email: userData.user!.email,
-      password: userData.user!.password,
       nickname: nickname,
     });
   };
