@@ -1,8 +1,5 @@
 import React from "react";
-import Maps from "@/components/restaurant/Maps";
 import Script from "next/script";
-import KakaoMaps from "@/components/restaurant/KakaoMaps";
-import TestMaps from "@/components/restaurant/TestMaps";
 import ResultMaps from "@/components/restaurant/ResultMaps";
 
 const Restaurant = () => {
@@ -16,9 +13,6 @@ const Restaurant = () => {
       {/* <Script type="text/javascript" src={KakaoMapLib} /> */}
       <script type="text/javascript" src={KakaoMapLib}></script>
       <ResultMaps />
-      {/* <Maps /> */}
-      {/* <KakaoMaps /> */}
-      {/* <TestMaps /> */}
     </>
   );
 };

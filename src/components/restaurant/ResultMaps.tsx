@@ -41,8 +41,8 @@ const ResultMaps = () => {
     const setInitLocation = async () => {
       const locPosition = await getCurrentCoordinate();
       options.center = locPosition;
-      const newMap = new kakao.maps.Map(container, options);
-      setMap(newMap);
+      const map = new kakao.maps.Map(container, options);
+      setMap(map);
     };
 
     setInitLocation();
@@ -62,7 +62,7 @@ const ResultMaps = () => {
 
       ps.keywordSearch(
         "비건",
-        (data, status) => {
+        (data: any, status: any) => {
           if (status === window.kakao.maps.services.Status.OK) {
             displayPlaces(data);
           }
@@ -71,10 +71,10 @@ const ResultMaps = () => {
       );
     };
 
-    const displayPlaces = (places) => {
+    const displayPlaces = (places: any) => {
       removeMarker();
 
-      places.forEach((place) => {
+      places.forEach((place: any) => {
         const markerPosition = new window.kakao.maps.LatLng(place.y, place.x);
         const marker = new window.kakao.maps.Marker({
           position: markerPosition,
