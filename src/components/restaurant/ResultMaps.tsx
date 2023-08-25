@@ -35,26 +35,14 @@ const ResultMaps = () => {
       center: new window.kakao.maps.LatLng(37.5665, 126.978),
       level: 5,
     };
+    // const map = new kakao.maps.Map(container, options);
+    //지도 생성 및 객체 리턴
+
     const setInitLocation = async () => {
       const locPosition = await getCurrentCoordinate();
       options.center = locPosition;
       const newMap = new kakao.maps.Map(container, options);
       setMap(newMap);
-    };
-
-    const getCurrentCoordinate = async () => {
-      return new Promise((res, rej) => {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function (position) {
-            const lat = position.coords.latitude;
-            const lon = position.coords.longitude;
-            const coordinate = new kakao.maps.LatLng(lat, lon);
-            res(coordinate);
-          });
-        } else {
-          rej(new Error("현재 위치를 불러올 수 없습니다."));
-        }
-      });
     };
 
     setInitLocation();
@@ -63,7 +51,7 @@ const ResultMaps = () => {
   useEffect(() => {
     if (!map) return;
 
-    const searchPlaces = async (coordinate) => {
+    const searchPlaces = async (coordinate: any) => {
       const ps = new window.kakao.maps.services.Places();
 
       const options = {
@@ -111,10 +99,6 @@ const ResultMaps = () => {
           infowindow.close();
         });
 
-        // window.kakao.maps.event.addListener(marker, "click", function () {
-        //   displayInfowindow(marker, place);
-        // });
-
         markers.push(marker);
       });
     };
@@ -143,12 +127,6 @@ const ResultMaps = () => {
       window.kakao.maps.event.removeListener(map, "idle", mapIdleHandler);
     };
   }, [map]);
-
-  //   const displayInfowindow = (marker, place) => {
-  //     const content = `<div>${place.place_name}</div>`;
-  //     const infowindow = new kakao.maps.InfoWindow({ content: content });
-  //     infowindow.open(map, marker);
-  //   };
 
   return (
     <div
