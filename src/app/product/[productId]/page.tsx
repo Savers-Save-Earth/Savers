@@ -13,7 +13,10 @@ import "swiper/css/autoplay";
 
 const ProductPost = () => {
   const [product, setProduct] = useState<Product>();
+  const [likedByUser, setLikedByUser] = useState<any>();
+  const [user, setUser] = useState<any>(null);
   const params = useParams();
+
   const fetchProduct = async () => {
     const { data } = await supabase
       .from("product")
@@ -23,8 +26,105 @@ const ProductPost = () => {
     setProduct(data![0]);
   };
 
+  // 현재 유저정보 fetch
+  const fetchUser = async () => {
+    try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (!user) {
+        setUser(false);
+      } else {
+        setUser(user);
+        fetchUserLike(user); // 유저 정보를 가져온 후에 fetchUserLike 함수 호출
+      }
+    } catch (error) {
+      console.error("Error fetching user:", error);
+    }
+  };
+
+  // 유저의 기존에 있던 좋아요를 불러오는 로직 -> 로그인 이후에 실행되는 함수
+  const fetchUserLike = async (user: any) => {
+    const { data: existingLikeData, error: existingLikeError } = await supabase
+      .from("like_product")
+      .select()
+      .eq("product_uid", params.productId)
+      .eq("user_id", user.id);
+
+    setLikedByUser(existingLikeData!);
+    console.log(existingLikeData);
+  };
+
+  // 좋아요 눌렀을 때, 물품 및 유저에 좋아요 데이터 업데이트
+
+  const likeHandler = async () => {
+    const userId = user.id;
+
+    if (!user) {
+      alert("로그인 후 이용 가능합니다.");
+      return;
+    } else {
+      // 현재 유저가 해당 게시물에 대해 좋아요를 눌렀는지 안눌렀는지에 대한 데이터
+      // => 빈값인경우 좋아요누르면 추가, 데이터가있을경우 좋아요누르면 삭제
+      const { data: existingLikeData, error: existingLikeError } =
+        await supabase
+          .from("like_product")
+          .select()
+          .eq("product_uid", params.productId)
+          .eq("user_id", userId);
+
+      console.log(existingLikeData);
+
+      // 현재 아이템의 좋아요 수 객체를 가져오는 로직
+      const { data: currentLikeCount } = await supabase
+        .from("product")
+        .select()
+        .eq("id", params.productId);
+
+      console.log(currentLikeCount);
+
+      // 좋아요 이미 눌렀으면 삭제하는 로직
+      if (!existingLikeError && existingLikeData.length > 0) {
+        await supabase
+          .from("like_product")
+          .delete()
+          .eq("user_id", userId)
+          .eq("product_uid", params.productId);
+
+        // 좋아요 count 내리는 로직
+        const { error: likeCountError } = await supabase
+          .from("product")
+          .update({ like_count: currentLikeCount![0].like_count - 1 })
+          .eq("id", params.productId);
+      } else {
+        // 좋아요 구현하는 로직
+        const { error: insertError } = await supabase
+          .from("like_product")
+          .insert({ product_uid: params.productId, user_id: userId });
+
+        // 좋아요 count 올리는 로직
+        const { error: likeCountError } = await supabase
+          .from("product")
+          .update({ like_count: currentLikeCount![0].like_count + 1 })
+          .eq("id", params.productId);
+      }
+      fetchProduct(); // 데이터 갱신 [숫자]
+      fetchUser(); // 데이터 갱신 [좋아요]
+    }
+  };
+
+  // 공유하기 눌렀을 때
+  const shareHandler = () => {
+    const currentURL = window.location.href;
+    navigator.clipboard.writeText(currentURL).then(() => {
+      alert("링크가 복사되었습니다.");
+    });
+  };
+
   useEffect(() => {
     fetchProduct();
+    fetchUser();
   }, []);
 
   return (
@@ -116,7 +216,10 @@ const ProductPost = () => {
                 </svg>
                 <span className="text-gray-600 ml-3">4 Reviews</span>
               </span>
-              <span className="flex ml-3 pl-3 py-2 border-l-2 border-gray-200 space-x-2s">
+              <span
+                className="flex ml-3 pl-3 py-2 border-l-2 border-gray-200 space-x-2s cursor-pointer"
+                onClick={shareHandler}
+              >
                 <a className="text-gray-500">
                   <svg
                     fill="currentColor"
@@ -157,38 +260,16 @@ const ProductPost = () => {
             </div>
             <p className="leading-relaxed">{product?.context}</p>
             <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
-              <div className="flex">
-                <span className="mr-3">Color</span>
-                <button className="border-2 border-gray-300 rounded-full w-6 h-6 focus:outline-none"></button>
-                <button className="border-2 border-gray-300 ml-1 bg-gray-700 rounded-full w-6 h-6 focus:outline-none"></button>
-                <button className="border-2 border-gray-300 ml-1 bg-green-500 rounded-full w-6 h-6 focus:outline-none"></button>
-              </div>
               <div className="flex ml-6 items-center">
-                <span className="mr-3">Size</span>
                 <div className="relative">
-                  <select className="rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-500 text-base pl-3 pr-10">
-                    <option>SM</option>
-                    <option>M</option>
-                    <option>L</option>
-                    <option>XL</option>
-                  </select>
-                  <span className="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
-                    <svg
-                      fill="none"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      className="w-4 h-4"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M6 9l6 6 6-6"></path>
-                    </svg>
-                  </span>
+                  <span className="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center"></span>
                 </div>
               </div>
             </div>
             <div className="flex">
+              <span className="title-font font-medium text-2xl text-green-500 mr-2">
+                {product?.sales ? `${product?.sales + "%"}` : null}
+              </span>
               <span className="title-font font-medium text-2xl text-gray-900">
                 {product?.price.toLocaleString("ko-KR") + "원"}
               </span>
@@ -196,8 +277,14 @@ const ProductPost = () => {
               <button className="flex ml-auto text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded">
                 <a href={product?.website}>구매하기</a>
               </button>
-
-              <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
+              <button
+                onClick={likeHandler}
+                className={`${
+                  likedByUser?.length
+                    ? "bg-red-500 text-white"
+                    : "bg-gray-200 text-gray-700"
+                } rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4`}
+              >
                 <svg
                   fill="currentColor"
                   strokeLinecap="round"
