@@ -13,13 +13,13 @@ export const createComment = async (newComment: NewCommentType) => {
 
 // 댓글 수정
 export const updateComment = async (editComment: EditCommentType) => {
-  const { data, error } = await supabase.from("community_comment").update(editComment).eq("post_uid", editComment.comment_uid);
+  const { data, error } = await supabase.from("community_comment").update(editComment).eq("comment_uid", editComment.comment_uid);
   if (error) return error;
   return data;
  };
 
 // 댓글 삭제
-export const deletePost = async (commentUid: string): Promise<void> => {
+export const deleteComment = async (commentUid: string): Promise<void> => {
   await supabase.from("community_comment").delete().eq("comment_uid", commentUid);
 };
  
