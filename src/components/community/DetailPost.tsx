@@ -47,7 +47,7 @@ const DetailPost = () => {
   };
 
   return (
-    <div className="flex flex-col max-w-7xl mt-10 px-10 mx-auto">
+    <div className="flex flex-col max-w-7xl mt-10 px-10 py-10 mx-auto">
       <button
         onClick={() => router.back()}
         className="w-28 mb-10 bg-green-200 px-5 py-2 rounded-md shadow-sm hover:bg-green-300 hover:-translate-y-1 transition ease-in-out duration-200"
@@ -59,7 +59,7 @@ const DetailPost = () => {
         <EditPost postDetail={postDetail} postUid={postUid} />
       ) : (
         // 상세 정보 모드
-        <div className="flex flex-col">
+        <div className="flex flex-col border-b pb-10">
           <h2 className="text-lg mb-3 text-gray-400 font-semibold">
             {postDetail?.category}
           </h2>
@@ -89,7 +89,6 @@ const DetailPost = () => {
             </div>
             <div className="flex space-x-3">
               <span>조회수 0</span>
-              <span>댓글 {postDetail?.number_comments ?? 0}</span>
               <span>좋아요 0</span>
             </div>
           </div>
