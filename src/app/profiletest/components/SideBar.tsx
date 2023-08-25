@@ -20,6 +20,9 @@ export interface DailyMission {
 export const currentDate = convertDate(new Date());
 
 const SideBar = () => {
+
+
+
   const params = useParams().id as string;
   const decodedParams = decodeURIComponent(params);
   // console.log("params--->",params)
@@ -42,6 +45,26 @@ const SideBar = () => {
   const [profile, setProfile] = useState<Profile>({});
   const [dailyMission, setDailyMission] = useState<DailyMission[]>([]);
   const [showModal, setShowModal] = useState(false);
+	const [user, setUser] = useState<any>()
+
+
+	const getUser = async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      setUser(false);
+    } else {
+      setUser(user);
+      console.log("사이드바에 찍힌 유저아이디 ==>", user!.id);
+    }
+  };
+	useEffect(() => {
+		getUser()
+	},[])
+	// getUser()
+
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -59,53 +82,83 @@ const SideBar = () => {
     // let { data: missionListData, error } = await supabase.from("missionList").select("dailyMission").eq("createdAt", currentDate).eq("userId", testId)
     let { data: missionListData, error } = await supabase
       .from("missionList")
-      .select("dailyMission")
+      .select("*")
       .eq("createdAt", currentDate)
       .eq("userId", searchId);
     console.log("missionListData==>", missionListData);
     // supabase가 데이터 return할 때 빈 값은 "무조건" 빈 배열[]로 반환하기 때문에, missionListData === null 인 경우가 없다고 타입선언.
     const myMissions =
-      missionListData!.length == 0 ? [] : missionListData![0].dailyMission;
-    console.log("myMissions===>", myMissions);
-    if (myMissions.length > 0 && myMissions.length > 0) {
+      missionListData!.length == 0 ? [] : missionListData
+    // console.log("myMissions===>", myMissions);
+    if (myMissions!.length > 0) {
       console.log("myMissions==>", myMissions);
-      setDailyMission(myMissions);
+      setDailyMission(myMissions || []);
       return false;
     } else {
-      try {
-        let { data: mission, error } = await supabase
-          .from("mission")
-          .select("*");
-        if (error) {
-          console.error("Error fetching mission data:", error);
-          return;
-        }
-        const randomMission = mission!
-          .sort(() => Math.random() - 0.5)
-          .slice(0, 2);
-        const newMission = [
-          {
-            userId: searchId,
-            createdAt: convertDate(new Date()),
-            dailyMission: randomMission,
-          },
-        ];
+			try {
+				const { data: missions, error } = await supabase
+					.from("mission")
+					.select("*");
+				
+				if (error) {
+					console.error("Error fetching mission data:", error);
+					return;
+				}
+				
+				const randomMissions = missions.sort(() => Math.random() - 0.5).slice(0, 2);
+			
+				const newMissions = randomMissions.map((mission) => ({
+					missionUid: mission.uid,
+					userId: searchId,
+					createdAt: convertDate(new Date()),
+					title: mission.title,
+					content: mission.content,
+					bigCategory: mission.bigCategory,
+					smallCategory: mission.smallCategory,
+					doingYn: mission.doingYn,
+					point: 1,
+				}));
+			
+				for (const newMission of newMissions) {
+					const { data, error: insertError } = await supabase
+						.from("missionList")
+						.insert([newMission]);
+						
+					if (insertError) {
+						console.error("Error inserting data:", insertError);
+					} else {
+						console.log("Inserted data:", newMission);
+					}
+				}
+			
+				setDailyMission(randomMissions);
+			} catch (error) {
+				console.error("An error occurred:", error);
+			}
+		} 
+				}
+        // const newMission = [
+        //   {
+        //     userId: searchId,
+        //     createdAt: convertDate(new Date()),
+        //     dailyMission: randomMission,
+        //   },
+        // ];
 
-        const { data, error: insertError } = await supabase
-          .from("missionList")
-          .insert(newMission);
+      //   const { data, error: insertError } = await supabase
+      //     .from("missionList")
+      //     .insert(newMission);
 
-        if (insertError) {
-          console.error("Error inserting data:", insertError);
-        } else {
-          setDailyMission(randomMission);
-          console.log("Inserted data:", newMission);
-        }
-      } catch (error) {
-        console.error("An error occurred:", error);
-      }
-    }
-  };
+      //   if (insertError) {
+      //     console.error("Error inserting data:", insertError);
+      //   } else {
+      //     setDailyMission(randomMission);
+      //     console.log("Inserted data:", newMission);
+      //   }
+      // } catch (error) {
+      //   console.error("An error occurred:", error);
+      // }
+    
   if (dailyMission) {
     console.log("dailyMission===>", dailyMission);
   } else {

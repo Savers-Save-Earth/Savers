@@ -6,6 +6,7 @@ import React from "react";
 export const currentDate = convertDate(new Date());
 
 const MissionDoing = async ({ params }: { params: { id: string } }) => {
+
   const searchId = decodeURIComponent(params.id);
   console.log("searchId==>", searchId);
   let { data, error } = await supabase

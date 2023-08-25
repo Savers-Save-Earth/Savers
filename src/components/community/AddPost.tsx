@@ -5,10 +5,13 @@ import { useState } from "react";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createPost } from "@/api/community/post";
-import { convertTimestamp } from "@/libs/util";
+import { convertDate, convertTimestamp } from "@/libs/util";
 import { Database } from "@/types/supabase";
+import supabase from "@/libs/supabase";
 
 type NewPost = Database["public"]["Tables"]["community"]["Insert"];
+
+export const currentDate = convertDate(new Date());
 
 const AddPost: NextComponentType = () => {
   const [category, setCategory] = useState("");
@@ -33,7 +36,13 @@ const AddPost: NextComponentType = () => {
       console.error("게시글 등록 에러:", error);
       window.alert("게시글이 정상적으로 등록되지 않았습니다. 다시 시도해주세요!");
     },
-  })
+  });
+
+  // Supabase로 현재 유저가 가지고 있는 미션 리스트 get(or supabase)
+const getMission = async () => {
+  const {data: missionLists, error} = await supabase.from("missionList").select("*").eq("createdAt", currentDate)
+
+}
   
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -62,8 +71,12 @@ const AddPost: NextComponentType = () => {
     }
 
     createMutation.mutate(newPost);
-  }
 
+    // mutate가 하나 더
+
+    // missionList를 업데이트하는(수파베이스) 로직
+    
+  }
   return (
     <>
       <form
@@ -71,7 +84,15 @@ const AddPost: NextComponentType = () => {
         className="w-5/6 h-4/5 mt-10 flex flex-col space-y-5">
         <select
           name="category"
-          onChange={(e) => selectChangeHandler(e, setCategory)}
+          onChange={(e) => {
+            // 현재 user가 해당 카테고리에 대한 미션을 갖고있는지를 체크
+            // missionLists를 가지고 해당 카테고리가 미션에 있는지 확인
+            // if (missionLists.find(e~~)~~~) {
+            //   setMissionUId(여기에 set);
+            // }
+
+            selectChangeHandler(e, setCategory)
+          }}
           className="w-1/5"
         >
           <option defaultValue="" disabled selected>
