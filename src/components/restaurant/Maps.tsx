@@ -100,6 +100,13 @@ const Maps = () => {
     veganCafeBtn.addEventListener("click", () => {
       searchAndDisplay("비건 카페");
     });
+
+    const veganBtn = document.createElement("button");
+    veganBtn.textContent = "비건";
+    document.body.appendChild(veganBtn);
+    veganBtn.addEventListener("click", () => {
+      searchAndDisplay("비건");
+    });
   }, []);
 
   return (
