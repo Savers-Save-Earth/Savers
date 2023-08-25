@@ -19,7 +19,7 @@ const LoginLoading = () => {
       console.log("user", user);
       loginUpdater();
       setUser(user);
-      getUserInfo();
+      getUserInfo(user);
       router.push("/");
     }
     exe();
@@ -34,28 +34,39 @@ const LoginLoading = () => {
   };
 
   const getUserInfo = async () => {
+    if (!user) {
+      console.log("getUerInfo User 없음");
+      return;
+    }
+
     const { data: userInfo } = await supabase
       .from("user")
       .select("uid")
-      .eq("uid", user?.id)
+      .eq("uid", user!.id)
       .single();
+
     if (userInfo) {
       console.log("유저정보등록되어있음");
       return;
     } else {
-      updateUserInfo();
+      updateUserInfo(user);
     }
   };
 
-  const updateUserInfo = async () => {
+  const updateUserInfo = async (user: User | null) => {
+    const generatedNickname = generateNickname();
+    console.log("nickname>>", generatedNickname);
+    console.log("user가져왔나?>>>", user);
+
     await supabase.from("user").upsert({
-      uid: user!.id,
+      uid: user?.id,
       email: user!.user_metadata["email"],
-      nickname: generateNickname,
+      nickname: generatedNickname,
       provider: user!.app_metadata.provider,
     });
+
     console.log("userInfo반영");
-    setNickname(generateNickname);
+    setNickname(generatedNickname);
   };
 
   const generateNickname = () => {
