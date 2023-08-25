@@ -27,9 +27,9 @@ export const deletePost = async (post_uid: string | string[]): Promise<void> => 
 export const getPosts = async (): Promise<PostType[]> => {
   try {
     const { data: posts } = await supabase
-    .from("community")
-    .select("*")
-    .order("created_date", { ascending: false });
+      .from("community")
+      .select("*")
+      .order("created_date", { ascending: false });
     return posts || [];
   }
   catch (error) {
