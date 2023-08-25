@@ -4,6 +4,12 @@ import supabase from "@/libs/supabase";
 import { useState } from "react";
 import { useParams } from "next/navigation";
 import { Product } from "@/types/types";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Scrollbar, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/autoplay";
 
 const ProductPost = () => {
   const [product, setProduct] = useState<Product>();
@@ -25,11 +31,25 @@ const ProductPost = () => {
     <section className="text-gray-600 body-font overflow-hidden">
       <div className="container px-5 py-24 mx-auto">
         <div className="lg:w-4/5 mx-auto flex flex-wrap">
-          <img
-            alt="ecommerce"
-            className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
-            src={product?.img}
-          />
+          <Swiper
+            // install Swiper modules
+            modules={[Navigation, Pagination, Autoplay]}
+            spaceBetween={0}
+            slidesPerView={1}
+            navigation
+            pagination={{ clickable: true }}
+            // onSwiper={(swiper) => console.log(swiper)}
+            // onSlideChange={() => console.log('slide change')}
+            autoplay={{ delay: 2000 }}
+            className="rounded-2xl lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center"
+          >
+            <SwiperSlide>
+              <img src={product?.img} className="w-full lg:h-auto" />
+            </SwiperSlide>
+            <SwiperSlide>
+              <img src={product?.sub_img} className="w-full lg:h-auto" />
+            </SwiperSlide>
+          </Swiper>
           <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
             <h2 className="text-sm title-font text-gray-500 tracking-widest">
               {product?.company}
