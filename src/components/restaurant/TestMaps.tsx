@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Map, MapMarker } from "react-kakao-maps-sdk";
+// import { Map, MapMarker } from "react-kakao-maps-sdk";
 
 declare global {
   interface Window {
@@ -30,9 +30,8 @@ const getCurrentCoordinate = async () => {
 };
 
 const TestMaps = () => {
-  const [info, setInfo] = useState();
-  const [pointer, setPointer] = useState<any>();
-  const [markers, setMarkers] = useState([]);
+  const [map, setMap] = useState<any>();
+  const [marker, setMarker] = useState([]);
 
   //카카오맵 불러오기
   useEffect(() => {
@@ -46,50 +45,14 @@ const TestMaps = () => {
       };
 
       //지도 생성 및 객체 리턴 / 마커 생성
-      const map = new window.kakao.maps.Map(container, options);
-      setPointer(new window.kakao.maps.Marker());
+      setMap(new window.kakao.maps.Map(container, options));
+      setMarker(new window.kakao.maps.Marker());
     });
-
-    //검색 결과 마커롤 표시
-    //마커 담을 배열
-    let markers = [];
-    let currentInfowindow = null;
-
-    //인포윈도우 오류
-    const infowindow = new window.kakao.maps.InfoWindow({ zIndex: 1 });
-
-    // 장소 검색 객체를 생성합니다
-    const ps = new window.kakao.maps.services.Places();
 
     //
     //warning!!!
     //여기부터 오류 또는 문제 발생코드
     //keyword marker 작동안되무ㅜㅜㅠㅜㅠㅜㅠㅜㅜㅠㅜㅠㅜㅠㅜ진짜 빠가사리임...ㅠㅜㅠㅜㅠㅜ
-    ps.keywordSearch("비건푸드", (data, status, _pagination) => {
-      if (status === window.kakao.maps.services.Status.OK) {
-        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-        // LatLngBounds 객체에 좌표를 추가합니다
-        const bounds = new window.kakao.maps.LatLngBounds();
-        let markers = [];
-
-        for (var i = 0; i < data.length; i++) {
-          // @ts-ignore
-          markers.push({
-            position: {
-              lat: data[i].y,
-              lng: data[i].x,
-            },
-            content: data[i].place_name,
-          });
-          // @ts-ignore
-          bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
-        }
-        setMarkers(markers);
-
-        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-        map.setBounds(bounds);
-      }
-    });
     //
   }, []);
 
@@ -99,9 +62,9 @@ const TestMaps = () => {
 
     map.setCenter(locPosition);
 
-    pointer.setMap(null);
-    pointer.setPosition(locPosition);
-    pointer.setMap(map);
+    marker.setMap(null);
+    marker.setPosition(locPosition);
+    marker.setMap(map);
   };
   setInitLocation();
 
@@ -129,30 +92,14 @@ const TestMaps = () => {
     map.panTo(currentPos);
 
     // 기존 마커를 제거하고 새로운 마커를 넣는다.
-    pointer.setMap(null);
-    pointer.setPosition(currentPos);
-    pointer.setMap(map);
+    marker.setMap(null);
+    marker.setPosition(currentPos);
+    marker.setMap(map);
   };
 
   return (
     <div>
-      <Map
-        center={getCurrentCoordinate}
-        style={{ width: "100%", height: "500px" }}
-        level={4}
-      >
-        {markers.map((marker) => (
-          <MapMarker
-            key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
-            position={marker.position}
-            onClick={() => setInfo(marker)}
-          >
-            {info && info.content === marker.content && (
-              <div style={{ color: "#000" }}>{marker.content}</div>
-            )}
-          </MapMarker>
-        ))}
-      </Map>
+      <div id="map" style={{ width: "100%", height: "400px" }}></div>
       <div onClick={getCurrentPosBtn}>현재 위치</div>
     </div>
   );

@@ -17,9 +17,9 @@ const Restaurant = () => {
         type="text/javascript"
         src="//dapi.kakao.com/v2/maps/sdk.js?appkey=20943b4a22719502dc157b55da145827&libraries=services"
       ></script>
-      <Maps />
+      {/* <Maps /> */}
       {/* <KakaoMaps /> */}
-      {/* <TestMaps /> */}
+      <TestMaps />
     </>
   );
 };
