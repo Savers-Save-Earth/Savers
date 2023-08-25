@@ -48,12 +48,6 @@ const TestMaps = () => {
       setMap(new window.kakao.maps.Map(container, options));
       setMarker(new window.kakao.maps.Marker());
     });
-
-    //
-    //warning!!!
-    //여기부터 오류 또는 문제 발생코드
-    //keyword marker 작동안되무ㅜㅜㅠㅜㅠㅜㅠㅜㅜㅠㅜㅠㅜㅠㅜ진짜 빠가사리임...ㅠㅜㅠㅜㅠㅜ
-    //
   }, []);
 
   //현재 위치 가져와서 표시 및 기본 위치 변경

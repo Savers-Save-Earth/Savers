@@ -88,24 +88,24 @@ const Maps = () => {
     }
 
     const veganRestaurantBtn = document.createElement("button");
-    veganRestaurantBtn.textContent = "비건 음식점";
+    veganRestaurantBtn.textContent = " 마포구 비건음식점 ";
     document.body.appendChild(veganRestaurantBtn);
     veganRestaurantBtn.addEventListener("click", () => {
-      searchAndDisplay("비건 음식점");
+      searchAndDisplay(" 마포구 비건음식점 ");
     });
 
     const veganCafeBtn = document.createElement("button");
-    veganCafeBtn.textContent = "비건 카페";
+    veganCafeBtn.textContent = " 마포구 비건카페 ";
     document.body.appendChild(veganCafeBtn);
     veganCafeBtn.addEventListener("click", () => {
-      searchAndDisplay("비건 카페");
+      searchAndDisplay(" 마포구 비건카페 ");
     });
 
     const veganBtn = document.createElement("button");
-    veganBtn.textContent = "비건";
+    veganBtn.textContent = " 마포구 비건 ";
     document.body.appendChild(veganBtn);
     veganBtn.addEventListener("click", () => {
-      searchAndDisplay("비건");
+      searchAndDisplay(" 마포구 비건 ");
     });
   }, []);
 
