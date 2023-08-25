@@ -1,19 +1,22 @@
 "use client";
-import type { NextComponentType } from "next";
 import TextEditor from "./quill/TextEditor";
 import { useState } from "react";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createPost } from "@/api/community/post";
+import { updatePost } from "@/api/community/post";
 import { convertTimestamp } from "@/libs/util";
 import { Database } from "@/types/supabase";
 
-type NewPost = Database["public"]["Tables"]["community"]["Insert"];
+type PostType = Database["public"]["Tables"]["community"]["Update"];
+type EditPostProps = {
+  postDetail?: PostType;
+  postUid: string | string[];
+}
 
-const AddPost: NextComponentType = () => {
-  const [category, setCategory] = useState("");
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+const EditPost: React.FC<EditPostProps> = ({ postDetail, postUid }) => {
+  const [category, setCategory] = useState(postDetail?.category ?? "");
+  const [title, setTitle] = useState(postDetail?.title);
+  const [content, setContent] = useState(postDetail?.content ?? "");
 
   const selectChangeHandler = (
     e: React.ChangeEvent<HTMLSelectElement>,
@@ -22,32 +25,35 @@ const AddPost: NextComponentType = () => {
     setCategory(e.currentTarget.value);
   };
 
+  console.log("postDetail >>> ", postDetail)
+  console.log("postuid >>> ", postUid)
+
   const queryClient = useQueryClient();
-  const createMutation = useMutation(createPost, {
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["communityAllPosts"] });
-      window.alert("게시글이 정상적으로 등록되었습니다.");
-      location.href = "/community";
+  const updateMutation = useMutation(updatePost, {
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["postDetail", postDetail?.post_uid] });
+      console.log("수정 성공 >> ", data);
+      window.alert("게시글이 정상적으로 수정되었습니다.");
+      location.href = `/community/${postDetail?.post_uid}`;
     },
     onError: (error) => {
-      console.error("게시글 등록 에러:", error);
-      window.alert("게시글이 정상적으로 등록되지 않았습니다. 다시 시도해주세요!");
+      console.error("게시글 수정 에러:", error);
+      window.alert("게시글이 정상적으로 수정되지 않았습니다. 다시 시도해주세요!");
     },
-  })
+  });
   
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const writtenTime = new Date();
-    const newPost: NewPost = {
+    const editPost: PostType = {
+      post_uid: postDetail?.post_uid,
       category,
       title,
       content,
-      author_uid: "bd2125b8-d852-485c-baf3-9c7a8949beee",
-      author_name: "테스트닉네임",
-      created_date: convertTimestamp(writtenTime),
-      updated_date: convertTimestamp(writtenTime)
-    }
-
+      author_name: "수정닉네임",
+      updated_date: convertTimestamp(writtenTime),
+    };
+  
     if (category === "") {
       window.alert("카테고리를 선택해주세요!");
       return false;
@@ -60,9 +66,9 @@ const AddPost: NextComponentType = () => {
       window.alert("본문을 작성해주세요!");
       return false;
     }
-
-    createMutation.mutate(newPost);
-  }
+  
+    updateMutation.mutate(editPost);
+  };  
 
   return (
     <>
@@ -71,6 +77,7 @@ const AddPost: NextComponentType = () => {
         className="w-5/6 h-4/5 mt-10 flex flex-col space-y-5">
         <select
           name="category"
+          value={category}
           onChange={(e) => selectChangeHandler(e, setCategory)}
           className="w-1/5"
         >
@@ -88,20 +95,20 @@ const AddPost: NextComponentType = () => {
           placeholder="제목을 입력해주세요."
           className="w-1/2 p-2 outline-none border-b text-lg"
         />
-        <div className="h-96"> 
+        <div className="h-96">
           <TextEditor
-            content={content}
+            content={content ?? ""}
             setContent={setContent}
           />
         </div>
         <button
           type="submit"
           className="rounded-md bg-green-200 w-48 py-3 mx-auto hover:bg-green-300">
-          게시글 등록
+          게시글 수정
         </button>
       </form>
     </>
-  )
-}
+  );
+};
 
-export default AddPost
+export default EditPost
