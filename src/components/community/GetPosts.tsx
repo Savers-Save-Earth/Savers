@@ -46,7 +46,7 @@ const GetPosts = () => {
                   </span>
                 </div>
               </div>
-              <span>{post.created_date}</span>
+              <span>{post.updated_date}</span>
             </div>
           ))}
         </div>
