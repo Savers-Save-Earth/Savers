@@ -15,7 +15,7 @@ export default async function ProfiletestLayout ({
 
         <SideBar />
       </div>
-      <section className="w-3/4 p-4 border-dashed border-2 border-red-600 flex">{children}</section>
+      <section className="w-3/4 p-4 border-dashed border-2 border-red-600 flex  mt-10">{children}</section>
     </div>
   );
 }
