@@ -147,13 +147,6 @@ const ProductComponent = () => {
     }
   };
 
-  // 공유하기 눌렀을 때
-  const shareHandler = (website: string) => {
-    navigator.clipboard.writeText(website).then(() => {
-      alert("링크가 복사되었습니다.");
-    });
-  };
-
   return (
     <>
       {/* 카테고리 선택 로직 */}
@@ -203,17 +196,12 @@ const ProductComponent = () => {
             <div key={item.id} className="m-3 flex-1 min-w-0 max-w-md">
               <img
                 src={item.img}
-                className="w-full h-auto rounded-md"
+                className="w-full h-auto rounded-md point"
                 alt={item.name}
+                onClick={() => router.push(`/product/${item.id}`)}
               />
               <p className="text-gray-500">{item.company}</p>
               <p>{item.name}</p>
-              <p>{item.context}</p>
-              <p>
-                <button onClick={() => router.push(`/product/${item.id}`)}>
-                  상세보기
-                </button>
-              </p>
               {item.sales ? (
                 <span className="text-green-500 font-bold mr-2">
                   {item.sales}%
@@ -222,22 +210,26 @@ const ProductComponent = () => {
               <span className="font-bold">
                 {item.price.toLocaleString("ko-KR")}원
               </span>
-              <button
+              {/* <button
                 onClick={() => likeHandler(item.id)}
                 className={`${
-                  likedByUser.some(
-                    (likedItem) => likedItem.product_uid === item.id,
-                  )
+                  likedByUser?.length
                     ? "bg-red-500 text-white"
                     : "bg-gray-200 text-gray-700"
-                } px-3 py-1 rounded-full transition-colors duration-300`}
+                } rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4`}
               >
-                🤍
-              </button>
-              <p>{item.like_count}</p>
-              <button onClick={() => shareHandler(item.website)}>
-                공유하기
-              </button>
+                <svg
+                  fill="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  className="w-5 h-5"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
+                </svg>
+              </button> */}
+              <p>💚 {item.like_count}</p>
             </div>
           ))}
       </div>
