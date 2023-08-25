@@ -6,6 +6,7 @@ export interface Product {
   sales: number;
   context: string;
   img: string;
+  sub_img: string;
   category: string;
   website: string;
   like_count: number;
