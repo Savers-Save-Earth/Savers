@@ -17,18 +17,26 @@ const LoginLoading = () => {
         data: { user },
       } = await supabase.auth.getUser();
       console.log("user", user);
+      loginUpdater();
       setUser(user);
       getUserInfo();
+      router.push("/");
     }
     exe();
   }, []);
 
-  // console.log("getUser확인", user?.app_metadata.provider);
+  console.log("getUser확인", user?.id);
+
+  const loginUpdater = async () => {
+    await supabase.from("user").upsert({
+      isLogin: true,
+    });
+  };
 
   const getUserInfo = async () => {
     const { data: userInfo } = await supabase
       .from("user")
-      .select("id")
+      .select("uid")
       .eq("uid", user?.id)
       .single();
     if (userInfo) {

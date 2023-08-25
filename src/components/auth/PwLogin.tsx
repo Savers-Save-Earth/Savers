@@ -36,7 +36,15 @@ const PwLogin: React.FC = () => {
       console.log("로그인 성공");
       alert("로그인⚡️");
       router.push("/");
+      loginUpdater();
     }
+  };
+
+  const loginUpdater = async () => {
+    await supabase.from("user").upsert({
+      isLogin: true,
+      provider: "email",
+    });
   };
 
   return (
