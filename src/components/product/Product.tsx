@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import supabase from "@/libs/supabase";
 import { Product } from "@/types/types";
+import { useRouter } from "next/navigation";
 
 const productCategory = [
   { value: "", label: "전체" },
@@ -23,9 +24,11 @@ const ProductComponent = () => {
   const [product, setProduct] = useState<Product[]>([]);
   const [category, setCategory] = useState("");
   const [search, setSearch] = useState("");
-  const [select, setSelect] = useState("cheap");
+  const [select, setSelect] = useState("popular");
   const [user, setUser] = useState<any>(null);
   const [likedByUser, setLikedByUser] = useState<any[]>([]);
+
+  const router = useRouter();
 
   // 물품 리스트 fetch
   const fetchProduct = async () => {
@@ -82,6 +85,8 @@ const ProductComponent = () => {
     sortedData = product.slice().sort((a, b) => b.sales - a.sales);
   } else if (select === "newest") {
     sortedData = product.slice().sort((a, b) => b.createdAt - a.createdAt);
+  } else if (select === "popular") {
+    sortedData = product.slice().sort((a, b) => b.like_count - a.like_count);
   }
 
   // 좋아요 눌렀을 때, 물품 및 유저에 좋아요 데이터 업데이트
@@ -93,6 +98,8 @@ const ProductComponent = () => {
       alert("로그인 후 이용 가능합니다.");
       return;
     } else {
+      // 현재 유저가 해당 게시물에 대해 좋아요를 눌렀는지 안눌렀는지에 대한 데이터
+      // => 빈값인경우 좋아요누르면 추가, 데이터가있을경우 좋아요누르면 삭제
       const { data: existingLikeData, error: existingLikeError } =
         await supabase
           .from("like_product")
@@ -100,16 +107,18 @@ const ProductComponent = () => {
           .eq("product_uid", id)
           .eq("user_id", userId);
 
-      const { data: existingLikeListData, error: existingLikeListError } =
-        await supabase.from("like_product").select().eq("user_id", userId);
+      console.log(existingLikeData);
 
+      // 현재 아이템의 좋아요 수 객체를 가져오는 로직
       const { data: currentLikeCount } = await supabase
         .from("product")
         .select()
         .eq("id", id);
 
+      console.log(currentLikeCount);
+
       // 좋아요 이미 눌렀으면 삭제하는 로직
-      if (!existingLikeError && existingLikeData!.length > 0) {
+      if (!existingLikeError && existingLikeData.length > 0) {
         await supabase
           .from("like_product")
           .delete()
@@ -125,7 +134,7 @@ const ProductComponent = () => {
         // 좋아요 구현하는 로직
         const { error: insertError } = await supabase
           .from("like_product")
-          .insert([{ product_uid: id, user_id: userId }]);
+          .insert({ product_uid: id, user_id: userId });
 
         // 좋아요 count 올리는 로직
         const { error: likeCountError } = await supabase
@@ -182,9 +191,8 @@ const ProductComponent = () => {
           placeholder="검색어를 입력하세요."
         />
       </form>
-      <div className="mt-5 ">
+      <div className="mt-5 grid grid-cols-4 gap-4">
         {sortedData
-          // 검색어 필터 및 카테고리 필터
           .filter(
             (item) =>
               item.name.includes(search.trim()) ||
@@ -192,20 +200,19 @@ const ProductComponent = () => {
           )
           .filter((item) => item.category.includes(category))
           .map((item) => (
-            <div key={item.id} className="inline-table m-3">
+            <div key={item.id} className="m-3 flex-1 min-w-0 max-w-md">
               <img
                 src={item.img}
-                style={{
-                  height: "406px",
-                  width: "406px",
-                  borderRadius: "16px",
-                }}
+                className="w-full h-auto rounded-md"
+                alt={item.name}
               />
               <p className="text-gray-500">{item.company}</p>
               <p>{item.name}</p>
               <p>{item.context}</p>
               <p>
-                <a href={item.website}>상세보기</a>
+                <button onClick={() => router.push(`/product/${item.id}`)}>
+                  상세보기
+                </button>
               </p>
               {item.sales ? (
                 <span className="text-green-500 font-bold mr-2">

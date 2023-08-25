@@ -39,10 +39,11 @@ const AddPost: NextComponentType = () => {
     e.preventDefault();
     const writtenTime = new Date();
     const newPost: NewPost = {
-      author_uid: "bd2125b8-d852-485c-baf3-9c7a8949beee",
       category,
       title,
       content,
+      author_uid: "bd2125b8-d852-485c-baf3-9c7a8949beee",
+      author_name: "테스트닉네임",
       created_date: convertTimestamp(writtenTime),
       updated_date: convertTimestamp(writtenTime)
     }

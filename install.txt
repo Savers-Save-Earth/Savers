@@ -2,3 +2,4 @@ npm i
 yarn
 
 yarn add @supabase/supabase-js swiper react-hook-form @supabase/auth-helpers-nextjs react-query
+react-kakao-maps-sdk

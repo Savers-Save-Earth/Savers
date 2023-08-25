@@ -10,6 +10,10 @@ const CommunityOhjiwan = () => {
   const { isLoading, data: ohjiwanPosts, error } = useQuery<PostType[]>(
     ["ohjiwanPosts"],
     () => getOhjiwanPosts(),
+    {
+      staleTime: 60000,
+      cacheTime: 120000
+    },
   );  
 
 if (isLoading) return "오지완 카테고리 게시글 로딩중";
