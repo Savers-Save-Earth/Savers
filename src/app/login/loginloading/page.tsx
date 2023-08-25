@@ -4,9 +4,10 @@ import Header from "@/components/Header";
 import supabase from "@/libs/supabase";
 import { useRouter } from "next/navigation";
 import NicknameMaker from "@/components/auth/NicknameMaker";
+import { User } from "@supabase/supabase-js";
 
 const LoginLoading = () => {
-  const [user, setUser] = useState<user | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
   const [nickname, setNickname] = useState<string | null>(null);
 
@@ -22,13 +23,13 @@ const LoginLoading = () => {
     exe();
   }, []);
 
-  console.log("getUser확인", user);
+  // console.log("getUser확인", user?.app_metadata.provider);
 
   const getUserInfo = async () => {
     const { data: userInfo } = await supabase
       .from("user")
       .select("id")
-      .eq("uid", user!.id)
+      .eq("uid", user?.id)
       .single();
     if (userInfo) {
       console.log("유저정보등록되어있음");
@@ -39,10 +40,11 @@ const LoginLoading = () => {
   };
 
   const updateUserInfo = async () => {
-    await supabase.from("user").insert({
+    await supabase.from("user").upsert({
       uid: user!.id,
       email: user!.user_metadata["email"],
       nickname: generateNickname,
+      provider: user!.app_metadata.provider,
     });
     console.log("userInfo반영");
     setNickname(generateNickname);

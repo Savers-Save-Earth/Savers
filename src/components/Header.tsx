@@ -2,27 +2,31 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import supabase from "@/libs/supabase";
+import { User } from "@supabase/supabase-js";
 
 const Header = () => {
   const router = useRouter();
-  const [user, setUser] = useState<any>(null);
-
-  const getUser = async () => {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    if (!user) {
-      setUser(false);
-    } else {
-      setUser(user);
-      console.log("헤더에 찍힌 유저아이디 ==>", user!.id);
-    }
-  };
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    getUser();
+    async function exe() {
+      const getUser = async () => {
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+
+        if (!user) {
+          setUser(null);
+        } else {
+          setUser(user);
+          console.log("normal헤더에 찍힌 유저아이디 ==>", user!.id);
+        }
+      };
+    }
+    exe();
   }, []);
+
+  console.log("getUser확인", user);
 
   const loginLogoutSwitcher = async () => {
     if (user) {
