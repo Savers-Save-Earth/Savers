@@ -6,24 +6,23 @@ import { User } from "@supabase/supabase-js";
 
 const Header = () => {
   const router = useRouter();
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<any>(null);
+
+  const getUser = async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      setUser(null);
+    } else {
+      setUser(user);
+      console.log("normal헤더에 찍힌 유저아이디 ==>", user!.id);
+    }
+  };
 
   useEffect(() => {
-    async function exe() {
-      const getUser = async () => {
-        const {
-          data: { user },
-        } = await supabase.auth.getUser();
-
-        if (!user) {
-          setUser(null);
-        } else {
-          setUser(user);
-          console.log("normal헤더에 찍힌 유저아이디 ==>", user!.id);
-        }
-      };
-    }
-    exe();
+    getUser();
   }, []);
 
   console.log("getUser확인", user);
