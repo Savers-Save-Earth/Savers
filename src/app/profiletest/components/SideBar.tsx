@@ -1,7 +1,7 @@
 "use client"
 import supabase from "@/libs/supabase";
 import { useParams } from "next/navigation";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Database } from "@/types/supabase";
 import Loading from "@/app/loading";
@@ -17,12 +17,19 @@ interface DailyMission {
 	doingYn: boolean
 }
 const SideBar = () => {
-	const params = useParams();
-  const router = useRouter()
-	const searchId = params.id as string
 
+	const params = useParams().id as string
+	const decodedParams = decodeURIComponent(params)
+	console.log("decodedParams--->",decodedParams)
+  const router = useRouter()
+	console.log("router--->",router)
+	// searchId값을 그냥 params로 할당하느냐 decodedParams로 할당하느냐에 따라 결과가 달라짐. 아, eq 컬럼은 바꿔줘야 함.
+	// const searchId = params as string
+	const searchId = decodedParams as string
+	console.log("searchId================================>",searchId)
 	const getProfile = async (id: string) => {
-    let { data: user, error } = await supabase.from("user").select("*").eq("uid", id);
+    // let { data: user, error } = await supabase.from("user").select("*").eq("uid", id);
+    let { data: user, error } = await supabase.from("user").select("*").eq("nickname", searchId);
     return user![0];
   };
 
@@ -44,11 +51,12 @@ const SideBar = () => {
       fetchProfile();
   }, [searchId]);
 
-	const testId = "userId4"
+	// const testId = "userId4"
 	const insertMissionListData = async () => {
 		const currentDate = convertDate(new Date())
 		console.log("currentDate=>",currentDate)
-		let { data: myMissions, error } = await supabase.from("missionList").select("dailyMission").eq("createdAt", currentDate).eq("userId", testId)
+		// let { data: myMissions, error } = await supabase.from("missionList").select("dailyMission").eq("createdAt", currentDate).eq("userId", testId)
+		let { data: myMissions, error } = await supabase.from("missionList").select("dailyMission").eq("createdAt", currentDate).eq("userId", searchId)
 		console.log("myMissions==>",myMissions)
 		if ((myMissions.length > 0) && (myMissions![0].dailyMission.length > 0)) {
 			console.log("myMissions==>",myMissions)
@@ -65,7 +73,7 @@ const SideBar = () => {
 				const randomMission = mission!.sort(() => Math.random() - 0.5).slice(0, 2)
 				const data = [
 					{
-						userId: testId,
+						userId: searchId,
 						createdAt: convertDate(new Date()),
 						dailyMission: randomMission,
 					},

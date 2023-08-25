@@ -14,7 +14,6 @@ export default async function ProfiletestLayout ({
         <h1>프로필테스트 레이아웃</h1>
 
         <SideBar />
-        <Link href="/where">where</Link>
       </div>
       <section className="w-3/4 p-4 border-dashed border-2 border-red-600 flex">{children}</section>
     </div>
