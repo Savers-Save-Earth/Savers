@@ -30,9 +30,8 @@ const EditPost: React.FC<EditPostProps> = ({ postDetail, postUid }) => {
 
   const queryClient = useQueryClient();
   const updateMutation = useMutation(updatePost, {
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["postDetail", postDetail?.post_uid] });
-      console.log("수정 성공 >> ", data);
       window.alert("게시글이 정상적으로 수정되었습니다.");
       location.href = `/community/${postDetail?.post_uid}`;
     },

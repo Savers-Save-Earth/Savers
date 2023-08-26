@@ -74,7 +74,7 @@ const AddPost: NextComponentType = () => {
           onChange={(e) => selectChangeHandler(e, setCategory)}
           className="w-1/5"
         >
-          <option defaultValue="" disabled>
+          <option defaultValue="" disabled selected>
             카테고리
           </option>
           <option value="제품">제품</option>
