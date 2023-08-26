@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import supabase from "@/libs/supabase";
+import { User } from "@supabase/supabase-js";
 
 const Header = () => {
   const router = useRouter();
@@ -22,7 +23,7 @@ const Header = () => {
     } = await supabase.auth.getUser();
 
     if (!user) {
-      setUser(false);
+      setUser(null);
     } else {
       setUser(user);
       console.log("헤더에 찍힌 유저아이디 ==>", user!.id);
@@ -33,6 +34,8 @@ const Header = () => {
   useEffect(() => {
     getUser();
   }, []);
+
+  console.log("getUser확인", user);
 
   const loginLogoutSwitcher = async () => {
     if (user) {
