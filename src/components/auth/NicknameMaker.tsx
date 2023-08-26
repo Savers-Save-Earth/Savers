@@ -60,6 +60,9 @@ const NicknameMaker = () => {
   const randomNoun = noun[Math.floor(Math.random() * noun.length)];
 
   const nickname = `${randomFirstAdjective} ${randomSecondAdjective} ${randomNoun}`;
+
+  console.log(nickname);
+  return nickname;
 };
 
 export default NicknameMaker;
