@@ -10,8 +10,10 @@ export const updateMissionHandler = async (missionId: string ) => {
  };
 
  export const getMissionHandler = async (user:any, currentDate:string, category:string, setMissionUid:any, bigCategory:string) => {
+  // console.log("category==>",category)
+  // console.log("bigCategory==>",bigCategory)
   if(!user) return
-  const {data: missionLists, error} = await supabase.from("missionList").select("*").eq("createdAt", currentDate).eq("bigCategory", bigCategory).eq("user_uid", user?.id).eq("doingYn", true)
+  const {data: missionLists, error} = await supabase.from("missionList").select("*").eq("createdAt", currentDate).eq("user_uid", user?.id).eq("bigCategory", bigCategory).eq("smallCategory", category).eq("doingYn", true)
   if (error) return error;
   console.log("missionLists==>",missionLists)
   if (missionLists!.length < 1) return false 
