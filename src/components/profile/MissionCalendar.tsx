@@ -22,7 +22,7 @@ const MissionCalendar = () => {
         maxDetail="month"
         showNeighboringMonth={false}
         locale="ko-KO"
-        className="mx-auto w-full text-sm border-b"
+        className="mx-auto w-full text-sm border-b "
         formatDay={(locale, date) => format(date, "dd")}
         tileClassName={({ date, view }) => {
           if (marks.find((item) => item === format(date, "yyyy-MM-dd"))) {
