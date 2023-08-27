@@ -10,7 +10,10 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/autoplay";
-import { getMissionHandler, updateMissionHandler } from "@/api/mission/checkMission";
+import {
+  getMissionHandler,
+  updateMissionHandler,
+} from "@/api/mission/checkMission";
 import { convertDate } from "@/libs/util";
 
 const ProductPost = () => {
@@ -19,7 +22,7 @@ const ProductPost = () => {
   const [user, setUser] = useState<any>(null);
   const params = useParams();
 
-  const [missionUid, setMissionUid] = useState<any>("")
+  const [missionUid, setMissionUid] = useState<any>("");
   const currentDate = convertDate(new Date());
   // const bigCategory = "좋아요"
   // const category = "좋아요"
@@ -108,7 +111,11 @@ const ProductPost = () => {
         // 좋아요 구현하는 로직
         const { error: insertError } = await supabase
           .from("like_product")
-          .insert({product_uid: params.productId,user_id: userId,img: product?.img,});
+          .insert({
+            product_uid: params.productId,
+            user_id: userId,
+            img: product?.img,
+          });
 
         // 좋아요 count 올리는 로직
         const { error: likeCountError } = await supabase
@@ -126,8 +133,8 @@ const ProductPost = () => {
       fetchUser(); // 데이터 갱신 [좋아요]
 
       ///===================👇동준작업👇=========================================================
-      getMissionHandler(user, currentDate, "제품", setMissionUid, "좋아요")
-      updateMissionHandler(missionUid)
+      getMissionHandler(user, currentDate, "제품", setMissionUid, "좋아요");
+      updateMissionHandler(missionUid);
       ///===================👆동준작업👆=========================================================
     }
   };
@@ -146,8 +153,8 @@ const ProductPost = () => {
         .insert({ badge_title: "share", user_id: userId });
 
       ///===================👇동준작업👇=========================================================
-      getMissionHandler(user, currentDate, "제품", setMissionUid, "공유하기")
-      updateMissionHandler(missionUid)
+      getMissionHandler(user, currentDate, "제품", setMissionUid, "공유하기");
+      updateMissionHandler(missionUid);
       ///===================👆동준작업👆=========================================================
     } else {
       return;
@@ -254,7 +261,9 @@ const ProductPost = () => {
               </span>
 
               <button className="flex ml-auto text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded">
-                <a href={product?.website}>구매하기</a>
+                <button onClick={() => window.open(`${product?.website}`)}>
+                  구매하기
+                </button>
               </button>
               <button
                 onClick={likeHandler}

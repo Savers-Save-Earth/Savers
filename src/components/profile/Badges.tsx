@@ -13,7 +13,6 @@ const Badges = () => {
   const [badges, setBadges] = useState<Badge[]>([]);
   const params = useParams();
   const searchId = decodeURIComponent(`${params.id}`);
-  console.log(searchId);
 
   const fetchBadges = async (user: any) => {
     console.log(user[0]);
@@ -22,9 +21,7 @@ const Badges = () => {
       .select()
       .eq("user_id", user[0]?.uid);
 
-    console.log(badgeData);
     if (badgeData !== null) {
-      console.log(badgeData);
       setBadges(badgeData);
     }
   };
