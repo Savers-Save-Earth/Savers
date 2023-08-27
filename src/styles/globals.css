@@ -103,5 +103,8 @@
 }
 
 .highlight {
-  background: #f3a95f;
+  color: rgb(255, 255, 255);
+
+  background-color: #10c800 !important;
+  border-radius: 30px;
 }

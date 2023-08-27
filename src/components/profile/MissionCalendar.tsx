@@ -7,7 +7,8 @@ type ValuePiece = Date | null;
 
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
-const marks = ["2023-08-24"];
+// 미션 완료 이후, 해당 유저가 완료한 date 를 가져오는 로직만 짜면 될듯
+const marks = ["2023-08-22", "2023-08-23", "2023-08-24"];
 
 const MissionCalendar = () => {
   const [value, onChange] = useState<Value>(new Date());
@@ -24,8 +25,7 @@ const MissionCalendar = () => {
         className="mx-auto w-full text-sm border-b"
         formatDay={(locale, date) => format(date, "dd")}
         tileClassName={({ date, view }) => {
-          const formattedDate = format(date, "yyyy-MM-dd");
-          if (marks.includes(formattedDate)) {
+          if (marks.find((item) => item === format(date, "yyyy-MM-dd"))) {
             return "highlight";
           }
         }}
