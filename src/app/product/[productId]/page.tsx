@@ -108,7 +108,7 @@ const ProductPost = () => {
         // 좋아요 구현하는 로직
         const { error: insertError } = await supabase
           .from("like_product")
-          .insert({ product_uid: params.productId, user_id: userId });
+          .insert({product_uid: params.productId,user_id: userId,img: product?.img,});
 
         // 좋아요 count 올리는 로직
         const { error: likeCountError } = await supabase

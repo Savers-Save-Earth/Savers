@@ -91,20 +91,20 @@ const SideBar = () => {
   // const testId = "userId4"
   const insertMissionListData = async () => {
     // const currentDate = convertDate(new Date());
-    console.log("currentDate=>", currentDate);
+    // console.log("currentDate=>", currentDate);
     // let { data: missionListData, error } = await supabase.from("missionList").select("dailyMission").eq("createdAt", currentDate).eq("userId", testId)
     let { data: missionListData, error } = await supabase
       .from("missionList")
       .select("*")
       .eq("createdAt", currentDate)
       .eq("userId", searchId);
-    console.log("missionListData==>", missionListData);
+    // console.log("missionListData==>", missionListData);
     // supabase가 데이터 return할 때 빈 값은 "무조건" 빈 배열[]로 반환하기 때문에, missionListData === null 인 경우가 없다고 타입선언.
     const myMissions =
       missionListData!.length == 0 ? [] : missionListData
     // console.log("myMissions===>", myMissions);
     if (myMissions!.length > 0) {
-      console.log("myMissions==>", myMissions);
+      // console.log("myMissions==>", myMissions);
       setDailyMission(myMissions || []);
       return false;
     } else {
@@ -151,34 +151,7 @@ const SideBar = () => {
 			}
 		} 
 				}
-        // const newMission = [
-        //   {
-        //     userId: searchId,
-        //     createdAt: convertDate(new Date()),
-        //     dailyMission: randomMission,
-        //   },
-        // ];
-
-      //   const { data, error: insertError } = await supabase
-      //     .from("missionList")
-      //     .insert(newMission);
-
-      //   if (insertError) {
-      //     console.error("Error inserting data:", insertError);
-      //   } else {
-      //     setDailyMission(randomMission);
-      //     console.log("Inserted data:", newMission);
-      //   }
-      // } catch (error) {
-      //   console.error("An error occurred:", error);
-      // }
-    
-  if (dailyMission) {
-    console.log("dailyMission===>", dailyMission);
-  } else {
-    console.log("dailyMission 에러뜸");
-  }
-
+        
   return (
     <>
       {profile ? (
@@ -210,7 +183,8 @@ const SideBar = () => {
           >
             커뮤니티 활동
           </button>
-          <button
+          {user && (user.id == profile.uid) ? (
+            <button
             onClick={() => {
               // 일일미션 뽑기 함수
               insertMissionListData();
@@ -220,6 +194,8 @@ const SideBar = () => {
           >
             일일미션 뽑기
           </button>
+          ) : ""}
+          
 
           {showModal && (
             <>
