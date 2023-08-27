@@ -2,8 +2,10 @@ import GetPosts from "@/components/community/GetPosts";
 
 const Community = () => {
   return (
-    <GetPosts />
-  )
+    <>
+      <GetPosts />
+    </>
+  );
 };
 
 export default Community;
