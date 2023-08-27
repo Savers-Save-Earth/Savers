@@ -3,6 +3,7 @@ import React from "react";
 import supabase from "@/libs/supabase";
 import { Database } from "@/types/supabase";
 import Badges from "@/components/profile/Badges";
+import MissionCalendar from "@/components/profile/MissionCalendar";
 // export const revalidate = 1 // revalidate every seconds
 
 type Profile = Database["public"]["Tables"]["user"]["Row"];
@@ -19,6 +20,7 @@ const MyProfile = async ({ params: { id } }: { params: { id: string } }) => {
     <div className="flex w-full h-full">
       <div className="w-1/2 p-4 border-dashed border-2 border-green-600 mx-3">
         일일미션 완료현황(잔디밭)
+        <MissionCalendar />
         {/* <p>닉네임 : {user![0].nickname}</p>
         <p>user uid : {user![0].uid}</p> */}
       </div>
