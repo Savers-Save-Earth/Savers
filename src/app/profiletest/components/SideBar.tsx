@@ -4,7 +4,6 @@ import { useParams } from "next/navigation";
 import { useRouter} from "next/navigation";
 import { useEffect, useState } from "react";
 import { Database } from "@/types/supabase";
-import Loading from "@/app/loading";
 import { convertDate } from "@/libs/util";
 
 type Profile = Database["public"]["Tables"]["user"]["Row"];
@@ -41,14 +40,13 @@ const SideBar = () => {
 
   const params = useParams().id as string;
   const decodedParams = decodeURIComponent(params);
-  // console.log("params--->",params)
-  // console.log("decodedParams--->", decodedParams);
+
   const router = useRouter();
   // console.log("router--->",router)
   // searchId값을 그냥 params로 할당하느냐 decodedParams로 할당하느냐에 따라 결과가 달라짐. 아, eq 컬럼은 바꿔줘야 함.
   // const searchId = params as string
   const searchId = decodedParams as string;
-  // console.log("searchId================================>",searchId)
+
   const getProfile = async (id: string) => {
     // let { data: user, error } = await supabase.from("user").select("*").eq("uid", id);
     let { data: user, error } = await supabase
@@ -62,7 +60,6 @@ const SideBar = () => {
   const [dailyMission, setDailyMission] = useState<DailyMission[]>([]);
   const [showModal, setShowModal] = useState(false);
 	const [user, setUser] = useState<any>()
-
 
 	const getUser = async () => {
     const {
