@@ -1,7 +1,7 @@
 "use client";
 import supabase from "@/libs/supabase";
 import { useParams } from "next/navigation";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter} from "next/navigation";
 import { useEffect, useState } from "react";
 import { Database } from "@/types/supabase";
 import Loading from "@/app/loading";
@@ -17,16 +17,32 @@ export interface DailyMission {
   doingYn: boolean;
 }
 
+const initialProfile = {
+  activePoint: null,
+  badges: null,
+  commentPosts: "",
+  email: "",
+  isActiveDone: false,
+  likedPosts: "",
+  likePosts: "",
+  likeProducts: null,
+  likeRestaurants: "",
+  nickname: "",
+  password: "",
+  profileImage: "",
+  provider: "",
+  uid: "",
+  writePosts: "",
+}
+
 export const currentDate = convertDate(new Date());
 
 const SideBar = () => {
 
-
-
   const params = useParams().id as string;
   const decodedParams = decodeURIComponent(params);
   // console.log("params--->",params)
-  console.log("decodedParams--->", decodedParams);
+  // console.log("decodedParams--->", decodedParams);
   const router = useRouter();
   // console.log("router--->",router)
   // searchId값을 그냥 params로 할당하느냐 decodedParams로 할당하느냐에 따라 결과가 달라짐. 아, eq 컬럼은 바꿔줘야 함.
@@ -42,7 +58,7 @@ const SideBar = () => {
     return user![0];
   };
 
-  const [profile, setProfile] = useState<Profile>({});
+  const [profile, setProfile] = useState<Profile>(initialProfile);
   const [dailyMission, setDailyMission] = useState<DailyMission[]>([]);
   const [showModal, setShowModal] = useState(false);
 	const [user, setUser] = useState<any>()
@@ -57,7 +73,7 @@ const SideBar = () => {
       setUser(false);
     } else {
       setUser(user);
-      console.log("사이드바에 찍힌 유저아이디 ==>", user!.id);
+      // console.log("사이드바에 찍힌 유저아이디 ==>", user!.id);
     }
   };
 	useEffect(() => {
@@ -105,7 +121,7 @@ const SideBar = () => {
 					return;
 				}
 				
-				const randomMissions = missions.sort(() => Math.random() - 0.5).slice(0, 2);
+				const randomMissions = missions.sort(() => Math.random() - 0.5).slice(0, 4);
 			
 				const newMissions = randomMissions.map((mission) => ({
 					missionUid: mission.uid,
@@ -117,6 +133,7 @@ const SideBar = () => {
 					smallCategory: mission.smallCategory,
 					doingYn: mission.doingYn,
 					point: 1,
+					user_uid: user.id
 				}));
 			
 				for (const newMission of newMissions) {
@@ -272,7 +289,7 @@ const SideBar = () => {
         </>
       ) : (
         <>
-          <Loading />
+          {/* <Loading /> */}
         </>
       )}
     </>

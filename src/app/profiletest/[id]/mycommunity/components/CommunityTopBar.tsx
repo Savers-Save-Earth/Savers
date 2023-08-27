@@ -24,12 +24,25 @@ const CommunityTopBar = () => {
 	>
 		내가 쓴 글
 	</button>
+
 	<button className="bg-blue-500"
 		onClick={() => router.push(`/profiletest/${searchId}/mycommunity/mycomments`)}
 	>
 		내가 쓴 댓글
 	</button>
-	</>
+
+	<button className="bg-blue-500"
+		onClick={() => router.push(`/profiletest/${searchId}/mycommunity/mylikedposts`)}
+	>
+		내가 북마크한 글
+	</button>
+
+	<button className="bg-blue-500"
+		onClick={() => router.push(`/profiletest/${searchId}/mycommunity/mylikedproducts`)}
+	>
+		내가 북마크한 제품
+	</button>
+		</>
 	)
 }
 export default CommunityTopBar

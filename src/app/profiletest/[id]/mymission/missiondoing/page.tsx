@@ -9,22 +9,21 @@ const MissionDoing = async ({ params }: { params: { id: string } }) => {
 
   const searchId = decodeURIComponent(params.id);
   console.log("searchId==>", searchId);
-  let { data, error } = await supabase
+  let { data: dailyMission, error } = await supabase
     .from("missionList")
     .select("*")
     .eq("createdAt", currentDate)
-    .eq("userId", searchId);
+    .eq("userId", searchId)
+    .eq("doingYn", true)
   if (error) console.log("데이터가져올 때 에러남");
-  if (data!.length === 0) return (
+  if (dailyMission!.length === 0) return (
     <div>일일미션을 받아주세요!</div>
   )
-  const dailyMission = data![0].dailyMission;
-  console.log("missionDoing==>", data![0].dailyMission);
+
   return (
     <div className="bg-green-200 h-full flex justify-center items-center gap-x-16 text-white">
       {
-        dailyMission.filter((mission: ListMission) => mission.doingYn === true)
-        .map((mission: ListMission) => {
+        dailyMission!.map((mission: ListMission) => {
           return (
             <div className="bg-slate-500" key={mission.id}>
               <p>{mission.id}</p>

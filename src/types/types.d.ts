@@ -23,10 +23,15 @@ export interface Post {
 }
 
 export interface ListMission {
-  id: string;
-  uid: number;
-  point: number;
-  title: string;
-  content: string;
-  doingYn: boolean;
+  id: string,
+  missionUid: string,
+  createdAt: string,
+  userId: string,
+  title: string,
+  content: string,
+  bigCategory: string,
+  smallCategory: string,
+  doingYn: boolean,
+  point: number,
+  user_uid: string
 }
