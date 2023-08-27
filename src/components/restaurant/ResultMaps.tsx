@@ -28,6 +28,7 @@ const getCurrentCoordinate = async () => {
 
 const ResultMaps = () => {
   const [map, setMap] = useState(null);
+  const [keyword, setKeyword] = useState("");
 
   useEffect(() => {
     const container = document.getElementById("map");
@@ -129,15 +130,19 @@ const ResultMaps = () => {
   }, [map]);
 
   return (
-    <div
-      id="map"
-      style={{
-        width: "100vw",
-        height: "100vh",
-        position: "relative",
-        overflow: "hidden",
-      }}
-    ></div>
+    <div style={{ marginTop: "40px" }}>
+      <button>비건</button>
+      <button>비건카페</button>
+      <div
+        id="map"
+        style={{
+          width: "100vw",
+          height: "100vh",
+          position: "relative",
+          overflow: "hidden",
+        }}
+      ></div>
+    </div>
   );
 };
 
