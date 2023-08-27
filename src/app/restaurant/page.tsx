@@ -2,6 +2,7 @@ import React from "react";
 import Script from "next/script";
 import ResultMaps from "@/components/restaurant/ResultMaps";
 import KakaoMaps from "@/components/restaurant/KakaoMaps";
+import Maps from "@/components/restaurant/Maps";
 
 const Restaurant = () => {
   const KakaoMapSrc = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAOMAP_KEY}&autoload=false`;
@@ -15,6 +16,7 @@ const Restaurant = () => {
       <script type="text/javascript" src={KakaoMapLib}></script>
       {/* <ResultMaps /> */}
       <KakaoMaps />
+      {/* <Maps /> */}
     </>
   );
 };
