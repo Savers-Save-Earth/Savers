@@ -261,7 +261,9 @@ const ProductPost = () => {
               </span>
 
               <button className="flex ml-auto text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded">
-                <a href={product?.website}>구매하기</a>
+                <button onClick={() => window.open(`${product?.website}`)}>
+                  구매하기
+                </button>
               </button>
               <button
                 onClick={likeHandler}
