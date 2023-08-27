@@ -39,7 +39,6 @@ const MissionCalendar = () => {
     fetchMissionList();
   }, []);
 
-  // 미션 완료 이후, 해당 유저가 완료한 date 를 가져오는 로직만 짜면 될듯
   const marks: string[] = [];
   console.log(mission);
   mission.map((item) => marks.push(`${item.createdAt}`));
