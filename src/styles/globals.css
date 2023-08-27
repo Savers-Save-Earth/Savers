@@ -101,3 +101,7 @@
   background-color: rgb(62, 61, 61); /* 활성화 색상 */
   opacity: 1; /* 활성화된 불릿의 투명도 */
 }
+
+.highlight {
+  background: #f3a95f;
+}
