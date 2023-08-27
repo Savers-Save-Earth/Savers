@@ -10,12 +10,19 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/autoplay";
+import { getMissionHandler, updateMissionHandler } from "@/api/mission/checkMission";
+import { convertDate } from "@/libs/util";
 
 const ProductPost = () => {
   const [product, setProduct] = useState<Product>();
   const [likedByUser, setLikedByUser] = useState<any>();
   const [user, setUser] = useState<any>(null);
   const params = useParams();
+
+  const [missionUid, setMissionUid] = useState<any>("")
+  const currentDate = convertDate(new Date());
+  // const bigCategory = "좋아요"
+  // const category = "좋아요"
 
   const fetchProduct = async () => {
     const { data } = await supabase
@@ -117,6 +124,11 @@ const ProductPost = () => {
       }
       fetchProduct(); // 데이터 갱신 [숫자]
       fetchUser(); // 데이터 갱신 [좋아요]
+
+      ///===================👇동준작업👇=========================================================
+      getMissionHandler(user, currentDate, "제품", setMissionUid, "좋아요")
+      updateMissionHandler(missionUid)
+      ///===================👆동준작업👆=========================================================
     }
   };
 
@@ -132,6 +144,11 @@ const ProductPost = () => {
       const { error: addShageBadgeError } = await supabase
         .from("badge")
         .insert({ badge_title: "share", user_id: userId });
+
+      ///===================👇동준작업👇=========================================================
+      getMissionHandler(user, currentDate, "제품", setMissionUid, "공유하기")
+      updateMissionHandler(missionUid)
+      ///===================👆동준작업👆=========================================================
     } else {
       return;
     }
