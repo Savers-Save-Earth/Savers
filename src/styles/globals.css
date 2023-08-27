@@ -101,3 +101,24 @@
   background-color: rgb(62, 61, 61); /* 활성화 색상 */
   opacity: 1; /* 활성화된 불릿의 투명도 */
 }
+
+.highlight {
+  color: rgb(255, 255, 255);
+
+  background-color: #10c800 !important;
+  border-radius: 30px;
+}
+
+.react-calendar {
+  width: 350px;
+  max-width: 100%;
+  background: rgb(245, 245, 245) !important;
+  border: none !important;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.125em;
+  border-radius: 10px;
+}
+
+.react-calendar__month-view__days__day--neighboringMonth {
+  color: rgb(245, 245, 245) !important;
+}

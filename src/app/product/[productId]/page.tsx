@@ -115,6 +115,12 @@ const ProductPost = () => {
           .from("product")
           .update({ like_count: currentLikeCount![0].like_count + 1 })
           .eq("id", params.productId);
+
+        // 좋아요 badge 추가하는 로직
+
+        const { error: badgeDataError } = await supabase
+          .from("badge")
+          .insert({ user_id: userId, badge_title: "like" });
       }
       fetchProduct(); // 데이터 갱신 [숫자]
       fetchUser(); // 데이터 갱신 [좋아요]
