@@ -47,7 +47,7 @@ const LoginLoading = () => {
       .eq("uid", user!.id)
       .single();
 
-    if (userInfo.nickname) {
+    if (userInfo?.nickname) {
       console.log("닉네임등록되어있음", userInfo.nickname);
       return;
     } else {
