@@ -9,67 +9,67 @@ declare global {
   }
 }
 
+const getCurrentCoordinate = async () => {
+  return new Promise((res, rej) => {
+    // HTML5의 geolocaiton으로 사용할 수 있는지 확인합니다.
+    if (navigator.geolocation) {
+      // GeoLocation을 이용해서 접속 위치를 얻어옵니다.
+      navigator.geolocation.getCurrentPosition(function (position) {
+        const lat = position.coords.latitude; // 위도
+        const lon = position.coords.longitude; // 경도
+
+        const coordinate = new kakao.maps.LatLng(lat, lon);
+        res(coordinate);
+      });
+    } else {
+      rej(new Error("현재 위치를 불러올 수 없습니다."));
+    }
+  });
+};
+
 const KakaoMaps = () => {
-  const [info, setInfo] = useState();
-  const [markers, setMarkers] = useState([]);
-  const [map, setMap] = useState();
+  const [mapCenter, setMapCenter] = useState({ x: 127.1086228, y: 37.4012191 });
 
   useEffect(() => {
-    if (!map) return;
-    const ps = new window.kakao.maps.services.Places();
+    const container = document.getElementById("map");
+    const options = {
+      center: new window.kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
+      level: 3, //지도의 레벨(확대, 축소 정도)
+    };
+    const map = new window.kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
 
-    ps.keywordSearch("비건푸드", (data, status, _pagination) => {
-      if (status === window.kakao.maps.services.Status.OK) {
-        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-        // LatLngBounds 객체에 좌표를 추가합니다
-        const bounds = new window.kakao.maps.LatLngBounds();
-        let markers = [];
+    // const setInitLocation = async () => {
+    //   let locPosition = await getCurrentCoordinate();
 
-        for (var i = 0; i < data.length; i++) {
-          // @ts-ignore
-          markers.push({
-            position: {
-              lat: data[i].y,
-              lng: data[i].x,
-            },
-            content: data[i].place_name,
-          });
-          // @ts-ignore
-          bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
-        }
-        setMarkers(markers);
+    //   setMapCenter({
+    //     x: locPosition.La,
+    //     y: locPosition.Ma,
+    //   });
 
-        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-        map.setBounds(bounds);
-      }
-    });
-  }, [map]);
+    //   // 지도 중심좌표를 접속위치로 변경합니다
+    //   map.setCenter(locPosition);
 
+    //   //현재 위치에 마커 표시
+    //   new window.kakao.maps.Marker({
+    //     position: locPosition,
+    //     map: map,
+    //   });
+
+    //   //   CoordPlaces.refetch();
+    // };
+    // setInitLocation();
+  });
   return (
-    <Map // 로드뷰를 표시할 Container
-      center={{
-        lat: 37.566826,
-        lng: 126.9786567,
-      }}
-      style={{
-        width: "100%",
-        height: "500px",
-      }}
-      level={3}
-      onCreate={setMap}
-    >
-      {markers.map((marker) => (
-        <MapMarker
-          key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
-          position={marker.position}
-          onClick={() => setInfo(marker)}
-        >
-          {info && info.content === marker.content && (
-            <div style={{ color: "#000" }}>{marker.content}</div>
-          )}
-        </MapMarker>
-      ))}
-    </Map>
+    <div style={{ marginTop: "40px" }}>
+      <div>카카오맵입니다</div>
+      <div
+        id="map"
+        style={{
+          width: "100vw",
+          height: "100vh",
+        }}
+      ></div>
+    </div>
   );
 };
 
