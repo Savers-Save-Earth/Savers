@@ -115,11 +115,20 @@ const ProductPost = () => {
   };
 
   // 공유하기 눌렀을 때
-  const shareHandler = () => {
+  const shareHandler = async () => {
+    const userId = user.id;
     const currentURL = window.location.href;
     navigator.clipboard.writeText(currentURL).then(() => {
       alert("링크가 복사되었습니다.");
     });
+    // 제품 공유하기 눌렀을 때 얻는 배지
+    if (user) {
+      const { error: addShageBadgeError } = await supabase
+        .from("badge")
+        .insert({ badge_title: "share", user_id: userId });
+    } else {
+      return;
+    }
   };
 
   useEffect(() => {

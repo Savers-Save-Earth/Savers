@@ -1,46 +1,54 @@
 "use client";
 import supabase from "@/libs/supabase";
 import React, { useEffect, useState } from "react";
-import { Database } from "@/types/supabase"
+import { Database } from "@/types/supabase";
+import Badges from "./Badges";
 
-type Profile = Database["public"]["Tables"]["user"]["Row"]
-type CommunityActivity = Database["public"]["Tables"]["community"]["Row"]
+type Profile = Database["public"]["Tables"]["user"]["Row"];
+type CommunityActivity = Database["public"]["Tables"]["community"]["Row"];
 
 interface ProfileProps {
   profileId: string;
 }
-const Profile = ( { profileId }: ProfileProps ) => {
+const Profile = ({ profileId }: ProfileProps) => {
   const [selectedMenu, setSelectedMenu] = useState<string>("profile");
   const [showMission, setShowMission] = useState<string>("missionDoing");
   const [showActivity, setShowActivity] = useState<string>("myPost");
   const [userData, setUserData] = useState<Profile | null>(null);
   const [userPost, setUserPost] = useState<CommunityActivity[]>([]);
-  const [loadCount, setLoadCount] = useState<number>(2)
+  const [loadCount, setLoadCount] = useState<number>(2);
 
   useEffect(() => {
-    fetchProfile()
+    fetchProfile();
   }, []);
   useEffect(() => {
-    fetchCommunity()
-  }, [loadCount])
+    fetchCommunity();
+  }, [loadCount]);
 
   const fetchProfile = async () => {
-    let { data: user, error } = await supabase.from("user").select().match({"uid" : profileId})
-    if(error) throw error
+    let { data: user, error } = await supabase
+      .from("user")
+      .select()
+      .match({ uid: profileId });
+    if (error) throw error;
     setUserData(user![0]);
   };
   const fetchCommunity = async () => {
-    // 달린 댓글 개수랑 좋아요는 어떻게 기입되는지 로직을 여쭤봐야 함 : supabase 내부적으로 댓글갯수를 count하여 다른 db에 넣는 방법이 있다고 함. 
+    // 달린 댓글 개수랑 좋아요는 어떻게 기입되는지 로직을 여쭤봐야 함 : supabase 내부적으로 댓글갯수를 count하여 다른 db에 넣는 방법이 있다고 함.
     // 해당 기능 개발과정을 본 후에 community에서 바로 끌고 올 지 판단
-    let { data: community, error } = await supabase.from('community').select().match({"author_uid": profileId}).range(0, loadCount - 1)
-    if (error) throw error
-    setUserPost(community || [])
-  }
+    let { data: community, error } = await supabase
+      .from("community")
+      .select()
+      .match({ author_uid: profileId })
+      .range(0, loadCount - 1);
+    if (error) throw error;
+    setUserPost(community || []);
+  };
 
   const handleLoadMore = () => {
-    setLoadCount(prev => prev + 2)
-  }
-  
+    setLoadCount((prev) => prev + 2);
+  };
+
   const handleSelectMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
     setSelectedMenu(event.currentTarget.value);
   };
@@ -107,95 +115,144 @@ const Profile = ( { profileId }: ProfileProps ) => {
             <div className="w-1/2 p-4 border-dashed border-2 border-green-600 mx-3">
               일일미션 완료현황(잔디밭)
             </div>
-            <div className="w-1/2 p-4 border-dashed border-2 border-purple-600 mx-3">
-              내가 획득한 뱃지
-            </div>
           </>
         )}
         {selectedMenu === "mymission" && (
           <div className="flex flex-col w-full border-dashed border-2 border-orange-600 p-5">
             <h3>나의 미션</h3>
             <div className="flex items-center gap-10">
-              <button value="missionDoing" className="hover:font-bold focus:font-bold focus:underline decoration" onClick={handleSelectMission}>
+              <button
+                value="missionDoing"
+                className="hover:font-bold focus:font-bold focus:underline decoration"
+                onClick={handleSelectMission}
+              >
                 진행중인 미션
               </button>
-              <button value="missionDone" className="hover:font-bold focus:font-bold focus:underline decoration" onClick={handleSelectMission}>
+              <button
+                value="missionDone"
+                className="hover:font-bold focus:font-bold focus:underline decoration"
+                onClick={handleSelectMission}
+              >
                 완료한 미션
               </button>
             </div>
             <div className="border-dashed border-2 border-yellow-600 w-full h-full p-5">
               {showMission === "missionDoing" && (
                 <>
-                <div>진행중인 미션이 나오게 됨</div>
-                <div>나중에 Carousel을 추가해야 함</div>
-              </>
+                  <div>진행중인 미션이 나오게 됨</div>
+                  <div>나중에 Carousel을 추가해야 함</div>
+                </>
               )}
-              {showMission === "missionDone" && 
-              <>
-              <div>완료한 미션이 나오게 됨</div>
-              <div>나중에 Carousel이나 로그? "내가 쓴 글"처럼 리스트를 추가해야 함</div>
-              </>}
+              {showMission === "missionDone" && (
+                <>
+                  <div>완료한 미션이 나오게 됨</div>
+                  <div>
+                    나중에 Carousel이나 로그? "내가 쓴 글"처럼 리스트를 추가해야
+                    함
+                  </div>
+                </>
+              )}
             </div>
           </div>
         )}
-        {selectedMenu === "activity" && 
-         <div className="flex flex-col w-full border-dashed border-2 border-orange-600 h-full p-5">
-         <h3>커뮤니티 활동</h3>
-         <div className="flex items-center gap-10">
-           <button value="myPost" className="hover:font-bold focus:font-bold focus:underline decoration" onClick={handleSelectActivity}>
-             내가 쓴 글
-           </button>
-           <button value="myComment" className="hover:font-bold focus:font-bold focus:underline decoration" onClick={handleSelectActivity}>
-             내가 쓴 댓글
-           </button>
-           <button value="bookedPost" className="hover:font-bold focus:font-bold focus:underline decoration" onClick={handleSelectActivity}>
-             북마크한 글
-           </button>
-           <button value="bookedRestaurant" className="hover:font-bold focus:font-bold focus:underline decoration" onClick={handleSelectActivity}>
-             북마크한 식당
-           </button>
-           <button value="bookedProduct" className="hover:font-bold focus:font-bold focus:underline decoration" onClick={handleSelectActivity}>
-             북마크한 제품
-           </button>
-         </div>
-         <div className="border-dashed border-2 border-yellow-900 w-full h-4/5">
-           {showActivity === "myPost" && (
-             <>
-             <div className="border-solid border-2 border-green-900 overflow-y-auto h-3/4">내가 쓴 글이 나와야 함
-             {userPost.map((post) => (
-              <div className="border-solid border-2 border-blue-900 p-5 m-5" key={post.post_uid}>
-              <p>글 uid : {post.post_uid}</p>
-              <p>글 제목 : {post.title}</p>
-              <p>등록일: {post.updated_date.slice(0,10)}</p>
-              </div>
-             ))}
-             <button onClick={handleLoadMore}>더 보기</button>
-             </div>
-           </>
-           )}
-           {showActivity === "myComment" && 
-           <>
-           <div>내가 쓴 댓글과 댓글단 글이 나와야 함</div>
-           <div>나중에 Carousel이나 로그? "내가 쓴 글"처럼 리스트를 추가해야 함</div>
-           </>}
-           {showActivity === "bookedPost" && 
-           <>
-           <div>내가 북마크한 글이 나와야 함</div>
-           <div>나중에 Carousel이나 로그? "내가 쓴 글"처럼 리스트를 추가해야 함</div>
-           </>}
-           {showActivity === "bookedRestaurant" && 
-           <>
-           <div>내가 북마크한 식당이 나와야 함</div>
-           <div>나중에 Carousel이나 로그? "내가 쓴 글"처럼 리스트를 추가해야 함</div>
-           </>}
-           {showActivity === "bookedProduct" && 
-           <>
-           <div>내가 북마크한 제품이 나와야 함</div>
-           <div>나중에 Carousel이나 로그? "내가 쓴 글"처럼 리스트를 추가해야 함</div>
-           </>}
-         </div>
-       </div>
-        }
+        {selectedMenu === "activity" && (
+          <div className="flex flex-col w-full border-dashed border-2 border-orange-600 h-full p-5">
+            <h3>커뮤니티 활동</h3>
+            <div className="flex items-center gap-10">
+              <button
+                value="myPost"
+                className="hover:font-bold focus:font-bold focus:underline decoration"
+                onClick={handleSelectActivity}
+              >
+                내가 쓴 글
+              </button>
+              <button
+                value="myComment"
+                className="hover:font-bold focus:font-bold focus:underline decoration"
+                onClick={handleSelectActivity}
+              >
+                내가 쓴 댓글
+              </button>
+              <button
+                value="bookedPost"
+                className="hover:font-bold focus:font-bold focus:underline decoration"
+                onClick={handleSelectActivity}
+              >
+                북마크한 글
+              </button>
+              <button
+                value="bookedRestaurant"
+                className="hover:font-bold focus:font-bold focus:underline decoration"
+                onClick={handleSelectActivity}
+              >
+                북마크한 식당
+              </button>
+              <button
+                value="bookedProduct"
+                className="hover:font-bold focus:font-bold focus:underline decoration"
+                onClick={handleSelectActivity}
+              >
+                북마크한 제품
+              </button>
+            </div>
+            <div className="border-dashed border-2 border-yellow-900 w-full h-4/5">
+              {showActivity === "myPost" && (
+                <>
+                  <div className="border-solid border-2 border-green-900 overflow-y-auto h-3/4">
+                    내가 쓴 글이 나와야 함
+                    {userPost.map((post) => (
+                      <div
+                        className="border-solid border-2 border-blue-900 p-5 m-5"
+                        key={post.post_uid}
+                      >
+                        <p>글 uid : {post.post_uid}</p>
+                        <p>글 제목 : {post.title}</p>
+                        <p>등록일: {post.updated_date.slice(0, 10)}</p>
+                      </div>
+                    ))}
+                    <button onClick={handleLoadMore}>더 보기</button>
+                  </div>
+                </>
+              )}
+              {showActivity === "myComment" && (
+                <>
+                  <div>내가 쓴 댓글과 댓글단 글이 나와야 함</div>
+                  <div>
+                    나중에 Carousel이나 로그? "내가 쓴 글"처럼 리스트를 추가해야
+                    함
+                  </div>
+                </>
+              )}
+              {showActivity === "bookedPost" && (
+                <>
+                  <div>내가 북마크한 글이 나와야 함</div>
+                  <div>
+                    나중에 Carousel이나 로그? "내가 쓴 글"처럼 리스트를 추가해야
+                    함
+                  </div>
+                </>
+              )}
+              {showActivity === "bookedRestaurant" && (
+                <>
+                  <div>내가 북마크한 식당이 나와야 함</div>
+                  <div>
+                    나중에 Carousel이나 로그? "내가 쓴 글"처럼 리스트를 추가해야
+                    함
+                  </div>
+                </>
+              )}
+              {showActivity === "bookedProduct" && (
+                <>
+                  <div>내가 북마크한 제품이 나와야 함</div>
+                  <div>
+                    나중에 Carousel이나 로그? "내가 쓴 글"처럼 리스트를 추가해야
+                    함
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

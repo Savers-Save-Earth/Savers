@@ -4,9 +4,10 @@ import Header from "@/components/Header";
 import supabase from "@/libs/supabase";
 import { useRouter } from "next/navigation";
 import NicknameMaker from "@/components/auth/NicknameMaker";
+// import { User } from "@supabase/supabase-js";
 
 const LoginLoading = () => {
-  const [user, setUser] = useState<user | null>(null);
+  const [user, setUser] = useState<any>(null);
   const router = useRouter();
   const [nickname, setNickname] = useState<string | null>(null);
 
@@ -15,37 +16,60 @@ const LoginLoading = () => {
       const {
         data: { user },
       } = await supabase.auth.getUser();
-      console.log("user", user);
-      setUser(user);
-      getUserInfo();
+
+      console.log("getUser>>>", user);
+
+      // loginUpdater();
+      await setUser(user);
+      await getUserInfo(user);
+      router.push("/");
     }
     exe();
   }, []);
 
-  console.log("getUser확인", user);
+  console.log("getUser확인", user?.id);
 
-  const getUserInfo = async () => {
+  // const loginUpdater = async () => {
+  //   await supabase.from("user").upsert({
+  //     isLogin: true,
+  //   });
+  // };
+
+  const getUserInfo = async (user: any) => {
+    if (!user) {
+      console.log("getUerInfo User 없음");
+      return;
+    }
+
     const { data: userInfo } = await supabase
       .from("user")
-      .select("id")
+      .select("*")
       .eq("uid", user!.id)
       .single();
-    if (userInfo) {
-      console.log("유저정보등록되어있음");
+
+    if (userInfo.nickname) {
+      console.log("닉네임등록되어있음", userInfo.nickname);
       return;
     } else {
-      updateUserInfo();
+      updateUserInfo(user);
+      console.log("닉네임 및 유저정보 등록하러감");
     }
   };
 
-  const updateUserInfo = async () => {
-    await supabase.from("user").insert({
-      uid: user!.id,
+  const updateUserInfo = async (user: any) => {
+    const generatedNickname = generateNickname();
+    console.log("nickname>>", generatedNickname);
+    console.log("user가져왔나?>>>", user);
+
+    await supabase.from("user").upsert({
+      uid: user?.id,
       email: user!.user_metadata["email"],
-      nickname: generateNickname,
+      nickname: generatedNickname,
+      provider: user!.app_metadata.provider,
     });
+
     console.log("userInfo반영");
-    setNickname(generateNickname);
+    setNickname(generatedNickname);
   };
 
   const generateNickname = () => {
