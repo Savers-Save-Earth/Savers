@@ -1,7 +1,7 @@
 "use client";
 
-import { info } from "console";
 import React, { useState, useEffect } from "react";
+import MarkerLists from "./MarkerLists";
 
 declare global {
   interface Window {
@@ -179,11 +179,12 @@ const KakaoMaps = () => {
       <button onClick={() => setCurrentCategory("비건카페")}>카페</button>
       <div className="list">
         <h2>마커 리스트</h2>
-        <ul>
+        <MarkerLists markerList={markerList} />
+        {/* <ul>
           {markerList.map((place, index) => (
             <li key={index}>{place.place_name}</li>
           ))}
-        </ul>
+        </ul> */}
       </div>
       <div
         id="map"
