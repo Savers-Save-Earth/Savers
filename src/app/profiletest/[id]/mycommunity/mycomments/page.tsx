@@ -12,7 +12,6 @@ const MyComments = async ({ params }: { params: { id: string } }) => {
   const router = useRouter();
   // decoded params : 유저 닉네임.
   const decodedParams = decodeURIComponent(params.id);
-  console.log("decodedParams===>", decodedParams);
 
   useEffect(() => {
     fetchCommunity();
@@ -34,9 +33,7 @@ const MyComments = async ({ params }: { params: { id: string } }) => {
   };
   const handleLoadMore = () => {
     setLoadCount((prev) => prev + 5);
-    console.log("loadCount===>",loadCount);
   };
-  console.log("userComments=====>", userComments);
   return (
     <>
       {userComments?.map((comment) => (

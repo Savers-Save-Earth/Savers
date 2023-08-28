@@ -89,7 +89,6 @@ const AddPost: NextComponentType = () => {
     // missionList를 업데이트하는(수파베이스) 로직
     
   }
-  console.log("currentuser 애드포스트==>", currentUser)
   return (
     <>
       <form

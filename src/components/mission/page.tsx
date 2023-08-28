@@ -47,7 +47,6 @@ const Mission = () => {
     const abc = missionList.sort(() => Math.random() - 0.5).slice(0, 2);
     setShuffledMission(abc);
   }, []);
-  // console.log("shuffledMission==>",shuffledMission)
 
   return (
     <section className="bg-pink-900 h-screen flex justify-center items-center gap-x-16 text-white">
