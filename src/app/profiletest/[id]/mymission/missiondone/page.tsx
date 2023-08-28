@@ -1,16 +1,16 @@
 import supabase from "@/libs/supabase";
 import { convertDate } from "@/libs/util";
 import { ListMission } from "@/types/types";
-import React from 'react'
+import React from "react";
 
-export const revalidate = 0
+export const revalidate = 0;
 
 export const currentDate = convertDate(new Date());
 
 const MissionDone = async ({ params }: { params: { id: string } }) => {
-
   const searchId = decodeURIComponent(params.id);
   let { data: dailyMission, error } = await supabase
+
   .from("missionList")
   .select("*")
   .eq("userId", searchId)
@@ -25,22 +25,19 @@ if (dailyMission!.length === 0) return (
 
   return (
     <div className="bg-green-200 h-full justify-center items-center gap-x-16 text-white">
-      {
-        dailyMission!.map((mission: ListMission) => {
-          return (
-            <div className="bg-slate-500 mb-5" key={mission.id}>
-              <p>{mission.id}</p>
-              <p>미션 제목 : {mission.title}</p>
-              <p>미션 내용 : {mission.content}</p>
-              <p>미션 생성일 : {mission.createdAt}</p>
-              <p>미션 수행중인가요? : {mission.doingYn.toString()}</p>
-            </div>
-          )
-        })
-      }
+      {dailyMission!.map((mission: ListMission) => {
+        return (
+          <div className="bg-slate-500 mb-5" key={mission.id}>
+            <p>{mission.id}</p>
+            <p>미션 제목 : {mission.title}</p>
+            <p>미션 내용 : {mission.content}</p>
+            <p>미션 생성일 : {mission.createdAt}</p>
+            <p>미션 수행중인가요? : {mission.doingYn.toString()}</p>
+          </div>
+        );
+      })}
     </div>
-    
-  )
-}
+  );
+};
 
-export default MissionDone
+export default MissionDone;

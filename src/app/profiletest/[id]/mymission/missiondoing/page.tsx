@@ -15,6 +15,7 @@ const MissionDoing = async ({ params }: { params: { id: string } }) => {
     .eq("createdAt", currentDate)
     .eq("userId", searchId)
     .eq("doingYn", true);
+
   if (error) {
     console.log("데이터가져올 때 에러남");
     return false;

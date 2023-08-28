@@ -6,13 +6,14 @@ import { useRouter } from "next/navigation";
 
 type CommunityComment =
   Database["public"]["Tables"]["community_comment"]["Row"];
-  
+
 const MyComments = ({ params }: { params: { id: string } }) => {
   const [userComments, setUserComments] = useState<CommunityComment[]>([]);
   const [loadCount, setLoadCount] = useState<number>(5);
   const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태 추가
   const router = useRouter();
   const decodedParams = decodeURIComponent(params.id);
+
   const fetchCommunity = async () => {
     try {
       let { data: comments } = await supabase
@@ -27,12 +28,15 @@ const MyComments = ({ params }: { params: { id: string } }) => {
       setIsLoading(false);
     }
   };
+
   useEffect(() => {
     fetchCommunity();
   }, [loadCount]);
+
   const handleLoadMore = () => {
     setLoadCount((prev) => prev + 5);
   };
+
   return (
     <>
       {isLoading ? ( // isLoading이 true이면 로딩 표시를 표시합니다.
@@ -55,6 +59,7 @@ const MyComments = ({ params }: { params: { id: string } }) => {
     </>
   );
 };
+
 export default MyComments;
 
 
