@@ -9,7 +9,7 @@ interface currentUserType {
   profileImage: string;
 }
 
-const useAuth = (): currentUserType | null => {
+export const useAuth = (): currentUserType | null => {
   const [currentUser, setCurrentUser] = useState<currentUserType | null>(null);
   const router = useRouter();
 
@@ -45,5 +45,3 @@ const useAuth = (): currentUserType | null => {
 
   return currentUser;
 };
-
-export default useAuth;

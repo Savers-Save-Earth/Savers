@@ -6,7 +6,7 @@ import { useState } from "react";
 
 import { Database } from "@/types/supabase";
 import { convertTimestamp } from "@/libs/util";
-import useAuth from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 
 const tailwindClsNames = (...classnames: string[]) => {
   return classnames.join(" ");

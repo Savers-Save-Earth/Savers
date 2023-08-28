@@ -8,11 +8,10 @@ import { createPost } from "@/api/community/post";
 import { convertDate, convertTimestamp } from "@/libs/util";
 import { Database } from "@/types/supabase";
 
-import useAuth from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 import { redirect } from "next/navigation";
 import supabase from "@/libs/supabase";
 import { getMissionHandler, updateMissionHandler } from "@/api/mission/checkMission";
-
 
 type NewPost = Database["public"]["Tables"]["community"]["Insert"];
 
@@ -22,6 +21,7 @@ const AddPost: NextComponentType = () => {
   const [category, setCategory] = useState("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+
   ///===================👇동준작업👇=========================================================
   const [user, setUser] = useState<any>()
   const [missionUid, setMissionUid] = useState<any>("")

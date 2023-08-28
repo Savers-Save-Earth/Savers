@@ -7,7 +7,7 @@ import { deletePost, getPostDetail } from "@/api/community/post";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { Database } from "@/types/supabase";
-import useAuth from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 
 type PostType = Database["public"]["Tables"]["community"]["Row"];
 
