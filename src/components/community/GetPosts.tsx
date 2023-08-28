@@ -11,6 +11,7 @@ type PostType = Database["public"]["Tables"]["community"]["Row"];
 
 const GetPosts = () => {
   const router = useRouter();
+  //(0) 게시글 가져오는 쿼리를 여기에 선언(??)
   const { isLoading, data: posts, error } = useQuery<PostType[]>(
     ["communityAllPosts"],
     () => getPosts(),
