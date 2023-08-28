@@ -38,15 +38,6 @@ const CommunityTopBar = () => {
       >
         내가 북마크한 글
       </button>
-
-      <button
-        className="bg-blue-500"
-        onClick={() =>
-          router.push(`/profiletest/${searchId}/mycommunity/mylikedproducts`)
-        }
-      >
-        내가 북마크한 제품
-      </button>
     </>
   );
 };

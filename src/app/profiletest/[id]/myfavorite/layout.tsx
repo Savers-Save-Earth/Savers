@@ -10,7 +10,7 @@ export default function MycommunityLayout ({
 
 {
   return (
-    <div className="h-screen w-full">
+    <div className="w-full">
         <h1>마이커뮤니티 레이아웃</h1>
         <div className="flex gap-10">
         {/* <Link
@@ -25,7 +25,7 @@ export default function MycommunityLayout ({
         </Link> */}
         <FavoriteTopBar/>
       </div>
-      <section className="border-dashed border-2 border-indigo-600 h-3/4 overflow-y-auto">{children}</section>
+      <section className="border-dashed border-2 border-indigo-600 h-3/4">{children}</section>
     </div>
   );
 }

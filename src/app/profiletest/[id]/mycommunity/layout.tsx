@@ -11,9 +11,9 @@ export default function MycommunityLayout ({
 
 {
   return (
-    <div className="h-screen w-full">
+    <div className="w-full">
         <h1>마이커뮤니티 레이아웃</h1>
-        <div className="flex gap-10">
+        <div className="flex gap-10 ">
         {/* <Link
           href={`/profiletest/${searchId}/mycommunity/myposts`}
         >
