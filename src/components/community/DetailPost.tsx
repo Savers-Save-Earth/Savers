@@ -49,7 +49,7 @@ const DetailPost = () => {
   };
 
   return (
-    <div className="flex flex-col max-w-7xl mt-10 px-10 py-10 mx-auto">
+    <div className="flex flex-col max-w-7xl mt-10 px-10 mx-auto">
       <button
         onClick={() => router.back()}
         className="w-28 mb-10 bg-green-200 px-5 py-2 rounded-md shadow-sm hover:bg-green-300 hover:-translate-y-1 transition ease-in-out duration-200"
@@ -90,8 +90,8 @@ const DetailPost = () => {
                 )
             }
           </div>
-          <div className="flex justify-between mt-3">
-            <div className="flex space-x-5 items-center">
+          <div className="flex justify-between mt-3 py-3">
+            <div className="flex space-x-5 items-center justify-center">
               <span>{postDetail?.author_name}</span>
               <span className="text-sm">{postDetail?.updated_date}</span>
             </div>

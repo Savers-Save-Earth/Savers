@@ -116,16 +116,25 @@ export interface Database {
       }
       like_map: {
         Row: {
-          id: number
+          num_likes: number
+          num_people: number | null
           place_name: string | null
+          place_region: string | null
+          place_uid: number
         }
         Insert: {
-          id?: number
+          num_likes: number
+          num_people?: number | null
           place_name?: string | null
+          place_region?: string | null
+          place_uid?: number
         }
         Update: {
-          id?: number
+          num_likes?: number
+          num_people?: number | null
           place_name?: string | null
+          place_region?: string | null
+          place_uid?: number
         }
         Relationships: []
       }
@@ -173,6 +182,7 @@ export interface Database {
       }
       mission: {
         Row: {
+          address: string | null
           bigCategory: string | null
           content: string | null
           doingYn: boolean | null
@@ -183,6 +193,7 @@ export interface Database {
           uid: number
         }
         Insert: {
+          address?: string | null
           bigCategory?: string | null
           content?: string | null
           doingYn?: boolean | null
@@ -193,6 +204,7 @@ export interface Database {
           uid?: number
         }
         Update: {
+          address?: string | null
           bigCategory?: string | null
           content?: string | null
           doingYn?: boolean | null
@@ -206,6 +218,7 @@ export interface Database {
       }
       missionList: {
         Row: {
+          address: string | null
           bigCategory: string | null
           content: string | null
           createdAt: string | null
@@ -219,6 +232,7 @@ export interface Database {
           userId: string | null
         }
         Insert: {
+          address?: string | null
           bigCategory?: string | null
           content?: string | null
           createdAt?: string | null
@@ -232,6 +246,7 @@ export interface Database {
           userId?: string | null
         }
         Update: {
+          address?: string | null
           bigCategory?: string | null
           content?: string | null
           createdAt?: string | null
