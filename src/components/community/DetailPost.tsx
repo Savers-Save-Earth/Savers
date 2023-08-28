@@ -8,6 +8,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { Database } from "@/types/supabase";
 import { useAuth } from "@/hooks/useAuth";
+import { LikesType, cancleLikePost, createLikePost, getLikeStatus, getLikesNum } from "@/api/community/like";
 
 type PostType = Database["public"]["Tables"]["community"]["Row"];
 
@@ -45,6 +46,52 @@ const DetailPost = () => {
   const handleEditClick = () => {
     setIsEditing(true);
   };
+
+  // const { data: likesData } = useQuery<LikesType[]>(
+  //   ["likes", postUid],
+  //   () => getLikeStatus(postUid, currentUser?.uid),
+  // )
+
+  // const addLikeMutation = useMutation(createLikePost, {
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries({ queryKey: ["likes", postUid] });
+  //   },
+  //   onError: (error) => {
+  //     console.log("좋아요 등록 에러:", error);
+  //   }
+  // })
+
+  // const cancelLikeMutation = useMutation(cancleLikePost, {
+  //   // 취소 성공 시 좋아요 캐시를 무효화
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries({ queryKey: ["likes", postUid] });
+  //   },
+  //   // ...
+  // });
+
+  // const handleLikeClick = async () => {
+  //   if (!currentUser) {
+  //     window.alert("좋아요를 누르시려면 로그인 해주세요!");
+  //     router.push("/login");
+  //     return false;
+  //   }
+    
+  //   // 현재 사용자의 좋아요 상태를 가져오기
+  //   const userLikeStatus = await getLikeStatus(postUid, currentUser.uid);
+  //   console.log("userLikeStatus => ", userLikeStatus);
+
+  //   // 이미 좋아요를 눌렀다면 취소
+  //   if (userLikeStatus.length > 0) {
+  //     cancelLikeMutation.mutate(postUid, currentUser.uid);
+  //   } else {
+  //     // 좋아요 추가
+  //     const newLike = {
+  //       like_user: currentUser.uid,
+  //       post_uid: postUid
+  //     }
+  //     addLikeMutation.mutate(newLike);
+  //   }
+  // }
 
   return (
     <div className="flex flex-col max-w-7xl mt-10 px-10 mx-auto">
@@ -91,7 +138,7 @@ const DetailPost = () => {
             </div>
             <div className="flex space-x-3">
               <span>조회수 0</span>
-              <span>좋아요 0</span>
+              <span>좋아요 {0}</span>
             </div>
           </div>
           {postDetail && (
@@ -122,7 +169,7 @@ const DetailPost = () => {
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke-width="1.5"
+                strokeWidth="1.5"
                 stroke="currentColor"
                 className="w-6 h-6"
               >

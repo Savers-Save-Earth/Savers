@@ -114,45 +114,21 @@ export interface Database {
         }
         Relationships: []
       }
-      like_map: {
-        Row: {
-          num_likes: number
-          num_people: number | null
-          place_name: string | null
-          place_region: string | null
-          place_uid: number
-        }
-        Insert: {
-          num_likes: number
-          num_people?: number | null
-          place_name?: string | null
-          place_region?: string | null
-          place_uid?: number
-        }
-        Update: {
-          num_likes?: number
-          num_people?: number | null
-          place_name?: string | null
-          place_region?: string | null
-          place_uid?: number
-        }
-        Relationships: []
-      }
       like_post: {
         Row: {
-          number_likes: number
+          like_id: string
+          like_user: string
           post_uid: string
-          user_likes: string | null
         }
         Insert: {
-          number_likes: number
-          post_uid?: string
-          user_likes?: string | null
+          like_id?: string
+          like_user: string
+          post_uid: string
         }
         Update: {
-          number_likes?: number
+          like_id?: string
+          like_user?: string
           post_uid?: string
-          user_likes?: string | null
         }
         Relationships: []
       }
@@ -177,6 +153,30 @@ export interface Database {
           like_id?: string
           product_uid?: string
           user_id?: string | null
+        }
+        Relationships: []
+      }
+      like_restaurant: {
+        Row: {
+          created_at: string
+          id: number
+          restaurant_address: string | null
+          restaurant_name: string | null
+          score: number | null
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          restaurant_address?: string | null
+          restaurant_name?: string | null
+          score?: number | null
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          restaurant_address?: string | null
+          restaurant_name?: string | null
+          score?: number | null
         }
         Relationships: []
       }

@@ -73,8 +73,6 @@ export const getPostDetail = async (post_uid: string): Promise<PostType> => {
     throw error;
   }
 };
- 
-// api/post.ts
 
 // 1. 제품 카테고리 게시글 조회
 const getProductPosts = async (): Promise<PostType[]> => {
@@ -119,7 +117,7 @@ const getRecipePosts = async (): Promise<PostType[]> => {
 };
 
 // 4. 오지완 카테고리 게시글 조회
-export const getOhjiwanPosts = async (): Promise<PostType[]> => {
+const getOhjiwanPosts = async (): Promise<PostType[]> => {
   try {
     const { data } = await supabase
       .from("community")

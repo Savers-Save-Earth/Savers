@@ -8,7 +8,7 @@ import { Database } from "@/types/supabase";
 import { convertTimestamp } from "@/libs/util";
 import { useAuth } from "@/hooks/useAuth";
 
-const tailwindClsNames = (...classnames: string[]) => {
+const cls = (...classnames: string[]) => {
   return classnames.join(" ");
 }
 
@@ -92,7 +92,7 @@ const PostComments = () => {
     },
     onError: (error) => {
       console.error("댓글 수정 에러:", error);
-      window.alert("댓글글이 정상적으로 수정되지 않았습니다. 다시 시도해주세요!");
+      window.alert("댓글이 정상적으로 수정되지 않았습니다. 다시 시도해주세요!");
     },
   });
 
@@ -182,20 +182,23 @@ const handleEditState = (commentUid: string) => {
         ))}
         {/* ------- 새 댓글 등록 textarea -------  */}
         <div className="relative flex flex-col mt-5 space-y-3">
-          <span className="absolute top-6 left-4 font-semibold bg-white">{currentUser?.nickname}</span>
+          {currentUser ? <span className="absolute top-6 left-4 font-semibold bg-white">{currentUser?.nickname}</span> : null}
           <textarea
             id="commentInput"
-            placeholder="댓글을 입력하세요."
+            placeholder={currentUser ? "댓글을 입력하세요." : "댓글을 등록하려면 로그인 해주세요."}
+            disabled={!currentUser}
             rows={4}
             value={newComment}
             onChange={handleNewInputChange}
             maxLength={300}
-            className="px-4 pt-12 pb-5 border focus:outline-none resize-none"
+            className={cls("px-4 pb-5 border focus:outline-none resize-none rounded-md",
+              currentUser ? "pt-12" : "pt-5"
+            )}
           />
           <button
             onClick={handleSubmit}
             disabled={newComment.length === 0}
-            className={tailwindClsNames("absolute bottom-3 right-3 px-4 py-1 rounded-md",
+            className={cls("absolute bottom-3 right-3 px-4 py-1 rounded-md",
               newComment.length === 0
                 ? "text-gray-200"
                 : "bg-slate-200"
