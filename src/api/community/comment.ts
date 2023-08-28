@@ -37,12 +37,3 @@ export const getComments = async (postUid: string): Promise<CommentType[]> => {
     throw error;
   }
 };
-
-// 댓글 개수 조회
-export const getCommentsNum = async (postUid: string) => {
-  const { count } = await supabase
-    .from("community_comment")
-    .select("*", { count: "exact" })
-    .eq("post_uid", postUid);
-  return count ?? 0;
-};

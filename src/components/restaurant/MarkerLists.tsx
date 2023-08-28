@@ -3,56 +3,87 @@ import supabase from "@/libs/supabase";
 import React, { useEffect } from "react";
 import { useState } from "react";
 
-interface Review {
+interface MarkList {
   id: number;
-  score: number;
   restaurant_name: string;
   restaurant_address: string;
 }
 
 const MarkerLists = ({ markerList }) => {
-  const [reviewList, setReviewList] = useState<Review[]>([]);
-  const [score, setScore] = useState(0);
+  const [markedList, setMarkedList] = useState<MarkList[]>([]);
+  const [user, setUser] = useState<any>(null);
+  const [markedByUser, setMarkedByUser] = useState<any[]>([]);
 
-  const fetchReviewList = async () => {
-    const { data: reviewData } = await supabase
+  const fetchMarkList = async () => {
+    const { data: markedData } = await supabase
       .from("like_restaurant")
       .select();
 
-    if (reviewData) {
-      setReviewList(reviewData);
+    if (markedData) {
+      setMarkedList(markedData);
     } else {
       return;
     }
   };
 
-  const averageHandler = (place: string) => {
-    let averageScore = 0;
-    const thisRestaurantReview = reviewList.filter(
-      (item) => item.restaurant_name === place,
-    );
+  const fetchUser = async () => {
+    try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
 
-    const averagelength = thisRestaurantReview.length;
-
-    const average = thisRestaurantReview.map(
-      (item) => (averageScore = averageScore + item.score),
-    );
-
-    return +averageScore / averagelength;
+      if (!user) {
+        setUser(false);
+      } else {
+        setUser(user);
+        fetchUserBookmark(user);
+      }
+    } catch (error) {
+      console.error("Error fetching user:", error);
+    }
   };
 
-  const addReview = async (name: string, address: string, score: number) => {
-    const { error: addReviewError } = await supabase
-      .from("like_restaurant")
-      .insert({
-        restaurant_address: address,
-        restaurant_name: name,
-        score: score,
-      });
+  const fetchUserBookmark = async (user: any) => {
+    const { data: existingMarkedData, error: existingLikeError } =
+      await supabase.from("like_restaurant").select().eq("user_id", user.id);
+    setMarkedByUser(existingMarkedData!);
+    console.log(existingMarkedData);
+  };
+
+  const bookmarkHandler = (place: string) => {
+    const countMarkedList = markedList.filter(
+      (item) => item.restaurant_name === place,
+    ).length;
+    return countMarkedList;
+  };
+
+  const addMarkList = async (
+    category: string,
+    name: string,
+    address: string,
+  ) => {
+    if (user) {
+      const { error: addMarkListError } = await supabase
+        .from("like_restaurant")
+        .insert({
+          restaurant_category: category,
+          restaurant_address: address,
+          restaurant_name: name,
+          user_id: user.id,
+        });
+
+      // const {error: addCountError } = await supabase
+      // .from("restaurant")
+      // .insert
+    } else {
+      alert("로그인 후 사용해주세요.");
+      return;
+    }
   };
 
   useEffect(() => {
-    fetchReviewList();
+    fetchUser();
+    fetchMarkList();
   }, []);
 
   return (
@@ -68,30 +99,20 @@ const MarkerLists = ({ markerList }) => {
             <p>{place.category_name}</p>
             <p>{place.place_name}</p>
             <p>{place.address_name}</p>
-            <p>
-              별점:
-              {averageHandler(place.place_name)
-                ? averageHandler(place.place_name)
-                : "평점 정보가 없습니다."}
-            </p>
-            <form>
-              <input
-                type="number"
-                style={{ border: "1px solid gray" }}
-                value={score}
-                onChange={(e) => setScore(parseInt(e.target.value))}
-              />
-              <button
-                onClick={(e) => {
-                  addReview(place.place_name, place.address_name, score);
-                  e.preventDefault();
-                  setScore(0);
-                  fetchReviewList();
-                }}
-              >
-                평점 등록
-              </button>
-            </form>
+            <p>📌 {bookmarkHandler(place.place_name)}</p>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                addMarkList(
+                  place.category_name,
+                  place.place_name,
+                  place.address_name,
+                );
+                fetchMarkList();
+              }}
+            >
+              북마크
+            </button>
           </div>
         ))}
       </ul>

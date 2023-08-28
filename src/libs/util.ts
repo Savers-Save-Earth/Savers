@@ -26,4 +26,8 @@ export const convertDate = (timeProps: any) => {
   day = String(day).padStart(2, "0");
   
   return `${year}-${month}-${day}`;
+};
+
+export const removeHtmlTags = (text: string) => {
+  return text.replace(/<\/?[^>]+(>|$)/g, "")
 }

@@ -6,9 +6,9 @@ import { useState } from "react";
 
 import { Database } from "@/types/supabase";
 import { convertTimestamp } from "@/libs/util";
-import useAuth from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 
-const tailwindClsNames = (...classnames: string[]) => {
+const cls = (...classnames: string[]) => {
   return classnames.join(" ");
 }
 
@@ -92,7 +92,7 @@ const PostComments = () => {
     },
     onError: (error) => {
       console.error("댓글 수정 에러:", error);
-      window.alert("댓글글이 정상적으로 수정되지 않았습니다. 다시 시도해주세요!");
+      window.alert("댓글이 정상적으로 수정되지 않았습니다. 다시 시도해주세요!");
     },
   });
 
@@ -131,15 +131,20 @@ const handleEditState = (commentUid: string) => {
   
   return (
     <>
-      <div className="flex flex-col max-w-7xl mt-10 px-10 mx-auto">
-        <span>댓글 {comments ? comments.length : 0}개</span>
+      <div className="mb-10 flex flex-col max-w-7xl px-10 mx-auto">
+        <div className="border-b py-4">
+          <span>댓글 {comments ? comments.length : 0}개</span>
+        </div>
         {comments?.map((comment: CommentType) => (
           <div
             key={comment.comment_uid}
-            className="bg-gray-100 flex flex-col mt-5 px-2 py-14 border rounded-md"
+            className="flex flex-col px-8 py-4 border-b"
           >
-            <div className="flex justify-between">
-              <span>작성자 : {comment.writer_name}</span>
+            <div className="flex justify-between mb-2">
+              <div className="flex flex-col">
+                <span>{comment.writer_name}</span>
+                <span className="text-sm text-gray-400">{comment.updated_date}</span>
+              </div>
               <div className="flex space-x-3 mr-2">
                 {currentUser?.uid === comment.writer_uid && (
                   <div className="space-x-2">
@@ -166,27 +171,34 @@ const handleEditState = (commentUid: string) => {
                 className="px-4 py-2 pb-5 border focus:outline-none resize-none"
               />
             ) : (
-              <p>{comment.content}</p>
+              <>
+                <p>{comment.content}</p>
+                <div className="mt-2">
+                  <button className="text-gray-400 text-sm">답글</button>
+                </div>
+              </>
             )}
-            <span>작성시간 : {comment.updated_date}</span>
           </div>
         ))}
         {/* ------- 새 댓글 등록 textarea -------  */}
         <div className="relative flex flex-col mt-5 space-y-3">
-          <span className="absolute top-6 left-4 font-semibold">{currentUser?.nickname}</span>
+          {currentUser ? <span className="absolute top-6 left-4 font-semibold bg-white">{currentUser?.nickname}</span> : null}
           <textarea
             id="commentInput"
-            placeholder="댓글을 입력하세요."
+            placeholder={currentUser ? "댓글을 입력하세요." : "댓글을 등록하려면 로그인 해주세요."}
+            disabled={!currentUser}
             rows={4}
             value={newComment}
             onChange={handleNewInputChange}
             maxLength={300}
-            className="px-4 pt-12 pb-5 border focus:outline-none resize-none"
+            className={cls("px-4 pb-5 border focus:outline-none resize-none rounded-md",
+              currentUser ? "pt-12" : "pt-5"
+            )}
           />
           <button
             onClick={handleSubmit}
             disabled={newComment.length === 0}
-            className={tailwindClsNames("absolute bottom-3 right-3 px-4 py-1 rounded-md",
+            className={cls("absolute bottom-3 right-3 px-4 py-1 rounded-md",
               newComment.length === 0
                 ? "text-gray-200"
                 : "bg-slate-200"
