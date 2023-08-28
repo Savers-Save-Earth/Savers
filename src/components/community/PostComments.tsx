@@ -6,6 +6,7 @@ import { useState } from "react";
 
 import { Database } from "@/types/supabase";
 import { convertTimestamp } from "@/libs/util";
+import useAuth from "@/hooks/useAuth";
 
 const tailwindClsNames = (...classnames: string[]) => {
   return classnames.join(" ");
@@ -16,6 +17,7 @@ type NewCommentType = Database["public"]["Tables"]["community_comment"]["Insert"
 type EditCommentType = Database["public"]["Tables"]["community_comment"]["Update"];
 
 const PostComments = () => {
+  const currentUser = useAuth();
   const { postUid } = useParams() as { postUid: string; };
   const { data: comments } = useQuery<CommentType[]>(
     ["comments", postUid],
@@ -51,10 +53,11 @@ const PostComments = () => {
     const commentData: NewCommentType = {
       content: newComment,
       post_uid: postUid,
-      writer_uid: "bd2125b8-d852-485c-baf3-9c7a8949beee",
-      writer_name: "테스트닉네임",
+      writer_uid: currentUser?.uid,
+      writer_name: currentUser?.nickname as string,
       created_date: convertTimestamp(writtenTime),
-      updated_date: convertTimestamp(writtenTime)
+      updated_date: convertTimestamp(writtenTime),
+      isDeleted: false,
     }
     createMutation.mutate(commentData);
     setNewComment("");
@@ -101,7 +104,7 @@ const PostComments = () => {
 const handleEditState = (commentUid: string) => {
   const commentToEdit = comments?.find((comment) => comment.comment_uid === commentUid);
   if (commentToEdit) {
-    setEditingComment(commentToEdit.content); // setEditingComment로 변경
+    setEditingComment(commentToEdit.content);
     setEditingCommentId(commentUid);
   }
 };
@@ -118,7 +121,7 @@ const handleEditState = (commentUid: string) => {
     const editCommentData: EditCommentType = {
       comment_uid: commentUid,
       content: editingComment,
-      writer_name: "수정 닉네임",
+      writer_name: currentUser?.nickname,
       updated_date: convertTimestamp(writtenTime),
     }
     updateMutation.mutate(editCommentData);
@@ -126,7 +129,6 @@ const handleEditState = (commentUid: string) => {
     setEditingCommentId(null);
   };
   
-
   return (
     <>
       <div className="flex flex-col max-w-7xl mt-10 px-10 mx-auto">
@@ -139,21 +141,20 @@ const handleEditState = (commentUid: string) => {
             <div className="flex justify-between">
               <span>작성자 : {comment.writer_name}</span>
               <div className="flex space-x-3 mr-2">
-                {editingCommentId === comment.comment_uid ? (
-                  <>
-                    <button
-                      onClick={() => handleSaveEdit(comment.comment_uid)}>
-                      저장
-                    </button>
-                    <button onClick={handleCancelEdit}>
-                      취소
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <button onClick={() => handleEditState(comment.comment_uid)}>수정</button>
-                    <button onClick={() => handleDelete(comment.comment_uid)}>삭제</button>
-                  </>
+                {currentUser?.uid === comment.writer_uid && (
+                  <div className="space-x-2">
+                    {editingCommentId === comment.comment_uid ? (
+                      <>
+                        <button onClick={() => handleSaveEdit(comment.comment_uid)}>저장</button>
+                        <button onClick={handleCancelEdit}>취소</button>
+                      </>
+                    ) : (
+                      <>
+                        <button onClick={() => handleEditState(comment.comment_uid)}>수정</button>
+                        <button onClick={() => handleDelete(comment.comment_uid)}>삭제</button>
+                      </>
+                    )}
+                  </div>
                 )}
               </div>
             </div>
@@ -172,7 +173,7 @@ const handleEditState = (commentUid: string) => {
         ))}
         {/* ------- 새 댓글 등록 textarea -------  */}
         <div className="relative flex flex-col mt-5 space-y-3">
-          <span className="absolute top-6 left-4 font-semibold">닉네임</span>
+          <span className="absolute top-6 left-4 font-semibold">{currentUser?.nickname}</span>
           <textarea
             id="commentInput"
             placeholder="댓글을 입력하세요."
@@ -195,8 +196,8 @@ const handleEditState = (commentUid: string) => {
           </button>
         </div>
       </div>
-    </>
-  );
+    </>  
+  );  
 };
 
 export default PostComments;
