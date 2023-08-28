@@ -27,9 +27,7 @@ const SocialLogin = () => {
       }
 
       await getUser();
-      // await getUserInfo();
       alert("로그인⚡️");
-      // await router.push("/");
     } catch (error) {
       alert(`${provider} 로그인 에러: ${error.message}`);
     }
@@ -90,16 +88,28 @@ const SocialLogin = () => {
   };
 
   return (
-    <div>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          signInWithOAuthAndLog("kakao");
-        }}
-      >
-        <button className="pt-20">kakao</button>
-      </form>
-    </div>
+    <>
+      <div>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            signInWithOAuthAndLog("kakao");
+          }}
+        >
+          <button className="pt-20">kakao</button>
+        </form>
+      </div>
+      <div>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            signInWithOAuthAndLog("google");
+          }}
+        >
+          <button className="pt-20">google</button>
+        </form>
+      </div>
+    </>
   );
 };
 

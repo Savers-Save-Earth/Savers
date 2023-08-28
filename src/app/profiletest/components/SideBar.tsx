@@ -1,14 +1,13 @@
 "use client";
 import supabase from "@/libs/supabase";
 import { useParams } from "next/navigation";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter} from "next/navigation";
 import { useEffect, useState } from "react";
 import { Database } from "@/types/supabase";
-import Loading from "@/app/loading";
 import { convertDate } from "@/libs/util";
 
 type Profile = Database["public"]["Tables"]["user"]["Row"];
-interface DailyMission {
+export interface DailyMission {
   id: string;
   uid: number;
   point: number;
@@ -16,17 +15,38 @@ interface DailyMission {
   content: string;
   doingYn: boolean;
 }
+
+const initialProfile = {
+  activePoint: null,
+  badges: null,
+  commentPosts: "",
+  email: "",
+  isActiveDone: false,
+  likedPosts: "",
+  likePosts: "",
+  likeProducts: null,
+  likeRestaurants: "",
+  nickname: "",
+  password: "",
+  profileImage: "",
+  provider: "",
+  uid: "",
+  writePosts: "",
+}
+
+export const currentDate = convertDate(new Date());
+
 const SideBar = () => {
+
   const params = useParams().id as string;
   const decodedParams = decodeURIComponent(params);
-  // console.log("params--->",params)
-  console.log("decodedParams--->", decodedParams);
+
   const router = useRouter();
   // console.log("router--->",router)
   // searchId값을 그냥 params로 할당하느냐 decodedParams로 할당하느냐에 따라 결과가 달라짐. 아, eq 컬럼은 바꿔줘야 함.
   // const searchId = params as string
   const searchId = decodedParams as string;
-  // console.log("searchId================================>",searchId)
+
   const getProfile = async (id: string) => {
     // let { data: user, error } = await supabase.from("user").select("*").eq("uid", id);
     let { data: user, error } = await supabase
@@ -36,9 +56,28 @@ const SideBar = () => {
     return user![0];
   };
 
-  const [profile, setProfile] = useState<Profile>({});
+  const [profile, setProfile] = useState<Profile>(initialProfile);
   const [dailyMission, setDailyMission] = useState<DailyMission[]>([]);
   const [showModal, setShowModal] = useState(false);
+	const [user, setUser] = useState<any>()
+
+	const getUser = async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      setUser(false);
+    } else {
+      setUser(user);
+      // console.log("사이드바에 찍힌 유저아이디 ==>", user!.id);
+    }
+  };
+	useEffect(() => {
+		getUser()
+	},[])
+	// getUser()
+
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -51,58 +90,89 @@ const SideBar = () => {
 
   // const testId = "userId4"
   const insertMissionListData = async () => {
-    const currentDate = convertDate(new Date());
+    // const currentDate = convertDate(new Date());
     console.log("currentDate=>", currentDate);
     // let { data: missionListData, error } = await supabase.from("missionList").select("dailyMission").eq("createdAt", currentDate).eq("userId", testId)
     let { data: missionListData, error } = await supabase
       .from("missionList")
-      .select("dailyMission")
+      .select("*")
       .eq("createdAt", currentDate)
       .eq("userId", searchId);
     console.log("missionListData==>", missionListData);
     // supabase가 데이터 return할 때 빈 값은 "무조건" 빈 배열[]로 반환하기 때문에, missionListData === null 인 경우가 없다고 타입선언.
     const myMissions =
-      missionListData!.length == 0 ? [] : missionListData![0].dailyMission;
-    console.log("myMissions===>", myMissions);
-    if (myMissions.length > 0 && myMissions.length > 0) {
+      missionListData!.length == 0 ? [] : missionListData
+    // console.log("myMissions===>", myMissions);
+    if (myMissions!.length > 0) {
       console.log("myMissions==>", myMissions);
-      setDailyMission(myMissions);
+      setDailyMission(myMissions || []);
       return false;
     } else {
-      try {
-        let { data: mission, error } = await supabase
-          .from("mission")
-          .select("*");
-        if (error) {
-          console.error("Error fetching mission data:", error);
-          return;
-        }
-        const randomMission = mission!
-          .sort(() => Math.random() - 0.5)
-          .slice(0, 2);
-        const newMission = [
-          {
-            userId: searchId,
-            createdAt: convertDate(new Date()),
-            dailyMission: randomMission,
-          },
-        ];
+			try {
+				const { data: missions, error } = await supabase
+					.from("mission")
+					.select("*");
+				
+				if (error) {
+					console.error("Error fetching mission data:", error);
+					return;
+				}
+				
+				const randomMissions = missions.sort(() => Math.random() - 0.5).slice(0, 4);
+			
+				const newMissions = randomMissions.map((mission) => ({
+					missionUid: mission.uid,
+					userId: searchId,
+					createdAt: convertDate(new Date()),
+					title: mission.title,
+					content: mission.content,
+					bigCategory: mission.bigCategory,
+					smallCategory: mission.smallCategory,
+					doingYn: mission.doingYn,
+					point: 1,
+					user_uid: user.id
+				}));
+			
+				for (const newMission of newMissions) {
+					const { data, error: insertError } = await supabase
+						.from("missionList")
+						.insert([newMission]);
+						
+					if (insertError) {
+						console.error("Error inserting data:", insertError);
+					} else {
+						console.log("Inserted data:", newMission);
+					}
+				}
+			
+				setDailyMission(randomMissions);
+			} catch (error) {
+				console.error("An error occurred:", error);
+			}
+		} 
+				}
+        // const newMission = [
+        //   {
+        //     userId: searchId,
+        //     createdAt: convertDate(new Date()),
+        //     dailyMission: randomMission,
+        //   },
+        // ];
 
-        const { data, error: insertError } = await supabase
-          .from("missionList")
-          .insert(newMission);
+      //   const { data, error: insertError } = await supabase
+      //     .from("missionList")
+      //     .insert(newMission);
 
-        if (insertError) {
-          console.error("Error inserting data:", insertError);
-        } else {
-          setDailyMission(randomMission);
-          console.log("Inserted data:", newMission);
-        }
-      } catch (error) {
-        console.error("An error occurred:", error);
-      }
-    }
-  };
+      //   if (insertError) {
+      //     console.error("Error inserting data:", insertError);
+      //   } else {
+      //     setDailyMission(randomMission);
+      //     console.log("Inserted data:", newMission);
+      //   }
+      // } catch (error) {
+      //   console.error("An error occurred:", error);
+      // }
+    
   if (dailyMission) {
     console.log("dailyMission===>", dailyMission);
   } else {
@@ -142,9 +212,9 @@ const SideBar = () => {
           </button>
           <button
             onClick={() => {
-							// 일일미션 뽑기 함수
+              // 일일미션 뽑기 함수
               insertMissionListData();
-							// 일일미션 모달 띄우기
+              // 일일미션 모달 띄우기
               setShowModal(true);
             }}
           >
@@ -153,7 +223,10 @@ const SideBar = () => {
 
           {showModal && (
             <>
-              <div onClick={() => setShowModal(false)} className="h-screen flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+              <div
+                onClick={() => setShowModal(false)}
+                className="h-screen flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
+              >
                 <div className="relative w-screen my-6 mx-auto max-w-3xl ">
                   <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                     {/* 모달 body */}
@@ -213,7 +286,7 @@ const SideBar = () => {
         </>
       ) : (
         <>
-          <Loading />
+          {/* <Loading /> */}
         </>
       )}
     </>

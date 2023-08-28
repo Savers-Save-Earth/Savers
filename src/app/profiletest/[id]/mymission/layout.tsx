@@ -11,7 +11,7 @@ export default function MymissionLayout ({
 {
 
   return (
-    <div className="h-screen">
+    <div className="h-full w-full">
         <h1>마이미션 레이아웃</h1>
         <div className="flex gap-10">
         {/* <Link

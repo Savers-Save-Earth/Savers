@@ -173,7 +173,7 @@ const ProductComponent = () => {
 
       <form
         className="rounded-lg flex p-2 items-center gap-2 bg-gray-100"
-        style={{ width: "350px", float: "right", marginRight: "22px" }}
+        style={{ width: "350px", float: "right" }}
       >
         <input
           type="text"
@@ -193,7 +193,7 @@ const ProductComponent = () => {
           )
           .filter((item) => item.category.includes(category))
           .map((item) => (
-            <div key={item.id} className="m-3 flex-1 min-w-0 max-w-md">
+            <div key={item.id} className=" flex-1 min-w-0 max-w-md">
               <img
                 src={item.img}
                 className="w-full h-auto rounded-md point"

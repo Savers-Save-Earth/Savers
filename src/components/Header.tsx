@@ -2,10 +2,20 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import supabase from "@/libs/supabase";
+import { User } from "@supabase/supabase-js";
 
 const Header = () => {
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
+  const [userNickname, setUserNickname] = useState<any>(null);
+
+  const getUserNickname = async (id: string) => {
+    const { data: userNickDB, error } = await supabase.from("user").select("nickname").eq("uid", id)
+    if (error) {console.log(error); return false};
+    const userNickname = userNickDB[0].nickname
+    console.log("userNickname===>",userNickname)
+    setUserNickname(userNickname)
+}
 
   const getUser = async () => {
     const {
@@ -13,16 +23,19 @@ const Header = () => {
     } = await supabase.auth.getUser();
 
     if (!user) {
-      setUser(false);
+      setUser(null);
     } else {
       setUser(user);
       console.log("헤더에 찍힌 유저아이디 ==>", user!.id);
+      getUserNickname(user.id)
     }
   };
 
   useEffect(() => {
     getUser();
   }, []);
+
+  console.log("getUser확인", user);
 
   const loginLogoutSwitcher = async () => {
     if (user) {
@@ -36,7 +49,9 @@ const Header = () => {
 
   const signupProfileSwitcher = () => {
     if (user) {
-      router.push(`/profiletest/${user.id}/myprofile`);
+      // router.push(`/profiletest/${user.id}/myprofile`);
+      const queryEncode = encodeURIComponent(userNickname)
+      router.push(`/profiletest/${queryEncode}/myprofile`);
     } else {
       router.push("/signup");
     }
