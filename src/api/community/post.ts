@@ -23,91 +23,109 @@ export const deletePost = async (post_uid: string | string[]): Promise<void> => 
   await supabase.from("community").delete().eq("post_uid", post_uid);
 };
  
-// 게시글 전체 조회
-export const getPosts = async (): Promise<PostType[]> => {
+// 댓글 개수 조회
+export const getCommentsNum = async (postUid: string) => {
+  const { count } = await supabase
+    .from("community_comment")
+    .select("*", { count: "exact" })
+    .eq("post_uid", postUid);
+  return count ?? 0;
+};
+
+// 게시글 조회
+export const getPosts = async (pathname: string): Promise<PostType[]> => {
   try {
-    const { data: posts } = await supabase
-      .from("community")
-      .select("*")
-      .order("created_date", { ascending: false });
-    return posts || [];
-  }
-  catch (error) {
+    let posts;
+    
+    if (pathname === "/community/product") {
+      posts = await getProductPosts();
+    } else if (pathname === "/community/restaurant") {
+      posts = await getRestaurantPosts();
+    } else if (pathname === "/community/recipe") {
+      posts = await getRecipePosts();
+    } else if (pathname === "/community/ohjiwan") {
+      posts = await getOhjiwanPosts();
+    } else {
+      // 다른 모든 경우에 대한 기본 처리
+      const { data } = await supabase
+        .from("community")
+        .select("*")
+        .order("created_date", { ascending: false });
+      posts = data || [];
+    }
+    
+    return posts;
+  } catch (error) {
     throw error;
   }
-}
+};
 
 // 게시글 상세내용 조회
-export const getPostDetail = async (post_uid: string | string[]): Promise<PostType> => {
+export const getPostDetail = async (post_uid: string): Promise<PostType> => {
   try {
     const { data: post } = await supabase
       .from("community")
       .select("*")
-      .eq('post_uid', post_uid)
+      .eq("post_uid", post_uid)
       .single();
     return post;
   } catch (error) {
     throw error;
   }
 };
- 
-// 카테고리별 게시글 조회
-// 1. 제품
-export const getProductPosts = async (): Promise<PostType[]> => {
+
+// 1. 제품 카테고리 게시글 조회
+const getProductPosts = async (): Promise<PostType[]> => {
   try {
-    const { data: posts } = await supabase
-    .from("community")
-    .select("*")
-    .eq("category", "제품")
-    .order("created_date", { ascending: false });
-    return posts || [];
-  }
-  catch (error) {
+    const { data } = await supabase
+      .from("community")
+      .select("*")
+      .eq("category", "제품")
+      .order("created_date", { ascending: false });
+    return data || [];
+  } catch (error) {
     throw error;
   }
 };
 
-// 2. 식당
-export const getRestaurantPosts = async (): Promise<PostType[]> => {
+// 2. 식당 카테고리 게시글 조회
+const getRestaurantPosts = async (): Promise<PostType[]> => {
   try {
-    const { data: posts } = await supabase
-    .from("community")
-    .select("*")
-    .eq("category", "식당")
-    .order("created_date", { ascending: false });
-    return posts || [];
-  }
-  catch (error) {
+    const { data } = await supabase
+      .from("community")
+      .select("*")
+      .eq("category", "식당")
+      .order("created_date", { ascending: false });
+    return data || [];
+  } catch (error) {
     throw error;
   }
 };
 
-// 3. 레시피
-export const getRecipePosts = async (): Promise<PostType[]> => {
+// 3. 레시피 카테고리 게시글 조회
+const getRecipePosts = async (): Promise<PostType[]> => {
   try {
-    const { data: posts } = await supabase
-    .from("community")
-    .select("*")
-    .eq("category", "레시피")
-    .order("created_date", { ascending: false });
-    return posts || [];
-  }
-  catch (error) {
+    const { data } = await supabase
+      .from("community")
+      .select("*")
+      .eq("category", "레시피")
+      .order("created_date", { ascending: false });
+    return data || [];
+  } catch (error) {
     throw error;
   }
 };
 
-// 4. 오지완
-export const getOhjiwanPosts = async (): Promise<PostType[]> => {
+// 4. 오지완 카테고리 게시글 조회
+const getOhjiwanPosts = async (): Promise<PostType[]> => {
   try {
-    const { data: posts } = await supabase
-    .from("community")
-    .select("*")
-    .eq("category", "오지완")
-    .order("created_date", { ascending: false });
-    return posts || [];
-  }
-  catch (error) {
+    const { data } = await supabase
+      .from("community")
+      .select("*")
+      .eq("category", "오지완")
+      .order("created_date", { ascending: false });
+    return data || [];
+  } catch (error) {
     throw error;
   }
-}
+};
