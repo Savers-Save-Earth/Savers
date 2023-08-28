@@ -195,12 +195,13 @@ const KakaoMap = () => {
       <div
         id="map"
         style={{
-          width: "100vw",
-          height: "100vh",
+          width: "50vw",
+          height: "50vh",
         }}
       ></div>
       <h2>마커 리스트</h2>
       <MarkerLists markerList={markerList} />
+      <div></div>
     </div>
   );
 };
