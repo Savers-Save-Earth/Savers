@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 type CommunityPost = Database["public"]["Tables"]["community"]["Row"];
 const MyPosts = ({ params }: { params: { id: string } }) => {
   const [userPosts, setUserPosts] = useState<CommunityPost[]>([]);
-  const [loadCount, setLoadCount] = useState<number>(4);
+  const [loadCount, setLoadCount] = useState<number>(5);
   const [search, setSearch] = useState("");
   const router = useRouter();
   // decoded params : 유저 닉네임.

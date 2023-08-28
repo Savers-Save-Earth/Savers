@@ -11,10 +11,8 @@ const MyLikedPosts = ({ params }: { params: { id: string } }) => {
   const [userLikedPosts, setUserLikedPosts] = useState<UserLikedPost[]>([]);
   const [loadCount, setLoadCount] = useState<number>(5);
   const router = useRouter();
-  // decoded params : 유저 닉네임.
   const decodedParams = decodeURIComponent(params.id);
-  // console.log("decodedParams===>", decodedParams);
-
+;
   useEffect(() => {
     fetchCommunity();
   }, [loadCount]);
@@ -35,9 +33,7 @@ const MyLikedPosts = ({ params }: { params: { id: string } }) => {
   };
   const handleLoadMore = () => {
     setLoadCount((prev) => prev + 5);
-    // console.log("loadCount===>",loadCount);
   };
-  // console.log("userPost=====>", userLikedPosts);
   return (
     <>
       {userLikedPosts?.map((post) => (

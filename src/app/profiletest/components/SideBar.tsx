@@ -171,6 +171,13 @@ const SideBar = () => {
           >
             커뮤니티 활동
           </button>
+          <button
+            onClick={() =>
+              router.push(`/profiletest/${searchId}/myfavorite/myfavoriteproducts`)
+            }
+          >
+            좋아요
+          </button>
           {user && user.id == profile.uid ? (
             <button
               onClick={() => {

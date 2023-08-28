@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Router } from "next/router";
-import CommunityTopBar from "./components/CommunityTopBar";
-CommunityTopBar
+import FavoriteTopBar from "./component/FavoriteTopBar";
 
 export default function MycommunityLayout ({
   children,
@@ -24,10 +23,9 @@ export default function MycommunityLayout ({
         >
           내가 쓴 댓글
         </Link> */}
-        <CommunityTopBar/>
+        <FavoriteTopBar/>
       </div>
-      {/* <section className="border-dashed border-2 border-indigo-600 h-3/4 overflow-y-auto">{children}</section> */}
-      <section className="border-dashed border-2 border-indigo-600 h-3/4">{children}</section>
+      <section className="border-dashed border-2 border-indigo-600 h-3/4 overflow-y-auto">{children}</section>
     </div>
   );
 }

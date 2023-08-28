@@ -36,8 +36,9 @@ const AddPost: NextComponentType = () => {
   ) => {
     setCategory(e.currentTarget.value);
   };
-
+  // (1) queryClient 가져오기
   const queryClient = useQueryClient();
+  // (2) mutation 함수
   const createMutation = useMutation(createPost, {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["communityAllPosts"] });
