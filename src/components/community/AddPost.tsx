@@ -1,12 +1,14 @@
 "use client";
 import type { NextComponentType } from "next";
 import TextEditor from "./quill/TextEditor";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createPost } from "@/api/community/post";
 import { convertTimestamp } from "@/libs/util";
 import { Database } from "@/types/supabase";
+import useAuth from "@/hooks/useAuth";
+import { redirect } from "next/navigation";
 
 type NewPost = Database["public"]["Tables"]["community"]["Insert"];
 
@@ -14,6 +16,8 @@ const AddPost: NextComponentType = () => {
   const [category, setCategory] = useState("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+
+  const currentUser = useAuth();
 
   const selectChangeHandler = (
     e: React.ChangeEvent<HTMLSelectElement>,
@@ -42,8 +46,8 @@ const AddPost: NextComponentType = () => {
       category,
       title,
       content,
-      author_uid: "bd2125b8-d852-485c-baf3-9c7a8949beee",
-      author_name: "테스트닉네임",
+      author_uid: currentUser?.uid,
+      author_name: currentUser?.nickname,
       created_date: convertTimestamp(writtenTime),
       updated_date: convertTimestamp(writtenTime)
     }
