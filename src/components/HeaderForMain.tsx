@@ -12,7 +12,6 @@ const HeaderForMain = () => {
     const { data: userNickDB, error } = await supabase.from("user").select("nickname").eq("uid", id)
     if (error) {console.log(error); return false};
     const userNickname = userNickDB[0].nickname
-    console.log("userNickname===>",userNickname)
     setUserNickname(userNickname)
 }
 
@@ -25,7 +24,6 @@ const HeaderForMain = () => {
       setUser(false);
     } else {
       setUser(user);
-      console.log("헤더에 찍힌 유저아이디==>", user.id);
       getUserNickname(user.id)
     }
   };

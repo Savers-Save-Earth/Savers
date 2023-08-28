@@ -50,7 +50,6 @@ const MyLikedProducts = ({ params }: { params: { id: string } }) => {
 
   const handleLoadMore = () => {
     setLoadCount((prev) => prev + 5);
-    console.log("loadCount===>",loadCount);
   };
   return (
     <>
