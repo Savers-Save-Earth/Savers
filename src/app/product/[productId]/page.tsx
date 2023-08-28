@@ -128,17 +128,17 @@ const ProductPost = () => {
         const { error: badgeDataError } = await supabase
           .from("badge")
           .insert({ user_id: userId, badge_title: "like" });
-      }
-      fetchProduct(); // 데이터 갱신 [숫자]
-      fetchUser(); // 데이터 갱신 [좋아요]
 
-      ///===================👇동준작업👇=========================================================
+              ///===================👇동준작업👇=========================================================
       getMissionHandler(user, currentDate, "제품", setMissionUid, "좋아요");
       updateMissionHandler(missionUid);
       ///===================👆동준작업👆=========================================================
+      }
+      fetchProduct(); // 데이터 갱신 [숫자]
+      fetchUser(); // 데이터 갱신 [좋아요]
     }
   };
-
+  console.log("missionUid====>",missionUid)
   // 공유하기 눌렀을 때
   const shareHandler = async () => {
     const userId = user.id;
