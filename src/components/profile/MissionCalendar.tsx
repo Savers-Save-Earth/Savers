@@ -40,9 +40,7 @@ const MissionCalendar = () => {
   }, []);
 
   const marks: string[] = [];
-  console.log(mission);
   mission.map((item) => marks.push(`${item.createdAt}`));
-  console.log(marks);
 
   return (
     <div>
