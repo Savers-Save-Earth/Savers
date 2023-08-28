@@ -1,7 +1,9 @@
 "use client";
+import useAuth from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 
 const NavBar = () => {
+  const currentUser = useAuth();
   const router = useRouter();
   return (
     <>
@@ -47,14 +49,19 @@ const NavBar = () => {
               오지완
             </button>
           </li>
-          <li>
-            <button
-              onClick={() => router.push("/community/write")}
-              className="w-28 border-b-4 border-blue-300 px-5 py-2 shadow-sm hover:-translate-y-2 transition ease-in-out duration-200"
-            >
-              글쓰기
-            </button>
-          </li>
+          {
+            currentUser ? 
+              <li>
+                <button
+                  onClick={() => router.push("/community/write")}
+                  className="w-28 border-b-4 border-blue-300 px-5 py-2 shadow-sm hover:-translate-y-2 transition ease-in-out duration-200"
+                >
+                  글쓰기
+                </button>
+              </li>
+            :
+            null
+          }
         </ul>
       </nav>
     </>

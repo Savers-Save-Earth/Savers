@@ -9,6 +9,24 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      badge: {
+        Row: {
+          badge_title: string | null
+          id: number
+          user_id: string | null
+        }
+        Insert: {
+          badge_title?: string | null
+          id?: number
+          user_id?: string | null
+        }
+        Update: {
+          badge_title?: string | null
+          id?: number
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       community: {
         Row: {
           author_name: string
@@ -16,7 +34,7 @@ export interface Database {
           category: string
           content: string
           created_date: string
-          number_comments: number | null
+          number_comments: number
           post_uid: string
           title: string
           updated_date: string
@@ -27,7 +45,7 @@ export interface Database {
           category?: string
           content?: string
           created_date?: string
-          number_comments?: number | null
+          number_comments?: number
           post_uid?: string
           title?: string
           updated_date?: string
@@ -38,7 +56,7 @@ export interface Database {
           category?: string
           content?: string
           created_date?: string
-          number_comments?: number | null
+          number_comments?: number
           post_uid?: string
           title?: string
           updated_date?: string
@@ -50,6 +68,7 @@ export interface Database {
           comment_uid: string
           content: string
           created_date: string
+          isDeleted: boolean
           post_uid: string
           updated_date: string
           writer_name: string
@@ -59,6 +78,7 @@ export interface Database {
           comment_uid?: string
           content?: string
           created_date: string
+          isDeleted?: boolean
           post_uid?: string
           updated_date: string
           writer_name: string
@@ -68,6 +88,7 @@ export interface Database {
           comment_uid?: string
           content?: string
           created_date?: string
+          isDeleted?: boolean
           post_uid?: string
           updated_date?: string
           writer_name?: string
@@ -93,6 +114,21 @@ export interface Database {
         }
         Relationships: []
       }
+      like_map: {
+        Row: {
+          id: number
+          place_name: string | null
+        }
+        Insert: {
+          id?: number
+          place_name?: string | null
+        }
+        Update: {
+          id?: number
+          place_name?: string | null
+        }
+        Relationships: []
+      }
       like_post: {
         Row: {
           number_likes: number
@@ -114,21 +150,99 @@ export interface Database {
       like_product: {
         Row: {
           createdAt: string | null
+          img: string | null
           like_id: string
           product_uid: string
           user_id: string | null
         }
         Insert: {
           createdAt?: string | null
+          img?: string | null
           like_id?: string
           product_uid: string
           user_id?: string | null
         }
         Update: {
           createdAt?: string | null
+          img?: string | null
           like_id?: string
           product_uid?: string
           user_id?: string | null
+        }
+        Relationships: []
+      }
+      mission: {
+        Row: {
+          bigCategory: string | null
+          content: string | null
+          doingYn: boolean | null
+          id: string | null
+          point: number | null
+          smallCategory: string | null
+          title: string | null
+          uid: number
+        }
+        Insert: {
+          bigCategory?: string | null
+          content?: string | null
+          doingYn?: boolean | null
+          id?: string | null
+          point?: number | null
+          smallCategory?: string | null
+          title?: string | null
+          uid?: number
+        }
+        Update: {
+          bigCategory?: string | null
+          content?: string | null
+          doingYn?: boolean | null
+          id?: string | null
+          point?: number | null
+          smallCategory?: string | null
+          title?: string | null
+          uid?: number
+        }
+        Relationships: []
+      }
+      missionList: {
+        Row: {
+          bigCategory: string | null
+          content: string | null
+          createdAt: string | null
+          doingYn: boolean | null
+          id: string
+          missionUid: string | null
+          point: number | null
+          smallCategory: string | null
+          title: string | null
+          user_uid: string | null
+          userId: string | null
+        }
+        Insert: {
+          bigCategory?: string | null
+          content?: string | null
+          createdAt?: string | null
+          doingYn?: boolean | null
+          id?: string
+          missionUid?: string | null
+          point?: number | null
+          smallCategory?: string | null
+          title?: string | null
+          user_uid?: string | null
+          userId?: string | null
+        }
+        Update: {
+          bigCategory?: string | null
+          content?: string | null
+          createdAt?: string | null
+          doingYn?: boolean | null
+          id?: string
+          missionUid?: string | null
+          point?: number | null
+          smallCategory?: string | null
+          title?: string | null
+          user_uid?: string | null
+          userId?: string | null
         }
         Relationships: []
       }
@@ -144,6 +258,7 @@ export interface Database {
           name: string | null
           price: number | null
           sales: number | null
+          sub_img: string | null
           website: string | null
         }
         Insert: {
@@ -157,6 +272,7 @@ export interface Database {
           name?: string | null
           price?: number | null
           sales?: number | null
+          sub_img?: string | null
           website?: string | null
         }
         Update: {
@@ -170,6 +286,7 @@ export interface Database {
           name?: string | null
           price?: number | null
           sales?: number | null
+          sub_img?: string | null
           website?: string | null
         }
         Relationships: []
@@ -181,12 +298,12 @@ export interface Database {
           commentPosts: string | null
           email: string | null
           isActiveDone: boolean | null
+          isLogin: boolean | null
           likedPosts: string | null
           likePosts: string | null
           likeProducts: Json | null
           likeRestaurants: string | null
           nickname: string | null
-          password: string | null
           profileImage: string | null
           provider: string | null
           uid: string
@@ -198,12 +315,12 @@ export interface Database {
           commentPosts?: string | null
           email?: string | null
           isActiveDone?: boolean | null
+          isLogin?: boolean | null
           likedPosts?: string | null
           likePosts?: string | null
           likeProducts?: Json | null
           likeRestaurants?: string | null
           nickname?: string | null
-          password?: string | null
           profileImage?: string | null
           provider?: string | null
           uid: string
@@ -215,12 +332,12 @@ export interface Database {
           commentPosts?: string | null
           email?: string | null
           isActiveDone?: boolean | null
+          isLogin?: boolean | null
           likedPosts?: string | null
           likePosts?: string | null
           likeProducts?: Json | null
           likeRestaurants?: string | null
           nickname?: string | null
-          password?: string | null
           profileImage?: string | null
           provider?: string | null
           uid?: string
