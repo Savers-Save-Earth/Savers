@@ -9,6 +9,7 @@ type CommunityPost = Database["public"]["Tables"]["community"]["Row"];
 const MyPosts = ({ params }: { params: { id: string } }) => {
   const [userPosts, setUserPosts] = useState<CommunityPost[]>([]);
   const [loadCount, setLoadCount] = useState<number>(4);
+  const [search, setSearch] = useState("");
   const router = useRouter();
   // decoded params : 유저 닉네임.
   const decodedParams = decodeURIComponent(params.id);
@@ -40,7 +41,24 @@ const MyPosts = ({ params }: { params: { id: string } }) => {
   return (
     <>
     <div>MyPosts</div>
-      {userPosts?.map((post) => (
+    <form
+        className="rounded-lg flex p-2 items-center gap-2 bg-gray-100"
+        style={{ width: "350px", float: "right" }}
+      >
+        <input
+          type="text"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className=" bg-gray-100"
+          style={{ width: "300px", outline: "none" }}
+          placeholder="검색어를 입력하세요."
+        />
+      </form>
+      {userPosts?.filter(
+            (item) =>
+              item.title.includes(search.trim())
+          )
+      .map((post) => (
           <div
             className="border-solid border-2 border-blue-900 p-5 m-5"
             key={post.post_uid}
