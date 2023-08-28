@@ -108,16 +108,13 @@ const KakaoMap = () => {
               map: map,
             });
 
-            var iwContent = `<div>
-        <h1 class="infoWindow-name">${place.place_name}</h1>
-        <p class="infoWindow-address">${place.address_name}</p>
-        <p class="infoWindow-road-address">(지번)${place.road_address_name}</p>
-        <p class="infoWindow-phone">${place.phone}</p>
-        <p class="infoWindow-phone">${place.place_url}</p>
-        <a href=${place.place_url} style="color:blue" target="_blank">카카오맵으로 이동</a>
-        
-      
-        
+            var iwContent = `<div style= "padding: 5px; width: 250px; border-radius:5px">
+            <p class="infoWindow-name" style="font-size: 13px; color: #4e4e4e">${place.category_name}</p>
+        <h1 class="infoWindow-name" style="font-weight: bold">${place.place_name}</h1>
+        <p class="infoWindow-address" style="font-size: 13px; color: #1f1f1f">${place.address_name}</p>
+        <p class="infoWindow-road-address" style="font-size: 13px; color: #1f1f1f">(지번)${place.road_address_name}</p>
+        <p class="infoWindow-phone"style="font-size: 13px; color: #1f1f1f" >${place.phone}</p>
+        <a href=${place.place_url} " target="_blank"><button style="background-color:#10C800; color:white; font-size: 13px; padding:3px; width: 240px">상세보기</button></a>
         </div>`; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
 
             var iwRemoveable = true;
