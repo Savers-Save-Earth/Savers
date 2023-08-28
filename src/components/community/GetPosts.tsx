@@ -3,32 +3,38 @@ import Link from "next/link";
 
 import { useQuery } from "@tanstack/react-query";
 import { getPosts } from "@/api/community/post";
+import { getCommentsNum } from "@/api/community/post";
 
-import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 import { Database } from "@/types/supabase";
-import supabase from "@/libs/supabase";
 import { removeHtmlTags } from "@/libs/util";
+
 type PostType = Database["public"]["Tables"]["community"]["Row"];
+type QueryKeyMap = {
+  [key: string]: string[];
+};
 
 const GetPosts = () => {
-  const router = useRouter();
-
-  // 게시글 댓글 개수 조회
-  const getCommentsNum = async (postUid: string) => {
-    const { count } = await supabase
-      .from("community_comment")
-      .select("*", { count: "exact" })
-      .eq("post_uid", postUid);
-    return count;
+  const pathname = usePathname();
+  const getPathnameQueryKey = (pathname: string) => {
+  const queryKeyMap: QueryKeyMap = {
+    "/community": ["allPosts"],
+    "/community/product": ["productPosts"],
+    "/community/restaurant": ["restaurantPosts"],
+    "/community/recipe": ["recipePosts"],
+    "/community/ohjiwan": ["ohjiwanPosts"],
   };
-  const {
-    isLoading,
-    data: posts,
-    error,
-  } = useQuery<PostType[]>(["communityAllPosts"], () => getPosts(), {
+
+  return queryKeyMap[pathname] || ["allPosts"];
+  };
+  const queryKey = getPathnameQueryKey(pathname);
+
+  const { isLoading, data: posts, error } = useQuery<PostType[]>(
+    queryKey,
+    () => getPosts(pathname), {
     staleTime: 60000,
-    cacheTime: 120000,
+    cacheTime: 300000,
   });
 
   if (isLoading) return "커뮤니티 게시글 로딩중";
