@@ -4,34 +4,65 @@ import supabase from "@/libs/supabase";
 import { Database } from "@/types/supabase";
 import { useRouter } from "next/navigation";
 
-type CommunityComment =
-  Database["public"]["Tables"]["community_comment"]["Row"];
-
+type CommunityComment =Database["public"]["Tables"]["community_comment"]["Row"];
 const MyComments = ({ params }: { params: { id: string } }) => {
+
   const [userComments, setUserComments] = useState<CommunityComment[]>([]);
   const [loadCount, setLoadCount] = useState<number>(5);
   const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태 추가
+  const [loadMoreBtn, setLoadMoreBtn] = useState<string>("더보기")
   const router = useRouter();
   const decodedParams = decodeURIComponent(params.id);
 
+  useEffect(() => {
+    fetchCommunity();
+  }, [loadCount]);
+
   const fetchCommunity = async () => {
     try {
-      let { data: comments } = await supabase
+      let { data: comments, count } = await supabase
         .from("community_comment")
-        .select("*")
+        .select("*", { count: 'exact'})
         .eq("writer_name", decodedParams)
         .range(0, loadCount - 1);
-      setUserComments(comments || []);
-      setIsLoading(false); // 데이터 가져오기 후 로딩 상태를 false로 설정
+        setUserComments(comments || []);
+        console.log("comments===>",comments)
+        console.log("count--+++-->",count)
+        console.log("loadCount--+++-->",loadCount)
+        setIsLoading(false); // 데이터 가져오기 후 로딩 상태를 false로 설정
+        
+        if(count && count <= 5 ) {
+          setLoadMoreBtn("")
+          return
+        }
+        else if (count! > loadCount) {
+          setLoadMoreBtn("더보기")
+          return
+        }
+        else if (count! <= loadCount) {
+          if (count! + 5 > loadCount) {
+            setLoadMoreBtn("접기")
+          }
+          else {
+            setLoadCount(5)
+            setLoadMoreBtn("더보기")
+          }
+          return
+        }
+        // if(count && loadCount) {
+        //   if(count <= loadCount) {
+        //     setLoadMoreBtn("접기")
+        //   }
+        //   else if(count+5 < loadCount) {
+        //     setLoadCount(5) 
+        //     setLoadMoreBtn("더보기")           
+        //   } 
+        // }
     } catch (error) {
       console.error("An error occurred:", error);
       setIsLoading(false);
     }
   };
-
-  useEffect(() => {
-    fetchCommunity();
-  }, [loadCount]);
 
   const handleLoadMore = () => {
     setLoadCount((prev) => prev + 5);
@@ -55,7 +86,8 @@ const MyComments = ({ params }: { params: { id: string } }) => {
           </div>
         ))
       )}
-      <button onClick={handleLoadMore}>더 보기</button>
+      {/* <button onClick={handleLoadMore}>더 보기</button> */}
+      <button onClick={handleLoadMore}>{loadMoreBtn}</button>
     </>
   );
 };
