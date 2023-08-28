@@ -122,3 +122,11 @@
 .react-calendar__month-view__days__day--neighboringMonth {
   color: rgb(245, 245, 245) !important;
 }
+
+.react-calendar__month-view__weekdays {
+  color: rgb(75, 75, 75);
+}
+
+.react-calendar__navigation__label {
+  background-color: rgb(245, 245, 245);
+}
