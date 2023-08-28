@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import MarkerLists from "./MarkerLists";
 
 declare global {
   interface Window {
@@ -29,6 +30,7 @@ const getCurrentCoordinate = async () => {
 const KakaoMaps = () => {
   const [mapCenter, setMapCenter] = useState({ x: 127.1086228, y: 37.4012191 });
   const [currentCategory, setCurrentCategory] = useState(""); // 기본값으로 "전체" 카테고리 설정
+  const [markerList, setMarkerList] = useState([]); // 마커 리스트 상태 추가
 
   useEffect(() => {
     const container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
@@ -89,6 +91,8 @@ const KakaoMaps = () => {
     const displayPlaces = (places: any) => {
       removeMarker();
 
+      const newMarkerList = [];
+
       places.forEach((place: any) => {
         const markerPosition = new window.kakao.maps.LatLng(place.y, place.x);
         const marker = new window.kakao.maps.Marker({
@@ -96,26 +100,49 @@ const KakaoMaps = () => {
           map: map,
         });
 
-        var iwContent = `<div>${place.place_name}</div>`; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+        var iwContent = `<div>
+        <h1 class="infoWindow-name">${place.place_name}</h1>
+        <p class="infoWindow-address">${place.address_name}</p>
+        <p class="infoWindow-road-address">(지번)${place.road_address_name}</p>
+        <p class="infoWindow-phone">${place.phone}</p>
+        <p class="infoWindow-phone">${place.place_url}</p>
+        <a href=${place.place_url} style="color:blue" target="_blank">카카오맵으로 이동</a>
+        <button class="infoWindow-closeBtn">x</button>
+        
+        </div>`; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
 
         // 인포윈도우를 생성합니다
         var infowindow = new kakao.maps.InfoWindow({
           content: iwContent,
         });
 
-        window.kakao.maps.event.addListener(marker, "mouseover", function () {
+        window.kakao.maps.event.addListener(marker, "click", function () {
           // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
           infowindow.open(map, marker);
         });
 
+        // window.kakao.maps.event.addListener(marker, "mouseover", function () {
+        //   // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
+        //   infowindow.open(map, marker);
+        // });
+
         // 마커에 마우스아웃 이벤트를 등록합니다
-        window.kakao.maps.event.addListener(marker, "mouseout", function () {
+        // window.kakao.maps.event.addListener(marker, "mouseout", function () {
+        //   // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
+        //   infowindow.close();
+        // });
+
+        // 마커에 마우스아웃 이벤트: map을 누르면 실행
+        window.kakao.maps.event.addListener(map, "click", function () {
           // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
           infowindow.close();
         });
 
         markers.push(marker);
+        newMarkerList.push(place);
       });
+      setMarkerList(newMarkerList);
+      console.log("MArkerlist-->", newMarkerList);
     };
 
     const removeMarker = () => {
@@ -150,6 +177,15 @@ const KakaoMaps = () => {
         베이커리
       </button>
       <button onClick={() => setCurrentCategory("비건카페")}>카페</button>
+      <div className="list">
+        <h2>마커 리스트</h2>
+        <MarkerLists markerList={markerList} />
+        {/* <ul>
+          {markerList.map((place, index) => (
+            <li key={index}>{place.place_name}</li>
+          ))}
+        </ul> */}
+      </div>
       <div
         id="map"
         style={{
