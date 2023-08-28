@@ -12,6 +12,7 @@ import "swiper/css/pagination";
 import "swiper/css/autoplay";
 import {
   getMissionHandler,
+  likeShareMissionHandler,
   updateMissionHandler,
 } from "@/api/mission/checkMission";
 import { convertDate } from "@/libs/util";
@@ -24,8 +25,6 @@ const ProductPost = () => {
 
   const [missionUid, setMissionUid] = useState<any>("");
   const currentDate = convertDate(new Date());
-  // const bigCategory = "좋아요"
-  // const category = "좋아요"
 
   const fetchProduct = async () => {
     const { data } = await supabase
@@ -128,14 +127,19 @@ const ProductPost = () => {
         const { error: badgeDataError } = await supabase
           .from("badge")
           .insert({ user_id: userId, badge_title: "like" });
+
+        ///===================👇동준작업👇=========================================================
+        likeShareMissionHandler(
+          user,
+          currentDate,
+          "제품",
+          setMissionUid,
+          "좋아요",
+        );
+        ///===================👆동준작업👆=========================================================
       }
       fetchProduct(); // 데이터 갱신 [숫자]
       fetchUser(); // 데이터 갱신 [좋아요]
-
-      ///===================👇동준작업👇=========================================================
-      getMissionHandler(user, currentDate, "제품", setMissionUid, "좋아요");
-      updateMissionHandler(missionUid);
-      ///===================👆동준작업👆=========================================================
     }
   };
 
@@ -153,8 +157,13 @@ const ProductPost = () => {
         .insert({ badge_title: "share", user_id: userId });
 
       ///===================👇동준작업👇=========================================================
-      getMissionHandler(user, currentDate, "제품", setMissionUid, "공유하기");
-      updateMissionHandler(missionUid);
+      likeShareMissionHandler(
+        user,
+        currentDate,
+        "제품",
+        setMissionUid,
+        "공유하기",
+      );
       ///===================👆동준작업👆=========================================================
     } else {
       return;
