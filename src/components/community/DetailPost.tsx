@@ -7,16 +7,18 @@ import { deletePost, getPostDetail } from "@/api/community/post";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { Database } from "@/types/supabase";
+import useAuth from "@/hooks/useAuth";
 
 type PostType = Database["public"]["Tables"]["community"]["Row"];
 
 const DetailPost = () => {
+  const currentUser = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const router = useRouter();
 
   console.log("isEditing >>> ", isEditing);
 
-  const { postUid } = useParams();
+  const { postUid } = useParams() as { postUid: string; };
   const { data: postDetail } = useQuery<PostType>(
     ["postDetail", postUid],
     () => getPostDetail(postUid),
@@ -67,20 +69,26 @@ const DetailPost = () => {
             <h1 className="text-3xl text-gray-700 font-semibold">
               {postDetail?.title}
             </h1>
-            <div className="flex space-x-3">
-              <button
-                onClick={handleEditClick}
-                className="w-20 text-sm border-b-4 border-blue-300 px-5 pb-1 shadow-sm hover:-translate-y-1 transition ease-in-out duration-200"
-              >
-                수정
-              </button>
-              <button
-                onClick={handleDelete}
-                className="w-20 text-sm border-b-4 border-blue-300 px-5 pb-1 shadow-sm hover:-translate-y-1 transition ease-in-out duration-200"
-              >
-                삭제
-              </button>
-            </div>
+              {currentUser?.uid === postDetail?.author_uid ?
+                (
+                  <div className="flex space-x-3">
+                    <button
+                      onClick={handleEditClick}
+                      className="w-20 text-sm border-b-4 border-blue-300 px-5 pb-1 shadow-sm hover:-translate-y-1 transition ease-in-out duration-200"
+                    >
+                      수정
+                    </button>
+                    <button
+                      onClick={handleDelete}
+                      className="w-20 text-sm border-b-4 border-blue-300 px-5 pb-1 shadow-sm hover:-translate-y-1 transition ease-in-out duration-200"
+                    >
+                      삭제
+                    </button>
+                  </div>
+                ) : (
+                  null
+                )
+            }
           </div>
           <div className="flex justify-between mt-3">
             <div className="flex space-x-5 items-center">
