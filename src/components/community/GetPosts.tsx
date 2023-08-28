@@ -9,6 +9,7 @@ import { usePathname } from "next/navigation";
 
 import { Database } from "@/types/supabase";
 import { removeHtmlTags } from "@/libs/util";
+import Loading from "@/app/loading";
 
 type PostType = Database["public"]["Tables"]["community"]["Row"];
 type QueryKeyMap = {
@@ -37,18 +38,18 @@ const GetPosts = () => {
     cacheTime: 300000,
   });
 
-  if (isLoading) return "커뮤니티 게시글 로딩중";
+  if (isLoading) return <Loading />;
   if (error) {
     console.error("데이터를 불러오는 중에 오류가 발생했습니다:", error);
     return "데이터를 불러오는 중에 오류가 발생했습니다.";
   }
   return (
     <>
-      <h1 className="text-xl flex justify-center items-center mx-auto mt-10">
-        전체 카테고리 게시글 목록
-      </h1>
       {
         <div className="flex flex-col max-w-7xl my-10 mx-auto items-center justify-center">
+          <h1 className="text-xl flex mx-auto my-10">
+            전체 글
+          </h1>
           {Array.isArray(posts) &&
             posts.map((post: PostType) => (
               <div
