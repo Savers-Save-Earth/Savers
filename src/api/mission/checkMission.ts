@@ -10,11 +10,14 @@ export const updateMissionHandler = async (missionId: string ) => {
   return data;
  };
 
- export const getMissionHandler = async (user:any, currentDate:string, category:string, setMissionUid:any, bigCategory:string) => {
-  console.log("category==>",category)
-  console.log("bigCategory==>",bigCategory)
-  if(!user) return
-  const {data: missionLists, error} = await supabase.from("missionList").select("*").eq("createdAt", currentDate).eq("user_uid", user?.id).eq("bigCategory", bigCategory).eq("smallCategory", category).eq("doingYn", true)
+ export const getMissionHandler = async (currentUser:any, currentDate:string, category:string, setMissionUid:any, bigCategory:string) => {
+  console.log("currentuser 체크미션==>", currentUser)
+  if(!currentUser) { return console.log("체크미션 커렌트유저 없음")}
+  else {
+    console.log("currentUser================================================================",currentUser)
+  }
+  
+  const {data: missionLists, error} = await supabase.from("missionList").select("*").eq("createdAt", currentDate).eq("user_uid", currentUser?.uid || currentUser?.id).eq("bigCategory", bigCategory).eq("smallCategory", category).eq("doingYn", true)
   if (error) return error;
   console.log("missionLists==>",missionLists)
   if (missionLists!.length < 1) return false 
@@ -25,5 +28,25 @@ export const updateMissionHandler = async (missionId: string ) => {
   } else {
     console.log("No matching mission found.");
     setMissionUid("")
+  }
+}
+
+export const likeShareMissionHandler = async (currentUser:any, currentDate:string, category:string, setMissionUid:any, bigCategory:string) => {
+  console.log("currentuser 체크미션==>", currentUser)
+  if(!currentUser) { return console.log("체크미션 커렌트유저 없음")}
+  else {
+    console.log("currentUser================================================================",currentUser)
+    const {data: missionLists, error} = await supabase.from("missionList").select("*").eq("createdAt", currentDate).eq("user_uid", currentUser?.uid || currentUser?.id).eq("bigCategory", bigCategory).eq("smallCategory", category).eq("doingYn", true)
+    if (error) return error;
+    console.log("missionLists==>",missionLists)
+    if (missionLists!.length < 1) return false 
+    const matchingMission = missionLists!.find((missionList) => missionList.smallCategory === category)
+    if (matchingMission) {
+      console.log("미션매칭 성공")
+      updateMissionHandler(matchingMission.id);
+    } else {
+      console.log("No matching mission found.");
+
+    }
   }
 }
