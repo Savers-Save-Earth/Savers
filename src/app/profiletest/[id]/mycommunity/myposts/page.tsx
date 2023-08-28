@@ -27,9 +27,6 @@ const MyPosts = ({ params }: { params: { id: string } }) => {
         .eq("author_name", decodedParams)
         .range(0, loadCount - 1);
         setUserPosts(posts || []);
-        console.log("posts===>",posts)
-        console.log("count--+++-->",count)
-        console.log("loadCount--+++-->",loadCount)
         
         if(count && count <= 5 ) {
           setLoadMoreBtn("")
