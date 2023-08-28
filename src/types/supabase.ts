@@ -114,36 +114,21 @@ export interface Database {
         }
         Relationships: []
       }
-      like_map: {
-        Row: {
-          id: number
-          place_name: string | null
-        }
-        Insert: {
-          id?: number
-          place_name?: string | null
-        }
-        Update: {
-          id?: number
-          place_name?: string | null
-        }
-        Relationships: []
-      }
       like_post: {
         Row: {
-          number_likes: number
+          like_id: string
+          like_user: string
           post_uid: string
-          user_likes: string | null
         }
         Insert: {
-          number_likes: number
-          post_uid?: string
-          user_likes?: string | null
+          like_id?: string
+          like_user: string
+          post_uid: string
         }
         Update: {
-          number_likes?: number
+          like_id?: string
+          like_user?: string
           post_uid?: string
-          user_likes?: string | null
         }
         Relationships: []
       }
@@ -171,8 +156,33 @@ export interface Database {
         }
         Relationships: []
       }
+      like_restaurant: {
+        Row: {
+          created_at: string
+          id: number
+          restaurant_address: string | null
+          restaurant_name: string | null
+          score: number | null
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          restaurant_address?: string | null
+          restaurant_name?: string | null
+          score?: number | null
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          restaurant_address?: string | null
+          restaurant_name?: string | null
+          score?: number | null
+        }
+        Relationships: []
+      }
       mission: {
         Row: {
+          address: string | null
           bigCategory: string | null
           content: string | null
           doingYn: boolean | null
@@ -183,6 +193,7 @@ export interface Database {
           uid: number
         }
         Insert: {
+          address?: string | null
           bigCategory?: string | null
           content?: string | null
           doingYn?: boolean | null
@@ -193,6 +204,7 @@ export interface Database {
           uid?: number
         }
         Update: {
+          address?: string | null
           bigCategory?: string | null
           content?: string | null
           doingYn?: boolean | null
@@ -206,6 +218,7 @@ export interface Database {
       }
       missionList: {
         Row: {
+          address: string | null
           bigCategory: string | null
           content: string | null
           createdAt: string | null
@@ -219,6 +232,7 @@ export interface Database {
           userId: string | null
         }
         Insert: {
+          address?: string | null
           bigCategory?: string | null
           content?: string | null
           createdAt?: string | null
@@ -232,6 +246,7 @@ export interface Database {
           userId?: string | null
         }
         Update: {
+          address?: string | null
           bigCategory?: string | null
           content?: string | null
           createdAt?: string | null
