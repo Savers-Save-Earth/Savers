@@ -7,10 +7,20 @@ import { getPosts } from "@/api/community/post";
 import { useRouter } from "next/navigation";
 
 import { Database } from "@/types/supabase";
+import supabase from "@/libs/supabase";
 type PostType = Database["public"]["Tables"]["community"]["Row"];
 
 const GetPosts = () => {
   const router = useRouter();
+
+  // 게시글 댓글 개수 조회
+  const getCommentsNum = async (postUid: string) => {
+    const { count } = await supabase
+      .from("community_comment")
+      .select("*", { count: "exact" })
+      .eq("post_uid", postUid);
+    return count;
+  };
   const { isLoading, data: posts, error } = useQuery<PostType[]>(
     ["communityAllPosts"],
     () => getPosts(),
@@ -42,7 +52,7 @@ const GetPosts = () => {
                 className="flex items-center space-x-2 cursor-pointer hover:text-green-400">
                   <h4>{post.title}</h4>
                   <span className="text-sm text-gray-500">
-                    ({post.number_comments})
+                    ({getCommentsNum(post.post_uid)})
                   </span>
                 </div>
               </div>

@@ -1,5 +1,7 @@
 "use client";
 import type { NextComponentType } from "next";
+
+import { useAuth } from "@/hooks/useAuth";
 import TextEditor from "./quill/TextEditor";
 import { useEffect, useState } from "react";
 
@@ -8,8 +10,6 @@ import { createPost } from "@/api/community/post";
 import { convertDate, convertTimestamp } from "@/libs/util";
 import { Database } from "@/types/supabase";
 
-import { useAuth } from "@/hooks/useAuth";
-import { redirect } from "next/navigation";
 import supabase from "@/libs/supabase";
 import { getMissionHandler, updateMissionHandler } from "@/api/mission/checkMission";
 
