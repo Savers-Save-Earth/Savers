@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 type UserFavoriteProducts = Database["public"]["Tables"]["like_product"]["Row"];
 
 const MyFavoriteProducts = ({ params }: { params: { id: string } }) => {
-  const [userLikedProducts, setUserLikedProducts] = useState<any[]>([]);
+  const [userLikedProducts, setUserLikedProducts] = useState<UserFavoriteProducts[]>([]);
   // const [userId, setUserId] = useState<string | null>(null);
   const [loadCount, setLoadCount] = useState<number>(5);
 
@@ -53,26 +53,24 @@ const MyFavoriteProducts = ({ params }: { params: { id: string } }) => {
   };
   return (
     <>
+    <div className="flex flex-wrap mx-auto">
       {userLikedProducts?.map((product) => (
           <div
-            className="border-solid border-2 border-blue-900 p-5 m-5 cursor-pointer"
+            className="border-solid border-2 border-blue-900 p-5 m-3 cursor-pointer w-1/5"
             key={product.like_id}
           >
-            <img className="w-1/6 rounded-full" src={product.img} alt="No Image"/>
-            <p>좋아요 그 자체의 uid : {product.like_id}</p>
+            <img className="w-1/2 rounded-full mx-auto" src={product.img} alt="No Image"/>
+            {/* <p>좋아요 그 자체의 uid : {product.like_id}</p> */}
             {/* window.open : 새 탭에서 해당 url로 이동 */}
-            <p onClick = {() => window.open(`/product/${product.product_uid}`)}>제품 uid : {product.product_uid}</p>
+            <p
+            className="hover:underline"
+             onClick = {() => window.open(`/product/${product.product_uid}`)}>제품 uid : {product.product_uid}</p>
             {/* <p>등록일: {post.created_date.slice(0, 10)}</p> */}
           </div>
       ))}
+      
+      </div>
       <button onClick={handleLoadMore}>더 보기</button>
-      <div>MyLikedProducts</div>
-      <div>MyLikedProducts</div>
-      <div>MyLikedProducts</div>
-      <div>MyLikedProducts</div>
-      <div>MyLikedProducts</div>
-      <div>MyLikedProducts</div>
-      <div>MyLikedProducts</div>
     </>
   );
 };
