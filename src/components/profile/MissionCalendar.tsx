@@ -40,12 +40,10 @@ const MissionCalendar = () => {
   }, []);
 
   const marks: string[] = [];
-  console.log(mission);
   mission.map((item) => marks.push(`${item.createdAt}`));
-  console.log(marks);
 
   return (
-    <div>
+    <div style={{ background: "rgb(245, 245, 245)", borderRadius: "10px" }}>
       <Calendar
         onChange={onChange}
         value={value}
@@ -53,14 +51,26 @@ const MissionCalendar = () => {
         maxDetail="month"
         showNeighboringMonth={false}
         locale="ko-KO"
+        calendarType="US" // 요일을 일요일부터 시작하도록 설정
         className="mx-auto w-full text-sm border-b "
-        formatDay={(locale, date) => format(date, "dd")}
+        formatDay={(locale, date) => format(date, "d")} // 일 제외하고 숫자만 보임
         tileClassName={({ date, view }) => {
           if (marks.find((item) => item === format(date, "yyyy-MM-dd"))) {
             return "highlight";
           }
         }}
       />
+      <p
+        style={{
+          background: "rgb(245, 245, 245)",
+          textAlign: "center",
+          color: "gray",
+          padding: "15px 0 15px 0",
+          borderRadius: "10px",
+        }}
+      >
+        일일미션 하러가기
+      </p>
     </div>
   );
 };

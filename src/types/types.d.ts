@@ -33,5 +33,6 @@ export interface ListMission {
   smallCategory: string,
   doingYn: boolean,
   point: number,
-  user_uid: string
+  user_uid: string,
+  address: string,
 }

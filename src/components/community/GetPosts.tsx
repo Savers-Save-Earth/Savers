@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getPosts } from "@/api/community/post";
 import { getCommentsNum } from "@/api/community/post";
 
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import { Database } from "@/types/supabase";
 import { removeHtmlTags } from "@/libs/util";
@@ -18,7 +18,7 @@ type QueryKeyMap = {
 
 const GetPosts = () => {
   const pathname = usePathname();
-
+  const router = useRouter();
   // 현재 pathname에 따라 쿼리키 설정하는 함수
   const getPathnameQueryKey = (pathname: string) => {
     const queryKeyMap: QueryKeyMap = {

@@ -5,10 +5,10 @@ import supabase from "@/libs/supabase";
 import { Database } from "@/types/supabase";
 import { useRouter } from "next/navigation";
 
-type UserLikedProducts = Database["public"]["Tables"]["like_product"]["Row"];
+type UserFavoriteProducts = Database["public"]["Tables"]["like_product"]["Row"];
 
-const MyLikedProducts = ({ params }: { params: { id: string } }) => {
-  const [userLikedProducts, setUserLikedProducts] = useState<UserLikedProducts[]>([]);
+const MyFavoriteProducts = ({ params }: { params: { id: string } }) => {
+  const [userLikedProducts, setUserLikedProducts] = useState<any[]>([]);
   // const [userId, setUserId] = useState<string | null>(null);
   const [loadCount, setLoadCount] = useState<number>(5);
 
@@ -50,7 +50,6 @@ const MyLikedProducts = ({ params }: { params: { id: string } }) => {
 
   const handleLoadMore = () => {
     setLoadCount((prev) => prev + 5);
-    console.log("loadCount===>",loadCount);
   };
   return (
     <>
@@ -59,6 +58,7 @@ const MyLikedProducts = ({ params }: { params: { id: string } }) => {
             className="border-solid border-2 border-blue-900 p-5 m-5 cursor-pointer"
             key={product.like_id}
           >
+            <img className="w-1/6 rounded-full" src={product.img} alt="No Image"/>
             <p>좋아요 그 자체의 uid : {product.like_id}</p>
             {/* window.open : 새 탭에서 해당 url로 이동 */}
             <p onClick = {() => window.open(`/product/${product.product_uid}`)}>제품 uid : {product.product_uid}</p>
@@ -77,4 +77,4 @@ const MyLikedProducts = ({ params }: { params: { id: string } }) => {
   );
 };
 
-export default MyLikedProducts
+export default MyFavoriteProducts
