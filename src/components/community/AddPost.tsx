@@ -7,8 +7,12 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createPost } from "@/api/community/post";
 import { convertDate, convertTimestamp } from "@/libs/util";
 import { Database } from "@/types/supabase";
+
+import useAuth from "@/hooks/useAuth";
+import { redirect } from "next/navigation";
 import supabase from "@/libs/supabase";
 import { getMissionHandler, updateMissionHandler } from "@/api/mission/checkMission";
+
 
 type NewPost = Database["public"]["Tables"]["community"]["Insert"];
 
@@ -19,26 +23,12 @@ const AddPost: NextComponentType = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   ///===================👇동준작업👇=========================================================
-  const [user, setUser] = useState<any>()
   const [missionUid, setMissionUid] = useState<any>("")
 
   const bigCategory = "글쓰기"
-	const getUser = async () => {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    if (!user) {
-      setUser(false);
-    } else {
-      setUser(user);
-      console.log("글쓰기에 찍힌 유저아이디 ==>", user!.id);
-    }
-  };
-	useEffect(() => {
-		getUser()
-	},[])
 ///===================👆동준작업👆=========================================================
+
+  const currentUser = useAuth();
 
   const selectChangeHandler = (
     e: React.ChangeEvent<HTMLSelectElement>,
@@ -60,24 +50,11 @@ const AddPost: NextComponentType = () => {
     },
   });
   ///===================👇동준작업👇=========================================================
-  // Supabase로 현재 유저가 가지고 있는 미션 리스트 get(or supabase)
   useEffect(() => {
     // 사용함수는 api폴더의 checkMission.ts에 있음
-    if(!user) return
-    getMissionHandler(user, currentDate, category, setMissionUid, bigCategory)
+    if(!currentUser) return
+    getMissionHandler(currentUser, currentDate, category, setMissionUid, bigCategory)
   },[category])
-// const getMissionHandler = async (e: React.ChangeEvent<HTMLSelectElement>) => {
-//   const {data: missionLists, error} = await supabase.from("missionList").select("*").eq("createdAt", currentDate).eq("user_uid", user.id).eq("doingYn", true)
-//   console.log("missionLists==>",missionLists)
-//   if (missionLists!.length < 1) return false 
-//   const matchingMission = missionLists!.find((missionList) => missionList.smallCategory === e.target.value)
-//   if (matchingMission) {
-//     setMissionUid(matchingMission.id);
-//   } else {
-//     console.log("No matching mission found.");
-//     setMissionUid("")
-//   }
-// }
   ///===================👆동준작업👆=========================================================
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -86,8 +63,8 @@ const AddPost: NextComponentType = () => {
       category,
       title,
       content,
-      author_uid: "bd2125b8-d852-485c-baf3-9c7a8949beee",
-      author_name: "테스트닉네임",
+      author_uid: currentUser?.uid,
+      author_name: currentUser?.nickname,
       created_date: convertTimestamp(writtenTime),
       updated_date: convertTimestamp(writtenTime)
     }
@@ -112,7 +89,6 @@ const AddPost: NextComponentType = () => {
     // missionList를 업데이트하는(수파베이스) 로직
     
   }
-
   return (
     <>
       <form
@@ -124,12 +100,6 @@ const AddPost: NextComponentType = () => {
         <select
           name="category"
           onChange={(e) => {
-            // 현재 user가 해당 카테고리에 대한 미션을 갖고있는지를 체크
-            // missionLists를 가지고 해당 카테고리가 미션에 있는지 확인
-            // if (missionLists.find(e~~)~~~) {
-            //   setMissionUId(여기에 set);
-            // }
-
             selectChangeHandler(e, setCategory)
           }}
           className="w-1/5"

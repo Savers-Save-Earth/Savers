@@ -59,6 +59,17 @@ const KakaoMap = () => {
         };
         setInitLocation();
 
+        // 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
+        var mapTypeControl = new kakao.maps.MapTypeControl();
+
+        // 지도에 컨트롤을 추가해야 지도위에 표시됩니다
+        // kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
+        map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+
+        // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+        var zoomControl = new kakao.maps.ZoomControl();
+        map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
         //
         //
         //
@@ -97,20 +108,21 @@ const KakaoMap = () => {
               map: map,
             });
 
-            var iwContent = `<div>
-        <h1 class="infoWindow-name">${place.place_name}</h1>
-        <p class="infoWindow-address">${place.address_name}</p>
-        <p class="infoWindow-road-address">(지번)${place.road_address_name}</p>
-        <p class="infoWindow-phone">${place.phone}</p>
-        <p class="infoWindow-phone">${place.place_url}</p>
-        <a href=${place.place_url} style="color:blue" target="_blank">카카오맵으로 이동</a>
-        <button class="infoWindow-closeBtn">x</button>
-        
+            var iwContent = `<div style= "padding: 5px; width: 250px; border-radius:5px">
+            <p class="infoWindow-name" style="font-size: 13px; color: #4e4e4e">${place.category_name}</p>
+        <h1 class="infoWindow-name" style="font-weight: bold">${place.place_name}</h1>
+        <p class="infoWindow-address" style="font-size: 13px; color: #1f1f1f">${place.address_name}</p>
+        <p class="infoWindow-road-address" style="font-size: 13px; color: #1f1f1f">(지번)${place.road_address_name}</p>
+        <p class="infoWindow-phone"style="font-size: 13px; color: #1f1f1f" >${place.phone}</p>
+        <a href=${place.place_url} " target="_blank"><button style="background-color:#10C800; color:white; font-size: 13px; padding:3px; width: 240px">상세보기</button></a>
         </div>`; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+
+            var iwRemoveable = true;
 
             // 인포윈도우를 생성합니다
             var infowindow = new kakao.maps.InfoWindow({
               content: iwContent,
+              removable: iwRemoveable,
             });
 
             window.kakao.maps.event.addListener(marker, "click", function () {
@@ -124,10 +136,14 @@ const KakaoMap = () => {
             // });
 
             // 마커에 마우스아웃 이벤트를 등록합니다
-            // window.kakao.maps.event.addListener(marker, "mouseout", function () {
-            //   // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
-            //   infowindow.close();
-            // });
+            // window.kakao.maps.event.addListener(
+            //   marker,
+            //   "mouseout",
+            //   function () {
+            //     // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
+            //     infowindow.close();
+            //   },
+            // );
 
             // 마커에 마우스아웃 이벤트: map을 누르면 실행
             window.kakao.maps.event.addListener(map, "click", function () {

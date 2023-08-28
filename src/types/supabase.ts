@@ -27,6 +27,24 @@ export interface Database {
         };
         Relationships: [];
       };
+      badge: {
+        Row: {
+          badge_title: string | null
+          id: number
+          user_id: string | null
+        }
+        Insert: {
+          badge_title?: string | null
+          id?: number
+          user_id?: string | null
+        }
+        Update: {
+          badge_title?: string | null
+          id?: number
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       community: {
         Row: {
           author_name: string;
@@ -39,6 +57,16 @@ export interface Database {
           title: string;
           updated_date: string;
         };
+          author_name: string
+          author_uid: string
+          category: string
+          content: string
+          created_date: string
+          number_comments: number
+          post_uid: string
+          title: string
+          updated_date: string
+        }
         Insert: {
           author_name?: string;
           author_uid?: string;
@@ -50,6 +78,16 @@ export interface Database {
           title?: string;
           updated_date?: string;
         };
+          author_name?: string
+          author_uid?: string
+          category?: string
+          content?: string
+          created_date?: string
+          number_comments?: number
+          post_uid?: string
+          title?: string
+          updated_date?: string
+        }
         Update: {
           author_name?: string;
           author_uid?: string;
@@ -63,6 +101,18 @@ export interface Database {
         };
         Relationships: [];
       };
+          author_name?: string
+          author_uid?: string
+          category?: string
+          content?: string
+          created_date?: string
+          number_comments?: number
+          post_uid?: string
+          title?: string
+          updated_date?: string
+        }
+        Relationships: []
+      }
       community_comment: {
         Row: {
           comment_uid: string;
@@ -74,6 +124,15 @@ export interface Database {
           writer_name: string;
           writer_uid: string;
         };
+          comment_uid: string
+          content: string
+          created_date: string
+          isDeleted: boolean
+          post_uid: string
+          updated_date: string
+          writer_name: string
+          writer_uid: string
+        }
         Insert: {
           comment_uid?: string;
           content?: string;
@@ -84,6 +143,15 @@ export interface Database {
           writer_name: string;
           writer_uid?: string;
         };
+          comment_uid?: string
+          content?: string
+          created_date: string
+          isDeleted?: boolean
+          post_uid?: string
+          updated_date: string
+          writer_name: string
+          writer_uid?: string
+        }
         Update: {
           comment_uid?: string;
           content?: string;
@@ -96,6 +164,17 @@ export interface Database {
         };
         Relationships: [];
       };
+          comment_uid?: string
+          content?: string
+          created_date?: string
+          isDeleted?: boolean
+          post_uid?: string
+          updated_date?: string
+          writer_name?: string
+          writer_uid?: string
+        }
+        Relationships: []
+      }
       like_comment: {
         Row: {
           comment_uid: string;
@@ -130,11 +209,24 @@ export interface Database {
           place_uid?: number;
         };
         Update: {
-          num_likes?: number;
-          num_people?: number | null;
+          comment_uid?: string;
+          number_likes?: number;
+          user_likes?: string | null;
+        };
+        Relationships: [];
+      };
+      like_map: {
+        Row: {
+          id: number;
+          place_name: string | null;
+        };
+        Insert: {
+          id?: number;
           place_name?: string | null;
-          place_region?: string | null;
-          place_uid?: number;
+        };
+        Update: {
+          id?: number;
+          place_name?: string | null;
         };
         Relationships: [];
       };
@@ -182,7 +274,6 @@ export interface Database {
       };
       mission: {
         Row: {
-          address: string | null;
           bigCategory: string | null;
           content: string | null;
           doingYn: boolean | null;
@@ -193,7 +284,6 @@ export interface Database {
           uid: number;
         };
         Insert: {
-          address?: string | null;
           bigCategory?: string | null;
           content?: string | null;
           doingYn?: boolean | null;
@@ -204,7 +294,6 @@ export interface Database {
           uid?: number;
         };
         Update: {
-          address?: string | null;
           bigCategory?: string | null;
           content?: string | null;
           doingYn?: boolean | null;
@@ -218,7 +307,6 @@ export interface Database {
       };
       missionList: {
         Row: {
-          address: string | null;
           bigCategory: string | null;
           content: string | null;
           createdAt: string | null;
@@ -232,7 +320,6 @@ export interface Database {
           userId: string | null;
         };
         Insert: {
-          address?: string | null;
           bigCategory?: string | null;
           content?: string | null;
           createdAt?: string | null;
@@ -246,7 +333,6 @@ export interface Database {
           userId?: string | null;
         };
         Update: {
-          address?: string | null;
           bigCategory?: string | null;
           content?: string | null;
           createdAt?: string | null;
@@ -276,6 +362,19 @@ export interface Database {
           sub_img: string | null;
           website: string | null;
         };
+          category: string | null
+          company: string | null
+          context: string | null
+          createdAt: string | null
+          id: string
+          img: string | null
+          like_count: number | null
+          name: string | null
+          price: number | null
+          sales: number | null
+          sub_img: string | null
+          website: string | null
+        }
         Insert: {
           category?: string | null;
           company?: string | null;
@@ -290,6 +389,19 @@ export interface Database {
           sub_img?: string | null;
           website?: string | null;
         };
+          category?: string | null
+          company?: string | null
+          context?: string | null
+          createdAt?: string | null
+          id?: string
+          img?: string | null
+          like_count?: number | null
+          name?: string | null
+          price?: number | null
+          sales?: number | null
+          sub_img?: string | null
+          website?: string | null
+        }
         Update: {
           category?: string | null;
           company?: string | null;
@@ -306,6 +418,21 @@ export interface Database {
         };
         Relationships: [];
       };
+          category?: string | null
+          company?: string | null
+          context?: string | null
+          createdAt?: string | null
+          id?: string
+          img?: string | null
+          like_count?: number | null
+          name?: string | null
+          price?: number | null
+          sales?: number | null
+          sub_img?: string | null
+          website?: string | null
+        }
+        Relationships: []
+      }
       user: {
         Row: {
           activePoint: number | null;
@@ -341,6 +468,22 @@ export interface Database {
           uid: string;
           writePosts?: string | null;
         };
+          activePoint?: number | null
+          badges?: string | null
+          commentPosts?: string | null
+          email?: string | null
+          isActiveDone?: boolean | null
+          isLogin?: boolean | null
+          likedPosts?: string | null
+          likePosts?: string | null
+          likeProducts?: Json | null
+          likeRestaurants?: string | null
+          nickname?: string | null
+          profileImage?: string | null
+          provider?: string | null
+          uid: string
+          writePosts?: string | null
+        }
         Update: {
           activePoint?: number | null;
           badges?: string | null;
@@ -361,6 +504,25 @@ export interface Database {
         Relationships: [];
       };
     };
+          activePoint?: number | null
+          badges?: string | null
+          commentPosts?: string | null
+          email?: string | null
+          isActiveDone?: boolean | null
+          isLogin?: boolean | null
+          likedPosts?: string | null
+          likePosts?: string | null
+          likeProducts?: Json | null
+          likeRestaurants?: string | null
+          nickname?: string | null
+          profileImage?: string | null
+          provider?: string | null
+          uid?: string
+          writePosts?: string | null
+        }
+        Relationships: []
+      }
+    }
     Views: {
       [_ in never]: never;
     };
