@@ -1,3 +1,5 @@
+"use client";
+
 import Maps from "@/components/restaurant/Maps";
 import React from "react";
 import Script from "next/script";
