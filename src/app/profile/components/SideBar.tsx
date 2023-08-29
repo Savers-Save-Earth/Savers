@@ -153,27 +153,27 @@ const SideBar = () => {
           </div>
           <div>{profile.nickname}</div>
           <button
-            onClick={() => router.push(`/profiletest/${searchId}/myprofile`)}
+            onClick={() => router.push(`/profile/${searchId}/myprofile`)}
           >
             나의 프로필
           </button>
           <button
             onClick={() =>
-              router.push(`/profiletest/${searchId}/mymission/missiondoing`)
+              router.push(`/profile/${searchId}/mymission/missiondoing`)
             }
           >
             나의 미션
           </button>
           <button
             onClick={() =>
-              router.push(`/profiletest/${searchId}/mycommunity/myposts`)
+              router.push(`/profile/${searchId}/mycommunity/myposts`)
             }
           >
             커뮤니티 활동
           </button>
           <button
             onClick={() =>
-              router.push(`/profiletest/${searchId}/myfavorite/myfavoriteproducts`)
+              router.push(`/profile/${searchId}/myfavorite/myfavoriteproducts`)
             }
           >
             좋아요
@@ -199,7 +199,7 @@ const SideBar = () => {
                 onClick={() => setShowModal(false)}
                 className="h-screen flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
               >
-                <div className="relative w-screen my-6 mx-auto max-w-3xl ">
+                <div className="relative w-3/5 my-6 mx-auto ">
                   <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                     {/* 모달 body */}
                     <div className="relative p-6 flex-auto h-3/4 ">

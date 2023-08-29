@@ -15,12 +15,12 @@ export default function MymissionLayout ({
         <h1>마이미션 레이아웃</h1>
         <div className="flex gap-10">
         {/* <Link
-          href={`/profiletest/${searchId}/mymission/missiondoing`}
+          href={`/profile/${searchId}/mymission/missiondoing`}
         >
           진행중인 미션
         </Link>
         <Link
-          href={`/profiletest/${searchId}/mymission/missiondone`}
+          href={`/profile/${searchId}/mymission/missiondone`}
         >
           완료한 미션
         </Link> */}
