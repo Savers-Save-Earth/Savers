@@ -35,18 +35,29 @@ const RestaurantList = () => {
     <div className="p-24 items-start gap-16 self-stretch">
       <h1 className="text-2xl">인기있는 레스토랑</h1>
       <div style={{ display: "flex", flexWrap: "wrap", gap: "16px" }}>
-        {restaurantList.map((item) => (
-          <div
-            key={item.id}
-            className="rounded-lg border border-gray-200 bg-white p-4 mt-5"
-            style={{ flex: "calc(50% - 8px)", maxWidth: "50%" }}
-          >
-            <p>{item.restaurant_category}</p>
-            <p>{item.restaurant_name}</p>
-            <p>{item.restaurant_address}</p>
-            <p>북마크: {item.bookmarkCount}</p>
-          </div>
-        ))}
+        {restaurantList // 똑같은 이름의 레스토랑을 거름
+          .filter(
+            (item, index, self) =>
+              self.findIndex(
+                (i) => i.restaurant_name === item.restaurant_name,
+              ) === index,
+          )
+          .map((item) => (
+            <div
+              key={item.id}
+              className="rounded-lg border border-gray-200 bg-white p-4 mt-3"
+              style={{ flex: "calc(50% - 8px)", maxWidth: "50%" }}
+            >
+              <p className="text-gray-500 text-sm">
+                {item.restaurant_category}
+              </p>
+              <p className="font-bold">{item.restaurant_name}</p>
+              <span className="text-sm">{item.restaurant_address}</span>
+              <span className="text-sm ml-2">
+                북마크 : {item.bookmarkCount}
+              </span>
+            </div>
+          ))}
       </div>
     </div>
   );
