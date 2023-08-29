@@ -167,7 +167,7 @@ console.log("호출확인용")
               router.push(`/profile/${searchId}/mycommunity/myposts`)
             }
           >
-            커뮤니티 활동
+            커뮤니티 활동 
           </button>
           <button
             onClick={() =>
