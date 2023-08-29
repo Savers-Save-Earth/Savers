@@ -10,6 +10,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { Database } from "@/types/supabase";
 import { removeHtmlTags } from "@/libs/util";
 import Loading from "@/app/loading";
+import { getLikesNum } from "@/api/community/like";
 
 type PostType = Database["public"]["Tables"]["community"]["Row"];
 type QueryKeyMap = {
@@ -112,7 +113,7 @@ const GetPosts = () => {
                               d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"
                             />
                           </svg>
-                          <span>0</span>
+                          <span>{getLikesNum(post.post_uid)}</span>
                         </div>
                       </div>
                       <span className="text-sm text-gray-400">

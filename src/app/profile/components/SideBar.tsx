@@ -152,9 +152,7 @@ const SideBar = () => {
             />
           </div>
           <div>{profile.nickname}</div>
-          <button
-            onClick={() => router.push(`/profile/${searchId}/myprofile`)}
-          >
+          <button onClick={() => router.push(`/profile/${searchId}/myprofile`)}>
             나의 프로필
           </button>
           <button
@@ -188,6 +186,17 @@ const SideBar = () => {
               }}
             >
               일일미션 뽑기
+            </button>
+          ) : (
+            ""
+          )}
+          {user && user.id == profile.uid ? (
+            <button
+              onClick={() => {
+                router.push(`/profile/${searchId}/setting`);
+              }}
+            >
+              회원정보 관리
             </button>
           ) : (
             ""
