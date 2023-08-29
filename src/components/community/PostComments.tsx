@@ -5,12 +5,8 @@ import { useParams } from "next/navigation";
 import { useState } from "react";
 
 import { Database } from "@/types/supabase";
-import { convertTimestamp } from "@/libs/util";
+import { cls, convertTimestamp } from "@/libs/util";
 import { useAuth } from "@/hooks/useAuth";
-
-const cls = (...classnames: string[]) => {
-  return classnames.join(" ");
-}
 
 type CommentType = Database["public"]["Tables"]["community_comment"]["Row"];
 type NewCommentType = Database["public"]["Tables"]["community_comment"]["Insert"];
