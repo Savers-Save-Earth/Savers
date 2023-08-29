@@ -1,42 +1,52 @@
 "use client";
 
 import supabase from "@/libs/supabase";
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const RestaurantList = () => {
   const [restaurantList, setRestaurantList] = useState<any[]>([]);
+
   const fetchRestaurant = async () => {
     const { data } = await supabase.from("like_restaurant").select();
 
     if (data) {
-      setRestaurantList(data);
+      // 북마크 숫자 세는 로직
+      const updatedData = data.map((item) => ({
+        ...item,
+        bookmarkCount: data.filter(
+          (i) => i.restaurant_name === item.restaurant_name,
+        ).length,
+      }));
+
+      // 북마크 숫자대로 정렬
+      const sortedData = updatedData.sort(
+        (a, b) => b.bookmarkCount - a.bookmarkCount,
+      );
+
+      setRestaurantList(sortedData);
     }
   };
 
   useEffect(() => {
     fetchRestaurant();
   }, []);
+
   return (
     <div className="p-24 items-start gap-16 self-stretch">
-      <h1 className="text-2xl">세이버 픽 레스토랑</h1>
-      {Array.from(
-        new Set(restaurantList.map((item) => item.restaurant_name)),
-      ).map((name) => {
-        const uniqueRestaurant = restaurantList.find(
-          (item) => item.restaurant_name === name,
-        );
-        return (
+      <h1 className="text-2xl">인기있는 레스토랑</h1>
+      <div>
+        {restaurantList.map((item) => (
           <div
-            key={uniqueRestaurant.id}
+            key={item.id}
             className="rounded-lg border border-gray-200 bg-white p-4 mt-5"
           >
-            <p>{uniqueRestaurant.restaurant_category}</p>
-            <p>{uniqueRestaurant.restaurant_name}</p>
-            <p>{uniqueRestaurant.restaurant_address}</p>
+            <p>{item.restaurant_category}</p>
+            <p>{item.restaurant_name}</p>
+            <p>{item.restaurant_address}</p>
+            <p>북마크 : {item.bookmarkCount}</p>
           </div>
-        );
-      })}
+        ))}
+      </div>
     </div>
   );
 };

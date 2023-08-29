@@ -63,18 +63,32 @@ const MarkerLists = ({ markerList }) => {
     address: string,
   ) => {
     if (user) {
-      const { error: addMarkListError } = await supabase
+      const { data: userMarkList } = await supabase
         .from("like_restaurant")
-        .insert({
-          restaurant_category: category,
-          restaurant_address: address,
-          restaurant_name: name,
-          user_id: user.id,
-        });
+        .select()
+        .eq("user_id", user.id)
+        .eq("restaurant_name", name);
+      console.log(userMarkList);
 
-      // const {error: addCountError } = await supabase
-      // .from("restaurant")
-      // .insert
+      if (userMarkList?.length !== 0) {
+        const { error: addMarkListError } = await supabase
+          .from("like_restaurant")
+          .delete()
+          .eq("user_id", user.id)
+          .eq("restaurant_name", name);
+
+        alert("북마크가 해제되었습니다.");
+      } else {
+        const { error: addMarkListError } = await supabase
+          .from("like_restaurant")
+          .insert({
+            restaurant_category: category,
+            restaurant_address: address,
+            restaurant_name: name,
+            user_id: user.id,
+          });
+        alert("북마크 되었습니다.");
+      }
     } else {
       alert("로그인 후 사용해주세요.");
       return;
@@ -99,7 +113,7 @@ const MarkerLists = ({ markerList }) => {
             <p>{place.category_name}</p>
             <p>{place.place_name}</p>
             <p>{place.address_name}</p>
-            <p>📌 {bookmarkHandler(place.place_name)}</p>
+            {/* <p>📌 {bookmarkHandler(place.place_name)}</p> */}
             <button
               onClick={(e) => {
                 e.preventDefault();
