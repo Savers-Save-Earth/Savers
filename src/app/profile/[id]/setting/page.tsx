@@ -15,6 +15,7 @@ const page = () => {
   const [name, setName] = useState<string>();
   const [email, setEmail] = useState("");
   const [number, setNumber] = useState("");
+  const [birthday, setBirthday] = useState("");
 
   const params = useParams();
   const searchId = decodeURIComponent(`${params.id}`);
@@ -37,13 +38,14 @@ const page = () => {
     setName(data[0].nickname);
     setEmail(data[0].email);
     setNumber(data[0].number);
+    setBirthday(data[0].birthday);
   };
 
   const handleSubmit = async () => {
     console.log(searchId);
     const { error: updateDataError } = await supabase
       .from("user")
-      .update({ nickname: name, email, number })
+      .update({ nickname: name, email, number, birthday })
       .eq("nickname", searchId);
 
     alert("수정이 완료되었습니다.");
@@ -56,7 +58,7 @@ const page = () => {
         <input
           type="text"
           value={name}
-          className="bg-gray-100"
+          className="bg-gray-100 p-2"
           onChange={(e) => setName(e.target.value)}
         />
       </p>
@@ -64,7 +66,7 @@ const page = () => {
         이메일 :
         <input
           type="text"
-          style={{ background: "lightgray", borderRadius: "5px" }}
+          className="bg-gray-100"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
@@ -76,6 +78,15 @@ const page = () => {
           style={{ background: "lightgray", borderRadius: "5px" }}
           value={number}
           onChange={(e) => setNumber(e.target.value)}
+        />
+      </p>
+      <p>
+        생년월일 :
+        <input
+          type="text"
+          style={{ background: "lightgray", borderRadius: "5px" }}
+          value={birthday}
+          onChange={(e) => setBirthday(e.target.value)}
         />
       </p>
       <button
