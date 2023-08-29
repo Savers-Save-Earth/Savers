@@ -50,8 +50,6 @@ const Header = () => {
     };
   }, []);
 
-  console.log("getUser확인", user);
-
   const loginLogoutSwitcher = async () => {
     if (user) {
       await supabase.auth.signOut();
@@ -75,15 +73,17 @@ const Header = () => {
     <>
       {pathname === "/" ? (
         <header
-          className={cls("fixed z-10 text-gray-600 body-font w-full",
-            scrollY < 3000 ? "bg-transparent" : "bg-white/30 backdrop-blur-md"
+          className={cls(
+            "fixed z-10 text-gray-600 body-font w-full",
+            scrollY < 3000 ? "bg-transparent" : "bg-white/30 backdrop-blur-md",
           )}
         >
           <div className="container mx-auto flex flex-wrap p-5 justify-between items-center">
             <Link href={`/`}>
               <span
-                className={cls("ml-3 text-xl flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0",
-                  scrollY < 3000 ? "text-white" : "text-black"
+                className={cls(
+                  "ml-3 text-xl flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0",
+                  scrollY < 3000 ? "text-white" : "text-black",
                 )}
               >
                 Savers
@@ -92,24 +92,27 @@ const Header = () => {
             <nav className="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center">
               <Link
                 href={`/product`}
-                className={cls("mr-5",
-                  scrollY < 3000 ? "text-white" : "text-gray-900"
+                className={cls(
+                  "mr-5",
+                  scrollY < 3000 ? "text-white" : "text-gray-900",
                 )}
               >
                 친환경 제품 구매
               </Link>
               <Link
                 href={`/restaurant`}
-                className={cls("mr-5",
-                  scrollY < 3000 ? "text-white" : "text-gray-900"
+                className={cls(
+                  "mr-5",
+                  scrollY < 3000 ? "text-white" : "text-gray-900",
                 )}
               >
                 비건식당 찾기
               </Link>
               <Link
                 href={`/community`}
-                className={cls("mr-5",
-                  scrollY < 3000 ? "text-white" : "text-gray-900"
+                className={cls(
+                  "mr-5",
+                  scrollY < 3000 ? "text-white" : "text-gray-900",
                 )}
               >
                 커뮤니티
@@ -118,8 +121,9 @@ const Header = () => {
             <div className="flex items-center space-x-4">
               <button
                 onClick={loginLogoutSwitcher}
-                className={cls("border-0 py-1 px-3 focus:outline-none rounded text-base",
-                  scrollY < 3000 ? "text-white" : "text-gray-900"
+                className={cls(
+                  "border-0 py-1 px-3 focus:outline-none rounded text-base",
+                  scrollY < 3000 ? "text-white" : "text-gray-900",
                 )}
               >
                 {user ? "로그아웃" : "로그인"}
@@ -127,18 +131,20 @@ const Header = () => {
               {user ? (
                 <button
                   onClick={signupProfileSwitcher}
-                  className={cls("border-0 py-1 px-3 focus:outline-none rounded text-base",
-                    scrollY < 3000 ? "text-white" : "text-gray-900"
-                )}
+                  className={cls(
+                    "border-0 py-1 px-3 focus:outline-none rounded text-base",
+                    scrollY < 3000 ? "text-white" : "text-gray-900",
+                  )}
                 >
                   마이페이지
                 </button>
               ) : (
                 <button
                   onClick={signupProfileSwitcher}
-                  className={cls("border-0 py-1 px-3 focus:outline-none rounded text-base",
-                    scrollY < 3000 ? "text-white" : "text-gray-900"
-                )}
+                  className={cls(
+                    "border-0 py-1 px-3 focus:outline-none rounded text-base",
+                    scrollY < 3000 ? "text-white" : "text-gray-900",
+                  )}
                 >
                   회원가입
                 </button>
@@ -150,7 +156,9 @@ const Header = () => {
         <header className="bg-white/50 backdrop-blur-md fixed z-10 text-gray-600 body-font w-full">
           <div className="container mx-auto flex flex-wrap p-5 justify-between items-center">
             <Link href={`/`}>
-              <span className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0 ml-3 text-xl">Savers</span>
+              <span className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0 ml-3 text-xl">
+                Savers
+              </span>
             </Link>
             <nav className="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center">
               <Link href={`/product`} className="mr-5 hover:text-gray-900">
