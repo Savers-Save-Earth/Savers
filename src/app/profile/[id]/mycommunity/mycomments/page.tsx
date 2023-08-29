@@ -19,14 +19,6 @@ const MyComments = ({ params }: { params: { id: string } }) => {
     fetchCommunity();
   }, [loadCount]);
 
-  // const getPostData = async (commentedPostUid: string) => {
-  //   try {
-  //     let {data : postData} = await supabase.from("community").select("title").eq("post_uid", commentedPostUid)
-  //     setCommentedPost(postData![0].title)
-  //   } catch (error) {
-  //   }
-  // } 
-
   const fetchCommunity = async () => {
     try {
       let { data: comments, count } = await supabase
@@ -36,10 +28,6 @@ const MyComments = ({ params }: { params: { id: string } }) => {
         .range(0, loadCount - 1);
         setUserComments(comments || []);
         setIsLoading(false); // 데이터 가져오기 후 로딩 상태를 false로 설정
-        // const commentedPostUid = comments[0].post_uid || null
-        // if (commentedPostUid) {
-        //   getPostData(commentedPostUid)
-        // }
         
         if(count && count <= loadBoundaryValue ) {
           setLoadMoreBtn("")

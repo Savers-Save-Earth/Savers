@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import supabase from "@/libs/supabase";
 import { Database } from "@/types/supabase";
 import { useRouter } from "next/navigation";
-import { getCommentsNum } from "@/api/community/post";
-import { getLikesNum } from "@/api/community/like";
+// import { getCommentsNum } from "@/api/community/post";
+// import { getLikesNum } from "@/api/community/like";
 
 type CommunityPost = Database["public"]["Tables"]["community"]["Row"];
 const MyPosts = ({ params }: { params: { id: string } }) => {
@@ -20,7 +20,13 @@ const MyPosts = ({ params }: { params: { id: string } }) => {
   useEffect(() => {
     fetchCommunity();
   }, [loadCount]);
-  
+  const getCommentsNum = async (postUid: string) => {
+    const { count } = await supabase
+      .from("community_comment")
+      .select("*", { count: "exact" })
+      .eq("post_uid", postUid);
+    return count ?? 0;
+  };
   const fetchCommunity = async () => {
     try {
       let { data: posts, count } = await supabase
@@ -30,6 +36,10 @@ const MyPosts = ({ params }: { params: { id: string } }) => {
         .range(0, loadCount - 1);
         setUserPosts(posts || []);
         console.log("count: " + count);
+
+        if(posts.length > 0) {
+
+        }
         if(count && count <= loadBoundaryValue ) {
           setLoadMoreBtn("")
           return
@@ -103,7 +113,7 @@ const MyPosts = ({ params }: { params: { id: string } }) => {
                               d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z"
                             />
                           </svg>
-                          <span>{getCommentsNum(post.post_uid)}</span>
+                          {/* <span>{getCommentsNum(post.post_uid)}</span> */}
                         </div>
 
                         <div className="space-x-1 items-center justify-center flex text-sm text-gray-500">
@@ -121,7 +131,7 @@ const MyPosts = ({ params }: { params: { id: string } }) => {
                               d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"
                             />
                           </svg>
-                          <span>{getLikesNum(post.post_uid)}</span>
+                          {/* <span>{getLikesNum(post.post_uid)}</span> */}
                         </div>
 
 
