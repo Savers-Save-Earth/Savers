@@ -136,8 +136,9 @@ const Header = () => {
               ) : (
                 <button
                   onClick={signupProfileSwitcher}
-                  className="border-0 py-1 px-3 focus:outline-nonerounded text-base"
-                  style={{ color: scrollY < 3000 ? "text-white" : "text-gray-900" }}
+                  className={cls("border-0 py-1 px-3 focus:outline-none rounded text-base",
+                    scrollY < 3000 ? "text-white" : "text-gray-900"
+                )}
                 >
                   회원가입
                 </button>
@@ -166,21 +167,21 @@ const Header = () => {
             <div className="flex items-center space-x-4">
               <button
                 onClick={loginLogoutSwitcher}
-                className="border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base"
+                className="border-0 py-1 px-3 focus:outline-none rounded text-base"
               >
                 {user ? "로그아웃" : "로그인"}
               </button>
               {user ? (
                 <button
                   onClick={signupProfileSwitcher}
-                  className="border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base"
+                  className="border-0 py-1 px-3 focus:outline-none rounded text-base"
                 >
                   마이페이지
                 </button>
               ) : (
                 <button
                   onClick={signupProfileSwitcher}
-                  className="border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base"
+                  className="border-0 py-1 px-3 focus:outline-none rounded text-base"
                 >
                   회원가입
                 </button>
