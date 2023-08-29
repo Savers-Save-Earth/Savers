@@ -63,7 +63,6 @@ const PostComments = () => {
     setNewComment("");
   }
   
-
   // 댓글 삭제 mutation
   const deleteMutation = useMutation(deleteComment, {
     onSuccess: () => {

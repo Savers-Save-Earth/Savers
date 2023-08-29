@@ -1,6 +1,5 @@
 import QueryProvider from "./QueryProvider";
 import Header from "@/components/Header";
-import supabase from "@/libs/supabase";
 import "@/styles/globals.css";
 import type { Metadata } from "next";
 import Script from "next/script";
