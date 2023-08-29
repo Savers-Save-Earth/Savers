@@ -34,16 +34,17 @@ const RestaurantList = () => {
   return (
     <div className="p-24 items-start gap-16 self-stretch">
       <h1 className="text-2xl">인기있는 레스토랑</h1>
-      <div>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "16px" }}>
         {restaurantList.map((item) => (
           <div
             key={item.id}
             className="rounded-lg border border-gray-200 bg-white p-4 mt-5"
+            style={{ flex: "calc(50% - 8px)", maxWidth: "50%" }}
           >
             <p>{item.restaurant_category}</p>
             <p>{item.restaurant_name}</p>
             <p>{item.restaurant_address}</p>
-            <p>북마크 : {item.bookmarkCount}</p>
+            <p>북마크: {item.bookmarkCount}</p>
           </div>
         ))}
       </div>
