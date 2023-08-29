@@ -17,7 +17,7 @@ export default async function profileLayout ({
           {/* </div> */}
         
       </div>
-      <section className="w-3/4 p-4 border-dashed border-2 border-red-600 flex  mt-10">{children}</section>
+      <section className="w-3/4 p-4 border-dashed border-2 border-red-600 flex flex-col mt-10">{children}</section>
     </div>
   );
 }

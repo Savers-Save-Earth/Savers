@@ -27,8 +27,8 @@ const MyProfile = async ({ params: { id } }: { params: { id: string } }) => {
       </div>
       <div className="w-1/2 p-4 border-dashed border-2 border-purple-600 mx-3 h-full">
         내가 획득한 뱃지
-        {/* <Badges /> */}
-        <BadgesTest/>
+        <Badges />
+        {/* <BadgesTest/> */}
       </div>
     </div>
   );
