@@ -1,19 +1,21 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 
 import EditPost from "./EditPost";
 import { deletePost, getPostDetail } from "@/api/community/post";
+import { cancelLikePost, createLikePost, getLikeStatus, getLikesNum } from "@/api/community/like";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { Database } from "@/types/supabase";
 import { useAuth } from "@/hooks/useAuth";
-import { LikesType, cancleLikePost, createLikePost, getLikeStatus, getLikesNum } from "@/api/community/like";
 
+type LikesType = Database["public"]["Tables"]["like_post"]["Insert"];
 type PostType = Database["public"]["Tables"]["community"]["Row"];
 
 const DetailPost = () => {
   const currentUser = useAuth();
+  const [isLiked, setIsLiked] = useState<LikesType | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const router = useRouter();
 
@@ -24,6 +26,27 @@ const DetailPost = () => {
     { cacheTime: 6000 }
   );
 
+  const { data: likesNumber } = useQuery(
+    ["likesNumber"],
+    () => getLikesNum(postUid),
+  );
+
+  const getLikedStatus = async () => {
+    if (currentUser) {
+      try {
+        const likeStatus = await getLikeStatus(postUid, currentUser.uid);
+        setIsLiked(likeStatus);
+      } catch (error) {
+        console.error("Error fetching like status:", error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    getLikedStatus();
+  }, [currentUser, postUid]);
+
+  // 게시글 삭제 mutate
   const queryClient = useQueryClient();
   const deleteMutation = useMutation(deletePost, {
     onSuccess: () => {
@@ -47,51 +70,54 @@ const DetailPost = () => {
     setIsEditing(true);
   };
 
-  // const { data: likesData } = useQuery<LikesType[]>(
-  //   ["likes", postUid],
-  //   () => getLikeStatus(postUid, currentUser?.uid),
-  // )
+  // 게시글 북마크
+  const likeMutation = useMutation(createLikePost, {
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["likes", postUid] });
+      queryClient.invalidateQueries({ queryKey: ["likesNumber"] });
+    },
+    onError: (error) => {
+      console.log("북마크 등록 에러:", error);
+    },
+  });
 
-  // const addLikeMutation = useMutation(createLikePost, {
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries({ queryKey: ["likes", postUid] });
-  //   },
-  //   onError: (error) => {
-  //     console.log("좋아요 등록 에러:", error);
-  //   }
-  // })
+  const cancelLikeMutation = useMutation(cancelLikePost, {
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["likes", postUid] });
+      queryClient.invalidateQueries({ queryKey: ["likesNumber"] });
+    },
+    onError: (error) => {
+      console.log("북마크 취소 에러:", error);
+    },
+  });
 
-  // const cancelLikeMutation = useMutation(cancleLikePost, {
-  //   // 취소 성공 시 좋아요 캐시를 무효화
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries({ queryKey: ["likes", postUid] });
-  //   },
-  //   // ...
-  // });
+  const handleLikeClick = async () => {
+    if (!currentUser) {
+      window.alert("북마크를 누르시려면 로그인 해주세요!");
+      router.push("/login");
+      return false;
+    }
 
-  // const handleLikeClick = async () => {
-  //   if (!currentUser) {
-  //     window.alert("좋아요를 누르시려면 로그인 해주세요!");
-  //     router.push("/login");
-  //     return false;
-  //   }
-    
-  //   // 현재 사용자의 좋아요 상태를 가져오기
-  //   const userLikeStatus = await getLikeStatus(postUid, currentUser.uid);
-  //   console.log("userLikeStatus => ", userLikeStatus);
+    const likeStatus = await getLikeStatus(postUid, currentUser.uid);
 
-  //   // 이미 좋아요를 눌렀다면 취소
-  //   if (userLikeStatus.length > 0) {
-  //     cancelLikeMutation.mutate(postUid, currentUser.uid);
-  //   } else {
-  //     // 좋아요 추가
-  //     const newLike = {
-  //       like_user: currentUser.uid,
-  //       post_uid: postUid
-  //     }
-  //     addLikeMutation.mutate(newLike);
-  //   }
-  // }
+    if (likeStatus) {
+      // 이미 북마크를 누른 경우 북마크 취소
+      const cancelLike = {
+        post_uid: postUid,
+        like_user: currentUser.uid,
+      };
+      cancelLikeMutation.mutate(cancelLike);
+      setIsLiked(null);
+    } else {
+      // 북마크를 누르지 않은 경우 북마크 추가
+      const newLike = {
+        post_uid: postUid,
+        like_user: currentUser.uid,
+      };
+      likeMutation.mutate(newLike);
+      setIsLiked(newLike);
+    }
+  };
 
   return (
     <div className="flex flex-col max-w-7xl mt-10 px-10 mx-auto">
@@ -138,7 +164,7 @@ const DetailPost = () => {
             </div>
             <div className="flex space-x-3">
               <span>조회수 0</span>
-              <span>좋아요 {0}</span>
+              <span>북마크 {likesNumber}</span>
             </div>
           </div>
           {postDetail && (
@@ -148,21 +174,36 @@ const DetailPost = () => {
             />
           )}
           <div className="mt-5 mx-auto space-x-5">
-            <button>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"
-                />
-              </svg>
+            <button onClick={handleLikeClick}>
+              {isLiked ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M6.32 2.577a49.255 49.255 0 0111.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 01-1.085.67L12 18.089l-7.165 3.583A.75.75 0 013.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"
+                  />
+                </svg>
+              )}
             </button>
             <button>
               <svg

@@ -66,19 +66,34 @@ const RestaurantList = () => {
               style={{ height: "50%", width: "50%" }}
             >
               <div className="rounded-lg border border-gray-200 bg-white p-4">
-                <p className="text-gray-500 text-sm">
-                  {item.restaurant_category}
-                </p>
-                <p className="font-bold">{item.restaurant_name}</p>
-                <span className="text-sm">{item.restaurant_address}</span>
-                <span className="text-sm ml-2">
-                  <FontAwesomeIcon
-                    icon={faBookmark}
-                    size="xs"
-                    style={{ color: "#000000", marginRight: "5px" }}
-                  />
-                  {item.bookmarkCount}
-                </span>
+                <div
+                  style={{
+                    width: "60px",
+                    height: "60px",
+                    background: "lightgray",
+                    display: "inline-block",
+                    marginRight: "10px",
+                  }}
+                ></div>
+                <div style={{ display: "inline-block" }}>
+                  <p className="text-gray-500 text-xs">
+                    {item.restaurant_category}
+                  </p>
+                  <p className="font-bold">
+                    {item.restaurant_name.length > 13
+                      ? `${item.restaurant_name.slice(0, 10) + `...`}`
+                      : item.restaurant_name}
+                  </p>
+                  <span className="text-sm">{item.restaurant_address}</span>
+                  <span className="text-sm ml-2">
+                    <FontAwesomeIcon
+                      icon={faBookmark}
+                      size="xs"
+                      style={{ color: "#000000", marginRight: "5px" }}
+                    />
+                    {item.bookmarkCount}
+                  </span>
+                </div>
               </div>
             </SwiperSlide>
           ))}
