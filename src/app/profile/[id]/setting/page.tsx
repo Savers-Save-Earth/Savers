@@ -51,52 +51,56 @@ const page = () => {
     alert("수정이 완료되었습니다.");
   };
   return (
-    <form>
-      <h1>회원정보 수정</h1>
-      <p>
-        닉네임 :
+    <form className="flex flex-col items-center">
+      <div className="flex justify-between w-3/4 mb-4">
+        <h1 className="self-start">회원정보 수정</h1>
+        <button
+          onClick={(e) => {
+            handleSubmit();
+            e.preventDefault();
+          }}
+          className="self-end"
+        >
+          수정완료
+        </button>
+      </div>
+      <p className="w-3/4">
+        <span>닉네임</span>
         <input
           type="text"
           value={name}
-          className="bg-gray-100 p-2"
+          className="w-full bg-gray-100 p-2 rounded-lg"
           onChange={(e) => setName(e.target.value)}
         />
       </p>
-      <p>
-        이메일 :
+      <p className="w-3/4">
+        <span>이메일</span>
         <input
           type="text"
-          className="bg-gray-100"
+          className="w-full bg-gray-100 p-2 rounded-lg"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
       </p>
-      <p>
-        휴대전화 :
+      <p className="w-3/4">
+        <span>휴대전화</span>
         <input
           type="text"
-          style={{ background: "lightgray", borderRadius: "5px" }}
+          className="w-full bg-gray-100 p-2 rounded-lg"
           value={number}
           onChange={(e) => setNumber(e.target.value)}
         />
       </p>
-      <p>
-        생년월일 :
+      <div className="w-3/4">
+        <span>생년월일</span>
         <input
           type="text"
-          style={{ background: "lightgray", borderRadius: "5px" }}
+          className="w-full bg-gray-100 p-2 rounded-lg"
           value={birthday}
           onChange={(e) => setBirthday(e.target.value)}
+          placeholder="예) 19991212"
         />
-      </p>
-      <button
-        onClick={(e) => {
-          handleSubmit();
-          e.preventDefault();
-        }}
-      >
-        수정완료
-      </button>
+      </div>
     </form>
   );
 };
