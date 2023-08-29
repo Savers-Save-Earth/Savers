@@ -2,6 +2,8 @@
 import supabase from "@/libs/supabase";
 import React, { useEffect } from "react";
 import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBookmark } from "@fortawesome/free-regular-svg-icons";
 
 interface MarkList {
   id: number;
@@ -108,7 +110,11 @@ const MarkerLists = ({ markerList }) => {
         {markerList.map((place: any, index: number) => (
           <div
             key={index}
-            style={{ border: "1px solid black", width: "300px" }}
+            style={{
+              border: "1px solid gray",
+              width: "50%",
+              borderRadius: "7px",
+            }}
           >
             <p>{place.category_name}</p>
             <p>{place.place_name}</p>
@@ -125,7 +131,11 @@ const MarkerLists = ({ markerList }) => {
                 fetchMarkList();
               }}
             >
-              북마크
+              <FontAwesomeIcon
+                icon={faBookmark}
+                size="xs"
+                style={{ color: "#000000", marginRight: "5px" }}
+              />
             </button>
           </div>
         ))}

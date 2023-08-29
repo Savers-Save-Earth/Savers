@@ -32,6 +32,7 @@ const PostList = () => {
           key={item.post_uid}
           className="rounded-lg border border-gray-200 bg-white p-4 mt-5"
         >
+          <p>{item.category}</p>
           <p className="font-bold text-lg ">{item.title}</p>
           <p className="text-base text-gray-500">
             {item.content.length > 20
