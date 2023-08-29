@@ -1,9 +1,9 @@
 "use client";
-
+import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 
-const CommunityTopBar = () => {
+const FavoriteTopBar = () => {
   const params = useParams().id as string;
   const decodedParams = decodeURIComponent(params);
   const router = useRouter();
@@ -15,30 +15,21 @@ const CommunityTopBar = () => {
       <button
         className="bg-blue-500"
         onClick={() =>
-          router.push(`/profiletest/${searchId}/mycommunity/myposts`)
+          router.push(`/profiletest/${searchId}/myfavorite/myfavoriteproducts`)
         }
       >
-        내가 쓴 글
+        내가 북마크한 제품
       </button>
 
-      <button
+			<button
         className="bg-blue-500"
         onClick={() =>
-          router.push(`/profiletest/${searchId}/mycommunity/mycomments`)
+          router.push(`/profiletest/${searchId}/myfavorite/myfavoriterestaurants`)
         }
       >
-        내가 쓴 댓글
-      </button>
-
-      <button
-        className="bg-blue-500"
-        onClick={() =>
-          router.push(`/profiletest/${searchId}/mycommunity/mylikedposts`)
-        }
-      >
-        내가 북마크한 글
+        내가 북마크한 식당
       </button>
     </>
   );
 };
-export default CommunityTopBar;
+export default FavoriteTopBar;

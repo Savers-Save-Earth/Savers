@@ -187,6 +187,7 @@ export interface Database {
           user_likes?: string | null;
         };
         Update: {
+<<<<<<< HEAD
           comment_uid?: string;
           number_likes?: number;
           user_likes?: string | null;
@@ -248,6 +249,32 @@ export interface Database {
         };
         Relationships: [];
       };
+=======
+          comment_uid?: string
+          number_likes?: number
+          user_likes?: string | null
+        }
+        Relationships: []
+      }
+      like_post: {
+        Row: {
+          like_id: string
+          like_user: string
+          post_uid: string
+        }
+        Insert: {
+          like_id?: string
+          like_user: string
+          post_uid: string
+        }
+        Update: {
+          like_id?: string
+          like_user?: string
+          post_uid?: string
+        }
+        Relationships: []
+      }
+>>>>>>> d32318377e6e5673b67d00e8c7fed1b9b02b95e8
       like_product: {
         Row: {
           createdAt: string | null;
@@ -264,6 +291,7 @@ export interface Database {
           user_id?: string | null;
         };
         Update: {
+<<<<<<< HEAD
           createdAt?: string | null;
           img?: string | null;
           like_id?: string;
@@ -347,6 +375,121 @@ export interface Database {
         };
         Relationships: [];
       };
+=======
+          createdAt?: string | null
+          img?: string | null
+          like_id?: string
+          product_uid?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      like_restaurant: {
+        Row: {
+          created_at: string
+          id: number
+          restaurant_address: string | null
+          restaurant_name: string | null
+          score: number | null
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          restaurant_address?: string | null
+          restaurant_name?: string | null
+          score?: number | null
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          restaurant_address?: string | null
+          restaurant_name?: string | null
+          score?: number | null
+        }
+        Relationships: []
+      }
+      mission: {
+        Row: {
+          address: string | null
+          bigCategory: string | null
+          content: string | null
+          doingYn: boolean | null
+          id: string | null
+          point: number | null
+          smallCategory: string | null
+          title: string | null
+          uid: number
+        }
+        Insert: {
+          address?: string | null
+          bigCategory?: string | null
+          content?: string | null
+          doingYn?: boolean | null
+          id?: string | null
+          point?: number | null
+          smallCategory?: string | null
+          title?: string | null
+          uid?: number
+        }
+        Update: {
+          address?: string | null
+          bigCategory?: string | null
+          content?: string | null
+          doingYn?: boolean | null
+          id?: string | null
+          point?: number | null
+          smallCategory?: string | null
+          title?: string | null
+          uid?: number
+        }
+        Relationships: []
+      }
+      missionList: {
+        Row: {
+          address: string | null
+          bigCategory: string | null
+          content: string | null
+          createdAt: string | null
+          doingYn: boolean | null
+          id: string
+          missionUid: string | null
+          point: number | null
+          smallCategory: string | null
+          title: string | null
+          user_uid: string | null
+          userId: string | null
+        }
+        Insert: {
+          address?: string | null
+          bigCategory?: string | null
+          content?: string | null
+          createdAt?: string | null
+          doingYn?: boolean | null
+          id?: string
+          missionUid?: string | null
+          point?: number | null
+          smallCategory?: string | null
+          title?: string | null
+          user_uid?: string | null
+          userId?: string | null
+        }
+        Update: {
+          address?: string | null
+          bigCategory?: string | null
+          content?: string | null
+          createdAt?: string | null
+          doingYn?: boolean | null
+          id?: string
+          missionUid?: string | null
+          point?: number | null
+          smallCategory?: string | null
+          title?: string | null
+          user_uid?: string | null
+          userId?: string | null
+        }
+        Relationships: []
+      }
+>>>>>>> d32318377e6e5673b67d00e8c7fed1b9b02b95e8
       product: {
         Row: {
           category: string | null;

@@ -141,7 +141,7 @@ const SideBar = () => {
   };
 
   return (
-    <>
+    <div className="bg-pink-400 sticky top-20 flex flex-col items-center">
       {profile ? (
         <>
           <div className="rounded-full overflow-hidden w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 xl:w-40 xl:h-40 flex items-center justify-center">
@@ -170,6 +170,13 @@ const SideBar = () => {
             }
           >
             커뮤니티 활동
+          </button>
+          <button
+            onClick={() =>
+              router.push(`/profiletest/${searchId}/myfavorite/myfavoriteproducts`)
+            }
+          >
+            좋아요
           </button>
           {user && user.id == profile.uid ? (
             <button
@@ -260,7 +267,7 @@ const SideBar = () => {
       ) : (
         <>{/* <Loading /> */}</>
       )}
-    </>
+    </div>
   );
 };
 export default SideBar;

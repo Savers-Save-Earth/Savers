@@ -9,11 +9,13 @@ export default async function ProfiletestLayout ({
 }) {
   // const profiledata = await getProfile(id)
   return (
-    <div className="flex gap-2 h-screen">
-      <div className="w-1/4 p-4 border-dashed border-2 border-indigo-600 flex flex-col">
+    <div className="flex gap-2 h-full">
+      <div className="w-1/4 p-4 border-dashed border-2 border-indigo-600 flex flex-col mt-10">
         <h1>프로필테스트 레이아웃</h1>
-
-        <SideBar />
+          {/* <div className="bg-pink-400 sticky top-1/3 flex flex-col "> */}
+          <SideBar/>
+          {/* </div> */}
+        
       </div>
       <section className="w-3/4 p-4 border-dashed border-2 border-red-600 flex  mt-10">{children}</section>
     </div>

@@ -1,5 +1,7 @@
 "use client";
 import type { NextComponentType } from "next";
+
+import { useAuth } from "@/hooks/useAuth";
 import TextEditor from "./quill/TextEditor";
 import { useEffect, useState } from "react";
 
@@ -8,11 +10,8 @@ import { createPost } from "@/api/community/post";
 import { convertDate, convertTimestamp } from "@/libs/util";
 import { Database } from "@/types/supabase";
 
-import useAuth from "@/hooks/useAuth";
-import { redirect } from "next/navigation";
 import supabase from "@/libs/supabase";
 import { getMissionHandler, updateMissionHandler } from "@/api/mission/checkMission";
-
 
 type NewPost = Database["public"]["Tables"]["community"]["Insert"];
 
@@ -22,6 +21,7 @@ const AddPost: NextComponentType = () => {
   const [category, setCategory] = useState("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+
   ///===================👇동준작업👇=========================================================
   const [missionUid, setMissionUid] = useState<any>("")
 
@@ -36,8 +36,9 @@ const AddPost: NextComponentType = () => {
   ) => {
     setCategory(e.currentTarget.value);
   };
-
+  // (1) queryClient 가져오기
   const queryClient = useQueryClient();
+  // (2) mutation 함수
   const createMutation = useMutation(createPost, {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["communityAllPosts"] });

@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
 import supabase from "@/libs/supabase";
 import { Database } from "@/types/supabase";
@@ -7,10 +6,12 @@ import { useRouter } from "next/navigation";
 
 type CommunityPost = Database["public"]["Tables"]["community"]["Row"];
 const MyPosts = ({ params }: { params: { id: string } }) => {
+  
   const [userPosts, setUserPosts] = useState<CommunityPost[]>([]);
-  const [loadCount, setLoadCount] = useState<number>(4);
+  const [loadCount, setLoadCount] = useState<number>(5);
   const [search, setSearch] = useState("");
   const router = useRouter();
+  const [loadMoreBtn, setLoadMoreBtn] = useState<string>("더보기")
   // decoded params : 유저 닉네임.
   const decodedParams = decodeURIComponent(params.id);
 
@@ -20,13 +21,32 @@ const MyPosts = ({ params }: { params: { id: string } }) => {
 
   const fetchCommunity = async () => {
     try {
-      let { data: posts } = await supabase
+      let { data: posts, count } = await supabase
         .from("community")
-        .select("*")
+        .select("*", { count: 'exact'})
         .eq("author_name", decodedParams)
         .range(0, loadCount - 1);
-
         setUserPosts(posts || []);
+        
+        if(count && count <= 5 ) {
+          setLoadMoreBtn("")
+          return
+        }
+        else if (count! > loadCount) {
+          setLoadMoreBtn("더보기")
+          return
+        }
+        else if (count! <= loadCount) {
+          if (count! + 5 > loadCount) {
+            setLoadMoreBtn("접기")
+          }
+          else {
+            setLoadCount(5)
+            setLoadMoreBtn("더보기")
+          }
+          return
+        }
+        
     } catch (error) {
       console.error("An error occurred:", error); // 예상치 못한 에러 처리
       return false; // 에러 처리 후 함수 종료
@@ -35,6 +55,8 @@ const MyPosts = ({ params }: { params: { id: string } }) => {
   const handleLoadMore = () => {
     setLoadCount((prev) => prev + 5);
   };
+
+
   return (
     <>
     <div>MyPosts</div>
@@ -65,7 +87,7 @@ const MyPosts = ({ params }: { params: { id: string } }) => {
             <p>등록일: {post.created_date.slice(0, 10)}</p>
           </div>
       ))}
-      <button onClick={handleLoadMore}>더 보기</button>
+      <button onClick={handleLoadMore}>{loadMoreBtn}</button>
     </>
   );
 };

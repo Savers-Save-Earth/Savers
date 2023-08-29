@@ -5,9 +5,9 @@ import supabase from "@/libs/supabase";
 import { Database } from "@/types/supabase";
 import { useRouter } from "next/navigation";
 
-type UserLikedProducts = Database["public"]["Tables"]["like_product"]["Row"];
+type UserFavoriteProducts = Database["public"]["Tables"]["like_product"]["Row"];
 
-const MyLikedProducts = ({ params }: { params: { id: string } }) => {
+const MyFavoriteProducts = ({ params }: { params: { id: string } }) => {
   const [userLikedProducts, setUserLikedProducts] = useState<any[]>([]);
   // const [userId, setUserId] = useState<string | null>(null);
   const [loadCount, setLoadCount] = useState<number>(5);
@@ -77,4 +77,4 @@ const MyLikedProducts = ({ params }: { params: { id: string } }) => {
   );
 };
 
-export default MyLikedProducts
+export default MyFavoriteProducts
