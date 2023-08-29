@@ -4,11 +4,11 @@ import { useParams, useRouter } from "next/navigation";
 
 import EditPost from "./EditPost";
 import { deletePost, getPostDetail } from "@/api/community/post";
+import { cancelLikePost, createLikePost, getLikeStatus, getLikesNum } from "@/api/community/like";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { Database } from "@/types/supabase";
 import { useAuth } from "@/hooks/useAuth";
-import { LikesType, cancleLikePost, createLikePost, getLikeStatus, getLikesNum } from "@/api/community/like";
 
 type PostType = Database["public"]["Tables"]["community"]["Row"];
 
@@ -22,6 +22,11 @@ const DetailPost = () => {
     ["postDetail", postUid],
     () => getPostDetail(postUid),
     { cacheTime: 6000 }
+  );
+
+  const { data: likesNumber } = useQuery(
+    ["likesNumber"],
+    () => getLikesNum(postUid),
   );
 
   const queryClient = useQueryClient();
@@ -47,51 +52,52 @@ const DetailPost = () => {
     setIsEditing(true);
   };
 
-  // const { data: likesData } = useQuery<LikesType[]>(
-  //   ["likes", postUid],
-  //   () => getLikeStatus(postUid, currentUser?.uid),
-  // )
+  // 게시글 좋아요
+  const likeMutation = useMutation(createLikePost, {
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["likes", postUid] });
+      queryClient.invalidateQueries({ queryKey: ["likesNumber"] });
+    },
+    onError: (error) => {
+      console.log("좋아요 등록 에러:", error);
+    },
+  });
 
-  // const addLikeMutation = useMutation(createLikePost, {
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries({ queryKey: ["likes", postUid] });
-  //   },
-  //   onError: (error) => {
-  //     console.log("좋아요 등록 에러:", error);
-  //   }
-  // })
+  const cancelLikeMutation = useMutation(cancelLikePost, {
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["likes", postUid] });
+      queryClient.invalidateQueries({ queryKey: ["likesNumber"] });
+    },
+    onError: (error) => {
+      console.log("좋아요 취소 에러:", error);
+    },
+  });
 
-  // const cancelLikeMutation = useMutation(cancleLikePost, {
-  //   // 취소 성공 시 좋아요 캐시를 무효화
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries({ queryKey: ["likes", postUid] });
-  //   },
-  //   // ...
-  // });
+  const handleLikeClick = async () => {
+    if (!currentUser) {
+      window.alert("좋아요를 누르시려면 로그인 해주세요!");
+      router.push("/login");
+      return false;
+    }
 
-  // const handleLikeClick = async () => {
-  //   if (!currentUser) {
-  //     window.alert("좋아요를 누르시려면 로그인 해주세요!");
-  //     router.push("/login");
-  //     return false;
-  //   }
-    
-  //   // 현재 사용자의 좋아요 상태를 가져오기
-  //   const userLikeStatus = await getLikeStatus(postUid, currentUser.uid);
-  //   console.log("userLikeStatus => ", userLikeStatus);
+    const isLiked = await getLikeStatus(postUid, currentUser.uid);
 
-  //   // 이미 좋아요를 눌렀다면 취소
-  //   if (userLikeStatus.length > 0) {
-  //     cancelLikeMutation.mutate(postUid, currentUser.uid);
-  //   } else {
-  //     // 좋아요 추가
-  //     const newLike = {
-  //       like_user: currentUser.uid,
-  //       post_uid: postUid
-  //     }
-  //     addLikeMutation.mutate(newLike);
-  //   }
-  // }
+    if (isLiked) {
+      // 이미 좋아요를 누른 경우 좋아요 취소
+      const cancelLike = {
+        post_uid: postUid,
+        like_user: currentUser.uid,
+      };
+      cancelLikeMutation.mutate(cancelLike);
+    } else {
+      // 좋아요를 누르지 않은 경우 좋아요 추가
+      const newLike = {
+        post_uid: postUid,
+        like_user: currentUser.uid,
+      };
+      likeMutation.mutate(newLike);
+    }
+  };
 
   return (
     <div className="flex flex-col max-w-7xl mt-10 px-10 mx-auto">
@@ -138,7 +144,7 @@ const DetailPost = () => {
             </div>
             <div className="flex space-x-3">
               <span>조회수 0</span>
-              <span>좋아요 {0}</span>
+              <span>좋아요 {likesNumber}</span>
             </div>
           </div>
           {postDetail && (
@@ -148,7 +154,7 @@ const DetailPost = () => {
             />
           )}
           <div className="mt-5 mx-auto space-x-5">
-            <button>
+            <button onClick={handleLikeClick}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
