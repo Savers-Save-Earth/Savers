@@ -6,9 +6,9 @@ import { useRouter } from "next/navigation";
 
 type CommunityPost = Database["public"]["Tables"]["community"]["Row"];
 const MyPosts = ({ params }: { params: { id: string } }) => {
-  
+  const loadBoundaryValue = 10
   const [userPosts, setUserPosts] = useState<CommunityPost[]>([]);
-  const [loadCount, setLoadCount] = useState<number>(5);
+  const [loadCount, setLoadCount] = useState<number>(loadBoundaryValue);
   const [search, setSearch] = useState("");
   const router = useRouter();
   const [loadMoreBtn, setLoadMoreBtn] = useState<string>("더보기")
@@ -18,7 +18,7 @@ const MyPosts = ({ params }: { params: { id: string } }) => {
   useEffect(() => {
     fetchCommunity();
   }, [loadCount]);
-
+  
   const fetchCommunity = async () => {
     try {
       let { data: posts, count } = await supabase
@@ -27,8 +27,8 @@ const MyPosts = ({ params }: { params: { id: string } }) => {
         .eq("author_name", decodedParams)
         .range(0, loadCount - 1);
         setUserPosts(posts || []);
-        
-        if(count && count <= 5 ) {
+        console.log("count: " + count);
+        if(count && count <= loadBoundaryValue ) {
           setLoadMoreBtn("")
           return
         }
@@ -37,11 +37,11 @@ const MyPosts = ({ params }: { params: { id: string } }) => {
           return
         }
         else if (count! <= loadCount) {
-          if (count! + 5 > loadCount) {
+          if (count! + loadBoundaryValue > loadCount) {
             setLoadMoreBtn("접기")
           }
           else {
-            setLoadCount(5)
+            setLoadCount(loadBoundaryValue)
             setLoadMoreBtn("더보기")
           }
           return
@@ -53,7 +53,7 @@ const MyPosts = ({ params }: { params: { id: string } }) => {
     }
   };
   const handleLoadMore = () => {
-    setLoadCount((prev) => prev + 5);
+    setLoadCount((prev) => prev + loadBoundaryValue);
   };
 
 
