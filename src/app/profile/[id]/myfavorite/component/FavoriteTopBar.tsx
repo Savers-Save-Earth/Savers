@@ -15,7 +15,7 @@ const FavoriteTopBar = () => {
       <button
         className="bg-blue-500"
         onClick={() =>
-          router.push(`/profiletest/${searchId}/myfavorite/myfavoriteproducts`)
+          router.push(`/profile/${searchId}/myfavorite/myfavoriteproducts`)
         }
       >
         내가 북마크한 제품
@@ -24,7 +24,7 @@ const FavoriteTopBar = () => {
 			<button
         className="bg-blue-500"
         onClick={() =>
-          router.push(`/profiletest/${searchId}/myfavorite/myfavoriterestaurants`)
+          router.push(`/profile/${searchId}/myfavorite/myfavoriterestaurants`)
         }
       >
         내가 북마크한 식당
