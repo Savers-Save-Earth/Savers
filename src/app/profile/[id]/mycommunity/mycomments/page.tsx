@@ -6,9 +6,9 @@ import { useRouter } from "next/navigation";
 
 type CommunityComment =Database["public"]["Tables"]["community_comment"]["Row"];
 const MyComments = ({ params }: { params: { id: string } }) => {
-
+  const loadBoundaryValue = 10
   const [userComments, setUserComments] = useState<CommunityComment[]>([]);
-  const [loadCount, setLoadCount] = useState<number>(5);
+  const [loadCount, setLoadCount] = useState<number>(loadBoundaryValue);
   const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태 추가
   const [loadMoreBtn, setLoadMoreBtn] = useState<string>("더보기")
   const router = useRouter();
@@ -28,7 +28,7 @@ const MyComments = ({ params }: { params: { id: string } }) => {
         setUserComments(comments || []);
         setIsLoading(false); // 데이터 가져오기 후 로딩 상태를 false로 설정
         
-        if(count && count <= 5 ) {
+        if(count && count <= loadBoundaryValue ) {
           setLoadMoreBtn("")
           return
         }
@@ -37,11 +37,11 @@ const MyComments = ({ params }: { params: { id: string } }) => {
           return
         }
         else if (count! <= loadCount) {
-          if (count! + 5 > loadCount) {
+          if (count! + loadBoundaryValue > loadCount) {
             setLoadMoreBtn("접기")
           }
           else {
-            setLoadCount(5)
+            setLoadCount(loadBoundaryValue)
             setLoadMoreBtn("더보기")
           }
           return
@@ -53,7 +53,7 @@ const MyComments = ({ params }: { params: { id: string } }) => {
   };
 
   const handleLoadMore = () => {
-    setLoadCount((prev) => prev + 5);
+    setLoadCount((prev) => prev + loadBoundaryValue);
   };
 
   return (

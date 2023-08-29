@@ -13,12 +13,12 @@ const MyMissionTopBar = () => {
 	return (
 		<>
 		<button className="bg-blue-500"
-		onClick={() => router.push(`/profiletest/${searchId}/mymission/missiondoing`)}
+		onClick={() => router.push(`/profile/${searchId}/mymission/missiondoing`)}
 	>
 		진행중인 미션
 	</button>
 	<button className="bg-blue-500"
-		onClick={() => router.push(`/profiletest/${searchId}/mymission/missiondone`)}
+		onClick={() => router.push(`/profile/${searchId}/mymission/missiondone`)}
 	>
 		완료한 미션
 	</button>
