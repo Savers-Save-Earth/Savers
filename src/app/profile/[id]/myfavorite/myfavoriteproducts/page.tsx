@@ -60,11 +60,11 @@ const MyFavoriteProducts = ({ params }: { params: { id: string } }) => {
             key={product.like_id}
           >
             <img className="w-1/2 rounded-full mx-auto" src={product.img} alt="No Image"/>
-            {/* <p>좋아요 그 자체의 uid : {product.like_id}</p> */}
+            <p>브랜드 : {product.product_company}</p>
             {/* window.open : 새 탭에서 해당 url로 이동 */}
             <p
             className="hover:underline"
-             onClick = {() => window.open(`/product/${product.product_uid}`)}>제품 uid : {product.product_uid}</p>
+             onClick = {() => window.open(`/product/${product.product_uid}`)}>제품 이름 : {product.product_name}</p>
             {/* <p>등록일: {post.created_date.slice(0, 10)}</p> */}
           </div>
       ))}

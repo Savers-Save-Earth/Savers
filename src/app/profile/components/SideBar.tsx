@@ -139,7 +139,7 @@ const SideBar = () => {
       }
     }
   };
-
+console.log("호출확인용")
   return (
     <div className="bg-pink-400 sticky top-20 flex flex-col items-center">
       {profile ? (
