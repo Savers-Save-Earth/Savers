@@ -30,4 +30,8 @@ export const convertDate = (timeProps: any) => {
 
 export const removeHtmlTags = (text: string) => {
   return text.replace(/<\/?[^>]+(>|$)/g, "")
+};
+
+export const cls = (...classnames: string[]) => {
+  return classnames.join(" ");
 }
