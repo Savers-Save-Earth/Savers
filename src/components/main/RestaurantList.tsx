@@ -2,6 +2,14 @@
 
 import supabase from "@/libs/supabase";
 import React, { useEffect, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Scrollbar, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/autoplay";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBookmark } from "@fortawesome/free-regular-svg-icons";
 
 const RestaurantList = () => {
   const [restaurantList, setRestaurantList] = useState<any[]>([]);
@@ -34,8 +42,17 @@ const RestaurantList = () => {
   return (
     <div className="p-24 items-start gap-16 self-stretch">
       <h1 className="text-2xl">인기있는 레스토랑</h1>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "16px" }}>
-        {restaurantList // 똑같은 이름의 레스토랑을 거름
+      <Swiper
+        // install Swiper modules
+        modules={[Navigation, Pagination, Autoplay]}
+        spaceBetween={10}
+        slidesPerView={4}
+        navigation
+        // navigation={{ prevEl: ".swiper-prev-1", nextEl: ".swiper-next-1" }}
+        autoplay={{ delay: 2000 }}
+        style={{ width: "100%" }}
+      >
+        {restaurantList
           .filter(
             (item, index, self) =>
               self.findIndex(
@@ -43,22 +60,29 @@ const RestaurantList = () => {
               ) === index,
           )
           .map((item) => (
-            <div
+            <SwiperSlide
               key={item.id}
-              className="rounded-lg border border-gray-200 bg-white p-4 mt-3"
-              style={{ flex: "calc(50% - 8px)", maxWidth: "50%" }}
+              className="flex items-center justify-center"
+              style={{ height: "50%", width: "50%" }}
             >
-              <p className="text-gray-500 text-sm">
-                {item.restaurant_category}
-              </p>
-              <p className="font-bold">{item.restaurant_name}</p>
-              <span className="text-sm">{item.restaurant_address}</span>
-              <span className="text-sm ml-2">
-                북마크 : {item.bookmarkCount}
-              </span>
-            </div>
+              <div className="rounded-lg border border-gray-200 bg-white p-4">
+                <p className="text-gray-500 text-sm">
+                  {item.restaurant_category}
+                </p>
+                <p className="font-bold">{item.restaurant_name}</p>
+                <span className="text-sm">{item.restaurant_address}</span>
+                <span className="text-sm ml-2">
+                  <FontAwesomeIcon
+                    icon={faBookmark}
+                    size="xs"
+                    style={{ color: "#000000", marginRight: "5px" }}
+                  />
+                  {item.bookmarkCount}
+                </span>
+              </div>
+            </SwiperSlide>
           ))}
-      </div>
+      </Swiper>
     </div>
   );
 };
