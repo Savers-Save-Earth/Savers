@@ -186,6 +186,7 @@ const KakaoMap = () => {
 
   return (
     <div style={{ marginTop: "40px" }}>
+      <div>비건식당 찾기</div>
       <button onClick={() => setCurrentCategory("비건")}>전체</button>
       <button onClick={() => setCurrentCategory("비건식당")}>식당</button>
       <button onClick={() => setCurrentCategory("비건베이커리")}>
@@ -199,7 +200,6 @@ const KakaoMap = () => {
           height: "50vh",
         }}
       ></div>
-      <h2>마커 리스트</h2>
       <MarkerLists markerList={markerList} />
       <div></div>
     </div>
