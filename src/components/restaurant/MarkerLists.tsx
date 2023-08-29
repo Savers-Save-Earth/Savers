@@ -102,6 +102,32 @@ const MarkerLists = ({ markerList }) => {
     }
   };
 
+  const shareBtn = (place) => {
+    const { Kakao } = window;
+    Kakao.Share.sendDefault({
+      objectType: "location",
+      address: place.address_name,
+      addressTitle: place.place_name,
+      content: {
+        title: place.place_name,
+        description: place.address_name,
+        imageUrl:
+          "http://k.kakaocdn.net/dn/bSbH9w/btqgegaEDfW/vD9KKV0hEintg6bZT4v4WK/kakaolink40_original.png",
+        link: {
+          webUrl: place.place_url,
+        },
+      },
+      buttons: [
+        {
+          title: "웹으로 보기",
+          link: {
+            webUrl: place.place_url,
+          },
+        },
+      ],
+    });
+  };
+
   useEffect(() => {
     fetchUser();
     fetchMarkList();
@@ -153,6 +179,7 @@ const MarkerLists = ({ markerList }) => {
                   style={{ color: "#000000", marginRight: "5px" }}
                 />
               </button>
+              <button onClick={() => shareBtn(place)}>공유하기</button>
             </div>
           </div>
         ))}
