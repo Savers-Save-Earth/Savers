@@ -5,11 +5,16 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark } from "@fortawesome/free-regular-svg-icons";
 
+import { Database } from "@/types/supabase";
+
 interface MarkList {
   id: number;
   restaurant_name: string;
   restaurant_address: string;
 }
+
+type LikeType = Database["public"]["Tables"]["like_restaurant"]["Row"];
+type NewLikeType = Database["public"]["Tables"]["like_restaurant"]["Insert"];
 
 const MarkerLists = ({ markerList }) => {
   const [markedList, setMarkedList] = useState<MarkList[]>([]);
@@ -103,7 +108,7 @@ const MarkerLists = ({ markerList }) => {
   }, []);
 
   return (
-    <div>
+    <div style={{ height: "71vh", overflow: "scroll" }}>
       <ul>
         {/* markerList 정보를 사용하여 리스트를 렌더링합니다 */}
         {markerList.map((place: any, index: number) => (
@@ -111,31 +116,44 @@ const MarkerLists = ({ markerList }) => {
             key={index}
             style={{
               border: "1px solid gray",
-              width: "50%",
+              width: "100%",
               borderRadius: "7px",
+              padding: "10px",
             }}
           >
-            <p>{place.category_name}</p>
-            <p>{place.place_name}</p>
-            <p>{place.address_name}</p>
-            {/* <p>📌 {bookmarkHandler(place.place_name)}</p> */}
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                addMarkList(
-                  place.category_name,
-                  place.place_name,
-                  place.address_name,
-                );
-                fetchMarkList();
+            <div
+              style={{
+                width: "56px",
+                height: "56px",
+                border: "1px solid gray",
+                borderRadius: "100px",
+                float: "left",
+                margin: "10px",
               }}
-            >
-              <FontAwesomeIcon
-                icon={faBookmark}
-                size="xs"
-                style={{ color: "#000000", marginRight: "5px" }}
-              />
-            </button>
+            ></div>
+            <div>
+              <p>{place.category_name}</p>
+              <p>{place.place_name}</p>
+              <p>{place.address_name}</p>
+              {/* <p>📌 {bookmarkHandler(place.place_name)}</p> */}
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  addMarkList(
+                    place.category_name,
+                    place.place_name,
+                    place.address_name,
+                  );
+                  fetchMarkList();
+                }}
+              >
+                <FontAwesomeIcon
+                  icon={faBookmark}
+                  size="xs"
+                  style={{ color: "#000000", marginRight: "5px" }}
+                />
+              </button>
+            </div>
           </div>
         ))}
       </ul>

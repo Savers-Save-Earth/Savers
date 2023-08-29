@@ -9,7 +9,6 @@ const Restaurant = () => {
   return (
     <>
       <Header />
-      <div>Restaurant</div>
       <KakaoMap />
     </>
   );
