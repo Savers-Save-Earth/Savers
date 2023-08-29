@@ -114,6 +114,8 @@ const ProductPost = () => {
             product_uid: params.productId,
             user_id: userId,
             img: product?.img,
+            product_name: product?.name,
+            product_company: product?.company,
           });
 
         // 좋아요 count 올리는 로직
