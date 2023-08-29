@@ -196,19 +196,23 @@ const KakaoMap = () => {
 
   return (
     <div>
-      <div style={{ paddingTop: "10vh" }}>
+      <div className="pt-20">
         <div>비건식당 찾기</div>
         <div
           id="map"
-          style={{
-            width: "60vw",
-            height: "75vh",
-            float: "left",
-            marginLeft: "3vw",
-            paddingRight: "3vw",
-          }}
+          className="w-8/12 h-96 ml-8 float-left"
+          // style={{
+          //   width: "60vw",
+          //   height: "75vh",
+          //   float: "left",
+          //   marginLeft: "3vw",
+          //   paddingRight: "3vw",
+          // }}
         ></div>
-        <div style={{ float: "left", width: "50vh", marginLeft: "1vw" }}>
+        <div
+          className="w-3/12 ml-3 float-left"
+          //  style={{ width: "50vh", marginLeft: "1vw" }}
+        >
           <CategotyBtn>
             <Btn onClick={() => setCurrentCategory("비건")}>전체</Btn>
             <Btn onClick={() => setCurrentCategory("비건식당")}>식당</Btn>

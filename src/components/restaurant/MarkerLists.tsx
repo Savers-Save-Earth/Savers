@@ -102,7 +102,7 @@ const MarkerLists = ({ markerList }) => {
     }
   };
 
-  const shareBtn = (place) => {
+  const shareBtn = async (place) => {
     const { Kakao } = window;
     Kakao.Share.sendDefault({
       objectType: "location",
@@ -110,18 +110,20 @@ const MarkerLists = ({ markerList }) => {
       addressTitle: place.place_name,
       content: {
         title: place.place_name,
-        description: place.address_name,
+        description: place.place_url,
         imageUrl:
           "http://k.kakaocdn.net/dn/bSbH9w/btqgegaEDfW/vD9KKV0hEintg6bZT4v4WK/kakaolink40_original.png",
         link: {
-          webUrl: place.place_url,
+          webUrl: "http:localhost:3000",
+          mobileWebUrl: "http:localhost:3000",
         },
       },
       buttons: [
         {
           title: "웹으로 보기",
           link: {
-            webUrl: place.place_url,
+            webUrl: "https://place.map.kakao.com/201218594",
+            mobileWebUrl: "https://place.map.kakao.com/201218594",
           },
         },
       ],
