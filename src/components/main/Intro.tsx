@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import { useState, useEffect } from "react";
-
 const Intro = () => {
   const [scrollY, setScrollY] = useState(0);
 
@@ -18,18 +17,36 @@ const Intro = () => {
   return (
     <>
       <div className="app-container">
-        <div
-          className="fade-element background-image"
+        {/* <div
+          className="gradient-overlay"
           style={{
-            position: scrollY < 4600 ? "fixed" : "absolute",
-            display: scrollY > 3600 ? "none" : "block",
-            top: scrollY < 3600 ? 0 : 3600,
-            opacity:
-              scrollY > 3000 ? Math.max(0, 1 - (scrollY - 3000) / 500) : 1,
-            transition: "opacity 0.3s ease", // Add transition for smooth effect
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100vh",
+            background:
+              "radial-gradient(ellipse at center, rgba(254, 252, 252, 0.1) 10%, rgba(20, 20, 20, 0.7) 70%, rgba(20, 20, 20, 1))",
           }}
-        />
-
+        ></div> */}
+        <div className="background-video">
+          <video
+            autoPlay={true}
+            muted={true}
+            loop={true}
+            style={{
+              width: "100%",
+              height: "100vh",
+              position: scrollY < 4600 ? "fixed" : "absolute",
+              display: scrollY > 3600 ? "none" : "block",
+              top: scrollY < 3600 ? 0 : 3600,
+              opacity:
+                scrollY > 3000 ? Math.max(0, 1 - (scrollY - 3000) / 500) : 1,
+              transition: "opacity 0.3s ease", // Add transition for smooth effect
+            }}
+            src={require("../../../public/assets/environment2.mp4")}
+          />
+        </div>
         <div
           className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-8xl font-bold transition-opacity duration-100 ease-in-out"
           style={{
