@@ -149,3 +149,18 @@ body {
 .react-calendar__navigation__label {
   background-color: rgb(245, 245, 245);
 }
+
+.categoryBtn {
+  border-radius: 16px;
+  border: 1px solid gray;
+  width: auto;
+  padding: 6px 12px;
+  font-size: small;
+  margin-right: 5px;
+  line-height: 1;
+}
+
+.categoryBtn.active {
+  color: #5fd100;
+  border-color: #5fd100;
+}

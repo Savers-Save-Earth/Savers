@@ -103,7 +103,7 @@ const MarkerLists = ({ markerList }) => {
   };
 
   const shareBtn = (place) => {
-    const { Kakao } = window;
+    // const { Kakao } = window;
     Kakao.Share.sendDefault({
       objectType: "location",
       address: place.address_name,
@@ -136,32 +136,16 @@ const MarkerLists = ({ markerList }) => {
   }, []);
 
   return (
-    <div style={{ height: "71vh", overflow: "scroll" }}>
+    <div className="overflow-scroll h-[32rem]">
+      {/* display:flex; justify-content: center; */}
       <ul>
         {/* markerList 정보를 사용하여 리스트를 렌더링합니다 */}
         {markerList.map((place: any, index: number) => (
-          <div
-            key={index}
-            style={{
-              border: "1px solid gray",
-              width: "100%",
-              borderRadius: "7px",
-              padding: "10px",
-            }}
-          >
-            <div
-              style={{
-                width: "56px",
-                height: "56px",
-                border: "1px solid gray",
-                borderRadius: "100px",
-                float: "left",
-                margin: "10px",
-              }}
-            ></div>
+          <div key={index} className="border text-sm p-2 rounded-lg mb-3 py-4">
+            <div className="w-12 h-12 border rounded-full float-left m-2.5 bg-slate-300"></div>
             <div>
-              <p>{place.category_name}</p>
-              <p>{place.place_name}</p>
+              {/* <p>{place.category_name}</p> */}
+              <p className="font-bold">{place.place_name}</p>
               <p>{place.address_name}</p>
               {/* <p>📌 {bookmarkHandler(place.place_name)}</p> */}
               <button

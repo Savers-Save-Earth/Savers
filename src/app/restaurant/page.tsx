@@ -8,7 +8,9 @@ import { useEffect } from "react";
 
 const Restaurant = () => {
   useEffect(() => {
-    window.Kakao.init(process.env.NEXT_PUBLIC_KAKAOMAP_KEY);
+    if (!Kakao.isInitialized()) {
+      window.Kakao.init(process.env.NEXT_PUBLIC_KAKAOMAP_KEY);
+    }
   }, []);
   return (
     <>
