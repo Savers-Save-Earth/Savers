@@ -38,9 +38,6 @@ const SideBar = () => {
               </li>
           </ul>
         </div>
-        <div className="mt-20">
-          <h2 className="text-xl">인기 글</h2>
-        </div>
       </aside>
     </>
   );
