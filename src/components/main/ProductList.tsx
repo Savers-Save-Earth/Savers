@@ -9,9 +9,12 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/autoplay";
+import { useRouter } from "next/navigation";
 
 const ProductList = () => {
   const [product, setProduct] = useState<Product[]>([]);
+
+  const router = useRouter();
 
   const fetchProduct = async () => {
     try {
@@ -32,7 +35,7 @@ const ProductList = () => {
     .sort((a, b) => b.like_count - a.like_count);
 
   return (
-    <div className="p-24 items-start gap-16 self-stretch">
+    <div className="items-start gap-16 self-stretch">
       <h1 className="text-2xl pb-4">인기있는 친환경제품</h1>
       <div>
         <Swiper
@@ -44,16 +47,19 @@ const ProductList = () => {
           autoplay={{ delay: 2000 }}
         >
           {sortedData.map((item) => (
-            <SwiperSlide key={item.id}>
+            <SwiperSlide
+              key={item.id}
+              onClick={() => router.push(`/product/${item.id}`)}
+            >
               <img src={item.img} className="rounded-lg" />
-              <p className="text-gray-500">{item.company}</p>
-              <p>{item.name}</p>
+              <p className="text-gray-300 text-sm mt-2">{item.company}</p>
+              <p className="text-sm text-gray-500">{item.name}</p>
               {item.sales ? (
-                <span className="text-green-500 font-bold mr-2">
+                <span className="text-green-500 font-bold mr-2 text-[16px]">
                   {item.sales}%
                 </span>
               ) : null}
-              <span className="font-bold">
+              <span className="font-bold  text-[16px]">
                 {item.price.toLocaleString("ko-KR")}원
               </span>
             </SwiperSlide>
