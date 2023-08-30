@@ -1,0 +1,152 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.app-container {
+  position: relative;
+  height: 2000px;
+}
+
+body {
+  max-width: 1200px; /* 1280px - 2 * 40px */
+  margin: 0 auto;
+  padding: 0 40px; /* 추가된 부분 */
+}
+
+/* .background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: radial-gradient(
+      ellipse at center,
+      rgba(254, 252, 252, 0.1) 10%,
+      rgba(20, 20, 20, 0.7) 70%,
+      rgba(20, 20, 20, 1)
+    ),
+    url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80");
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.1s ease;
+} */
+
+.background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.background-video video {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* .text-container1 {
+  position: absolute;
+  z-index: 100;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 60px;
+  color: white;
+  font-weight: bold;
+  transition: opacity 0.3s ease;
+} */
+
+.text-container2 {
+  position: fixed;
+  z-index: 100;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 60px;
+  font-weight: bold;
+  color: white;
+  transition: opacity 0.3s ease;
+}
+
+.text-container3 {
+  position: absolute;
+  z-index: 100;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 60px;
+  color: white;
+  font-weight: bold;
+  transition: opacity 0.3s ease;
+}
+
+.text-container4 {
+  position: absolute;
+  z-index: 100;
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 60px;
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+  transition: opacity 0.3s ease;
+}
+
+/* swiper */
+.swiper-button-next {
+  background: url("https://i.ibb.co/VqjGnw1/rightBtn.png") no-repeat;
+  background-size: 100% auto;
+  background-position: center;
+}
+
+.swiper-button-prev {
+  background: url("https://i.ibb.co/qdJYds2/leftBtn.png") no-repeat;
+  background-size: 100% auto;
+  background-position: center;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  display: none;
+}
+
+.swiper .swiper-pagination-bullet {
+  background-color: white; /* 비활성화 색상 */
+  opacity: 0.5; /* 비활성화된 불릿의 투명도 */
+}
+
+.swiper .swiper-pagination-bullet-active {
+  background-color: rgb(62, 61, 61); /* 활성화 색상 */
+  opacity: 1; /* 활성화된 불릿의 투명도 */
+}
+
+.highlight {
+  color: rgb(255, 255, 255);
+
+  background-color: #10c800 !important;
+  border-radius: 30px;
+}
+
+.react-calendar {
+  width: 350px;
+  max-width: 100%;
+  background: rgb(245, 245, 245) !important;
+  border: none !important;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.125em;
+  border-radius: 10px;
+}
+
+.react-calendar__month-view__days__day--neighboringMonth {
+  color: rgb(245, 245, 245) !important;
+}
+
+.react-calendar__month-view__weekdays {
+  color: rgb(75, 75, 75);
+}
+
+.react-calendar__navigation__label {
+  background-color: rgb(245, 245, 245);
+}
