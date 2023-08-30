@@ -10,7 +10,7 @@ interface UserData {
   email: string;
 }
 
-const ModifyingProgile = () => {
+const ModifyProfile = () => {
   const [user, setUser] = useState<any>([]);
   const [name, setName] = useState<string>();
   const [email, setEmail] = useState("");
@@ -105,4 +105,4 @@ const ModifyingProgile = () => {
   );
 };
 
-export default ModifyingProgile;
+export default ModifyProfile;
