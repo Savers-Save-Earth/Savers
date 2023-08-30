@@ -35,7 +35,9 @@ const Intro = () => {
             muted={true}
             loop={true}
             style={{
+              left: 0,
               width: "100%",
+
               height: "100vh",
               position: scrollY < 4600 ? "fixed" : "absolute",
               display: scrollY > 3600 ? "none" : "block",
@@ -44,7 +46,7 @@ const Intro = () => {
                 scrollY > 3000 ? Math.max(0, 1 - (scrollY - 3000) / 500) : 1,
               transition: "opacity 0.3s ease", // Add transition for smooth effect
             }}
-            src={require("../../../public/assets/environment2.mp4")}
+            src={require("../../../public/assets/environment5.mp4")}
           />
         </div>
         <div
