@@ -150,14 +150,14 @@ const ProductComponent = () => {
   return (
     <>
       {/* 카테고리 선택 로직 */}
-      <div className="flex justify-center items-center mt-10">
+      <div className="flex justify-center items-center mt-16 mb-16">
         {productCategory.map((category) => (
           <button
             key={category.value}
             onClick={() => setCategory(category.value)}
             className="flex flex-col items-center space-y-2"
           >
-            <svg className="text-gray-300 bg-gray-400 w-40 m-2"></svg>
+            <svg className="text-gray-300 bg-gray-200 w-24 h-24 m-2 rounded-full"></svg>
             <p>{category.label}</p>
           </button>
         ))}
@@ -184,7 +184,7 @@ const ProductComponent = () => {
           placeholder="검색어를 입력하세요."
         />
       </form>
-      <div className="mt-5 grid grid-cols-4 gap-4">
+      <div className="mt-8 grid grid-cols-4 gap-4">
         {sortedData
           .filter(
             (item) =>
@@ -193,24 +193,24 @@ const ProductComponent = () => {
           )
           .filter((item) => item.category.includes(category))
           .map((item) => (
-            <div key={item.id} className=" flex-1 min-w-0 max-w-md">
+            <div key={item.id} className=" flex-1 min-w-0 max-w-md mb-9">
               <img
                 src={item.img}
                 className="w-full h-auto rounded-md point"
                 alt={item.name}
                 onClick={() => router.push(`/product/${item.id}`)}
               />
-              <p className="text-gray-500">{item.company}</p>
-              <p>{item.name}</p>
+              <p className="text-gray-300 text-sm mt-2">{item.company}</p>
+              <p className="text-sm text-gray-500">{item.name}</p>
               {item.sales ? (
-                <span className="text-green-500 font-bold mr-2">
+                <span className="text-green-500 font-bold mr-2 text-[16px]">
                   {item.sales}%
                 </span>
               ) : null}
-              <span className="font-bold">
+              <span className="font-bold  text-[16px]">
                 {item.price.toLocaleString("ko-KR")}원
               </span>
-              {/* <button
+              <button
                 onClick={() => likeHandler(item.id)}
                 className={`${
                   likedByUser?.length
@@ -228,7 +228,7 @@ const ProductComponent = () => {
                 >
                   <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
                 </svg>
-              </button> */}
+              </button>
               <p>💚 {item.like_count}</p>
             </div>
           ))}

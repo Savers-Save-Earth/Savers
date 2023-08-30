@@ -25,11 +25,16 @@ export const deletePost = async (post_uid: string | string[]): Promise<void> => 
  
 // 댓글 개수 조회
 export const getCommentsNum = async (postUid: string) => {
-  const { count } = await supabase
+  const { count: comments } = await supabase
     .from("community_comment")
     .select("*", { count: "exact" })
     .eq("post_uid", postUid);
-  return count;
+  
+  const { count: replies } = await supabase
+    .from("community_reply")
+    .select("*", { count: "exact" })
+    .eq("post_uid", postUid)
+  return (comments || 0) + (replies || 0);
 };
 
 // 게시글 조회

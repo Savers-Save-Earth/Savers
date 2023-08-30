@@ -3,12 +3,14 @@ import React from "react";
 import { useState, useEffect } from "react";
 import supabase from "@/libs/supabase";
 import { Post } from "@/types/types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBookmark } from "@fortawesome/free-regular-svg-icons";
+import { useRouter } from "next/navigation";
+import { updateComment } from "@/api/community/comment";
 
 const PostList = () => {
   const [post, setPost] = useState<Post[]>([]);
-  const [showCount, setShowCount] = useState(3);
+  const [showCount, setShowCount] = useState(5);
+
+  const router = useRouter();
 
   const fetchPost = async () => {
     try {
@@ -31,6 +33,34 @@ const PostList = () => {
         setPost(sortedData);
         console.log(sortedData);
       }
+
+      const { data: commentData } = await supabase
+        .from("community_comment")
+        .select();
+
+      if (commentData) {
+        // 댓글 숫자 세는 로직
+        const updatedCommentData = commentData.map((item) => ({
+          ...item,
+          comment_count: commentData.filter((i) => i.post_uid === item.post_uid)
+            .length,
+        }));
+
+        setPost((prevPost) =>
+          prevPost.map((postItem) => {
+            const updatedItem = updatedCommentData.find(
+              (commentItem) => commentItem.post_uid === postItem.post_uid,
+            );
+            if (updatedItem) {
+              return {
+                ...postItem,
+                comment_count: updatedItem.comment_count,
+              };
+            }
+            return postItem;
+          }),
+        );
+      }
     } catch (error) {
       console.error("Error fetching products:", error);
     }
@@ -40,40 +70,76 @@ const PostList = () => {
   }, []);
 
   const showMorePost = () => {
-    setShowCount(showCount + 3);
+    setShowCount(showCount + 10);
   };
 
-  const sortedPost = post.sort((a, b) => b.created_date - a.created_date);
-
   return (
-    <div className="p-24 items-start gap-16 self-stretch">
-      <h1 className="text-2xl">인기있는 글</h1>
+    <div className="mt-16">
+      <h1 className="text-2xl mb-6">인기있는 글</h1>
       {post.slice(0, showCount).map((item) => (
         <div
           key={item.post_uid}
-          className="rounded-lg border border-gray-200 bg-white p-4 mt-5"
+          className="rounded-2xl border border-gray-200 bg-white p-4 mb-4 cursor-pointer"
+          onClick={() => router.push(`/community/${item.post_uid}`)}
         >
-          <p>{item.category}</p>
-          <p className="font-bold text-lg ">{item.title}</p>
+          <div className="inline-block">
+            <p
+              className="text-[12px] bg-gray-50 rounded-2xl mb-[6px]"
+              style={{
+                padding: "4px 8px",
+                lineHeight: "14px",
+                display: "inline-block",
+              }}
+            >
+              {item.category}
+            </p>
+          </div>
+
+          <p className="font-bold text-base mb-[6px] text-gray-900">
+            {item.title}
+          </p>
           <p className="text-base text-gray-500">
-            {item.content.length > 20
-              ? `${item.content.replace(/<[^>]*>/g, "").slice(0, 20)}...`
+            {item.content.length > 190
+              ? `${item.content.replace(/<[^>]*>/g, "").slice(0, 190)}...`
               : item.content.replace(/<[^>]*>/g, "")}
           </p>
-          <span className="mt-2 text-gray-500">{item.created_date}</span>
-          <span className="text-sm ml-2">
-            <FontAwesomeIcon
-              icon={faBookmark}
-              size="xs"
-              style={{ color: "#000000", marginRight: "5px" }}
-            />
-            {item.like_count}
-          </span>
+
+          <div className="flex items-center justify-between mt-4">
+            <div className="flex items-center">
+              <img
+                src="/assets/bookmark.png"
+                className="inline-block mr-0.5"
+                style={{ height: "auto", verticalAlign: "middle" }}
+                alt="Icon"
+              />
+              <span className="text-sm text-gray-400">{item.like_count}</span>
+              <img
+                src="/assets/comment.png"
+                className="inline-block mr-0.5 ml-2"
+                style={{ height: "auto", verticalAlign: "middle" }}
+                alt="Icon"
+              />
+              <span className="text-sm text-gray-400">
+                {item.comment_count ? item.comment_count : 0}
+              </span>
+            </div>
+            <span className="mt-2 text-gray-300 font-[14px]">
+              {`${item.created_date}`.slice(0, 11)}
+            </span>
+          </div>
         </div>
       ))}
-      <button onClick={showMorePost}>
-        {showCount <= post.length ? "더보기" : "더 이상 게시글이 없습니다."}
-      </button>
+      <div className="flex justify-center">
+        {showCount <= post.length && (
+          <button
+            onClick={showMorePost}
+            className="text-gray-500 text-base bg-gray-50 rounded-2xl mt-4 mb-8"
+            style={{ padding: "16px 24px" }}
+          >
+            더보기
+          </button>
+        )}
+      </div>
     </div>
   );
 };

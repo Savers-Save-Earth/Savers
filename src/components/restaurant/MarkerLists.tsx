@@ -68,6 +68,7 @@ const MarkerLists = ({ markerList }) => {
     category: string,
     name: string,
     address: string,
+    url: string,
   ) => {
     if (user) {
       const { data: userMarkList } = await supabase
@@ -93,6 +94,7 @@ const MarkerLists = ({ markerList }) => {
             restaurant_address: address,
             restaurant_name: name,
             user_id: user.id,
+            restaurant_map: url,
           });
         alert("북마크 되었습니다.");
       }
@@ -155,6 +157,7 @@ const MarkerLists = ({ markerList }) => {
                     place.category_name,
                     place.place_name,
                     place.address_name,
+                    place.place_url,
                   );
                   fetchMarkList();
                 }}

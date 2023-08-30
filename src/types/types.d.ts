@@ -21,6 +21,7 @@ export interface Post {
   content: string;
   created_date: number;
   like_count: number;
+  comment_count: number;
 }
 
 export interface ListMission {

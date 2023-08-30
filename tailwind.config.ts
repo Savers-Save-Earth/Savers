@@ -2,23 +2,23 @@ import type { Config } from "tailwindcss";
 
 const plugin = require("tailwindcss/plugin");
 //@ts-ignore import
-const MyRotation = plugin(function ({ addUtilities}) {
+const MyRotation = plugin(function ({ addUtilities }) {
   addUtilities({
-    ".my-rotate-y-180" : {
+    ".my-rotate-y-180": {
       transform: "rotateY(180deg)",
       animation: "flip 1.5s ease-in-out forwards",
     },
-    ".my-rotate-y-180-withoutkey" : {
+    ".my-rotate-y-180-withoutkey": {
       transform: "rotateY(180deg)",
     },
     ".preserve-3d": {
-      transformStyle: "preserve-3d"
+      transformStyle: "preserve-3d",
     },
     ".perspective": {
-      perspective:"1000px"
+      perspective: "1000px",
     },
     ".backface-hidden": {
-      backfaceVisibility : "hidden"
+      backfaceVisibility: "hidden",
     },
     "@keyframes flip": {
       "0%": {
@@ -28,8 +28,8 @@ const MyRotation = plugin(function ({ addUtilities}) {
         transform: "rotateY(-180deg)",
       },
     },
-  })
-})
+  });
+});
 
 const config: Config = {
   content: [
@@ -44,6 +44,9 @@ const config: Config = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      },
+      colors: {
+        mainGreen: "#5FD100",
       },
     },
   },

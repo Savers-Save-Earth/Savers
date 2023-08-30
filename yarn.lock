@@ -227,7 +227,7 @@
 
 "@supabase/auth-helpers-nextjs@^0.7.4":
   version "0.7.4"
-  resolved "https://registry.npmjs.org/@supabase/auth-helpers-nextjs/-/auth-helpers-nextjs-0.7.4.tgz"
+  resolved "https://registry.yarnpkg.com/@supabase/auth-helpers-nextjs/-/auth-helpers-nextjs-0.7.4.tgz#0e2949b1f7ada97f8593ef1bb57901622c47b065"
   integrity sha512-MyGCkB7LEDcGrKmesKGjyG54Jlbiss8VGTegrNde/ywXujQyRFnzycijoASDBc6i9SmE7eE1qWBsMr2URb07nw==
   dependencies:
     "@supabase/auth-helpers-shared" "0.4.1"
@@ -284,9 +284,9 @@
   dependencies:
     "@supabase/node-fetch" "^2.6.13"
 
-"@supabase/supabase-js@^2.32.0":
+"@supabase/supabase-js@^2.33.1":
   version "2.33.1"
-  resolved "https://registry.npmjs.org/@supabase/supabase-js/-/supabase-js-2.33.1.tgz"
+  resolved "https://registry.yarnpkg.com/@supabase/supabase-js/-/supabase-js-2.33.1.tgz#2407861afe63c2817d030514c87a745f78dfe68a"
   integrity sha512-jA00rquPTppPOHpBB6KABW98lfg0gYXcuGqP3TB1iiduznRVsi3GGk2qBKXPDLMYSe0kRlQp5xCwWWthaJr8eA==
   dependencies:
     "@supabase/functions-js" "^2.1.0"
@@ -340,6 +340,11 @@
     axios "*"
 
 "@types/json-schema@^7.0.5", "@types/json-schema@^7.0.8":
+  version "7.0.12"
+  resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.12.tgz#d70faba7039d5fca54c83c7dbab41051d2b6f6cb"
+  integrity sha512-Hr5Jfhc9eYOQNPYO5WLDq/n4jqijdHNlDXjuAQkkt+mWdQR+XJToOHrsD4cPaMXpn6KO7y2+wM8AZEs8VpBLVA==
+
+"@types/json-schema@^7.0.5":
   version "7.0.12"
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.12.tgz#d70faba7039d5fca54c83c7dbab41051d2b6f6cb"
   integrity sha512-Hr5Jfhc9eYOQNPYO5WLDq/n4jqijdHNlDXjuAQkkt+mWdQR+XJToOHrsD4cPaMXpn6KO7y2+wM8AZEs8VpBLVA==
@@ -2799,7 +2804,7 @@ react-dom@18.2.0:
 
 react-hook-form@^7.45.4:
   version "7.45.4"
-  resolved "https://registry.npmjs.org/react-hook-form/-/react-hook-form-7.45.4.tgz"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.45.4.tgz#73d228b704026ae95d7e5f7b207a681b173ec62a"
   integrity sha512-HGDV1JOOBPZj10LB3+OZgfDBTn+IeEsNOKiq/cxbQAIbKaiJUe/KV8DBUzsx0Gx/7IG/orWqRRm736JwOfUSWQ==
 
 react-is@^16.13.1:
@@ -2816,7 +2821,7 @@ react-kakao-maps-sdk@^1.1.11:
 
 react-query@^3.39.3:
   version "3.39.3"
-  resolved "https://registry.npmjs.org/react-query/-/react-query-3.39.3.tgz"
+  resolved "https://registry.yarnpkg.com/react-query/-/react-query-3.39.3.tgz#4cea7127c6c26bdea2de5fb63e51044330b03f35"
   integrity sha512-nLfLz7GiohKTJDuT4us4X3h/8unOh+00MLb2yJoGTPjxKs2bc1iDhkNx2bd5MKklXnOD3NrVZ+J2UXujA5In4g==
   dependencies:
     "@babel/runtime" "^7.5.5"
@@ -3197,7 +3202,7 @@ supports-preserve-symlinks-flag@^1.0.0:
 
 swiper@^10.2.0:
   version "10.2.0"
-  resolved "https://registry.npmjs.org/swiper/-/swiper-10.2.0.tgz"
+  resolved "https://registry.yarnpkg.com/swiper/-/swiper-10.2.0.tgz#e7369ff56f4e10069f2244a4436f732b8925deb0"
   integrity sha512-nktQsOtBInJjr3f5DicxC8eHYGcLXDVIGPSon0QoXRaO6NjKnATCbQ8SZsD3dN1Ph1RH4EhVPwSYCcuDRFWHGQ==
 
 tailwindcss@3.3.3:
