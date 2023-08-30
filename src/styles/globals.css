@@ -168,3 +168,17 @@ body {
     @apply border-2 border-solid border-black flex flex-col items-center gap-2
   }
 }
+.categoryBtn {
+  border-radius: 16px;
+  border: 1px solid gray;
+  width: auto;
+  padding: 6px 12px;
+  font-size: small;
+  margin-right: 5px;
+  line-height: 1;
+}
+
+.categoryBtn.active {
+  color: #5fd100;
+  border-color: #5fd100;
+}
