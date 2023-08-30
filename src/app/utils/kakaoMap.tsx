@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import MarkerLists from "@/components/restaurant/MarkerLists";
-import { styled } from "styled-components";
 
 const getCurrentCoordinate = async () => {
   return new Promise((res, rej) => {
