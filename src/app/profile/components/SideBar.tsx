@@ -160,26 +160,26 @@ const SideBar = () => {
           </div>
 
           <div className="flex flex-col items-start gap-6">
-            <button className="text-gray-400 non-italic font-normal leading-6 hover:text-[#10C800] focus:text-[#10C800]"
+            <button className="btn-sidebar"
               onClick={() => router.push(`/profile/${searchId}/myprofile`)}
             >
               프로필
             </button>
-            <button className="text-gray-400 non-italic font-normal leading-6 hover:text-[#10C800] focus:text-[#10C800]"
+            <button className="btn-sidebar"
               onClick={() =>
                 router.push(`/profile/${searchId}/mymission/missiondoing`)
               }
             >
               나의 미션
             </button>
-            <button className="text-gray-400 non-italic font-normal leading-6 hover:text-[#10C800] focus:text-[#10C800]"
+            <button className="btn-sidebar"
               onClick={() =>
                 router.push(`/profile/${searchId}/mycommunity/myposts`)
               }
             >
               커뮤니티 활동
             </button>
-            <button className="text-gray-400 non-italic font-normal leading-6 hover:text-[#10C800] focus:text-[#10C800]"
+            <button className="btn-sidebar"
               onClick={() =>
                 router.push(
                   `/profile/${searchId}/myfavorite/myfavoriteproducts`,
@@ -189,7 +189,7 @@ const SideBar = () => {
               좋아요
             </button>
             {user && user.id == profile.uid ? (
-              <button className="text-gray-400 non-italic font-normal leading-6 hover:text-[#10C800] focus:text-[#10C800]"
+              <button className="btn-sidebar"
                 onClick={() => {
                   // 일일미션 뽑기 함수
                   insertMissionListData();
@@ -203,7 +203,7 @@ const SideBar = () => {
               ""
             )}
             {user && user.id == profile.uid ? (
-              <button className="text-gray-400 non-italic font-normal leading-6 hover:text-[#10C800] focus:text-[#10C800]"
+              <button className="btn-sidebar"
                 onClick={() => {
                   router.push(`/profile/${searchId}/setting`);
                 }}
