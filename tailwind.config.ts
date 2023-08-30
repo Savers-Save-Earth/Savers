@@ -45,6 +45,11 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      sidebarButtons: {
+        base: 'text-gray-400 non-italic font-normal leading-6',
+        hover: 'hover:text-[#10C800]',
+        focus: 'focus:text-[#10C800]',
+      }
     },
   },
   plugins: [MyRotation],

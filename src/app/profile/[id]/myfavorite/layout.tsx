@@ -8,12 +8,13 @@ export default function MycommunityLayout ({
 {
   return (
     <>
-    <div className="w-full"></div>
-        <h1>마이favorite 레이아웃</h1>
+    <div className="flex flex-col w-[789px] p-8 items-start gap-6 shrink-0 self-stretch bg-white rounded-2xl">
+    <h1 className="self-stretch text-gray-900 text-[24px] non-italic font-semibold leading-6">좋아요</h1>
         <div className="flex gap-10">
         <FavoriteTopBar/>
       </div>
-      <section className="border-dashed border-2 border-indigo-600 h-3/4">{children}</section>
+      <section className="h-3/4 w-full">{children}</section>
+      </div>
     </>
   );
 }
