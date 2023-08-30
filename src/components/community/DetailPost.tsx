@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 
 import EditPost from "./EditPost";
-import { deletePost, getPostDetail } from "@/api/community/post";
+import { deletePost, getPostDetail, updatePost } from "@/api/community/post";
 import { cancelLikePost, createLikePost, getLikeStatus, getLikesNum } from "@/api/community/like";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
@@ -30,6 +30,10 @@ const DetailPost = () => {
     ["likesNumber"],
     () => getLikesNum(postUid),
   );
+
+  useEffect(() => {
+    updatePost({ post_uid: postUid, number_likes: likesNumber || 0 });
+  }, [likesNumber]);
 
   const getLikedStatus = async () => {
     if (currentUser) {

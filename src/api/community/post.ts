@@ -23,20 +23,6 @@ export const updatePost = async (editPost: EditPostType) => {
 export const deletePost = async (post_uid: string | string[]): Promise<void> => {
   await supabase.from("community").delete().eq("post_uid", post_uid);
 };
- 
-// 댓글 개수 조회
-export const getCommentsNum = async (postUid: string) => {
-  const { count: comments } = await supabase
-    .from("community_comment")
-    .select("*", { count: "exact" })
-    .eq("post_uid", postUid);
-  
-  const { count: replies } = await supabase
-    .from("community_reply")
-    .select("*", { count: "exact" })
-    .eq("post_uid", postUid)
-  return (comments || 0) + (replies || 0);
-};
 
 // 게시글 조회
 export const POSTS_NUMBER = 10;
@@ -124,62 +110,6 @@ export const getPostDetail = async (post_uid: string): Promise<PostType> => {
       .eq("post_uid", post_uid)
       .single();
     return post;
-  } catch (error) {
-    throw error;
-  }
-};
-
-// 1. 제품 카테고리 게시글 조회
-const getProductPosts = async (): Promise<PostType[]> => {
-  try {
-    const { data } = await supabase
-      .from("community")
-      .select("*")
-      .eq("category", "제품")
-      .order("created_date", { ascending: false });
-    return data || [];
-  } catch (error) {
-    throw error;
-  }
-};
-
-// 2. 식당 카테고리 게시글 조회
-const getRestaurantPosts = async (): Promise<PostType[]> => {
-  try {
-    const { data } = await supabase
-      .from("community")
-      .select("*")
-      .eq("category", "식당")
-      .order("created_date", { ascending: false });
-    return data || [];
-  } catch (error) {
-    throw error;
-  }
-};
-
-// 3. 레시피 카테고리 게시글 조회
-const getRecipePosts = async (): Promise<PostType[]> => {
-  try {
-    const { data } = await supabase
-      .from("community")
-      .select("*")
-      .eq("category", "레시피")
-      .order("created_date", { ascending: false });
-    return data || [];
-  } catch (error) {
-    throw error;
-  }
-};
-
-// 4. 오지완 카테고리 게시글 조회
-const getOhjiwanPosts = async (): Promise<PostType[]> => {
-  try {
-    const { data } = await supabase
-      .from("community")
-      .select("*")
-      .eq("category", "오지완")
-      .order("created_date", { ascending: false });
-    return data || [];
   } catch (error) {
     throw error;
   }

@@ -7,12 +7,13 @@ import {
 } from "@/api/community/comment";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useParams, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Database } from "@/types/supabase";
 import { cls, convertTimestamp } from "@/libs/util";
 import { useAuth } from "@/hooks/useAuth";
 import { createReply, deleteReply, getReplies, updateReply } from "@/api/community/reply";
+import { updatePost } from "@/api/community/post";
 
 type CommentType = Database["public"]["Tables"]["community_comment"]["Row"];
 type NewCommentType =
@@ -44,6 +45,10 @@ const PostComments = () => {
   const [newReply, setNewReply] = useState("");
   const [editingReply, setEditingReply] = useState("");
   const [editingReplyId, setEditingReplyId] = useState<string | null>(null);
+
+  useEffect(() => {
+    updatePost({post_uid: postUid, number_comments: (comments?.length ?? 0) + (replies?.length ?? 0)})
+  }, [comments?.length, replies?.length])
 
   // 댓글 등록 mutation
   const queryClient = useQueryClient();

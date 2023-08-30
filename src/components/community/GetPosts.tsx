@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useMemo } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getPosts } from "@/api/community/post";
-import { getCommentsNum } from "@/api/community/post";
 
 import { usePathname } from "next/navigation";
 
@@ -129,7 +128,7 @@ const GetPosts = () => {
                               d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z"
                             />
                           </svg>
-                          <span>{getCommentsNum(post.post_uid)}</span>
+                          <span>{post.number_comments}</span>
                         </div>
                         <div className="space-x-1 items-center justify-center flex text-sm text-gray-500">
                           <svg
@@ -146,7 +145,7 @@ const GetPosts = () => {
                               d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"
                             />
                           </svg>
-                          <span>{getLikesNum(post.post_uid)}</span>
+                          <span>{post.number_likes}</span>
                         </div>
                       </div>
                       <span className="text-sm text-gray-400">
