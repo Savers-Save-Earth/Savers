@@ -133,12 +133,12 @@ const KakaoMap = () => {
             });
 
             var iwContent = `<div style= "padding: 5px; width: 250px; border-radius:5px">
-            <p class="infoWindow-name" style="font-size: 13px; color: #4e4e4e">${place.category_name}</p>
+            
         <h1 class="infoWindow-name" style="font-weight: bold">${place.place_name}</h1>
         <p class="infoWindow-address" style="font-size: 13px; color: #1f1f1f">${place.address_name}</p>
         <p class="infoWindow-road-address" style="font-size: 13px; color: #1f1f1f">(지번)${place.road_address_name}</p>
         <p class="infoWindow-phone"style="font-size: 13px; color: #1f1f1f" >${place.phone}</p>
-        <a href=${place.place_url} " target="_blank"><button style="background-color:#10C800; color:white; font-size: 13px; padding:3px; width: 240px">상세보기</button></a>
+        <a href=${place.place_url} " target="_blank"><button style="background-color:#5FD100; color:white; font-size: 13px; padding:3px; width: 240px">상세보기</button></a>
         </div>`; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
 
             var iwRemoveable = true;
@@ -195,29 +195,49 @@ const KakaoMap = () => {
 
   return (
     <div>
-      <div className="pt-20">
-        <div>비건식당 찾기</div>
-        <div
-          id="map"
-          className="w-8/12 h-96 ml-8 float-left"
-          // style={{
-          //   width: "60vw",
-          //   height: "75vh",
-          //   float: "left",
-          //   marginLeft: "3vw",
-          //   paddingRight: "3vw",
-          // }}
-        ></div>
-        <div className="w-3/12 ml-3 float-left">
-          <div>
-            <button onClick={() => setCurrentCategory("비건")}>전체</button>
-            <button onClick={() => setCurrentCategory("비건식당")}>식당</button>
-            <button onClick={() => setCurrentCategory("비건베이커리")}>
-              베이커리
-            </button>
-            <button onClick={() => setCurrentCategory("비건카페")}>카페</button>
+      <div className="border pt-20 ">
+        <div id="pageTitle" className="text-lg mb-3 font-semibold">
+          비건식당 찾기
+        </div>
+        <div id="pageBody">
+          <div id="pageLeft" className=" border w-80 float-left">
+            <div id="buttons" className="mb-3">
+              <button
+                onClick={() => setCurrentCategory("비건")}
+                className={`categoryBtn ${
+                  currentCategory === "비건" ? "active" : ""
+                }`}
+              >
+                전체
+              </button>
+              <button
+                onClick={() => setCurrentCategory("비건식당")}
+                className={`categoryBtn ${
+                  currentCategory === "비건식당" ? "active" : ""
+                }`}
+              >
+                식당
+              </button>
+              <button
+                onClick={() => setCurrentCategory("비건베이커리")}
+                className={`categoryBtn ${
+                  currentCategory === "비건베이커리" ? "active" : ""
+                }`}
+              >
+                베이커리
+              </button>
+              <button
+                onClick={() => setCurrentCategory("비건카페")}
+                className={`categoryBtn ${
+                  currentCategory === "비건카페" ? "active" : ""
+                }`}
+              >
+                카페
+              </button>
+            </div>
+            <MarkerLists markerList={markerList} />
           </div>
-          <MarkerLists markerList={markerList} />
+          <div id="map" className="w-[100vh] h-[75vh] float-left"></div>
         </div>
       </div>
     </div>
@@ -226,25 +246,24 @@ const KakaoMap = () => {
 
 export default KakaoMap;
 
-// const CategotyBtn = styled.div`
-//   display: flex;
-//   flex-direction: row;
-//   justify-content: center;
-//   align-items: center;
-// `;
+/* .kakaoMap {
+  width: 100vh;
+  height: 75vh;
+  float: left;
+  margin-left: 20px;
+} */
 
-// const Btn = styled.button`
-//   border-radius: 10px;
+// .categoryBtn {
+//   border-radius: 16px;
 //   border: 1px solid gray;
-//   width: 55px;
-//   height: 32px;
+//   width: auto;
+//   padding: 6px 12px;
+//   font-size: small;
+//   margin-right: 5px;
+//   line-height: 1;
+// }
 
-//   font-family: "Pretendard";
-//   font-style: normal;
-//   font-weight: 500;
-//   font-size: 13px;
-//   /* identical to box height, or 133% */
-//   display: flex;
-//   align-items: center;
-//   text-align: center;
-// `;
+// .categoryBtn.active {
+//   color: #5fd100;
+//   border-color: #5fd100;
+// }

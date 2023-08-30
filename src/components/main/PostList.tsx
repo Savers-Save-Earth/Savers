@@ -46,7 +46,20 @@ const PostList = () => {
             .length,
         }));
 
-        console.log(updatedCommentData);
+        setPost((prevPost) =>
+          prevPost.map((postItem) => {
+            const updatedItem = updatedCommentData.find(
+              (commentItem) => commentItem.post_uid === postItem.post_uid,
+            );
+            if (updatedItem) {
+              return {
+                ...postItem,
+                comment_count: updatedItem.comment_count,
+              };
+            }
+            return postItem;
+          }),
+        );
       }
     } catch (error) {
       console.error("Error fetching products:", error);
@@ -107,7 +120,7 @@ const PostList = () => {
                 alt="Icon"
               />
               <span className="text-sm text-gray-400">
-                {item.comment_count}
+                {item.comment_count ? item.comment_count : 0}
               </span>
             </div>
             <span className="mt-2 text-gray-300 font-[14px]">

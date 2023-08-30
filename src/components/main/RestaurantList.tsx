@@ -35,13 +35,21 @@ const RestaurantList = () => {
     }
   };
 
+  // 공유하기 눌렀을 때
+  const shareHandler = async () => {
+    const currentURL = window.location.href;
+    navigator.clipboard.writeText(currentURL).then(() => {
+      alert("링크가 복사되었습니다.");
+    });
+  };
+
   useEffect(() => {
     fetchRestaurant();
   }, []);
 
   return (
     <div className="items-start gap-16 self-stretch mt-16">
-      <h1 className="text-2xl mb-6">인기있는 레스토랑</h1>
+      <h1 className="text-2xl mb-6">인기있는 비건식당</h1>
       <Swiper
         // install Swiper modules
         modules={[Navigation, Pagination, Autoplay]}
@@ -65,7 +73,7 @@ const RestaurantList = () => {
               className="flex items-center justify-center"
               style={{ height: "50%", width: "50%" }}
             >
-              <div className="rounded-lg border border-gray-200 bg-white p-4">
+              <div className="rounded-lg border border-gray-200 bg-white p-4 flex items-center">
                 <div
                   style={{
                     width: "60px",
@@ -92,6 +100,20 @@ const RestaurantList = () => {
                       alt="Icon"
                     />
                     <span className="text-gray-300">{item.bookmarkCount}</span>
+                  </p>
+                  <p>
+                    <img
+                      src="/assets/share.png"
+                      className="border border-gray-300 p-2 rounded-full inline-block cursor-pointer"
+                      onClick={shareHandler}
+                    />
+                    <span
+                      className="bg-gray-50 ml-2 text-[14px] text-gray-500 rounded-2xl cursor-pointer"
+                      style={{ padding: "8px 10px" }}
+                      onClick={() => window.open(`${item?.restaurant_map}`)}
+                    >
+                      상세보기
+                    </span>
                   </p>
                 </div>
               </div>
