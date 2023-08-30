@@ -208,10 +208,7 @@ const KakaoMap = () => {
           //   paddingRight: "3vw",
           // }}
         ></div>
-        <div
-          className="w-3/12 ml-3 float-left"
-          //  style={{ width: "50vh", marginLeft: "1vw" }}
-        >
+        <div className="w-3/12 ml-3 float-left">
           <div>
             <button onClick={() => setCurrentCategory("비건")}>전체</button>
             <button onClick={() => setCurrentCategory("비건식당")}>식당</button>
@@ -250,7 +247,4 @@ export default KakaoMap;
 //   display: flex;
 //   align-items: center;
 //   text-align: center;
-
-//   /* gray/500 */
-//   color: #667085;
 // `;
