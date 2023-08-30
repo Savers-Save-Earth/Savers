@@ -4,7 +4,6 @@ import supabase from "@/libs/supabase";
 import { Database } from "@/types/supabase";
 import Badges from "@/components/profile/Badges";
 import MissionCalendar from "@/components/profile/MissionCalendar";
-// export const revalidate = 1 // revalidate every seconds
 
 type Profile = Database["public"]["Tables"]["user"]["Row"];
 const MyProfile = async ({ params: { id } }: { params: { id: string } }) => {

@@ -17,7 +17,7 @@ export interface DailyMission {
   address: string;
 }
 
-const initialProfile = {
+const initialProfile: any = {
   activePoint: null,
   badges: null,
   commentPosts: "",
@@ -35,9 +35,8 @@ const initialProfile = {
   writePosts: "",
 };
 
-export const currentDate = convertDate(new Date());
-
 const SideBar = () => {
+  const currentDate = convertDate(new Date());
   const params = useParams().id as string;
   const decodedParams = decodeURIComponent(params);
 

@@ -62,7 +62,7 @@ const MyFavoriteProducts = ({ params }: { params: { id: string } }) => {
             className="flex flex-col items-start gap-3 cursor-pointer"
             key={product.like_id}
           >
-            <img className="w-[152px] h-[152px] rounded-2xl shrink-0" src={product.img} alt="No Image"/>
+            <img className="w-[152px] h-[152px] rounded-2xl shrink-0" src={product.img || ""} alt="No Image"/>
             <p className="btn-profile-topbar">{product.product_company}</p>
             {/* window.open : 새 탭에서 해당 url로 이동 */}
             <p

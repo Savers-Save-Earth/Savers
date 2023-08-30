@@ -72,9 +72,9 @@ const Intro = () => {
             display: scrollY > 3600 ? "none" : "block",
           }}
         >
-          "자연과 가까울수록 병은 멀어지고,
+          자연과 가까울수록 병은 멀어지고,
           <br />
-          자연과 멀수록 병은 가까워진다."
+          자연과 멀수록 병은 가까워진다.
         </div>
         <div
           className="fade-element fixed left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-4xl font-bold transition-opacity duration-100 ease-in-out"
@@ -89,9 +89,9 @@ const Intro = () => {
             display: scrollY > 3600 ? "none" : "block",
           }}
         >
-          "자연은 결코 배신하지 않는다.
+          자연은 결코 배신하지 않는다.
           <br />
-          우리 자신을 배신하는 것은 항상 우리들이다."
+          우리 자신을 배신하는 것은 항상 우리들이다.
         </div>
         <div
           className="fade-element fixed left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl font-bold text-white transition-opacity duration-100 ease-in-out"
@@ -106,9 +106,9 @@ const Intro = () => {
             display: scrollY > 3300 ? "none" : "block",
           }}
         >
-          "예술에는 오류가 있을지 모르나,
+          예술에는 오류가 있을지 모르나,
           <br />
-          자연에는 잘못이 없다."
+          자연에는 잘못이 없다.
         </div>
       </div>
       <div style={{ height: "2000px" }}></div>

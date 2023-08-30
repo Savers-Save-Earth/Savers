@@ -6,19 +6,19 @@ import { Database } from "@/types/supabase";
 import { ListMission } from "@/types/types";
 import React, { useEffect, useState } from "react";
 
-// export const revalidate = 0
 type MissionDoingProp =Database["public"]["Tables"]["missionList"]["Row"];
 
-export const currentDate = convertDate(new Date());
-
-const MissionDoing = ({ params }: { params: { id: string } }) => {
+const MissionDoing = async ({ params }: { params: { id: string; }; }) => {
   const [dailyMission, setDailyMission] = useState<MissionDoingProp[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태 추가
+  const currentDate = convertDate(new Date());
   const searchId = decodeURIComponent(params.id);
 
   useEffect(() => {
     fetchMissionData(searchId)
   },[])
+
+
 
   const fetchMissionData = async (searchId: string) => {
     try {
@@ -31,7 +31,7 @@ const MissionDoing = ({ params }: { params: { id: string } }) => {
       setIsLoading(false)
       if (dailyMission?.length === 0) return <div>일일미션을 받아주세요!</div>;
       else {
-        setDailyMission(dailyMission)
+        setDailyMission(dailyMission!)
       }
     } catch (error) {
       console.log("데이터가져올 때 에러남");
