@@ -14,7 +14,7 @@ const CommunityTopBar = () => {
     <div className="flex items-start gap-8 self-stretch">
       <div className="flex flex-col items-start py-[6.5px] gap-[13px] self-stretch">
         <button
-          className="text-gray-300 text-[14px] non-italic font-medium leading-[22px] focus:text-gray-900 focus:font-medium"
+          className="btn-profile-topbar"
           onClick={() =>
             router.push(`/profile/${searchId}/mycommunity/myposts`)
           }
@@ -25,7 +25,7 @@ const CommunityTopBar = () => {
 
       <div className="flex flex-col items-start py-[6.5px] gap-[13px] self-stretch">
         <button
-          className="text-gray-300 text-[14px] non-italic font-medium leading-[22px] focus:text-gray-900 focus:font-medium"
+          className="btn-profile-topbar"
           onClick={() =>
             router.push(`/profile/${searchId}/mycommunity/mycomments`)
           }
@@ -35,7 +35,7 @@ const CommunityTopBar = () => {
       </div>
       <div className="flex flex-col items-start py-[6.5px] gap-[13px] self-stretch">
         <button
-          className="text-gray-300 text-[14px] non-italic font-medium leading-[22px] focus:text-gray-900 focus:font-medium"
+          className="btn-profile-topbar"
           onClick={() =>
             router.push(`/profile/${searchId}/mycommunity/mylikedposts`)
           }
