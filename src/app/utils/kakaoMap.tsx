@@ -98,13 +98,37 @@ const KakaoMap = () => {
 
           const newMarkerList = [];
 
+          let imgSrc = "";
+
           places.forEach((place: any) => {
             const markerPosition = new window.kakao.maps.LatLng(
               place.y,
               place.x,
             );
+
+            if (currentCategory === "비건베이커리") {
+              imgSrc =
+                "https://cdn2.iconfinder.com/data/icons/bakery-and-baking-filled/64/bakery_baked_flour-125-512.png";
+            }
+            if (currentCategory === "비건식당") {
+              imgSrc =
+                "https://cdn4.iconfinder.com/data/icons/food-delivery-59/64/15-Location-256.png";
+            }
+            if (currentCategory === "비건카페") {
+              imgSrc =
+                "https://cdn1.iconfinder.com/data/icons/location-107/64/08-Coffee-shop-512.png";
+            }
+            let imgSize = new kakao.maps.Size(38, 38),
+              imgOption = { offset: new kakao.maps.Point(27, 69) };
+            const markerImg = new window.kakao.maps.MarkerImage(
+              imgSrc,
+              imgSize,
+              imgOption,
+            );
+
             const marker = new window.kakao.maps.Marker({
               position: markerPosition,
+              image: markerImg,
               map: map,
             });
 
@@ -129,21 +153,6 @@ const KakaoMap = () => {
               // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
               infowindow.open(map, marker);
             });
-
-            // window.kakao.maps.event.addListener(marker, "mouseover", function () {
-            //   // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
-            //   infowindow.open(map, marker);
-            // });
-
-            // 마커에 마우스아웃 이벤트를 등록합니다
-            // window.kakao.maps.event.addListener(
-            //   marker,
-            //   "mouseout",
-            //   function () {
-            //     // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
-            //     infowindow.close();
-            //   },
-            // );
 
             // 마커에 마우스아웃 이벤트: map을 누르면 실행
             window.kakao.maps.event.addListener(map, "click", function () {
@@ -185,25 +194,57 @@ const KakaoMap = () => {
   }, [currentCategory]);
 
   return (
-    <div style={{ marginTop: "40px" }}>
-      <button onClick={() => setCurrentCategory("비건")}>전체</button>
-      <button onClick={() => setCurrentCategory("비건식당")}>식당</button>
-      <button onClick={() => setCurrentCategory("비건베이커리")}>
-        베이커리
-      </button>
-      <button onClick={() => setCurrentCategory("비건카페")}>카페</button>
-      <div
-        id="map"
-        style={{
-          width: "50vw",
-          height: "50vh",
-        }}
-      ></div>
-      <h2>마커 리스트</h2>
-      <MarkerLists markerList={markerList} />
-      <div></div>
+    <div>
+      <div className="pt-20">
+        <div>비건식당 찾기</div>
+        <div
+          id="map"
+          className="w-8/12 h-96 ml-8 float-left"
+          // style={{
+          //   width: "60vw",
+          //   height: "75vh",
+          //   float: "left",
+          //   marginLeft: "3vw",
+          //   paddingRight: "3vw",
+          // }}
+        ></div>
+        <div className="w-3/12 ml-3 float-left">
+          <div>
+            <button onClick={() => setCurrentCategory("비건")}>전체</button>
+            <button onClick={() => setCurrentCategory("비건식당")}>식당</button>
+            <button onClick={() => setCurrentCategory("비건베이커리")}>
+              베이커리
+            </button>
+            <button onClick={() => setCurrentCategory("비건카페")}>카페</button>
+          </div>
+          <MarkerLists markerList={markerList} />
+        </div>
+      </div>
     </div>
   );
 };
 
 export default KakaoMap;
+
+// const CategotyBtn = styled.div`
+//   display: flex;
+//   flex-direction: row;
+//   justify-content: center;
+//   align-items: center;
+// `;
+
+// const Btn = styled.button`
+//   border-radius: 10px;
+//   border: 1px solid gray;
+//   width: 55px;
+//   height: 32px;
+
+//   font-family: "Pretendard";
+//   font-style: normal;
+//   font-weight: 500;
+//   font-size: 13px;
+//   /* identical to box height, or 133% */
+//   display: flex;
+//   align-items: center;
+//   text-align: center;
+// `;
