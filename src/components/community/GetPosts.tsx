@@ -1,7 +1,8 @@
 "use client";
 import Link from "next/link";
 
-import { useQuery } from "@tanstack/react-query";
+import { useMemo } from "react";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { getPosts } from "@/api/community/post";
 import { getCommentsNum } from "@/api/community/post";
 
@@ -12,15 +13,15 @@ import { removeHtmlTags } from "@/libs/util";
 import Loading from "@/app/loading";
 import { getLikesNum } from "@/api/community/like";
 
+import { ToTalDataType } from "@/types/types";
+
 type PostType = Database["public"]["Tables"]["community"]["Row"];
 type QueryKeyMap = {
   [key: string]: string[];
 };
 
 const GetPosts = () => {
-  const POSTS_NUMBER = 10;
   const pathname = usePathname();
-  // 현재 pathname에 따라 쿼리키 설정하는 함수
   const getPathnameQueryKey = (pathname: string) => {
     const queryKeyMap: QueryKeyMap = {
       "/community": ["allPosts"],
@@ -29,10 +30,9 @@ const GetPosts = () => {
       "/community/recipe": ["recipePosts"],
       "/community/ohjiwan": ["ohjiwanPosts"],
     };
-
-    return queryKeyMap[pathname] || ["allPosts"];
+  
+    return queryKeyMap[pathname]
   };
-  // queryKey 변수에 쿼리키 설정함수의 return값 할당
   const queryKey = getPathnameQueryKey(pathname);
 
   const getCategoryName = (pathname: string) => {
@@ -48,26 +48,47 @@ const GetPosts = () => {
   };
 
   const {
-    isLoading,
     data: posts,
-    error,
-  } = useQuery<PostType[]>(queryKey, () => getPosts(pathname), {
-    staleTime: 60000,
-    cacheTime: 300000,
+    isLoading,
+    isError,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage
+  } = useInfiniteQuery<ToTalDataType>({
+    queryKey: queryKey,
+    queryFn: ({ pageParam }) => getPosts(pathname, pageParam),
+    getNextPageParam: (lastPage) => {
+      // 전체 페이지 개수보다 작을 때 다음 페이지로
+      if (lastPage.page < lastPage.total_pages) {
+        return lastPage.page + 1;
+      }
+    }
   });
+  
+  const accumulatePosts = useMemo(() => {
+    return posts?.pages
+      .map((page) => {
+        return page.posts;
+      })
+      .flat();
+      // flat() : 모든 하위 배열 요소를 지정한 깊이까지 재귀적으로 이어붙인 새로운 배열 생성
+  }, [posts]);
+  
+  const handleMoreViewClick = () => {
+    fetchNextPage();
+  }
 
   if (isLoading) return <Loading />;
-  if (error) {
-    console.error("데이터를 불러오는 중에 오류가 발생했습니다:", error);
+  if (isError) {
+    console.error("데이터를 불러오는 중에 오류가 발생했습니다:", isError);
     return "데이터를 불러오는 중에 오류가 발생했습니다.";
   }
   return (
-    <>
+    <section className="flex flex-col mb-20">
       {
-        <div className="flex flex-col mt-16 mb-10 justify-center divide-y-[1px]">
-          <h1 className="text-xl flex my-10">{getCategoryName(pathname)} 글</h1>
-          {Array.isArray(posts) &&
-            posts.map((post: PostType) => (
+        <div className="flex flex-col mb-5 justify-center divide-y-[1px]">
+          <h1 className="text-xl flex mb-8">{getCategoryName(pathname)} 글</h1>
+          {accumulatePosts?.map((post: PostType) => (
               <div
                 key={post.post_uid}
                 className="flex flex-col justify-between max-w-[789px] px-4 py-4"
@@ -138,7 +159,16 @@ const GetPosts = () => {
             ))}
         </div>
       }
-    </>
+      {hasNextPage ?
+        <button
+          onClick={handleMoreViewClick}
+          className="mx-auto px-4 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-500">
+          더보기
+        </button>
+        :
+        null
+       }
+    </section>
   );
 };
 

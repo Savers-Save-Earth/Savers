@@ -251,7 +251,7 @@ const PostComments = () => {
 
   return (
     <>
-      <div className="mb-10 flex flex-col max-w-7xl px-10 mx-auto">
+      <div className="mb-10 flex flex-col mx-auto">
         <div className="border-b py-4">
           <span>댓글 {(comments?.length ?? 0) + (replies?.length ?? 0)}개</span>
         </div>

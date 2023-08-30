@@ -6,11 +6,11 @@ import { useAuth } from "@/hooks/useAuth";
 const CommunityLayout = ({ children }: { children: React.ReactNode }) => {
   const user = useAuth();
   return (
-    <div className="flex w-full">
-      <div className="w-[379px] mt-24 h-full">
+    <div className="flex w-full mt-24">
+      <div className="w-[379px] h-full">
         <SideBar />
       </div>
-      <section className="w-[789px]">{children}</section>
+      <main className="w-[789px] ">{children}</main>
       {user ? (
         <FloatingButton href="/community/write">
           <svg

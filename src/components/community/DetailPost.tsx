@@ -120,7 +120,7 @@ const DetailPost = () => {
   };
 
   return (
-    <div className="flex flex-col max-w-7xl mt-10 px-10 mx-auto">
+    <div className="flex flex-col">
       <button
         onClick={() => router.back()}
         className="w-28 mb-10 bg-green-200 px-5 py-2 rounded-md shadow-sm hover:bg-green-300 hover:-translate-y-1 transition ease-in-out duration-200"

@@ -1,5 +1,6 @@
 import supabase from "@/libs/supabase";
 import { Database } from "@/types/supabase";
+import { ToTalDataType } from "@/types/types";
 
 type PostType = Database["public"]["Tables"]["community"]["Row"];
 type NewPostType = Database["public"]["Tables"]["community"]["Insert"];
@@ -38,31 +39,80 @@ export const getCommentsNum = async (postUid: string) => {
 };
 
 // 게시글 조회
-export const getPosts = async (pathname: string): Promise<PostType[]> => {
-  try {
-    let posts;
+export const POSTS_NUMBER = 10;
+export const getPosts = async (pathname: string, pageParam: number = 1): Promise<ToTalDataType> => {
+  let data: any = [];
+  let count = null;
     
     if (pathname === "/community/product") {
-      posts = await getProductPosts();
-    } else if (pathname === "/community/restaurant") {
-      posts = await getRestaurantPosts();
-    } else if (pathname === "/community/recipe") {
-      posts = await getRecipePosts();
-    } else if (pathname === "/community/ohjiwan") {
-      posts = await getOhjiwanPosts();
-    } else {
-      // 다른 모든 경우에 대한 기본 처리
-      const { data } = await supabase
+      const productPosts = await supabase
         .from("community")
         .select("*")
-        .order("created_date", { ascending: false });
-      posts = data || [];
+        .eq("category", "제품")
+        .order("created_date", { ascending: false })
+        .range(pageParam * 10 - 10, pageParam * 10 -1);
+      
+      data = productPosts.data;
+
+      const { count: productCount } = await supabase.from("community").select("count", { count: "exact" }).eq("category", "제품");
+      count = productCount;
+
+    } else if (pathname === "/community/restaurant") {
+      const restaurantPosts = await supabase
+        .from("community")
+        .select("*")
+        .eq("category", "식당")
+        .order("created_date", { ascending: false })
+        .range(pageParam * 10 - 10, pageParam * 10 -1);
+      
+      data = restaurantPosts.data;
+
+      const { count: restaurantCount } = await supabase.from("community").select("count", { count: "exact" }).eq("category", "식당");
+      count = restaurantCount;
+      
+    } else if (pathname === "/community/recipe") {
+      const recipePosts = await supabase
+        .from("community")
+        .select("*")
+        .eq("category", "레시피")
+        .order("created_date", { ascending: false })
+        .range(pageParam * 10 - 10, pageParam * 10 -1);
+      
+      data = recipePosts.data;
+
+      const { count: recipeCount } = await supabase.from("community").select("count", { count: "exact" }).eq("category", "레시피");
+      count = recipeCount;
+      
+    } else if (pathname === "/community/ohjiwan") {
+      const ohjiwanPosts = await supabase
+        .from("community")
+        .select("*")
+        .eq("category", "오지완")
+        .order("created_date", { ascending: false })
+        .range(pageParam * 10 - 10, pageParam * 10 -1);
+      
+      data = ohjiwanPosts.data;
+
+      const { count: ohjiwanCount } = await supabase.from("community").select("count", { count: "exact" }).eq("category", "오지완");
+      count = ohjiwanCount;
+      
+    } else {
+      // 전체 데이터
+      const allPosts = await supabase
+        .from("community")
+        .select("*")
+        .order("created_date", { ascending: false })
+        .range(pageParam * 10 - 10, pageParam * 10 - 1);
+      
+      data = allPosts.data;
+
+      const { count: allCount } = await supabase.from("community").select("count", { count: "exact" });
+      count = allCount;
     }
-    
-    return posts;
-  } catch (error) {
-    throw error;
-  }
+  
+    const total_pages = count ? Math.floor(count / 10) + (count % 10 === 0 ? 0 : 1) : 1;
+
+    return { posts: data, page: pageParam, total_pages, total_results: count };
 };
 
 // 게시글 상세내용 조회
