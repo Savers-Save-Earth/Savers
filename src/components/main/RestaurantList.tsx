@@ -36,9 +36,8 @@ const RestaurantList = () => {
   };
 
   // 공유하기 눌렀을 때
-  const shareHandler = async () => {
-    const currentURL = window.location.href;
-    navigator.clipboard.writeText(currentURL).then(() => {
+  const shareHandler = async (url: string) => {
+    navigator.clipboard.writeText(url).then(() => {
       alert("링크가 복사되었습니다.");
     });
   };
@@ -105,7 +104,7 @@ const RestaurantList = () => {
                     <img
                       src="/assets/share.png"
                       className="border border-gray-300 p-2 rounded-full inline-block cursor-pointer"
-                      onClick={shareHandler}
+                      onClick={() => shareHandler(item?.restaurant_map)}
                     />
                     <span
                       className="bg-gray-50 ml-2 text-[14px] text-gray-500 rounded-2xl cursor-pointer"
