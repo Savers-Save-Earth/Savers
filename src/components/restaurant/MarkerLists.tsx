@@ -5,11 +5,16 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark } from "@fortawesome/free-regular-svg-icons";
 
+import { Database } from "@/types/supabase";
+
 interface MarkList {
   id: number;
   restaurant_name: string;
   restaurant_address: string;
 }
+
+type LikeType = Database["public"]["Tables"]["like_restaurant"]["Row"];
+type NewLikeType = Database["public"]["Tables"]["like_restaurant"]["Insert"];
 
 const MarkerLists = ({ markerList }) => {
   const [markedList, setMarkedList] = useState<MarkList[]>([]);
@@ -97,14 +102,41 @@ const MarkerLists = ({ markerList }) => {
     }
   };
 
+  const shareBtn = async (place) => {
+    const { Kakao } = window;
+    Kakao.Share.sendDefault({
+      objectType: "location",
+      address: place.address_name,
+      addressTitle: place.place_name,
+      content: {
+        title: place.place_name,
+        description: place.place_url,
+        imageUrl:
+          "http://k.kakaocdn.net/dn/bSbH9w/btqgegaEDfW/vD9KKV0hEintg6bZT4v4WK/kakaolink40_original.png",
+        link: {
+          webUrl: "http:localhost:3000",
+          mobileWebUrl: "http:localhost:3000",
+        },
+      },
+      buttons: [
+        {
+          title: "웹으로 보기",
+          link: {
+            webUrl: "https://place.map.kakao.com/201218594",
+            mobileWebUrl: "https://place.map.kakao.com/201218594",
+          },
+        },
+      ],
+    });
+  };
+
   useEffect(() => {
     fetchUser();
     fetchMarkList();
   }, []);
 
   return (
-    <div>
-      <h2>마커 리스트 컴포넌트</h2>
+    <div style={{ height: "71vh", overflow: "scroll" }}>
       <ul>
         {/* markerList 정보를 사용하여 리스트를 렌더링합니다 */}
         {markerList.map((place: any, index: number) => (
@@ -112,31 +144,45 @@ const MarkerLists = ({ markerList }) => {
             key={index}
             style={{
               border: "1px solid gray",
-              width: "50%",
+              width: "100%",
               borderRadius: "7px",
+              padding: "10px",
             }}
           >
-            <p>{place.category_name}</p>
-            <p>{place.place_name}</p>
-            <p>{place.address_name}</p>
-            {/* <p>📌 {bookmarkHandler(place.place_name)}</p> */}
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                addMarkList(
-                  place.category_name,
-                  place.place_name,
-                  place.address_name,
-                );
-                fetchMarkList();
+            <div
+              style={{
+                width: "56px",
+                height: "56px",
+                border: "1px solid gray",
+                borderRadius: "100px",
+                float: "left",
+                margin: "10px",
               }}
-            >
-              <FontAwesomeIcon
-                icon={faBookmark}
-                size="xs"
-                style={{ color: "#000000", marginRight: "5px" }}
-              />
-            </button>
+            ></div>
+            <div>
+              <p>{place.category_name}</p>
+              <p>{place.place_name}</p>
+              <p>{place.address_name}</p>
+              {/* <p>📌 {bookmarkHandler(place.place_name)}</p> */}
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  addMarkList(
+                    place.category_name,
+                    place.place_name,
+                    place.address_name,
+                  );
+                  fetchMarkList();
+                }}
+              >
+                <FontAwesomeIcon
+                  icon={faBookmark}
+                  size="xs"
+                  style={{ color: "#000000", marginRight: "5px" }}
+                />
+              </button>
+              <button onClick={() => shareBtn(place)}>공유하기</button>
+            </div>
           </div>
         ))}
       </ul>
