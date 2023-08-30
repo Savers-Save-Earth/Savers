@@ -29,7 +29,7 @@ export const getCommentsNum = async (postUid: string) => {
     .from("community_comment")
     .select("*", { count: "exact" })
     .eq("post_uid", postUid);
-  return count ?? 0;
+  return count;
 };
 
 // 게시글 조회
