@@ -4,57 +4,100 @@ import React, { useEffect, useState } from "react";
 import supabase from "@/libs/supabase";
 import { Database } from "@/types/supabase";
 import { useRouter } from "next/navigation";
+import UserLikedPost from "./UserLikedPost";
 
-type UserLikedPost = Database["public"]["Tables"]["like_post"]["Row"];
+
+type UserLikedPost = Database["public"]["Tables"]["community"]["Row"];
 
 const MyLikedPosts = ({ params }: { params: { id: string } }) => {
+  const loadBoundaryValue = 10;
   const [userLikedPosts, setUserLikedPosts] = useState<UserLikedPost[]>([]);
-  const [loadCount, setLoadCount] = useState<number>(5);
-  const router = useRouter();
+  const [loadCount, setLoadCount] = useState<number>(loadBoundaryValue);
+  const [loadMoreBtn, setLoadMoreBtn] = useState<string>("");
   const decodedParams = decodeURIComponent(params.id);
-;
+
   useEffect(() => {
-    fetchCommunity();
+    fetchUser()
   }, [loadCount]);
 
-  const fetchCommunity = async () => {
+  const fetchUser = async () => {
     try {
-      let { data: posts } = await supabase
+      let { data:user } = await supabase.from("user").select("uid").eq("nickname", decodedParams)
+      if (user!.length === 0) {
+        console.log("에러난듯??")
+setUserLikedPosts([])
+return <div>죄송합니다. 에러가 발생했습니다.</div>;
+      }
+      else {
+        console.log("user===>",user)
+        fetchCommunity(user![0].uid)
+      }
+
+    } catch (error) {
+      console.log("error", error)
+    }
+    
+  }
+  const fetchCommunity = async (id: string) => {
+    try {
+      console.log("id",id)
+      let { data: posts, count } = await supabase
         .from("like_post")
-        .select("*")
-        .eq("author_name", decodedParams)
+        .select("*", { count: "exact" })
+        .eq("like_user", id)
         .range(0, loadCount - 1);
+        console.log("posts=======++>",posts)
 
         setUserLikedPosts(posts || []);
+        if (posts!.length === 0) {
+          setUserLikedPosts([]);
+          return <div>지금까지 북마크한 글이 없네요!!</div>;
+        }
+  
+        if (posts!.length > 0) {
+        }
+        if (count && count <= loadBoundaryValue) {
+          setLoadMoreBtn("");
+          return;
+        } else if (count! > loadCount) {
+          setLoadMoreBtn("더보기");
+          return;
+        } else if (count! <= loadCount) {
+          if (count! + loadBoundaryValue > loadCount) {
+            setLoadMoreBtn("접기");
+          } else {
+            setLoadCount(loadBoundaryValue);
+            setLoadMoreBtn("더보기");
+          }
+          return;
+        }
     } catch (error) {
       console.error("An error occurred:", error); // 예상치 못한 에러 처리
       return false; // 에러 처리 후 함수 종료
     }
   };
   const handleLoadMore = () => {
-    setLoadCount((prev) => prev + 5);
+    setLoadCount((prev) => prev + loadBoundaryValue);
   };
+  console.log("userLikedPosts--<",userLikedPosts)
   return (
-    <>
+    <div className="space-y-4">
       {userLikedPosts?.map((post) => (
-          <div
-            className="border-solid border-2 border-blue-900 p-5 m-5"
-            key={post.post_uid}
-          >
-            <p>글 uid : {post.post_uid}</p>
-            <p onClick = {() => router.push(`/community/${post.post_uid}`)}>글 제목 : {post.post_uid}</p>
-            {/* <p>등록일: {post.created_date.slice(0, 10)}</p> */}
-          </div>
+          <UserLikedPost key={post.post_uid} post={post}/>
       ))}
-      <button onClick={handleLoadMore}>더 보기</button>
-      <div>MyLikedPost</div>
-      <div>MyLikedPost</div>
-      <div>MyLikedPost</div>
-      <div>MyLikedPost</div>
-      <div>MyLikedPost</div>
-      <div>MyLikedPost</div>
-      <div>MyLikedPost</div>
-    </>
+            <div className="flex justify-center">
+        {loadMoreBtn ? (
+          <button
+            className="py-4 px-5 justify-center items-center gap-[10px] rounded-2xl bg-gray-50"
+            onClick={handleLoadMore}
+          >
+            {loadMoreBtn}
+          </button>
+        ) : (
+          ""
+        )}
+      </div>
+    </div>
   );
 };
 
