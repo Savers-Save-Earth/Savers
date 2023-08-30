@@ -74,11 +74,11 @@ const Header = () => {
       {pathname === "/" ? (
         <header
           className={cls(
-            "fixed z-10 text-gray-600 body-font w-[1200px]",
+            "fixed top-0 left-1/2 -translate-x-1/2 z-10 text-gray-900 w-screen",
             scrollY < 3000 ? "bg-transparent" : "bg-white/30 backdrop-blur-md",
           )}
         >
-          <div className="container mx-auto flex flex-wrap p-5 justify-between items-center">
+          <div className="w-[1280px] container mx-auto flex flex-wrap p-5 justify-between items-center">
             <Link href={`/`}>
               <span
                 className={cls(
@@ -89,12 +89,12 @@ const Header = () => {
                 Savers
               </span>
             </Link>
-            <nav className="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center">
+            <nav className="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l flex flex-wrap items-center text-base justify-center">
               <Link
                 href={`/product`}
                 className={cls(
                   "mr-5",
-                  scrollY < 3000 ? "text-white" : "text-gray-900",
+                  scrollY < 3000 ? "text-white border-gray-100" : "text-gray-900 border-gray-500",
                 )}
               >
                 친환경 제품 구매
@@ -153,10 +153,10 @@ const Header = () => {
           </div>
         </header>
       ) : (
-        <header className="bg-white/50 backdrop-blur-md fixed z-10 text-gray-600 body-font w-[1200px]">
-          <div className="container mx-auto flex flex-wrap p-5 justify-between items-center">
+        <header className="fixed top-0 left-1/2 -translate-x-1/2 z-10 text-gray-900 w-screen bg-white/30 backdrop-blur-md">
+          <div className="w-[1280px] container mx-auto flex flex-wrap p-5 justify-between items-center">
             <Link href={`/`}>
-              <span className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0 ml-3 text-xl">
+              <span className="flex font-medium items-center text-gray-900 mb-4 md:mb-0 ml-3 text-xl">
                 Savers
               </span>
             </Link>

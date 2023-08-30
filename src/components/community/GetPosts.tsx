@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getPosts } from "@/api/community/post";
 import { getCommentsNum } from "@/api/community/post";
 
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 import { Database } from "@/types/supabase";
 import { removeHtmlTags } from "@/libs/util";
@@ -18,8 +18,8 @@ type QueryKeyMap = {
 };
 
 const GetPosts = () => {
+  const POSTS_NUMBER = 10;
   const pathname = usePathname();
-  const router = useRouter();
   // 현재 pathname에 따라 쿼리키 설정하는 함수
   const getPathnameQueryKey = (pathname: string) => {
     const queryKeyMap: QueryKeyMap = {
@@ -34,6 +34,18 @@ const GetPosts = () => {
   };
   // queryKey 변수에 쿼리키 설정함수의 return값 할당
   const queryKey = getPathnameQueryKey(pathname);
+
+  const getCategoryName = (pathname: string) => {
+    if (pathname === "/community/product") {
+      return "제품";
+    } else if (pathname === "/community/restaurant") {
+      return "식당";
+    } else if (pathname === "/community/recipe") {
+      return "레시피";
+    } else if (pathname === "/community/ohjiwan") {
+      return "오지완";
+    } else return "전체"
+  };
 
   const {
     isLoading,
@@ -52,13 +64,13 @@ const GetPosts = () => {
   return (
     <>
       {
-        <div className="flex flex-col max-w-7xl my-10 mx-auto items-center justify-center">
-          <h1 className="text-xl flex mx-auto my-10">전체 글</h1>
+        <div className="flex flex-col mt-16 mb-10 justify-center divide-y-[1px]">
+          <h1 className="text-xl flex my-10">{getCategoryName(pathname)} 글</h1>
           {Array.isArray(posts) &&
             posts.map((post: PostType) => (
               <div
                 key={post.post_uid}
-                className="flex flex-col justify-between w-3/4 border px-4 py-4 mb-2 rounded-md space-y-2"
+                className="flex flex-col justify-between max-w-[789px] px-4 py-4"
               >
                 <div className="flex flex-col space-y-2">
                   <div>
