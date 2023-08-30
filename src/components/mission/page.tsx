@@ -51,7 +51,7 @@ const Mission = () => {
   return (
     <section className="bg-pink-900 h-screen flex justify-center items-center gap-x-16 text-white">
       {shuffledMission.map((missionItem) => (
-        <div className="w-[300px] h-[420px] bg-transparent cursor-pointer group perspective">
+        <div key={missionItem.id} className="w-[300px] h-[420px] bg-transparent cursor-pointer group perspective">
           <div className="relative preserve-3d my-rotate-y-180 w-full h-full">
             <div className="absolute w-full h-full my-rotate-y-180-withoutkey bg-gray-100">
               <div className="text-center flex flex-col items-center justify-center h-full text-gray-800 px-2 pb-24">

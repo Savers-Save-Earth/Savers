@@ -18,13 +18,13 @@ const MyProfile = async ({ params: { id } }: { params: { id: string } }) => {
 
   return (
     <div className="flex w-full h-full items-start gap-8 self-stretch">
-      <div className="flex p-8 flex-col items-start gap-6 flex-[1,0,0%] rounded-xl self-stretch bg-white">
+      <div className="flex flex-col items-start gap-6 flex-[1,0,0%] rounded-xl self-stretch bg-white">
         <p className="self-stretch text-gray-900 text-[24px] non-italic font-semibold leading-6">
           일일미션 완료 현황
         </p>
         <MissionCalendar />
       </div>
-      <div className="flex p-8 flex-col items-start gap-6 flex-[1,0,0%] rounded-xl self-stretch bg-white">
+      <div className="flex flex-col items-start gap-6 flex-[1,0,0%] rounded-xl self-stretch bg-white">
       <p className="self-stretch text-gray-900 text-[24px] non-italic font-semibold leading-6">
           내가 획득한 배지
         </p>
