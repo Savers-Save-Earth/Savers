@@ -13,7 +13,6 @@ const MyComments = ({ params }: { params: { id: string } }) => {
   const [loadMoreBtn, setLoadMoreBtn] = useState<string>("더보기")
   const router = useRouter();
   const decodedParams = decodeURIComponent(params.id);
-  const [commentedPost, setCommentedPost] = useState<CommunityComment>()
 
   useEffect(() => {
     fetchCommunity();
@@ -25,6 +24,7 @@ const MyComments = ({ params }: { params: { id: string } }) => {
         .from("community_comment")
         .select("*", { count: 'exact'})
         .eq("writer_name", decodedParams)
+        .eq("isDeleted", false)
         .range(0, loadCount - 1);
         setUserComments(comments || []);
         setIsLoading(false); // 데이터 가져오기 후 로딩 상태를 false로 설정
@@ -73,6 +73,7 @@ const MyComments = ({ params }: { params: { id: string } }) => {
               댓글 내용 : {comment.content}
             </p>
             <p>등록일: {comment.created_date.slice(0, 10)}</p>
+            {/* <p>댓글 단 글: {comment.post_title?.slice(0, 10)}</p> */}
           </div>
         ))
       )}
