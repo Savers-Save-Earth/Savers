@@ -12,7 +12,7 @@ const MyComments = ({ params }: { params: { id: string } }) => {
   const [userComments, setUserComments] = useState<CommunityComment[]>([]);
   const [loadCount, setLoadCount] = useState<number>(loadBoundaryValue);
   const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태 추가
-  const [loadMoreBtn, setLoadMoreBtn] = useState<string>("더보기");
+  const [loadMoreBtn, setLoadMoreBtn] = useState<string>("");
   const router = useRouter();
   const decodedParams = decodeURIComponent(params.id);
 
@@ -57,19 +57,23 @@ const MyComments = ({ params }: { params: { id: string } }) => {
   };
 
   return (
-    <>
+    <div className="space-y-4">
       {userComments?.map((comment) => (
-        <UserComment key={comment.comment_uid} comment={comment} />
+        <UserComment key={comment.comment_uid} comment={comment}/>
       ))}
       <div className="flex justify-center">
-        <button
-          className="py-4 px-5 justify-center items-center gap-[10px] rounded-2xl bg-gray-50"
-          onClick={handleLoadMore}
-        >
-          {loadMoreBtn}
-        </button>
+      {loadMoreBtn ? (
+          <button
+            className="py-4 px-5 justify-center items-center gap-[10px] rounded-2xl bg-gray-50"
+            onClick={handleLoadMore}
+          >
+            {loadMoreBtn}
+          </button>
+        ) : (
+          ""
+        )}
       </div>
-    </>
+    </div>
   );
 };
 

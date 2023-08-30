@@ -38,7 +38,7 @@ export default function UserPost({ post }: any) {
         </div>
         <div className="flex-[1,0,0%]">
           <p
-            className="overflow-hidden text-gray-900 text-ellipsis text-[16px] font-semibold leading-4"
+            className="overflow-hidden text-gray-900 text-ellipsis text-[16px] font-semibold leading-4 cursor-pointer hover:underline"
             onClick={() => window.open(`/community/${post.post_uid}`)}
           >
             {post.title}
@@ -88,7 +88,7 @@ export default function UserPost({ post }: any) {
             </span>
           </div>
         </div>
-        <p>등록일: {post.created_date.slice(0, 10)}</p>
+        <p>등록일&nbsp;{post.created_date.slice(0, 10)}</p>
       </div>
     </div>
   );
