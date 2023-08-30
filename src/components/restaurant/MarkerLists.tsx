@@ -102,7 +102,7 @@ const MarkerLists = ({ markerList }) => {
     }
   };
 
-  const shareBtn = async (place) => {
+  const shareBtn = (place) => {
     const { Kakao } = window;
     Kakao.Share.sendDefault({
       objectType: "location",
@@ -112,7 +112,7 @@ const MarkerLists = ({ markerList }) => {
         title: place.place_name,
         description: place.place_url,
         imageUrl:
-          "http://k.kakaocdn.net/dn/bSbH9w/btqgegaEDfW/vD9KKV0hEintg6bZT4v4WK/kakaolink40_original.png",
+          "https://media.istockphoto.com/id/485504378/photo/city-map-3d-rendering-image.webp?b=1&s=612x612&w=0&k=20&c=Se3HW4VNvbDeun0LnTbtpcjrmWoYg070rCPoRQAWM6Y=",
         link: {
           webUrl: "http:localhost:3000",
           mobileWebUrl: "http:localhost:3000",
