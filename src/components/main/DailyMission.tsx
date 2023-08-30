@@ -9,7 +9,7 @@ const DailyMission = () => {
       <div>
         <span className="text-white text-[20px]">지구를 지키는</span>
         <br />
-        <span className="font-bold text-white text-[20px]">
+        <span className="font-semibold text-white text-[20px]">
           일일미션 랜덤 뽑기
         </span>
       </div>
