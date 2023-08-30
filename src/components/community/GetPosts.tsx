@@ -10,7 +10,6 @@ import { usePathname } from "next/navigation";
 import { Database } from "@/types/supabase";
 import { removeHtmlTags } from "@/libs/util";
 import Loading from "@/app/loading";
-import { getLikesNum } from "@/api/community/like";
 
 import { ToTalDataType } from "@/types/types";
 
@@ -85,12 +84,12 @@ const GetPosts = () => {
   return (
     <section className="flex flex-col mb-20">
       {
-        <div className="flex flex-col mb-5 justify-center divide-y-[1px]">
+        <div className="flex flex-col mb-5 justify-center">
           <h1 className="text-xl flex mb-8">{getCategoryName(pathname)} 글</h1>
           {accumulatePosts?.map((post: PostType) => (
               <div
                 key={post.post_uid}
-                className="flex flex-col justify-between max-w-[789px] px-4 py-4"
+                className="border-t last:border-b flex flex-col justify-between max-w-[789px] min-w-[725px] px-4 py-4"
               >
                 <div className="flex flex-col space-y-2">
                   <div>

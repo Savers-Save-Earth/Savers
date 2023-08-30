@@ -114,3 +114,16 @@ export const getPostDetail = async (post_uid: string): Promise<PostType> => {
     throw error;
   }
 };
+
+// 댓글+좋아요 많은 순서대로 8개만 가져오기
+export const getPopularPosts = async (): Promise<PostType[]> => {
+  const { data: popularPosts, error } = await supabase
+    .from("community")
+    .select("*")
+    .order("number_comments", { ascending: false })
+    .order("number_likes", { ascending: false })
+    .range(1, 8);
+  
+  if (error) throw error;
+  return popularPosts;
+};
