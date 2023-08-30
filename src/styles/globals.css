@@ -10,7 +10,6 @@
 body {
   max-width: 1200px; /* 1280px - 2 * 40px */
   margin: 0 auto;
-  padding: 0 40px; /* 추가된 부분 */
 }
 
 /* .background-video {
