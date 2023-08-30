@@ -17,7 +17,7 @@ export interface DailyMission {
   address: string;
 }
 
-const initialProfile = {
+const initialProfile: any = {
   activePoint: null,
   badges: null,
   commentPosts: "",

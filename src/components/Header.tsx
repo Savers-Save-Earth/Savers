@@ -144,7 +144,6 @@ const Header = () => {
                   scrollY < 3000 ? "text-white" : "text-gray-900",
                 )}
               >
-                {console.log({ user })}
                 {user ? "로그아웃" : "로그인"}
               </button>
               {user ? (
