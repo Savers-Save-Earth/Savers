@@ -121,7 +121,7 @@ const SignUp: React.FC = () => {
             id="passwordChecking"
             type="password"
             placeholder="passwordChecking"
-            {...register("confirmingPw", {
+            {...register("password", {
               required: true,
               validate: (value) => value === passwordRef.current,
             })}

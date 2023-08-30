@@ -143,8 +143,7 @@ const Header = () => {
                   "border-0 py-1 px-3 focus:outline-none rounded text-base",
                   scrollY < 3000 ? "text-white" : "text-gray-900",
                 )}
-              >
-              {user ? "로그아웃" : "로그인"}
+              >                {user ? "로그아웃" : "로그인"}
               </button>
               {user ? (
                 <button
