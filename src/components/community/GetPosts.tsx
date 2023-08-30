@@ -60,7 +60,9 @@ const GetPosts = () => {
       if (lastPage.page < lastPage.total_pages) {
         return lastPage.page + 1;
       }
-    }
+    },
+    staleTime: 60000,
+    cacheTime: 300000,
   });
   
   const accumulatePosts = useMemo(() => {
@@ -82,14 +84,14 @@ const GetPosts = () => {
     return "데이터를 불러오는 중에 오류가 발생했습니다.";
   }
   return (
-    <section className="flex flex-col mb-20">
+    <section className="flex flex-col mt-10 mb-20 w-[725px]">
       {
         <div className="flex flex-col mb-5 justify-center">
-          <h1 className="text-xl flex mb-8">{getCategoryName(pathname)} 글</h1>
+          <h2 className="text-xl flex mb-8">{getCategoryName(pathname)} 글</h2>
           {accumulatePosts?.map((post: PostType) => (
               <div
                 key={post.post_uid}
-                className="border-t last:border-b flex flex-col justify-between max-w-[789px] min-w-[725px] px-4 py-4"
+                className="border-t last:border-b flex flex-col justify-between px-4 py-4"
               >
                 <div className="flex flex-col space-y-2">
                   <div>
@@ -100,9 +102,9 @@ const GetPosts = () => {
                   <div>
                     <div>
                       <Link href={`/community/${post.post_uid}`}>
-                        <h4 className="font-medium text-lg flex items-center space-x-2 cursor-pointer hover:underline leading-10">
+                        <h2 className="font-medium text-lg flex items-center space-x-2 cursor-pointer hover:underline leading-10">
                           {post.title}
-                        </h4>
+                        </h2>
                       </Link>
                       <Link href={`/community/${post.post_uid}`}>
                         <p className="text-gray-500 text-sm cursor-pointer hover:underline text-ellipsis line-clamp-2">
