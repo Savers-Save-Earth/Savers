@@ -194,12 +194,38 @@ const ProductComponent = () => {
           .filter((item) => item.category.includes(category))
           .map((item) => (
             <div key={item.id} className=" flex-1 min-w-0 max-w-md mb-9">
-              <img
-                src={item.img}
-                className="w-full h-auto rounded-md point"
-                alt={item.name}
-                onClick={() => router.push(`/product/${item.id}`)}
-              />
+              <div className="relative">
+                <img
+                  src={item.img}
+                  className="w-full h-auto rounded-md point"
+                  alt={item.name}
+                  onClick={() => router.push(`/product/${item.id}`)}
+                />
+                {likedByUser.find(
+                  (likedItem) => likedItem.product_uid === item.id,
+                ) ? (
+                  <button
+                    onClick={() => likeHandler(item.id)}
+                    className="absolute bottom-2 right-2"
+                  >
+                    <img src="/assets/like_dark.png" />
+                    <p className="text-[12px] text-gray-700">
+                      {item.like_count}
+                    </p>
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => likeHandler(item.id)}
+                    className="absolute bottom-2 right-2"
+                  >
+                    <img src="/assets/like_gray.png" />
+                    <p className="text-[12px] text-gray-300">
+                      {item.like_count}
+                    </p>
+                  </button>
+                )}
+              </div>
+
               <p className="text-gray-300 text-sm mt-2">{item.company}</p>
               <p className="text-sm text-gray-500">{item.name}</p>
               {item.sales ? (
@@ -210,26 +236,6 @@ const ProductComponent = () => {
               <span className="font-bold  text-[16px]">
                 {item.price.toLocaleString("ko-KR")}원
               </span>
-              <button
-                onClick={() => likeHandler(item.id)}
-                className={`${
-                  likedByUser?.length
-                    ? "bg-red-500 text-white"
-                    : "bg-gray-200 text-gray-700"
-                } rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4`}
-              >
-                <svg
-                  fill="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  className="w-5 h-5"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
-                </svg>
-              </button>
-              <p>💚 {item.like_count}</p>
             </div>
           ))}
       </div>

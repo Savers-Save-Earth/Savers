@@ -6,7 +6,6 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
     "vercel-deploy": "next build && next export"
   },
   "dependencies": {
@@ -24,6 +23,7 @@
     "@types/react-dom": "18.2.7",
     "autoprefixer": "10.4.15",
     "date-fns": "^2.30.0",
+    "encoding": "^0.1.13",
     "eslint": "8.47.0",
     "eslint-config-next": "13.4.18",
     "force": "^0.0.3",

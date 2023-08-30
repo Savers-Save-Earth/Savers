@@ -47,13 +47,19 @@ const ProductList = () => {
           autoplay={{ delay: 2000 }}
         >
           {sortedData.map((item) => (
-            <SwiperSlide
-              key={item.id}
-              onClick={() => router.push(`/product/${item.id}`)}
-            >
-              <img src={item.img} className="rounded-lg" />
+            <SwiperSlide key={item.id}>
+              <img
+                src={item.img}
+                className="rounded-lg cursor-pointer"
+                onClick={() => router.push(`/product/${item.id}`)}
+              />
               <p className="text-gray-300 text-sm mt-2">{item.company}</p>
-              <p className="text-sm text-gray-500">{item.name}</p>
+              <p
+                className="text-sm text-gray-500 cursor-pointer"
+                onClick={() => router.push(`/product/${item.id}`)}
+              >
+                {item.name}
+              </p>
               {item.sales ? (
                 <span className="text-green-500 font-bold mr-2 text-[16px]">
                   {item.sales}%
