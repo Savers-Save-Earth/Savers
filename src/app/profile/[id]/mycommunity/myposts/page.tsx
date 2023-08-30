@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { getCommentsNum } from "@/api/community/post";
 import { getLikesNum } from "@/api/community/like";
 import UserPost from "./UserPost";
-import CommentNum from "./CommentNum";
 
 type CommunityPost = Database["public"]["Tables"]["community"]["Row"];
 const MyPosts = ({ params }: { params: { id: string } }) => {
@@ -34,7 +33,7 @@ const MyPosts = ({ params }: { params: { id: string } }) => {
         setUserPosts(posts || []);
         console.log("count: " + count);
 
-        if(posts.length > 0) {
+        if(posts!.length > 0) {
 
         }
         if(count && count <= loadBoundaryValue ) {
