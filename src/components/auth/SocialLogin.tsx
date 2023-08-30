@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 type Provider = "google" | "kakao" | "facebook";
 
 const SocialLogin = () => {
-  const [user, setUser] = useState<user | null>(null);
+  const [user, setUser] = useState<any>(null);
   const router = useRouter();
   const [nickname, setNickname] = useState<string | null>(null);
 
@@ -27,9 +27,9 @@ const SocialLogin = () => {
       }
 
       await getUser();
-      alert("로그인⚡️");
-    } catch (error) {
-      alert(`${provider} 로그인 에러: ${error.message}`);
+      window.alert("로그인⚡️");
+    } catch (error: any) {
+      window.alert(`${provider} 로그인 에러: ${error.message}`);
     }
   };
 
@@ -75,10 +75,10 @@ const SocialLogin = () => {
     await supabase.from("user").insert({
       uid: user!.id,
       email: user!.user_metadata["email"],
-      nickname: generatedNickname,
+      nickname: generateNickname,
     });
     console.log("userInfo반영");
-    setNickname(generatedNickname);
+    setNickname(generateNickname);
   };
 
   const generateNickname = () => {

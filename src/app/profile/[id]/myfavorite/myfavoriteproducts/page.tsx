@@ -59,7 +59,7 @@ const MyFavoriteProducts = ({ params }: { params: { id: string } }) => {
             className="border-solid border-2 border-blue-900 p-5 m-3 cursor-pointer w-1/5"
             key={product.like_id}
           >
-            <img className="w-1/2 rounded-full mx-auto" src={product.img} alt="No Image"/>
+            <img className="w-1/2 rounded-full mx-auto" src={product.img || ""} alt="No Image"/>
             <p>브랜드 : {product.product_company}</p>
             {/* window.open : 새 탭에서 해당 url로 이동 */}
             <p

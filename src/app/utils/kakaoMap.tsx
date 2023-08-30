@@ -39,7 +39,7 @@ const KakaoMap = () => {
         const map = new window.kakao.maps.Map(Container, Option);
 
         const setInitLocation = async () => {
-          let locPosition = await getCurrentCoordinate();
+          let locPosition: any = await getCurrentCoordinate();
 
           setMapCenter({
             x: locPosition.La,
@@ -96,7 +96,7 @@ const KakaoMap = () => {
         const displayPlaces = (places: any) => {
           removeMarker();
 
-          const newMarkerList = [];
+          const newMarkerList: any = [];
 
           let imgSrc = "";
 
@@ -168,13 +168,13 @@ const KakaoMap = () => {
         };
 
         const removeMarker = () => {
-          markers.forEach((marker) => {
+          markers.forEach((marker: any) => {
             marker.setMap(null);
           });
           markers = [];
         };
 
-        let markers = [];
+        let markers: any = [];
 
         const mapIdleHandler = () => {
           const latlng = map.getCenter();
