@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import supabase from "@/libs/supabase";
 import { Database } from "@/types/supabase";
 import { useRouter } from "next/navigation";
-// import { getCommentsNum } from "@/api/community/post";
-// import { getLikesNum } from "@/api/community/like";
+import { getCommentsNum } from "@/api/community/post";
+import { getLikesNum } from "@/api/community/like";
 
 type CommunityPost = Database["public"]["Tables"]["community"]["Row"];
 const MyPosts = ({ params }: { params: { id: string } }) => {
@@ -20,13 +20,7 @@ const MyPosts = ({ params }: { params: { id: string } }) => {
   useEffect(() => {
     fetchCommunity();
   }, [loadCount]);
-  const getCommentsNum = async (postUid: string) => {
-    const { count } = await supabase
-      .from("community_comment")
-      .select("*", { count: "exact" })
-      .eq("post_uid", postUid);
-    return count ?? 0;
-  };
+
   const fetchCommunity = async () => {
     try {
       let { data: posts, count } = await supabase
