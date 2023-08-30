@@ -150,3 +150,15 @@ body {
 .react-calendar__navigation__label {
   background-color: rgb(245, 245, 245);
 }
+
+@layer components {
+  .btn-sidebar {
+    @apply text-gray-400 font-normal leading-6 hover:text-[#10C800] focus:text-[#10C800]
+  }
+}
+
+@layer components {
+  .btn-profile-topbar {
+    @apply overflow-hidden text-gray-900 text-ellipsis text-[14px] font-bold leading-[14px] hover:underline
+  }
+}
