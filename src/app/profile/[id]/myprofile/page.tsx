@@ -4,7 +4,7 @@ import supabase from "@/libs/supabase";
 import { Database } from "@/types/supabase";
 import Badges from "@/components/profile/Badges";
 import MissionCalendar from "@/components/profile/MissionCalendar";
-import BadgesTest from "@/components/profile/Badgestest";
+
 // export const revalidate = 1 // revalidate every seconds
 
 type Profile = Database["public"]["Tables"]["user"]["Row"];

@@ -2,15 +2,22 @@
 import FloatingButton from "@/components/community/FloatingButton";
 import SideBar from "@/components/community/SideBar";
 import { useAuth } from "@/hooks/useAuth";
+import { usePathname } from "next/navigation";
 
 const CommunityLayout = ({ children }: { children: React.ReactNode }) => {
   const user = useAuth();
+  const pathname = usePathname();
   return (
-    <div className="flex w-full">
-      <div className="w-[379px] mt-24 h-full">
-        <SideBar />
-      </div>
-      <section className="w-[789px]">{children}</section>
+    <div className="flex items-start self-stretch mt-24">
+      {pathname === "/community/write"
+        ?
+        null
+        :
+        <div className="w-[379px] h-full">
+          <SideBar />
+        </div>
+      }
+      <main>{children}</main>
       {user ? (
         <FloatingButton href="/community/write">
           <svg

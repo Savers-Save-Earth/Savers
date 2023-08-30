@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 
 import EditPost from "./EditPost";
-import { deletePost, getPostDetail } from "@/api/community/post";
+import { deletePost, getPostDetail, updatePost } from "@/api/community/post";
 import { cancelLikePost, createLikePost, getLikeStatus, getLikesNum } from "@/api/community/like";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
@@ -30,6 +30,10 @@ const DetailPost = () => {
     ["likesNumber"],
     () => getLikesNum(postUid),
   );
+
+  useEffect(() => {
+    updatePost({ post_uid: postUid, number_likes: likesNumber || 0 });
+  }, [likesNumber]);
 
   const getLikedStatus = async () => {
     if (currentUser) {
@@ -120,7 +124,7 @@ const DetailPost = () => {
   };
 
   return (
-    <div className="flex flex-col max-w-7xl mt-10 px-10 mx-auto">
+    <div className="flex flex-col">
       <button
         onClick={() => router.back()}
         className="w-28 mb-10 bg-green-200 px-5 py-2 rounded-md shadow-sm hover:bg-green-300 hover:-translate-y-1 transition ease-in-out duration-200"

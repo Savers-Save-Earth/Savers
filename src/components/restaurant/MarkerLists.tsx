@@ -16,7 +16,7 @@ interface MarkList {
 type LikeType = Database["public"]["Tables"]["like_restaurant"]["Row"];
 type NewLikeType = Database["public"]["Tables"]["like_restaurant"]["Insert"];
 
-const MarkerLists = ({ markerList }) => {
+const MarkerLists = ({ markerList }: any) => {
   const [markedList, setMarkedList] = useState<MarkList[]>([]);
   const [user, setUser] = useState<any>(null);
   const [markedByUser, setMarkedByUser] = useState<any[]>([]);
@@ -104,9 +104,8 @@ const MarkerLists = ({ markerList }) => {
     }
   };
 
-  const shareBtn = (place) => {
-    // const { Kakao } = window;
-    Kakao.Share.sendDefault({
+  const shareBtn = (place: any) => {
+    window.kakao.Share.sendDefault({
       objectType: "location",
       address: place.address_name,
       addressTitle: place.place_name,

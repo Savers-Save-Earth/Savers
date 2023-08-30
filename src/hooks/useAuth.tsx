@@ -1,5 +1,4 @@
 import supabase from "@/libs/supabase";
-import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
 interface currentUserType {
@@ -11,7 +10,6 @@ interface currentUserType {
 
 export const useAuth = (): currentUserType | null => {
   const [currentUser, setCurrentUser] = useState<currentUserType | null>(null);
-  const router = useRouter();
 
   useEffect(() => {
     const fetchAuthData = async () => {
