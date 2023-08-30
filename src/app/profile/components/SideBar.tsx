@@ -35,9 +35,8 @@ const initialProfile = {
   writePosts: "",
 };
 
-export const currentDate = convertDate(new Date());
-
 const SideBar = () => {
+  const currentDate = convertDate(new Date());
   const params = useParams().id as string;
   const decodedParams = decodeURIComponent(params);
 
