@@ -9,7 +9,6 @@ import { useEffect } from "react";
 const Restaurant = () => {
   return (
     <>
-      <Header />
       <KakaoMap />
     </>
   );
