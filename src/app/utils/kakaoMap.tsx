@@ -213,14 +213,14 @@ const KakaoMap = () => {
           className="w-3/12 ml-3 float-left"
           //  style={{ width: "50vh", marginLeft: "1vw" }}
         >
-          <CategotyBtn>
-            <Btn onClick={() => setCurrentCategory("비건")}>전체</Btn>
-            <Btn onClick={() => setCurrentCategory("비건식당")}>식당</Btn>
-            <Btn onClick={() => setCurrentCategory("비건베이커리")}>
+          <div>
+            <button onClick={() => setCurrentCategory("비건")}>전체</button>
+            <button onClick={() => setCurrentCategory("비건식당")}>식당</button>
+            <button onClick={() => setCurrentCategory("비건베이커리")}>
               베이커리
-            </Btn>
-            <Btn onClick={() => setCurrentCategory("비건카페")}>카페</Btn>
-          </CategotyBtn>
+            </button>
+            <button onClick={() => setCurrentCategory("비건카페")}>카페</button>
+          </div>
           <MarkerLists markerList={markerList} />
         </div>
       </div>
@@ -230,28 +230,28 @@ const KakaoMap = () => {
 
 export default KakaoMap;
 
-const CategotyBtn = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-`;
+// const CategotyBtn = styled.div`
+//   display: flex;
+//   flex-direction: row;
+//   justify-content: center;
+//   align-items: center;
+// `;
 
-const Btn = styled.button`
-  border-radius: 10px;
-  border: 1px solid gray;
-  width: 55px;
-  height: 32px;
+// const Btn = styled.button`
+//   border-radius: 10px;
+//   border: 1px solid gray;
+//   width: 55px;
+//   height: 32px;
 
-  font-family: "Pretendard";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-  /* identical to box height, or 133% */
-  display: flex;
-  align-items: center;
-  text-align: center;
+//   font-family: "Pretendard";
+//   font-style: normal;
+//   font-weight: 500;
+//   font-size: 13px;
+//   /* identical to box height, or 133% */
+//   display: flex;
+//   align-items: center;
+//   text-align: center;
 
-  /* gray/500 */
-  color: #667085;
-`;
+//   /* gray/500 */
+//   color: #667085;
+// `;

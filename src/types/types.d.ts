@@ -20,19 +20,20 @@ export interface Post {
   title: string;
   content: string;
   created_date: number;
+  like_count: number;
 }
 
 export interface ListMission {
-  id: string,
-  missionUid: string,
-  createdAt: string,
-  userId: string,
-  title: string,
-  content: string,
-  bigCategory: string,
-  smallCategory: string,
-  doingYn: boolean,
-  point: number,
-  user_uid: string,
-  address: string,
+  id: string;
+  missionUid: string;
+  createdAt: string;
+  userId: string;
+  title: string;
+  content: string;
+  bigCategory: string;
+  smallCategory: string;
+  doingYn: boolean;
+  point: number;
+  user_uid: string;
+  address: string;
 }

@@ -13,10 +13,19 @@ const MyComments = ({ params }: { params: { id: string } }) => {
   const [loadMoreBtn, setLoadMoreBtn] = useState<string>("더보기")
   const router = useRouter();
   const decodedParams = decodeURIComponent(params.id);
+  const [commentedPost, setCommentedPost] = useState<CommunityComment>()
 
   useEffect(() => {
     fetchCommunity();
   }, [loadCount]);
+
+  // const getPostData = async (commentedPostUid: string) => {
+  //   try {
+  //     let {data : postData} = await supabase.from("community").select("title").eq("post_uid", commentedPostUid)
+  //     setCommentedPost(postData![0].title)
+  //   } catch (error) {
+  //   }
+  // } 
 
   const fetchCommunity = async () => {
     try {
@@ -27,6 +36,10 @@ const MyComments = ({ params }: { params: { id: string } }) => {
         .range(0, loadCount - 1);
         setUserComments(comments || []);
         setIsLoading(false); // 데이터 가져오기 후 로딩 상태를 false로 설정
+        // const commentedPostUid = comments[0].post_uid || null
+        // if (commentedPostUid) {
+        //   getPostData(commentedPostUid)
+        // }
         
         if(count && count <= loadBoundaryValue ) {
           setLoadMoreBtn("")
@@ -46,6 +59,7 @@ const MyComments = ({ params }: { params: { id: string } }) => {
           }
           return
         }
+
     } catch (error) {
       console.error("An error occurred:", error);
       setIsLoading(false);

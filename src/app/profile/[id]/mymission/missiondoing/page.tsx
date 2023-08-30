@@ -3,7 +3,7 @@ import { convertDate } from "@/libs/util";
 import { ListMission } from "@/types/types";
 import React from "react";
 
-export const revalidate = 0
+// export const revalidate = 0
 
 export const currentDate = convertDate(new Date());
 

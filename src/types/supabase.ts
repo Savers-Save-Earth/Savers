@@ -175,8 +175,9 @@ export interface Database {
         }
         Relationships: []
       }
-      like_comment: {
+      community_reply: {
         Row: {
+<<<<<<< HEAD
           comment_uid: string;
           number_likes: number;
           user_likes: string | null;
@@ -186,6 +187,27 @@ export interface Database {
           number_likes?: number;
           user_likes?: string | null;
         };
+=======
+          comment_uid: string
+          content: string
+          created_date: string
+          post_uid: string
+          reply_uid: string
+          update_date: string
+          writer_name: string
+          writer_uid: string
+        }
+        Insert: {
+          comment_uid?: string
+          content?: string
+          created_date?: string
+          post_uid?: string
+          reply_uid?: string
+          update_date?: string
+          writer_name?: string
+          writer_uid?: string
+        }
+>>>>>>> 65e4cf1f189a2d26a165041e2d327713f4114daf
         Update: {
 <<<<<<< HEAD
           comment_uid?: string;
@@ -251,8 +273,31 @@ export interface Database {
       };
 =======
           comment_uid?: string
-          number_likes?: number
-          user_likes?: string | null
+          content?: string
+          created_date?: string
+          post_uid?: string
+          reply_uid?: string
+          update_date?: string
+          writer_name?: string
+          writer_uid?: string
+        }
+        Relationships: []
+      }
+      like_comment_reply: {
+        Row: {
+          data_uid: string
+          like_id: string
+          like_user: string
+        }
+        Insert: {
+          data_uid?: string
+          like_id?: string
+          like_user: string
+        }
+        Update: {
+          data_uid?: string
+          like_id?: string
+          like_user?: string
         }
         Relationships: []
       }
@@ -277,6 +322,7 @@ export interface Database {
 >>>>>>> d32318377e6e5673b67d00e8c7fed1b9b02b95e8
       like_product: {
         Row: {
+<<<<<<< HEAD
           createdAt: string | null;
           img: string | null;
           like_id: string;
@@ -290,6 +336,25 @@ export interface Database {
           product_uid: string;
           user_id?: string | null;
         };
+=======
+          createdAt: string | null
+          img: string | null
+          like_id: string
+          product_company: string | null
+          product_name: string | null
+          product_uid: string
+          user_id: string | null
+        }
+        Insert: {
+          createdAt?: string | null
+          img?: string | null
+          like_id?: string
+          product_company?: string | null
+          product_name?: string | null
+          product_uid: string
+          user_id?: string | null
+        }
+>>>>>>> 65e4cf1f189a2d26a165041e2d327713f4114daf
         Update: {
 <<<<<<< HEAD
           createdAt?: string | null;
@@ -379,6 +444,8 @@ export interface Database {
           createdAt?: string | null
           img?: string | null
           like_id?: string
+          product_company?: string | null
+          product_name?: string | null
           product_uid?: string
           user_id?: string | null
         }
@@ -389,22 +456,25 @@ export interface Database {
           created_at: string
           id: number
           restaurant_address: string | null
+          restaurant_category: string | null
           restaurant_name: string | null
-          score: number | null
+          user_id: string | null
         }
         Insert: {
           created_at?: string
           id?: number
           restaurant_address?: string | null
+          restaurant_category?: string | null
           restaurant_name?: string | null
-          score?: number | null
+          user_id?: string | null
         }
         Update: {
           created_at?: string
           id?: number
           restaurant_address?: string | null
+          restaurant_category?: string | null
           restaurant_name?: string | null
-          score?: number | null
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -576,8 +646,33 @@ export interface Database {
         }
         Relationships: []
       }
+      restaurant: {
+        Row: {
+          address: string | null
+          count: number
+          created_at: string
+          id: number
+          name: string | null
+        }
+        Insert: {
+          address?: string | null
+          count?: number
+          created_at?: string
+          id?: number
+          name?: string | null
+        }
+        Update: {
+          address?: string | null
+          count?: number
+          created_at?: string
+          id?: number
+          name?: string | null
+        }
+        Relationships: []
+      }
       user: {
         Row: {
+<<<<<<< HEAD
           activePoint: number | null;
           badges: string | null;
           commentPosts: string | null;
@@ -594,6 +689,26 @@ export interface Database {
           uid: string;
           writePosts: string | null;
         };
+=======
+          activePoint: number | null
+          badges: string | null
+          birthday: string | null
+          commentPosts: string | null
+          email: string | null
+          isActiveDone: boolean | null
+          isLogin: boolean | null
+          likedPosts: string | null
+          likePosts: string | null
+          likeProducts: Json | null
+          likeRestaurants: string | null
+          nickname: string | null
+          number: string | null
+          profileImage: string | null
+          provider: string | null
+          uid: string
+          writePosts: string | null
+        }
+>>>>>>> 65e4cf1f189a2d26a165041e2d327713f4114daf
         Insert: {
           activePoint?: number | null;
           badges?: string | null;
@@ -613,6 +728,7 @@ export interface Database {
         };
           activePoint?: number | null
           badges?: string | null
+          birthday?: string | null
           commentPosts?: string | null
           email?: string | null
           isActiveDone?: boolean | null
@@ -622,6 +738,7 @@ export interface Database {
           likeProducts?: Json | null
           likeRestaurants?: string | null
           nickname?: string | null
+          number?: string | null
           profileImage?: string | null
           provider?: string | null
           uid: string
@@ -649,6 +766,7 @@ export interface Database {
     };
           activePoint?: number | null
           badges?: string | null
+          birthday?: string | null
           commentPosts?: string | null
           email?: string | null
           isActiveDone?: boolean | null
@@ -658,6 +776,7 @@ export interface Database {
           likeProducts?: Json | null
           likeRestaurants?: string | null
           nickname?: string | null
+          number?: string | null
           profileImage?: string | null
           provider?: string | null
           uid?: string
