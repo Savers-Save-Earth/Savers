@@ -40,13 +40,13 @@ const RestaurantList = () => {
   }, []);
 
   return (
-    <div className="p-24 items-start gap-16 self-stretch">
-      <h1 className="text-2xl">인기있는 레스토랑</h1>
+    <div className="items-start gap-16 self-stretch mt-16">
+      <h1 className="text-2xl mb-6">인기있는 레스토랑</h1>
       <Swiper
         // install Swiper modules
         modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={10}
-        slidesPerView={4}
+        slidesPerView={3}
         navigation
         // navigation={{ prevEl: ".swiper-prev-1", nextEl: ".swiper-next-1" }}
         autoplay={{ delay: 2000 }}
@@ -76,23 +76,23 @@ const RestaurantList = () => {
                   }}
                 ></div>
                 <div style={{ display: "inline-block" }}>
-                  <p className="text-gray-500 text-xs">
-                    {item.restaurant_category}
-                  </p>
-                  <p className="font-bold">
+                  <p className="font-bold text-[16px]">
                     {item.restaurant_name.length > 13
                       ? `${item.restaurant_name.slice(0, 10) + `...`}`
                       : item.restaurant_name}
                   </p>
-                  <span className="text-sm">{item.restaurant_address}</span>
-                  <span className="text-sm ml-2">
-                    <FontAwesomeIcon
-                      icon={faBookmark}
-                      size="xs"
-                      style={{ color: "#000000", marginRight: "5px" }}
-                    />
-                    {item.bookmarkCount}
+                  <span className="text-sm text-gray-400">
+                    {item.restaurant_address}
                   </span>
+                  <p className="text-sm">
+                    <img
+                      src="/assets/like.png"
+                      className="inline-block mr-0.5"
+                      style={{ height: "auto", verticalAlign: "middle" }}
+                      alt="Icon"
+                    />
+                    <span className="text-gray-300">{item.bookmarkCount}</span>
+                  </p>
                 </div>
               </div>
             </SwiperSlide>

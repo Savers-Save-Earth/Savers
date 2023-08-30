@@ -83,10 +83,13 @@ const Header = () => {
               <span
                 className={cls(
                   "ml-3 text-xl flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0",
-                  scrollY < 3000 ? "text-white" : "text-black",
                 )}
               >
-                Savers
+                {scrollY < 3000 ? (
+                  <img src="/assets/logo_white.png" />
+                ) : (
+                  <img src="/assets/logo_basic.png" />
+                )}
               </span>
             </Link>
             <nav className="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l flex flex-wrap items-center text-base justify-center">
@@ -94,7 +97,9 @@ const Header = () => {
                 href={`/product`}
                 className={cls(
                   "mr-5",
-                  scrollY < 3000 ? "text-white border-gray-100" : "text-gray-900 border-gray-500",
+                  scrollY < 3000
+                    ? "text-white border-gray-100"
+                    : "text-gray-900 border-gray-500",
                 )}
               >
                 친환경 제품 구매
@@ -157,7 +162,7 @@ const Header = () => {
           <div className="w-[1280px] container mx-auto flex flex-wrap p-5 justify-between items-center">
             <Link href={`/`}>
               <span className="flex font-medium items-center text-gray-900 mb-4 md:mb-0 ml-3 text-xl">
-                Savers
+                <img src="/assets/logo_basic.png" />
               </span>
             </Link>
             <nav className="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center">
