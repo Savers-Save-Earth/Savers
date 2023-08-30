@@ -103,7 +103,7 @@ const Intro = () => {
               20,
               (scrollY - 3000) / 15,
             )}px))`,
-            display: scrollY > 3600 ? "none" : "block",
+            display: scrollY > 3300 ? "none" : "block",
           }}
         >
           "예술에는 오류가 있을지 모르나,
@@ -111,7 +111,7 @@ const Intro = () => {
           자연에는 잘못이 없다."
         </div>
       </div>
-      <div style={{ height: "2300px" }}></div>
+      <div style={{ height: "2000px" }}></div>
     </>
   );
 };

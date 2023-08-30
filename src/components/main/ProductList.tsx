@@ -62,6 +62,15 @@ const ProductList = () => {
               <span className="font-bold  text-[16px]">
                 {item.price.toLocaleString("ko-KR")}원
               </span>
+              <p>
+                <img
+                  src="/assets/like.png"
+                  className="inline-block mr-0.5"
+                  style={{ height: "auto", verticalAlign: "middle" }}
+                  alt="Icon"
+                />
+                <span className="text-gray-300">{item.like_count}</span>
+              </p>
             </SwiperSlide>
           ))}
         </Swiper>
