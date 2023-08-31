@@ -6,6 +6,7 @@ import supabase from "@/libs/supabase";
 interface FormValues {
   email: string;
   password: string;
+  passwordConfirmation: string;
   nickname: string;
 }
 
@@ -24,7 +25,7 @@ const SignUp: React.FC = () => {
   const [userData, setUserData] = useState<any>(null);
 
   const signupHandler: SubmitHandler<FormValues> = async (formData) => {
-    const { email, password, nickname } = formData;
+    const { email, password, nickname, passwordConfirmation } = formData;
 
     try {
       const { data: existingUser, error: existingUserError } = await supabase
@@ -92,13 +93,8 @@ const SignUp: React.FC = () => {
   };
 
   return (
-    <div className="flex w-1200 flex-col gap-10 pt-28">
-      <div
-        className="text-gray-900 font-Pretendard font-semibold text-50 pb-16 pl-20"
-        style={{ lineHeight: "24px" }}
-      >
-        회원가입
-      </div>
+    <div className="flex w-300 flex-col gap-10 pt-28">
+      <h1 className="text-2xl pb-16 text-gray-900  font-semibold">회원가입</h1>
 
       <div className="flex flex-col items-center gap-16 self-stretch">
         <svg
@@ -166,58 +162,93 @@ const SignUp: React.FC = () => {
 
       <form onSubmit={handleSubmit(signupHandler)}>
         <div className="pt-16 flex flex-col items-center gap-4 self-stretch">
-          <div className="flex w-106 items-start gap-2">
-            <label className="w-24 shrink-0">이메일</label>
-            <input
-              id="email"
-              type="email"
-              placeholder="이메일 입력"
-              {...register("email", { required: true })}
-              className="flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50"
-            />
-            {errors.email && <span>이메일 형식에 맞게 입력해주세요</span>}
+          <div className="flex items-center gap-2">
+            <label className="w-24 shrink-0 flex items-center">이메일</label>
+            <div className="flex flex-grow flex-col">
+              <input
+                id="email"
+                type="email"
+                placeholder="이메일 입력"
+                {...register("email", {
+                  required: "메일을 입력하세요",
+                  pattern: {
+                    value: /^\S+@\S+$/i,
+                    message: "올바른 메일 형식이 아닙니다",
+                  },
+                })}
+                className="flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50"
+              />
+              {errors.email && (
+                <span className="text-red-500">{errors.email.message}</span>
+              )}
+            </div>
           </div>
 
-          <div className="flex w-106 items-start gap-2">
-            <label className="w-24 shrink-0">비밀번호</label>
-            <input
-              id="password"
-              type="password"
-              placeholder="8자리 이상 영문, 숫자 포함"
-              {...register("password", { required: true })}
-              className="flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50"
-            />
-            {errors.password && <span>비밀번호 조건에 맞게 입력해주세요</span>}
+          <div className="flex items-center gap-2">
+            <label className="w-24 shrink-0 flex items-center">비밀번호</label>
+            <div className="flex flex-grow flex-col">
+              <input
+                id="password"
+                type="password"
+                placeholder="8자리 이상 영문, 숫자 포함"
+                {...register("password", { required: true })}
+                className="flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50"
+              />
+              {errors.password && (
+                <span className="text-red-500">
+                  비밀번호 조건에 맞게 입력해주세요
+                </span>
+              )}
+            </div>
           </div>
 
-          <div className="flex w-106 items-start gap-2">
+          <div className="flex items-center gap-2">
             <label className="w-24 shrink-0">비밀번호 확인</label>
-            <input
-              id="passwordChecking"
-              type="password"
-              placeholder="비밀번호 재입력"
-              {...register("password", {
-                required: true,
-                validate: (value) => value === passwordRef.current,
-              })}
-              className="flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50"
-            />
+            <div className="flex flex-grow flex-col">
+              <input
+                id="passwordChecking"
+                type="password"
+                placeholder="비밀번호 확인"
+                {...register("passwordConfirmation", {
+                  required: true,
+                  validate: (value) => value === passwordRef.current,
+                })}
+                className="flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50"
+              />
+              {errors.passwordConfirmation &&
+                errors.passwordConfirmation.type === "required" && (
+                  <span className="text-red-500">
+                    비밀번호 확인을 입력하세요
+                  </span>
+                )}
+              {errors.passwordConfirmation &&
+                errors.passwordConfirmation.type === "validate" && (
+                  <span className="text-red-500">
+                    비밀번호가 일치하지 않습니다
+                  </span>
+                )}
+            </div>
           </div>
 
-          <div className="flex w-106 items-start gap-2">
-            <label className="w-24 shrink-0">닉네임</label>
-            <input
-              id="nickname"
-              type="nickname"
-              placeholder="닉네임 입력"
-              {...register("nickname", { required: true })}
-              className="flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50"
-            />
+          <div className="flex items-center gap-2">
+            <label className="w-24 shrink-0 flex items-center">닉네임</label>
+            <div className="flex flex-grow flex-col">
+              <input
+                id="nickname"
+                type="nickname"
+                placeholder="닉네임 입력"
+                {...register("nickname", { required: true })}
+                className="flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50"
+              />
+              {errors.nickname && errors.nickname.type === "required" && (
+                <span className="text-red-500">닉네임을 입력해주세요</span>
+              )}
+            </div>
           </div>
 
           <button
             type="submit"
-            className="flex w-80 h-12 p-4 justify-center items-center border rounded-xl bg-gray-900 text-white hover:bg-gray-700"
+            className="flex w-[424px] h-12 justify-center items-center border rounded-xl bg-gray-900 text-white hover:bg-gray-700"
           >
             회원가입
           </button>
