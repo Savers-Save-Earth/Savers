@@ -82,10 +82,14 @@ return <div>죄송합니다. 에러가 발생했습니다.</div>;
   console.log("userLikedPosts--<",userLikedPosts)
   return (
     <div className="space-y-4">
-      {userLikedPosts?.map((post) => (
-          <UserLikedPost key={post.post_uid} post={post}/>
-      ))}
-            <div className="flex justify-center">
+      {userLikedPosts.length === 0 ? (
+        <div>지금까지 북마크한 글이 없네요!</div>
+      ) : (
+        userLikedPosts.map((post) => (
+          <UserLikedPost key={post.post_uid} post={post} />
+        ))
+      )}
+      <div className="flex justify-center">
         {loadMoreBtn ? (
           <button
             className="py-4 px-5 justify-center items-center gap-[10px] rounded-2xl bg-gray-50"

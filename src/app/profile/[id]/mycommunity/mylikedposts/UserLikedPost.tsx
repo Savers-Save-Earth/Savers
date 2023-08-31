@@ -31,7 +31,7 @@ export default function UserLikedPost({ post }: any) {
 
     getPostDetail(post.post_uid);
   }, [post.post_uid]);
-
+  console.log("userLikedPost==>",userLikedPost)
   return (
     <>
       {isLoading ? (
@@ -61,7 +61,7 @@ export default function UserLikedPost({ post }: any) {
               </div>
             </>
           ) : (
-            <p>No data available.</p>
+            <p>북마크한 글이 없네요!</p>
           )}
         </div>
       )}
