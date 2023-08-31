@@ -4,16 +4,17 @@ import React from "react";
 
 import KakaoMap from "../utils/kakaoMap";
 import { useEffect } from "react";
+import MarkerLists from "@/components/restaurant/MarkerLists";
 
 const Restaurant = () => {
-  // useEffect(() => {
-  //   if (typeof window !== "undefined") {
-  //     const { Kakao } = window;
-
-  //     if (!Kakao.isInitialized()) {
-  //       // SDK 초기화 부분, 본인의 API KEY 입력
-  //       Kakao.init(process.env.NEXT_PUBLIC_KAKAO_API_KEY);
-  //     }
+  // const { Kakao } = window;
+  //window오류로 useEffect안으로 이동
+  useEffect(() => {
+    const { Kakao } = window;
+    if (!Kakao.isInitialized()) {
+      window.Kakao.init(process.env.NEXT_PUBLIC_KAKAOMAP_KEY);
+    }
+  }, []);
   return (
     <>
       <KakaoMap />
