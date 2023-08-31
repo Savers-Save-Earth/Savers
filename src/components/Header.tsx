@@ -62,7 +62,6 @@ const Header = () => {
   const loginLogoutSwitcher = async () => {
     if (user) {
       await supabase.auth.signOut();
-      // location.reload();
       alert("로그아웃되었습니다");
       router.push("/");
     } else {
