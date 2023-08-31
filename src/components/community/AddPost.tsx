@@ -82,22 +82,17 @@ const AddPost: NextComponentType = () => {
       window.alert("본문을 작성해주세요!");
       return false;
     }
-
     createMutation.mutate(newPost);
-
-    // mutate가 하나 더
-
-    // missionList를 업데이트하는(수파베이스) 로직
-    
   }
+
   return (
-    <>
+    <div className="flex flex-col items-start self-stretch">
       <form
         onSubmit={(e) => {
           handleSubmit(e);
           updateMissionHandler(missionUid)
         }}
-        className="w-5/6 h-4/5 mt-10 flex flex-col space-y-5">
+        className="flex flex-col space-y-5">
         <select
           name="category"
           onChange={(e) => {
@@ -117,9 +112,9 @@ const AddPost: NextComponentType = () => {
           value={title}
           onChange={(e) => setTitle(e.currentTarget.value)}
           placeholder="제목을 입력해주세요."
-          className="w-1/2 p-2 outline-none border-b text-lg"
+          className="p-2 outline-none border-b text-lg"
         />
-        <div className="h-96"> 
+        <div className="w-[1000px] h-[500px] mx-auto"> 
           <TextEditor
             content={content}
             setContent={setContent}
@@ -131,7 +126,7 @@ const AddPost: NextComponentType = () => {
           게시글 등록
         </button>
       </form>
-    </>
+    </div>
   )
 }
 

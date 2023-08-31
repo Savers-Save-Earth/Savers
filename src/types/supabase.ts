@@ -35,6 +35,7 @@ export interface Database {
           content: string
           created_date: string
           number_comments: number
+          number_likes: number
           post_uid: string
           title: string
           updated_date: string
@@ -46,6 +47,7 @@ export interface Database {
           content?: string
           created_date?: string
           number_comments?: number
+          number_likes?: number
           post_uid?: string
           title?: string
           updated_date?: string
@@ -57,6 +59,7 @@ export interface Database {
           content?: string
           created_date?: string
           number_comments?: number
+          number_likes?: number
           post_uid?: string
           title?: string
           updated_date?: string
@@ -201,6 +204,7 @@ export interface Database {
           id: number
           restaurant_address: string | null
           restaurant_category: string | null
+          restaurant_map: string | null
           restaurant_name: string | null
           user_id: string | null
         }
@@ -209,6 +213,7 @@ export interface Database {
           id?: number
           restaurant_address?: string | null
           restaurant_category?: string | null
+          restaurant_map?: string | null
           restaurant_name?: string | null
           user_id?: string | null
         }
@@ -217,6 +222,7 @@ export interface Database {
           id?: number
           restaurant_address?: string | null
           restaurant_category?: string | null
+          restaurant_map?: string | null
           restaurant_name?: string | null
           user_id?: string | null
         }
