@@ -290,7 +290,7 @@ const ProductComponent = () => {
         ) : (
           <div className="col-span-4 mx-auto">
             <div className="h-[500px]">
-              <h1 className="pt-16 text-gray-900 text-xl">
+              <h1 className="pt-48 text-gray-900 text-xl">
                 &quot;{search}&quot; 검색 결과가 존재하지 않습니다.
               </h1>
             </div>
