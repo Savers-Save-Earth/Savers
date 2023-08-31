@@ -112,6 +112,7 @@ const PwLogin: React.FC = () => {
           </defs>
         </svg>
       </div>
+
       <div>
         <form onSubmit={handleSubmit(loginButtonHandler)}>
           <div className="pt-16 flex flex-col items-center gap-4 self-stretch">
@@ -127,7 +128,9 @@ const PwLogin: React.FC = () => {
               })}
               className="flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50"
             />
-            {errors.email && <p>{errors.email.message}</p>}
+            {errors.email && (
+              <p className="text-red-500">{errors.email.message}</p>
+            )}
 
             <input
               type="password"
