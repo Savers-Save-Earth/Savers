@@ -153,21 +153,34 @@ body {
 
 @layer components {
   .btn-sidebar {
-    @apply text-gray-400 font-normal leading-6 hover:text-[#10C800] focus:text-[#10C800]
+    @apply text-gray-400 font-normal leading-6 hover:text-[#10C800] focus:text-[#10C800];
   }
 }
 
 @layer components {
   .btn-profile-topbar {
-    @apply overflow-hidden text-gray-300 text-ellipsis text-[14px] font-bold leading-[14px] hover:underline focus:text-gray-900
+    @apply overflow-hidden text-gray-300 text-ellipsis text-[14px] font-bold leading-[14px] hover:underline focus:text-gray-900;
   }
 }
 
 @layer components {
   .badge-ctn-profile {
-    @apply border-2 border-solid border-black flex flex-col items-center gap-2
+    @apply border-2 border-solid border-black flex flex-col items-center gap-2;
   }
 }
+
+@layer components {
+  .badge-image {
+    @apply w-[88px] h-[88px] rounded-full;
+  }
+}
+
+@layer components {
+  .badge-text {
+    @apply text-gray-500 text-[14px] font-normal leading-[14px];
+  }
+}
+
 .categoryBtn {
   border-radius: 16px;
   border: 1px solid gray;
@@ -181,4 +194,38 @@ body {
 .categoryBtn.active {
   color: #5fd100;
   border-color: #5fd100;
+}
+
+/* intro 깜빡거리는 arrow */
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.blinking-text {
+  animation: blink 1.5s infinite;
+}
+
+@layer utilities {
+  @variants responsive {
+
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      /* IE and Edge */
+      scrollbar-width: none;
+      /* Firefox */
+    }
+  }
 }
