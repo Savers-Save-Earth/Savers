@@ -12,6 +12,7 @@ import { removeHtmlTags } from "@/libs/util";
 import Loading from "@/app/loading";
 
 import { ToTalDataType } from "@/types/types";
+import CategoryTag from "./CategoryTag";
 
 type PostType = Database["public"]["Tables"]["community"]["Row"];
 type QueryKeyMap = {
@@ -93,11 +94,9 @@ const GetPosts = () => {
                 className="border-t last:border-b flex flex-col justify-between px-4 py-4"
               >
                 <div className="flex flex-col space-y-2">
-                  <div>
-                    <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-400">
-                      {post.category}
-                    </span>
-                  </div>
+                  <CategoryTag>
+                    {post.category}
+                  </CategoryTag>
                   <div>
                     <div>
                       <Link href={`/community/${post.post_uid}`}>
