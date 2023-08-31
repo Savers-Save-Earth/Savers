@@ -156,7 +156,6 @@ const PwLogin: React.FC = () => {
               onClick={() => {
                 router.push("/signup");
               }}
-              type="submit"
               className="color: var(--gray-500, #667085);
               font-family: Pretendard;
               font-size: 14px;

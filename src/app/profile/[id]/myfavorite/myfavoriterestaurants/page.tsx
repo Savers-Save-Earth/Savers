@@ -60,6 +60,7 @@ const MyFavoriteRestaurants = ({ params }: { params: { id: string } }) => {
             key={restaurants.id}
           >
             {/* <img className="w-1/6 rounded-full" src={product.img} alt="No Image"/> */}
+            <img/>
             <p>레스토랑 이름 : {restaurants.restaurant_name}</p>
             <p>레스토랑 업종 : {restaurants.restaurant_category}</p>
             {/* window.open : 새 탭에서 해당 url로 이동 */}

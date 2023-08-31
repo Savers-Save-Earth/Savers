@@ -6,10 +6,6 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-<<<<<<< HEAD
-    "lint": "next lint",
-=======
->>>>>>> 124-fixmerge
     "vercel-deploy": "next build && next export"
   },
   "dependencies": {

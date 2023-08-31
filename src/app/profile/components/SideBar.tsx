@@ -138,77 +138,89 @@ const SideBar = () => {
       }
     }
   };
-console.log("호출확인용")
+  console.log("호출확인용");
   return (
-    <div className="bg-pink-400 sticky top-20 flex flex-col items-center">
+    <div className=" sticky top-20 flex flex-col items-start gap-16 text-gray-900">
+      <h1 className="text-[24px] non-italic font-semibold">마이페이지</h1>
       {profile ? (
         <>
-          <div className="rounded-full overflow-hidden w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 xl:w-40 xl:h-40 flex items-center justify-center">
-            <img
-              className="object-cover w-full h-full"
-              src={profile.profileImage || ""}
-              alt="이미지"
-            />
+          <div className="flex flex-col justify-center items-center gap-6 self-stretch leading-none">
+            <div className="rounded-full overflow-hidden w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 xl:w-40 xl:h-40 flex items-center justify-center">
+              <img
+                className="object-cover w-full h-full"
+                src={profile.profileImage || ""}
+                alt="이미지"
+              />
+            </div>
+            <div className="flex flex-col items-center gap-4">
+              <p className="text-gray-900 text-[24px] non-italic font-semibold leading-7">{profile.nickname}</p>
+              <button className="text-gray-400 text-[16px] non-italic font-normal leading-4">프로필 수정</button>
+              </div>
           </div>
-          <div>{profile.nickname}</div>
-          <button onClick={() => router.push(`/profile/${searchId}/myprofile`)}>
-            나의 프로필
-          </button>
-          <button
-            onClick={() =>
-              router.push(`/profile/${searchId}/mymission/missiondoing`)
-            }
-          >
-            나의 미션
-          </button>
-          <button
-            onClick={() =>
-              router.push(`/profile/${searchId}/mycommunity/myposts`)
-            }
-          >
-            커뮤니티 활동 
-          </button>
-          <button
-            onClick={() =>
-              router.push(`/profile/${searchId}/myfavorite/myfavoriteproducts`)
-            }
-          >
-            좋아요
-          </button>
-          {user && user.id == profile.uid ? (
-            <button
-              onClick={() => {
-                // 일일미션 뽑기 함수
-                insertMissionListData();
-                // 일일미션 모달 띄우기
-                setShowModal(true);
-              }}
-            >
-              일일미션 뽑기
-            </button>
-          ) : (
-            ""
-          )}
-          {user && user.id == profile.uid ? (
-            <button
-              onClick={() => {
-                router.push(`/profile/${searchId}/setting`);
-              }}
-            >
-              회원정보 관리
-            </button>
-          ) : (
-            ""
-          )}
 
+          <div className="flex flex-col items-start gap-6">
+            <button className="text-gray-400 non-italic font-normal leading-6 hover:text-[#10C800] focus:text-[#10C800]"
+              onClick={() => router.push(`/profile/${searchId}/myprofile`)}
+            >
+              프로필
+            </button>
+            <button className="text-gray-400 non-italic font-normal leading-6 hover:text-[#10C800] focus:text-[#10C800]"
+              onClick={() =>
+                router.push(`/profile/${searchId}/mymission/missiondoing`)
+              }
+            >
+              나의 미션
+            </button>
+            <button className="text-gray-400 non-italic font-normal leading-6 hover:text-[#10C800] focus:text-[#10C800]"
+              onClick={() =>
+                router.push(`/profile/${searchId}/mycommunity/myposts`)
+              }
+            >
+              커뮤니티 활동
+            </button>
+            <button className="text-gray-400 non-italic font-normal leading-6 hover:text-[#10C800] focus:text-[#10C800]"
+              onClick={() =>
+                router.push(
+                  `/profile/${searchId}/myfavorite/myfavoriteproducts`,
+                )
+              }
+            >
+              좋아요
+            </button>
+            {user && user.id == profile.uid ? (
+              <button className="text-gray-400 non-italic font-normal leading-6 hover:text-[#10C800] focus:text-[#10C800]"
+                onClick={() => {
+                  // 일일미션 뽑기 함수
+                  insertMissionListData();
+                  // 일일미션 모달 띄우기
+                  setShowModal(true);
+                }}
+              >
+                일일미션 뽑기
+              </button>
+            ) : (
+              ""
+            )}
+            {user && user.id == profile.uid ? (
+              <button className="text-gray-400 non-italic font-normal leading-6 hover:text-[#10C800] focus:text-[#10C800]"
+                onClick={() => {
+                  router.push(`/profile/${searchId}/setting`);
+                }}
+              >
+                회원정보 관리
+              </button>
+            ) : (
+              ""
+            )}
+          </div>
           {showModal && (
             <>
               <div
                 onClick={() => setShowModal(false)}
                 className="h-screen flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
               >
-                <div className="relative w-3/5 my-6 mx-auto ">
-                  <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                <div className="relative w-120 height-[729px]">
+                  <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-120 height-[729px] bg-white outline-none focus:outline-none">
                     {/* 모달 body */}
                     <div className="relative p-6 flex-auto h-3/4 ">
                       <div className="bg-gray-200 shadow-md rounded px-8 pt-6 pb-8 w-full">

@@ -11,34 +11,39 @@ const CommunityTopBar = () => {
   // const searchId = params as string
   const searchId = decodedParams as string;
   return (
-    <>
-      <button
-        className="bg-blue-500"
-        onClick={() =>
-          router.push(`/profile/${searchId}/mycommunity/myposts`)
-        }
-      >
-        내가 쓴 글
-      </button>
+    <div className="flex items-start gap-8 self-stretch">
+      <div className="flex flex-col items-start py-[6.5px] gap-[13px] self-stretch">
+        <button
+          className="text-gray-300 text-[14px] non-italic font-medium leading-[22px] focus:text-gray-900 focus:font-medium"
+          onClick={() =>
+            router.push(`/profile/${searchId}/mycommunity/myposts`)
+          }
+        >
+          내가 쓴 글
+        </button>
+      </div>
 
-      <button
-        className="bg-blue-500"
-        onClick={() =>
-          router.push(`/profile/${searchId}/mycommunity/mycomments`)
-        }
-      >
-        내가 쓴 댓글
-      </button>
-
-      <button
-        className="bg-blue-500"
-        onClick={() =>
-          router.push(`/profile/${searchId}/mycommunity/mylikedposts`)
-        }
-      >
-        내가 북마크한 글
-      </button>
-    </>
+      <div className="flex flex-col items-start py-[6.5px] gap-[13px] self-stretch">
+        <button
+          className="text-gray-300 text-[14px] non-italic font-medium leading-[22px] focus:text-gray-900 focus:font-medium"
+          onClick={() =>
+            router.push(`/profile/${searchId}/mycommunity/mycomments`)
+          }
+        >
+          내가 쓴 댓글
+        </button>
+      </div>
+      <div className="flex flex-col items-start py-[6.5px] gap-[13px] self-stretch">
+        <button
+          className="text-gray-300 text-[14px] non-italic font-medium leading-[22px] focus:text-gray-900 focus:font-medium"
+          onClick={() =>
+            router.push(`/profile/${searchId}/mycommunity/mylikedposts`)
+          }
+        >
+          내가 북마크한 글
+        </button>
+      </div>
+    </div>
   );
 };
 export default CommunityTopBar;
