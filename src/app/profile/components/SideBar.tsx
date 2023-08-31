@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Database } from "@/types/supabase";
 import { convertDate } from "@/libs/util";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 
 type Profile = Database["public"]["Tables"]["user"]["Row"];
 export interface DailyMission {
@@ -216,31 +218,29 @@ const SideBar = () => {
             <>
               <div
                 onClick={() => setShowModal(false)}
-                className="h-screen flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
+                className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
               >
-                <div className="relative w-120 height-[729px]">
-                  <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-120 height-[729px] bg-white outline-none focus:outline-none">
+                <div className="border-2 border-slate-600 bg-white relative w-[480px] h-[729px] gap-3 p-8 flex flex-wrap items-center justify-center rounded-2xl">
+                  <div className="flex flex-col gap-5 justify-center items-center">
+                  <h1 className="text-gray-900 w-full text-2xl font-semibold leading-6">오늘의 세이버 일일미션 랜덤 뽑기</h1> 
+                  <p className="text-center text-gray-400 w-full text-lg font-normal leading-4">미션을 클리어하고 배지를 받아보세요!</p>
+                  </div>
+                  <FontAwesomeIcon className="absolute top-[20px] right-[20px] hover:scale-[120%]" icon={faCircleXmark} />
                     {/* 모달 body */}
-                    <div className="relative p-6 flex-auto h-3/4 ">
-                      <div className="bg-gray-500 shadow-md rounded px-8 pt-6 pb-8 w-full">
-                        <section className="bg-pink-900 h-full flex justify-center items-center gap-x-16 text-white">
                           {dailyMission.map((missionItem) => (
                             <div
                               key={missionItem.id}
-                              className="w-[200px] h-[320px] bg-transparent cursor-pointer group perspective"
+                              className="min-w-[200px] min-h-[280px] bg-transparent cursor-pointer group perspective rounded-2xl "
                             >
-                              <div className="relative preserve-3d my-rotate-y-180 w-full h-full">
-                                <div className="absolute w-full h-full my-rotate-y-180-withoutkey bg-gray-100">
-                                  <div className="text-center flex flex-col items-center justify-center h-full text-gray-800 px-2 pb-24">
-                                    <h1 className="text-3x1 font-semibold">
-                                      {missionItem.id}
-                                    </h1>
-                                    <p className="my-2">{missionItem.title}</p>
-                                    <p className="my-2">
+                              <div className="relative preserve-3d my-rotate-y-180">
+                                <div className="absolute my-rotate-y-180-withoutkey min-w-[200px] min-h-[280px] bg-[#DBF8D9] rounded-2xl break-words">
+                                  <div className="flex flex-col items-center justify-center text-gray-800 gap-4 min-h-[230px]">
+                                    <p className=" text-gray-900 fixed top-1 w-full text-[20px] font-semibold text-center ">{missionItem.title}</p>
+                                    <p>
                                       {missionItem.content}
                                     </p>
                                     {/* <p>안나옴?{missionItem?.address}</p> */}
-                                    <button
+                                    <button className="fixed bottom-2 py-1 px-3 rounded-full border-2 border-[#42723e] text-[#42723e] font-semibold hover:bg-[#42723e] hover:text-white hover:duration-500"
                                       onClick={() =>
                                         window.open(`${missionItem?.address}`)
                                       }
@@ -249,37 +249,17 @@ const SideBar = () => {
                                     </button>
                                   </div>
                                 </div>
-                                <div className="absolute backface-hidden border-2 w-full h-full">
-                                  <img
-                                    src="https://mblogthumb-phinf.pstatic.net/20160817_259/retspe_14714118890125sC2j_PNG/%C7%C7%C4%AB%C3%F2_%281%29.png?type=w800"
-                                    className="w-full h-full"
+                                <div className="absolute backface-hidden w-full h-[280px] rounded-2xl">
+                                  <img 
+                                    src="https://img4.yna.co.kr/photo/ap/2012/12/11/PAP20121211146101034_P2.jpg"
+                                    className="w-full h-full rounded-2xl"
                                   />
                                 </div>
                               </div>
                             </div>
                           ))}
-                        </section>
-                      </div>
-                    </div>
-                    <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
-                      <button
-                        className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1"
-                        type="button"
-                        onClick={() => setShowModal(false)}
-                      >
-                        Close
-                      </button>
-                      {/* <button
-                        className="text-white bg-yellow-500 active:bg-yellow-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
-                        type="button"
-                        onClick={() => setShowModal(false)}
-                      >
-                        Submit
-                      </button> */}
                     </div>
                   </div>
-                </div>
-              </div>
             </>
           )}
         </>
