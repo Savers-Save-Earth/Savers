@@ -48,7 +48,7 @@ const MissionDone = ({ params }: { params: { id: string } }) => {
   {missionDone?.map((mission) => {
     return (
       <div
-        className="py-[40px] relative flex flex-col justify-start items-center w-[169px] h-[280px] rounded-2xl break-words gap-[40px] p-1"
+        className="py-[40px] px-3 flex flex-col justify-start items-center w-[169px] h-[280px] rounded-2xl break-words gap-[40px] p-1"
         style={{
           backgroundImage: `url('https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/sign/badge/missionDOneCard_200_300.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJiYWRnZS9taXNzaW9uRE9uZUNhcmRfMjAwXzMwMC5wbmciLCJpYXQiOjE2OTM0NzYzNjUsImV4cCI6MTY5NjA2ODM2NX0.crCRDp7gU6YrfvgzNyIYtE4Bq6JREBNsMBc79i2iH9k&t=2023-08-31T10%3A06%3A05.635Z')`,
           backgroundRepeat: 'no-repeat',
@@ -59,6 +59,7 @@ const MissionDone = ({ params }: { params: { id: string } }) => {
       >
         <h1 className="text-center font-semibold">{mission.title}</h1>
         <div>{mission.content}</div>
+        <p>{mission}</p>
       </div>
     );
   })}
