@@ -91,11 +91,19 @@ const Badges = () => {
     <div className="flex flex-col w-[317.5px] items-start gap-[30px] ">
       <div className="flex justify-between items-start self-stretch">
         <div className="flex flex-col items-center gap-2">
+<<<<<<< HEAD
+          {bronzeTrophy ? (
+            <>
+              <img
+                className="badge-image"
+                src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/sign/badge/true.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJiYWRnZS90cnVlLnN2ZyIsImlhdCI6MTY5MzQ1NjI2NywiZXhwIjoxNjk2MDQ4MjY3fQ.VOB1STTxO1I0y6VAbEiTtaDVplvFiUOYyVt6-cLW_Jg&t=2023-08-31T04%3A31%3A05.175Z"
+=======
           {badges ? (
             <>
               <img
                 className="badge-image"
                 src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/sign/badge/01sproutsaver.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJiYWRnZS8wMXNwcm91dHNhdmVyLnN2ZyIsImlhdCI6MTY5MzQ2NTYzNywiZXhwIjoxNjk2MDU3NjM3fQ.y9emdOUGzuWiaGTUZDAorTZa6-ezqX_VqwXMHbZgspY&t=2023-08-31T07%3A07%3A17.651Z"
+>>>>>>> f7de48ef8d3436736eb7e896c6e0c2969f853fd3
               />
               <p className="badge-text">
                 새싹 세이버
@@ -114,7 +122,11 @@ const Badges = () => {
           )}
         </div>
         <div className="flex flex-col items-center gap-2">
+<<<<<<< HEAD
+          {silverTrophy ? (
+=======
           {shareBadge ? (
+>>>>>>> f7de48ef8d3436736eb7e896c6e0c2969f853fd3
             <>
               <img
                 className="badge-image"
@@ -137,7 +149,11 @@ const Badges = () => {
           )}
         </div>
         <div className="flex flex-col items-center gap-2">
+<<<<<<< HEAD
+          {goldTrophy ? (
+=======
           {threeShareBadge ? (
+>>>>>>> f7de48ef8d3436736eb7e896c6e0c2969f853fd3
             <>
               <img
                 className="badge-image"
@@ -162,7 +178,11 @@ const Badges = () => {
       </div>
       <div className="flex justify-between items-start self-stretch">
         <div className="flex flex-col items-center gap-2">
+<<<<<<< HEAD
+          {bronzeTrophy ? (
+=======
           {likeBadge ? (
+>>>>>>> f7de48ef8d3436736eb7e896c6e0c2969f853fd3
             <>
               <img
                 className="badge-image"
@@ -185,7 +205,11 @@ const Badges = () => {
           )}
         </div>
         <div className="flex flex-col items-center gap-2">
+<<<<<<< HEAD
+          {silverTrophy ? (
+=======
           {threeLikeBadge ? (
+>>>>>>> f7de48ef8d3436736eb7e896c6e0c2969f853fd3
             <>
               <img
                 className="badge-image"
@@ -208,7 +232,11 @@ const Badges = () => {
           )}
         </div>
         <div className="flex flex-col items-center gap-2">
+<<<<<<< HEAD
+          {goldTrophy ? (
+=======
           {firstMission ? (
+>>>>>>> f7de48ef8d3436736eb7e896c6e0c2969f853fd3
             <>
               <img
                 className="badge-image"
@@ -219,6 +247,9 @@ const Badges = () => {
               </p>
             </>
           ) : (
+<<<<<<< HEAD
+            <p>"아직 [첫 미션] 배지를 획득하지 못했습니다."</p>
+=======
             <>
               <img
                 className="badge-image"
@@ -228,6 +259,7 @@ const Badges = () => {
                 첫 미션
               </p>
             </>
+>>>>>>> f7de48ef8d3436736eb7e896c6e0c2969f853fd3
           )}
         </div>
       </div>

@@ -1,9 +1,23 @@
 "use client";
 import { NextPage } from "next";
 import AddPost from "@/components/community/AddPost";
+import { useEffect, useState } from "react";
+import supabase from "@/libs/supabase";
+import { useRouter } from "next/navigation";
 
 const Write: NextPage = () => {
-  // 서버사이드에서 user session 있는지 판단해서 세션 없으면 redirect 홈
+  const router = useRouter();
+  const [sessionState, setSessionState] = useState<any>(null);
+
+  useEffect(() => {
+    const getSessionState = async () => {
+      const { data: session, error } = await supabase.auth.getSession();
+      if (!session.session) router.push("/");
+      setSessionState(session.session);
+    }
+    getSessionState();
+  }, [router]);
+
   return (
     <>
       <AddPost />
