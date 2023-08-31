@@ -135,7 +135,7 @@ const PostList = () => {
         {showCount <= post.length && (
           <button
             onClick={showMorePost}
-            className="text-gray-500 text-base bg-gray-50 rounded-2xl mt-4 mb-8"
+            className="text-gray-500 text-base bg-gray-50 rounded-2xl mt-4 mb-8 "
             style={{ padding: "16px 24px" }}
           >
             더보기

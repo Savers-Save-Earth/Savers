@@ -85,7 +85,10 @@ const ProductList = () => {
                 {item.name}
               </p>
               {item.sales ? (
-                <span className="text-green-500 font-bold mr-2 text-[16px]">
+                <span
+                  className="font-bold mr-2 text-[16px]"
+                  style={{ color: "#5FD100" }}
+                >
                   {item.sales}%
                 </span>
               ) : null}
