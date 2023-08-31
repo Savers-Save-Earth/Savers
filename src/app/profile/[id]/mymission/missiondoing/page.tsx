@@ -37,7 +37,7 @@ const MissionDoing = ({ params }: { params: { id: string } }) => {
       return false;
     }
   };
-  
+
   // const routTo = (obj: any) => {
   //   if (obj.bigCategory === "글쓰기") {
   //     window.open(`/community`)
@@ -60,8 +60,13 @@ const MissionDoing = ({ params }: { params: { id: string } }) => {
               >
                 <h1 className="text-center font-semibold">{mission.title}</h1>
                 <div>{mission.content}</div>
-                <button className="absolute bottom-8 py-1 px-3 rounded-full border-2 border-[#42723e] text-[#42723e] font-semibold hover:bg-[#42723e] hover:text-white hover:duration-500"
-                onClick={() => mission.bigCategory === "글쓰기" ? window.open("/community") : window.open("/product")}
+                <button
+                  className="absolute bottom-8 py-1 px-3 rounded-full border-2 border-[#42723e] text-[#42723e] font-semibold hover:bg-[#42723e] hover:text-white hover:duration-500"
+                  onClick={() =>
+                    mission.bigCategory === "글쓰기"
+                      ? window.open("/community")
+                      : window.open("/product")
+                  }
                 >
                   미션하러 가기
                 </button>

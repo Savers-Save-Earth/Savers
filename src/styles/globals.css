@@ -125,18 +125,21 @@ body {
 .highlight {
   color: rgb(255, 255, 255);
 
-  background-color: #10c800 !important;
-  border-radius: 30px;
+  background-color: #5fd100 !important;
+  border-radius: 100px;
 }
 
 .react-calendar {
-  width: 350px;
+  width: 280px !important;
+  height: 300px !important;
   max-width: 100%;
+  padding: 10px;
   background: rgb(245, 245, 245) !important;
   border: none !important;
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.125em;
   border-radius: 10px;
+  font-size: 15px;
 }
 
 .react-calendar__month-view__days__day--neighboringMonth {
@@ -144,7 +147,12 @@ body {
 }
 
 .react-calendar__month-view__weekdays {
-  color: rgb(75, 75, 75);
+  color: rgb(94, 94, 94);
+}
+
+/* 주말 색깔 */
+.react-calendar__month-view__days__day--weekend {
+  color: #d80000 !important;
 }
 
 .react-calendar__navigation__label {
