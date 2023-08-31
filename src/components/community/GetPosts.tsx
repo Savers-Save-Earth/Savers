@@ -61,7 +61,6 @@ const GetPosts = () => {
         return lastPage.page + 1;
       }
     },
-    staleTime: 60000,
     cacheTime: 300000,
   });
   
@@ -102,7 +101,7 @@ const GetPosts = () => {
                   <div>
                     <div>
                       <Link href={`/community/${post.post_uid}`}>
-                        <h2 className="font-medium text-lg flex items-center space-x-2 cursor-pointer hover:underline leading-10">
+                        <h2 className="font-medium text-lg flex items-center space-x-2 cursor-pointer hover:underline my-2">
                           {post.title}
                         </h2>
                       </Link>

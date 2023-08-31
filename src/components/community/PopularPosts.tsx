@@ -15,7 +15,7 @@ const PopularPosts = () => {
   const { data: popularPosts, isLoading } = useQuery<PostType[]>(
     ["popularPosts"],
     () => getPopularPosts(),
-    { staleTime: 300000 },
+    { cacheTime: 300000 },
   );
 
   if (isLoading) return <Loading />;
