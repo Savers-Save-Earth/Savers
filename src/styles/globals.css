@@ -153,26 +153,26 @@ body {
 
 @layer components {
   .btn-sidebar {
-    @apply text-gray-400 font-normal leading-6 hover:text-[#10C800] focus:text-[#10C800]
+    @apply text-gray-400 font-normal leading-6 hover:text-[#10C800] focus:text-[#10C800];
   }
 }
 
 @layer components {
   .btn-profile-topbar {
-    @apply overflow-hidden text-gray-300 text-ellipsis text-[14px] font-bold leading-[14px] hover:underline focus:text-gray-900
+    @apply overflow-hidden text-gray-300 text-ellipsis text-[14px] font-bold leading-[14px] hover:underline focus:text-gray-900;
   }
 }
 
 @layer components {
   .badge-ctn-profile {
-    @apply border-2 border-solid border-black flex flex-col items-center gap-2
+    @apply border-2 border-solid border-black flex flex-col items-center gap-2;
   }
 }
 .categoryBtn {
   border-radius: 16px;
   border: 1px solid gray;
   width: auto;
-  padding: 6px 12px;
+  padding: 5px 12px 6px 12px;
   font-size: small;
   margin-right: 5px;
   line-height: 1;
@@ -181,4 +181,24 @@ body {
 .categoryBtn.active {
   color: #5fd100;
   border-color: #5fd100;
+}
+/*width*/
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
