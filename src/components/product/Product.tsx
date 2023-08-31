@@ -5,11 +5,11 @@ import { Product } from "@/types/types";
 import { useRouter } from "next/navigation";
 
 const productCategory = [
-  { value: "", label: "전체" },
-  { value: "bath", label: "욕실" },
-  { value: "kitchen", label: "주방" },
-  { value: "food", label: "식품" },
-  { value: "else", label: "기타" },
+  { value: "", label: "전체", img: "assets/product/all.png" },
+  { value: "bath", label: "욕실", img: "assets/product/bath.png" },
+  { value: "kitchen", label: "주방", img: "assets/product/kitchen.png" },
+  { value: "food", label: "식품", img: "assets/product/food.png" },
+  { value: "else", label: "기타", img: "assets/product/else.png" },
 ];
 
 const selectOptions = [
@@ -166,9 +166,9 @@ const ProductComponent = () => {
           <button
             key={category.value}
             onClick={() => setCategory(category.value)}
-            className="flex flex-col items-center space-y-2"
+            className="flex flex-col items-center space-y-2 m-4"
           >
-            <svg className="text-gray-300 bg-gray-200 w-24 h-24 m-2 rounded-full"></svg>
+            <img src={category.img} style={{ width: "96px" }} />
             <p>{category.label}</p>
           </button>
         ))}

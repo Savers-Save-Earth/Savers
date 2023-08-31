@@ -1,3 +1,5 @@
+import { Database } from "./supabase";
+
 export interface Product {
   id: string;
   name: string;
@@ -41,9 +43,15 @@ export interface ListMission {
   address: string;
 }
 
+type PostType = Database["public"]["Tables"]["community"]["Row"];
 export interface ToTalDataType {
   posts: PostType[];
   page: number;
   total_pages: number;
   total_results: number | null;
+}
+
+export interface DetailPostProps {
+  postDetail?: PostType;
+  postUid: string;
 }
