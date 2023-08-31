@@ -216,7 +216,7 @@ const ProductComponent = () => {
                 <div className="relative">
                   <img
                     src={item.img}
-                    className="w-full h-auto rounded-md point"
+                    className="w-full h-auto rounded-md point cursor-pointer"
                     alt={item.name}
                     onClick={() => router.push(`/product/${item.id}`)}
                   />
@@ -268,7 +268,12 @@ const ProductComponent = () => {
                 </div>
 
                 <p className="text-gray-300 text-sm mt-2">{item.company}</p>
-                <p className="text-sm text-gray-500">{item.name}</p>
+                <p
+                  className="text-sm text-gray-500 cursor-pointer"
+                  onClick={() => router.push(`/product/${item.id}`)}
+                >
+                  {item.name}
+                </p>
                 {item.sales ? (
                   <span
                     className=" font-bold mr-2 text-[16px]"
@@ -283,8 +288,12 @@ const ProductComponent = () => {
               </div>
             ))
         ) : (
-          <div className="h-[500px]">
-            <h1>검색 결과가 존재하지 않습니다.</h1>
+          <div className="col-span-4 mx-auto">
+            <div className="h-[500px]">
+              <h1 className="pt-16 text-gray-900 text-xl">
+                &quot;{search}&quot; 검색 결과가 존재하지 않습니다.
+              </h1>
+            </div>
           </div>
         )}
       </div>
