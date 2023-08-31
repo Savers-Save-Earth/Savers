@@ -43,14 +43,18 @@ const MissionDoing = ({ params }: { params: { id: string } }) => {
       {isLoading ? ( // isLoading이 true이면 로딩 표시를 표시합니다.
         <p>Loading...</p>
       ) : (
-        <div className="bg-green-200 h-full flex justify-center items-center gap-x-4 text-white">
+        <div className="flex justify-center items-center gap-x-4 text-gray-800">
           {dailyMission?.map((mission) => {
             return (
-              <div className="bg-slate-500 w-[169px] h-[280px] rounded-2xl gap-4 break-words" key={mission.id}>
-                <div>내용aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
-                <div>내용aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
-                <div>내용aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
-                <div>내용aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+              <div
+                className="relative flex flex-col justify-start items-center bg-[#DBF8D9] w-[169px] h-[280px] rounded-2xl gap-4 break-words p-1"
+                key={mission.id}
+              >
+                <h1 className="text-center">{mission.title}</h1>
+                <div>{mission.content}</div>
+                <button className="absolute bottom-1 py-1 px-3 rounded-full border-2 border-[#42723e] text-[#42723e] font-semibold hover:bg-[#42723e] hover:text-white hover:duration-500">
+                  미션하러 가기
+                </button>
               </div>
             );
           })}
