@@ -10,7 +10,6 @@ import { createPost } from "@/api/community/post";
 import { convertDate, convertTimestamp } from "@/libs/util";
 import { Database } from "@/types/supabase";
 
-import supabase from "@/libs/supabase";
 import { getMissionHandler, updateMissionHandler } from "@/api/mission/checkMission";
 
 type NewPost = Database["public"]["Tables"]["community"]["Insert"];
@@ -22,11 +21,10 @@ const AddPost: NextComponentType = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
-  ///===================👇동준작업👇=========================================================
-  const [missionUid, setMissionUid] = useState<any>("")
 
+  // 미션 관련 부분(동준님)
+  const [missionUid, setMissionUid] = useState<any>("")
   const bigCategory = "글쓰기"
-///===================👆동준작업👆=========================================================
 
   const currentUser = useAuth();
 
@@ -36,9 +34,8 @@ const AddPost: NextComponentType = () => {
   ) => {
     setCategory(e.currentTarget.value);
   };
-  // (1) queryClient 가져오기
+
   const queryClient = useQueryClient();
-  // (2) mutation 함수
   const createMutation = useMutation(createPost, {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["communityAllPosts"] });
@@ -50,13 +47,15 @@ const AddPost: NextComponentType = () => {
       window.alert("게시글이 정상적으로 등록되지 않았습니다. 다시 시도해주세요!");
     },
   });
-  ///===================👇동준작업👇=========================================================
+  
+  // 미션 관련 부분(동준님)
   useEffect(() => {
     // 사용함수는 api폴더의 checkMission.ts에 있음
     if(!currentUser) return
     getMissionHandler(currentUser, currentDate, category, setMissionUid, bigCategory)
   },[category])
-  ///===================👆동준작업👆=========================================================
+
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const writtenTime = new Date();
@@ -86,45 +85,48 @@ const AddPost: NextComponentType = () => {
   }
 
   return (
-    <div className="flex flex-col items-start self-stretch">
+    <div className="w-full flex flex-col items-start self-stretch space-y-10">
+      <h1 className="text-2xl font-semibold">글쓰기</h1>
       <form
         onSubmit={(e) => {
           handleSubmit(e);
           updateMissionHandler(missionUid)
         }}
-        className="flex flex-col space-y-5">
-        <select
-          name="category"
-          onChange={(e) => {
-            selectChangeHandler(e, setCategory)
-          }}
-          className="w-1/5"
-        >
-          <option defaultValue="" disabled selected>
-            카테고리
-          </option>
-          <option value="제품">제품</option>
-          <option value="식당">식당</option>
-          <option value="레시피">레시피</option>
-          <option value="오지완">오.지.완</option>
-        </select>
-        <input
-          value={title}
-          onChange={(e) => setTitle(e.currentTarget.value)}
-          placeholder="제목을 입력해주세요."
-          className="p-2 outline-none border-b text-lg"
-        />
-        <div className="w-[1000px] h-[500px] mx-auto"> 
+        className="flex flex-col space-y-5 w-full">
+        <div className="flex space-x-2 items-center justify-center">
+          <select
+            name="category"
+            onChange={(e) => {
+              selectChangeHandler(e, setCategory)
+            }}
+            className="w-1/6 p-3 rounded-md focus:outline-none"
+          >
+            <option defaultValue="" disabled selected>
+              카테고리
+            </option>
+            <option value="제품">제품</option>
+            <option value="식당">식당</option>
+            <option value="레시피">레시피</option>
+            <option value="오지완">오.지.완</option>
+          </select>
+          <input
+            value={title}
+            onChange={(e) => setTitle(e.currentTarget.value)}
+            placeholder="제목을 입력해주세요."
+            className="w-full p-2 outline-none border-b text-lg"
+          />
+          <button
+            type="submit"
+            className="w-1/12 px-3 py-2 rounded-xl bg-gray-950 text-white">
+            등록
+          </button>
+        </div>
+        <div className="w-full h-[850px] mx-auto"> 
           <TextEditor
             content={content}
             setContent={setContent}
           />
         </div>
-        <button
-          type="submit"
-          className="rounded-md bg-green-200 w-48 py-3 mx-auto hover:bg-green-300">
-          게시글 등록
-        </button>
       </form>
     </div>
   )
