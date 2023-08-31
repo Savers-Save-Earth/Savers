@@ -8,18 +8,22 @@ import { usePathname } from "next/navigation";
 const CommunityLayout = ({ children }: { children: React.ReactNode }) => {
   const user = useAuth();
   const pathname = usePathname();
-  console.log("pathname >>> ", pathname);
   return (
     <div className="flex items-start self-stretch mt-24">
-      {pathname === "/community/write"
+      {
+        pathname === "/community"
+          || pathname === "/community/product"
+          || pathname === "/community/restaurant"
+          || pathname === "/community/recipe"
+          || pathname === "/community/ohjiwan"
         ?
-        null
-        :
-        <div className="w-[379px] h-full">
+        <div className="w-full h-full">
           <SideBar />
         </div>
+        :
+        null
       }
-      <main>
+      <main className="w-full">
         {
           pathname === "/community"
             || pathname === "/community/product"

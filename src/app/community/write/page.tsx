@@ -16,7 +16,7 @@ const Write: NextPage = () => {
       setSessionState(session.session);
     }
     getSessionState();
-  }, [sessionState]);
+  }, [router]);
 
   return (
     <>

@@ -5,19 +5,19 @@ import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updatePost } from "@/api/community/post";
 import { convertTimestamp } from "@/libs/util";
-import { Database } from "@/types/supabase";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 
-type PostType = Database["public"]["Tables"]["community"]["Update"];
-type EditPostProps = {
-  postDetail?: PostType;
-  postUid: string | string[];
-}
+import { editPostAtom } from "@/libs/atoms";
+import { useRecoilValue } from "recoil";
+import { Database } from "@/types/supabase";
 
-const EditPost: React.FC<EditPostProps> = ({ postDetail, postUid }) => {
+type PostType = Database["public"]["Tables"]["community"]["Update"];
+
+const EditPost = () => {
   const currentUser = useAuth();
   const router = useRouter();
+  const { postDetail } = useRecoilValue(editPostAtom);
 
   const [category, setCategory] = useState(postDetail?.category ?? "");
   const [title, setTitle] = useState(postDetail?.title);
@@ -29,9 +29,6 @@ const EditPost: React.FC<EditPostProps> = ({ postDetail, postUid }) => {
   ) => {
     setCategory(e.currentTarget.value);
   };
-
-  console.log("postDetail >>> ", postDetail)
-  console.log("postuid >>> ", postUid)
 
   const queryClient = useQueryClient();
   const updateMutation = useMutation(updatePost, {

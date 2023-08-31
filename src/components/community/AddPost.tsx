@@ -10,7 +10,6 @@ import { createPost } from "@/api/community/post";
 import { convertDate, convertTimestamp } from "@/libs/util";
 import { Database } from "@/types/supabase";
 
-import supabase from "@/libs/supabase";
 import { getMissionHandler, updateMissionHandler } from "@/api/mission/checkMission";
 
 type NewPost = Database["public"]["Tables"]["community"]["Insert"];
@@ -22,11 +21,10 @@ const AddPost: NextComponentType = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
-  ///===================👇동준작업👇=========================================================
-  const [missionUid, setMissionUid] = useState<any>("")
 
+  // 미션 관련 부분(동준님)
+  const [missionUid, setMissionUid] = useState<any>("")
   const bigCategory = "글쓰기"
-///===================👆동준작업👆=========================================================
 
   const currentUser = useAuth();
 
@@ -36,9 +34,8 @@ const AddPost: NextComponentType = () => {
   ) => {
     setCategory(e.currentTarget.value);
   };
-  // (1) queryClient 가져오기
+
   const queryClient = useQueryClient();
-  // (2) mutation 함수
   const createMutation = useMutation(createPost, {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["communityAllPosts"] });
@@ -50,13 +47,15 @@ const AddPost: NextComponentType = () => {
       window.alert("게시글이 정상적으로 등록되지 않았습니다. 다시 시도해주세요!");
     },
   });
-  ///===================👇동준작업👇=========================================================
+  
+  // 미션 관련 부분(동준님)
   useEffect(() => {
     // 사용함수는 api폴더의 checkMission.ts에 있음
     if(!currentUser) return
     getMissionHandler(currentUser, currentDate, category, setMissionUid, bigCategory)
   },[category])
-  ///===================👆동준작업👆=========================================================
+
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const writtenTime = new Date();
