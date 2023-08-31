@@ -1,5 +1,6 @@
 "use client";
 import FloatingButton from "@/components/community/FloatingButton";
+import PopularPosts from "@/components/community/PopularPosts";
 import SideBar from "@/components/community/SideBar";
 import { useAuth } from "@/hooks/useAuth";
 import { usePathname } from "next/navigation";
@@ -7,6 +8,7 @@ import { usePathname } from "next/navigation";
 const CommunityLayout = ({ children }: { children: React.ReactNode }) => {
   const user = useAuth();
   const pathname = usePathname();
+  console.log("pathname >>> ", pathname);
   return (
     <div className="flex items-start self-stretch mt-24">
       {pathname === "/community/write"
@@ -17,7 +19,20 @@ const CommunityLayout = ({ children }: { children: React.ReactNode }) => {
           <SideBar />
         </div>
       }
-      <main>{children}</main>
+      <main>
+        {
+          pathname === "/community"
+            || pathname === "/community/product"
+            || pathname === "/community/restaurant"
+            || pathname === "/community/recipe"
+            || pathname === "/community/ohjiwan"
+          ?
+          <PopularPosts />
+          :
+          null
+        }
+        {children}
+      </main>
       {user ? (
         <FloatingButton href="/community/write">
           <svg
