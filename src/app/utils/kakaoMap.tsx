@@ -175,7 +175,7 @@ const KakaoMap = () => {
             content.appendChild(info);
 
             var closeBtn = document.createElement("button");
-            closeBtn.innerHTML = `<p style="margin-top:5px; margin-left: 105px; padding-top:2px; font-weight:bold; background-color: white;height:30px; width:30px; border-radius: 30px ">X</p>`;
+            closeBtn.innerHTML = `<p style="border: 1px solid black; margin-top:5px; margin-left: 105px; padding-top:2px; font-weight:bold; background-color: rgb(241 245 249);height:30px; width:30px; border-radius: 50px ">X</p>`;
             // 닫기 이벤트 추가
             closeBtn.onclick = function () {
               overlay.setMap(null);
