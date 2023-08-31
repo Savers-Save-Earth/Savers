@@ -1,30 +1,6 @@
-import supabase from "@/libs/supabase";
 import React, { useEffect, useState } from "react";
 
 export default function UserPost({ post }: any) {
-  const [commentsNum, setCommentsNum] = useState(0);
-  const [likesNum, setLikesNum] = useState(0);
-  useEffect(() => {
-    const getCommentsNum = async (postUid: string) => {
-      const { count } = await supabase
-        .from("community_comment")
-        .select("*", { count: "exact" })
-        .eq("post_uid", postUid);
-      setCommentsNum(count || 0);
-      return count;
-    };
-    const getLikesNum = async (postUid: string) => {
-      const { count } = await supabase
-        .from("like_post")
-        .select("*", { count: "exact" })
-        .eq("post_uid", postUid);
-      setLikesNum(count || 0);
-      return count;
-    };
-
-    getCommentsNum(post.post_uid);
-    getLikesNum(post.post_uid);
-  }, []);
   return (
     <div
       className="flex flex-col items-start p-6 gap-4 self-stretch rounded-2xl bg-white border border-gray-200"
