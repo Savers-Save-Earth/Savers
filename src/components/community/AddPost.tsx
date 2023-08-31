@@ -85,45 +85,48 @@ const AddPost: NextComponentType = () => {
   }
 
   return (
-    <div className="flex flex-col items-start self-stretch">
+    <div className="w-full flex flex-col items-start self-stretch space-y-10">
+      <h1 className="text-2xl font-semibold">글쓰기</h1>
       <form
         onSubmit={(e) => {
           handleSubmit(e);
           updateMissionHandler(missionUid)
         }}
-        className="flex flex-col space-y-5">
-        <select
-          name="category"
-          onChange={(e) => {
-            selectChangeHandler(e, setCategory)
-          }}
-          className="w-1/5"
-        >
-          <option defaultValue="" disabled selected>
-            카테고리
-          </option>
-          <option value="제품">제품</option>
-          <option value="식당">식당</option>
-          <option value="레시피">레시피</option>
-          <option value="오지완">오.지.완</option>
-        </select>
-        <input
-          value={title}
-          onChange={(e) => setTitle(e.currentTarget.value)}
-          placeholder="제목을 입력해주세요."
-          className="p-2 outline-none border-b text-lg"
-        />
-        <div className="w-[1000px] h-[500px] mx-auto"> 
+        className="flex flex-col space-y-5 w-full">
+        <div className="flex space-x-2 items-center justify-center">
+          <select
+            name="category"
+            onChange={(e) => {
+              selectChangeHandler(e, setCategory)
+            }}
+            className="w-1/6 p-3 rounded-md focus:outline-none"
+          >
+            <option defaultValue="" disabled selected>
+              카테고리
+            </option>
+            <option value="제품">제품</option>
+            <option value="식당">식당</option>
+            <option value="레시피">레시피</option>
+            <option value="오지완">오.지.완</option>
+          </select>
+          <input
+            value={title}
+            onChange={(e) => setTitle(e.currentTarget.value)}
+            placeholder="제목을 입력해주세요."
+            className="w-full p-2 outline-none border-b text-lg"
+          />
+          <button
+            type="submit"
+            className="w-1/12 px-3 py-2 rounded-xl bg-gray-950 text-white">
+            등록
+          </button>
+        </div>
+        <div className="w-full h-[850px] mx-auto"> 
           <TextEditor
             content={content}
             setContent={setContent}
           />
         </div>
-        <button
-          type="submit"
-          className="rounded-md bg-green-200 w-48 py-3 mx-auto hover:bg-green-300">
-          게시글 등록
-        </button>
       </form>
     </div>
   )
