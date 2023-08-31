@@ -37,7 +37,15 @@ const MissionDoing = ({ params }: { params: { id: string } }) => {
       return false;
     }
   };
-
+  
+  // const routTo = (obj: any) => {
+  //   if (obj.bigCategory === "글쓰기") {
+  //     window.open(`/community`)
+  //   }
+  //   else {
+  //     window.open(`/product`)
+  //   }
+  // }
   return (
     <>
       {isLoading ? ( // isLoading이 true이면 로딩 표시를 표시합니다.
@@ -47,12 +55,14 @@ const MissionDoing = ({ params }: { params: { id: string } }) => {
           {dailyMission?.map((mission) => {
             return (
               <div
-                className="relative flex flex-col justify-start items-center bg-[#DBF8D9] w-[169px] h-[280px] rounded-2xl gap-4 break-words p-1"
+                className=" py-[40px] relative flex flex-col justify-start items-center bg-[#DBF8D9] w-[169px] h-[280px] rounded-2xl break-words gap-[40px] p-1"
                 key={mission.id}
               >
-                <h1 className="text-center">{mission.title}</h1>
+                <h1 className="text-center font-semibold">{mission.title}</h1>
                 <div>{mission.content}</div>
-                <button className="absolute bottom-1 py-1 px-3 rounded-full border-2 border-[#42723e] text-[#42723e] font-semibold hover:bg-[#42723e] hover:text-white hover:duration-500">
+                <button className="absolute bottom-8 py-1 px-3 rounded-full border-2 border-[#42723e] text-[#42723e] font-semibold hover:bg-[#42723e] hover:text-white hover:duration-500"
+                onClick={() => mission.bigCategory === "글쓰기" ? window.open("/community") : window.open("/product")}
+                >
                   미션하러 가기
                 </button>
               </div>

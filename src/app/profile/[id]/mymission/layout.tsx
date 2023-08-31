@@ -11,7 +11,7 @@ export default function MymissionLayout ({
 {
 
   return (
-    <div className="w-[789px] p-8 flex flex-col items-start gap-6 shrink-0 self-stretch rounded-2xl bg-pink-400">
+    <div className="w-[789px] p-8 flex flex-col items-start gap-6 shrink-0 self-stretch rounded-2xl">
         <h1 className="self-stretch text-gray-900 text-[24px] non-italic font-semibold leading-6">나의 미션</h1>
         <div className="flex gap-10">
         <MyMissionTopBar/>
