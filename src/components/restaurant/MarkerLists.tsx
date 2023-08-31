@@ -16,7 +16,7 @@ interface MarkList {
 type LikeType = Database["public"]["Tables"]["like_restaurant"]["Row"];
 type NewLikeType = Database["public"]["Tables"]["like_restaurant"]["Insert"];
 
-const MarkerLists = ({ markerList }) => {
+const MarkerLists = ({ markerList }: any) => {
   const [markedList, setMarkedList] = useState<MarkList[]>([]);
   const [user, setUser] = useState<any>(null);
   const [markedByUser, setMarkedByUser] = useState<any[]>([]);
@@ -68,6 +68,7 @@ const MarkerLists = ({ markerList }) => {
     category: string,
     name: string,
     address: string,
+    url: string,
   ) => {
     if (user) {
       const { data: userMarkList } = await supabase
@@ -93,6 +94,7 @@ const MarkerLists = ({ markerList }) => {
             restaurant_address: address,
             restaurant_name: name,
             user_id: user.id,
+            restaurant_map: url,
           });
         alert("북마크 되었습니다.");
       }
@@ -102,9 +104,8 @@ const MarkerLists = ({ markerList }) => {
     }
   };
 
-  const shareBtn = async (place) => {
-    const { Kakao } = window;
-    Kakao.Share.sendDefault({
+  const shareBtn = (place: any) => {
+    window.kakao.Share.sendDefault({
       objectType: "location",
       address: place.address_name,
       addressTitle: place.place_name,
@@ -112,7 +113,7 @@ const MarkerLists = ({ markerList }) => {
         title: place.place_name,
         description: place.place_url,
         imageUrl:
-          "http://k.kakaocdn.net/dn/bSbH9w/btqgegaEDfW/vD9KKV0hEintg6bZT4v4WK/kakaolink40_original.png",
+          "https://media.istockphoto.com/id/485504378/photo/city-map-3d-rendering-image.webp?b=1&s=612x612&w=0&k=20&c=Se3HW4VNvbDeun0LnTbtpcjrmWoYg070rCPoRQAWM6Y=",
         link: {
           webUrl: "http:localhost:3000",
           mobileWebUrl: "http:localhost:3000",
@@ -136,32 +137,16 @@ const MarkerLists = ({ markerList }) => {
   }, []);
 
   return (
-    <div style={{ height: "71vh", overflow: "scroll" }}>
+    <div className="overflow-scroll h-[32rem]">
+      {/* display:flex; justify-content: center; */}
       <ul>
         {/* markerList 정보를 사용하여 리스트를 렌더링합니다 */}
         {markerList.map((place: any, index: number) => (
-          <div
-            key={index}
-            style={{
-              border: "1px solid gray",
-              width: "100%",
-              borderRadius: "7px",
-              padding: "10px",
-            }}
-          >
-            <div
-              style={{
-                width: "56px",
-                height: "56px",
-                border: "1px solid gray",
-                borderRadius: "100px",
-                float: "left",
-                margin: "10px",
-              }}
-            ></div>
+          <div key={index} className="border text-sm p-2 rounded-lg mb-3 py-4">
+            <div className="w-12 h-12 border rounded-full float-left m-2.5 bg-slate-300"></div>
             <div>
-              <p>{place.category_name}</p>
-              <p>{place.place_name}</p>
+              {/* <p>{place.category_name}</p> */}
+              <p className="font-bold">{place.place_name}</p>
               <p>{place.address_name}</p>
               {/* <p>📌 {bookmarkHandler(place.place_name)}</p> */}
               <button
@@ -171,6 +156,7 @@ const MarkerLists = ({ markerList }) => {
                     place.category_name,
                     place.place_name,
                     place.address_name,
+                    place.place_url,
                   );
                   fetchMarkList();
                 }}

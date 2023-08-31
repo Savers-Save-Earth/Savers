@@ -29,7 +29,7 @@ const Header = () => {
     const {
       data: { user },
     } = await supabase.auth.getUser();
-
+    console.log({ getUser: user });
     if (!user) {
       setUser(null);
     } else {
@@ -38,8 +38,21 @@ const Header = () => {
     }
   };
 
+  // onAuthStateChanged
+  // supabase
   useEffect(() => {
-    getUser();
+    console.log("Header가 마운트됐다.");
+    // onAuthStateChange는 실제로 supabase에 회원가입, 로그인, 로그아웃의 변경을 계속 주시하고 있는 놈
+    supabase.auth.onAuthStateChange((event, session) => {
+      console.log("onAuthStateChanged: ", event, session);
+      if (!session?.user) {
+        setUser(null);
+      } else {
+        setUser(session.user);
+        getUserNickname(session.user.id);
+      }
+    });
+    // getUser();
     const handleScroll = () => {
       setScrollY(window.scrollY);
     };
@@ -130,8 +143,7 @@ const Header = () => {
                   "border-0 py-1 px-3 focus:outline-none rounded text-base",
                   scrollY < 3000 ? "text-white" : "text-gray-900",
                 )}
-              >
-                {user ? "로그아웃" : "로그인"}
+              >                {user ? "로그아웃" : "로그인"}
               </button>
               {user ? (
                 <button
