@@ -31,7 +31,8 @@ const DailyMission = () => {
 
   const missionHandler = () => {
     if (!user) {
-      console.log("로그인 후 이용해주세요.");
+      alert("로그인 후 이용해주세요.");
+      router.push(`/login`);
     } else {
       router.push(`/profile/${user[0]?.nickname}/mymission/missiondoing`);
     }
