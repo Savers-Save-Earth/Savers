@@ -11,18 +11,22 @@ const MyMissionTopBar = () => {
 	// const searchId = params as string
 	const searchId = decodedParams as string
 	return (
-		<>
-		<button className="bg-blue-500"
+		<div className="flex items-start gap-8 self-stretch">
+		<div className="flex flex-col items-start py-[6.5px] gap-[13px] self-stretch">
+		<button className="btn-profile-topbar"
 		onClick={() => router.push(`/profile/${searchId}/mymission/missiondoing`)}
 	>
 		진행중인 미션
 	</button>
-	<button className="bg-blue-500"
+	</div>
+	<div className="flex flex-col items-start py-[6.5px] gap-[13px] self-stretch">
+	<button className="btn-profile-topbar"
 		onClick={() => router.push(`/profile/${searchId}/mymission/missiondone`)}
 	>
 		완료한 미션
 	</button>
-	</>
+	</div>
+	</div>
 	)
 }
 export default MyMissionTopBar
