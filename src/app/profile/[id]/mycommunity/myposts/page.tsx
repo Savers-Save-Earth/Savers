@@ -60,7 +60,6 @@ const MyPosts = ({ params }: { params: { id: string } }) => {
   const handleLoadMore = () => {
     setLoadCount((prev) => prev + loadBoundaryValue);
   };
-
   return (
     <div className="space-y-4">
       <form className="flex items-center gap-2 self-stretch px-[2px] py-[16px] rounded-lg bg-gray-50">
