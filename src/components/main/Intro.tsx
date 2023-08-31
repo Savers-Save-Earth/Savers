@@ -107,7 +107,7 @@ const Intro = () => {
               20,
               (scrollY - 2000) / 15,
             )}px))`,
-            display: scrollY > 3600 ? "none" : "block",
+            display: scrollY > 3400 ? "none" : "block",
           }}
         >
           자연은 결코 배신하지 않는다.
