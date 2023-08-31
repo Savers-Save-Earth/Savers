@@ -49,8 +49,9 @@ const PwLogin: React.FC = () => {
 
   return (
     <>
-      <svg>
+      <div className="flex flex-col items-center gap-16 self-stretch">
         <svg
+          pb-16
           xmlns="http://www.w3.org/2000/svg"
           width="142"
           height="24"
@@ -110,10 +111,10 @@ const PwLogin: React.FC = () => {
             </linearGradient>
           </defs>
         </svg>
-      </svg>
-      <div className="pt-20">
+      </div>
+      <div>
         <form onSubmit={handleSubmit(loginButtonHandler)}>
-          <div className="pt-20 flex flex-col items-center gap-16 self-stretch">
+          <div className="pt-16 flex flex-col items-center gap-4 self-stretch">
             <input
               type="email"
               placeholder="메일주소를 입력하세요"
@@ -149,6 +150,20 @@ const PwLogin: React.FC = () => {
               className="flex w-80 h-12 p-4 justify-center items-center border rounded-xl bg-gray-900 text-white hover:bg-gray-700"
             >
               로그인
+            </button>
+
+            <button
+              onClick={() => {
+                router.push("/signup");
+              }}
+              className="color: var(--gray-500, #667085);
+              font-family: Pretendard;
+              font-size: 14px;
+              font-style: normal;
+              font-weight: 400;
+              line-height: 100%; /* 14px */"
+            >
+              이메일로 가입
             </button>
           </div>
         </form>
