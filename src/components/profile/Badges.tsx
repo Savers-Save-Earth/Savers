@@ -62,11 +62,11 @@ const Badges = () => {
 
   const shareBadge = badges.find((item) => item.badge_title === "share");
   const threeShareBadge =
-    badges.filter((item) => item.badge_title === "share").length >= 3;
+    badges.filter((item) => item.badge_title === "share").length >= 30;
 
   const likeBadge = badges.find((item) => item.badge_title === "like");
   const threeLikeBadge =
-    badges.filter((item) => item.badge_title === "like").length >= 3;
+    badges.filter((item) => item.badge_title === "like").length >= 30;
 
   ///===================👇동준작업👇=========================================================
   /*
@@ -78,9 +78,9 @@ const Badges = () => {
   //  const bronzeTrophy
   const firstMission = badgesByMissionCount >= 1;
   //아래 뱃지 얻는 조건은 추후에 수정해야 함.
-  const bronzeTrophy = badgesByMissionCount >= 1;
-  const silverTrophy = badgesByMissionCount >= 2;
-  const goldTrophy = badgesByMissionCount >= 3;
+  const bronzeTrophy = badgesByMissionCount >= 10;
+  const silverTrophy = badgesByMissionCount >= 20;
+  const goldTrophy = badgesByMissionCount >= 30;
   ///===================👆동준작업👆=========================================================
   useEffect(() => {
     fetchUser();
@@ -91,7 +91,7 @@ const Badges = () => {
     <div className="flex flex-col w-[317.5px] items-start gap-[30px] ">
       <div className="flex justify-between items-start self-stretch">
         <div className="flex flex-col items-center gap-2">
-          {bronzeTrophy ? (
+          {badges ? (
             <>
               <img
                 className="badge-image"
@@ -114,7 +114,7 @@ const Badges = () => {
           )}
         </div>
         <div className="flex flex-col items-center gap-2">
-          {silverTrophy ? (
+          {shareBadge ? (
             <>
               <img
                 className="badge-image"
@@ -137,7 +137,7 @@ const Badges = () => {
           )}
         </div>
         <div className="flex flex-col items-center gap-2">
-          {goldTrophy ? (
+          {threeShareBadge ? (
             <>
               <img
                 className="badge-image"
@@ -162,7 +162,7 @@ const Badges = () => {
       </div>
       <div className="flex justify-between items-start self-stretch">
         <div className="flex flex-col items-center gap-2">
-          {bronzeTrophy ? (
+          {likeBadge ? (
             <>
               <img
                 className="badge-image"
@@ -185,7 +185,7 @@ const Badges = () => {
           )}
         </div>
         <div className="flex flex-col items-center gap-2">
-          {silverTrophy ? (
+          {threeLikeBadge ? (
             <>
               <img
                 className="badge-image"
@@ -208,7 +208,7 @@ const Badges = () => {
           )}
         </div>
         <div className="flex flex-col items-center gap-2">
-          {goldTrophy ? (
+          {firstMission ? (
             <>
               <img
                 className="badge-image"
