@@ -105,7 +105,7 @@ const MarkerLists = ({ markerList }: any) => {
   };
 
   const shareBtn = (place: any) => {
-    window.kakao.Share.sendDefault({
+    window.Kakao.Share.sendDefault({
       objectType: "location",
       address: place.address_name,
       addressTitle: place.place_name,
