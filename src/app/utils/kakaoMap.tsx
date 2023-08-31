@@ -25,6 +25,7 @@ const KakaoMap = () => {
   const [mapCenter, setMapCenter] = useState({ x: 127.1086228, y: 37.4012191 });
   const [currentCategory, setCurrentCategory] = useState(""); // 기본값으로 "전체" 카테고리 설정
   const [markerList, setMarkerList] = useState([]); // 마커 리스트 상태 추가
+
   useEffect(() => {
     if (window.kakao) {
       window.kakao.maps.load(() => {
@@ -132,39 +133,70 @@ const KakaoMap = () => {
               map: map,
             });
 
-            var iwContent = `<div style= "padding: 5px; width: 250px;">
-            
-        <h1 class="infoWindow-name" style="font-weight: bold">${place.place_name}</h1>
-        <p class="infoWindow-address" style="font-size: 13px; color: #1f1f1f">${place.address_name}</p>
-        <p class="infoWindow-road-address" style="font-size: 13px; color: #1f1f1f">(지번)${place.road_address_name}</p>
-        <p class="infoWindow-phone"style="font-size: 13px; color: #1f1f1f" >${place.phone}</p>
-        <a href=${place.place_url} " target="_blank"><button style="background-color:#5FD100; color:white; font-size: 13px; padding:3px; width: 240px">상세보기</button></a>
-        </div>`; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+            //     var iwContent = `<div style= "padding: 8px; width: 250px; border: 1px solid black; border-radius: 25px;">
+            // <h1 class="infoWindow-name" style="font-weight: bold">${place.place_name}</h1>
+            // <p class="infoWindow-address" style="font-size: 13px; color: #1f1f1f">${place.address_name}</p>
+            // <p class="infoWindow-road-address" style="font-size: 13px; color: #1f1f1f">(지번)${place.road_address_name}</p>
+            // <p class="infoWindow-phone"style="font-size: 13px; color: #1f1f1f" >${place.phone}</p>
+            // <a href=${place.place_url} " target="_blank"><button style="border-radius: 15px; border: 1px solid black;  background-color:rgb(249 250 251); color:rgb(107 114 128); font-size: 13px; padding:3px; width: 90px;">상세보기</button></a>
+            // </div>`;
 
-            var iwRemoveable = true;
+            //     var iwRemoveable = true;
 
-            // 인포윈도우를 생성합니다
-            var infowindow = new kakao.maps.InfoWindow({
-              content: iwContent,
-              removable: iwRemoveable,
+            //     // 인포윈도우를 생성합니다
+            //     var infowindow = new kakao.maps.InfoWindow({
+            //       content: iwContent,
+            //       removable: iwRemoveable,
+            //     });
+
+            //     window.kakao.maps.event.addListener(marker, "click", function () {
+            //       // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
+            //       infowindow.open(map, marker);
+            //     });
+
+            //     // 마커에 마우스아웃 이벤트: map을 누르면 실행
+            //     window.kakao.maps.event.addListener(map, "click", function () {
+            //       // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
+            //       infowindow.close();
+            //     });
+            var content = document.createElement("div");
+
+            // 커스텀 오버레이 엘리먼트를 만들고, 컨텐츠를 추가합니다
+            var info = document.createElement("div");
+            // info.appendChild(document.createTextNode(pos.title));
+            info.className = "overlay";
+            info.innerHTML = `<div style= "background-color:white; padding: 10px; padding-left:15px; width: 250px; border-radius: 20px;">
+            <h1 class="infoWindow-name" style="font-weight: bold">${place.place_name}</h1>
+             <p class="infoWindow-address" style="font-size: 13px; color: rgb(148 163 184)">${place.address_name}</p>
+             <p class="infoWindow-road-address" style="font-size: 13px; color: rgb(148 163 184)">(지번)${place.road_address_name}</p>
+             <p class="infoWindow-phone"style="font-size: 13px; color: rgb(148 163 184)" >${place.phone}</p>
+             <a href=${place.place_url} " target="_blank"><button style="margin-left: 60px; auto; border-radius: 15px;  background-color:rgb(249 250 251); color:rgb(100 116 139); font-size: 13px; padding:3px; width: 90px;">상세보기</button></a>
+             </div>`;
+            content.appendChild(info);
+
+            var closeBtn = document.createElement("button");
+            closeBtn.innerHTML = `<p style="margin-top:5px; margin-left: 105px; padding-top:2px; font-weight:bold; background-color: white;height:30px; width:30px; border-radius: 30px ">X</p>`;
+            // 닫기 이벤트 추가
+            closeBtn.onclick = function () {
+              overlay.setMap(null);
+            };
+
+            content.appendChild(closeBtn);
+
+            var overlay = new window.kakao.maps.CustomOverlay({
+              content: content,
+              position: marker.getPosition(),
             });
 
+            // 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
             window.kakao.maps.event.addListener(marker, "click", function () {
-              // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
-              infowindow.open(map, marker);
-            });
-
-            // 마커에 마우스아웃 이벤트: map을 누르면 실행
-            window.kakao.maps.event.addListener(map, "click", function () {
-              // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
-              infowindow.close();
+              overlay.setMap(map);
             });
 
             markers.push(marker);
             newMarkerList.push(place);
           });
           setMarkerList(newMarkerList);
-          console.log("MArkerlist-->", newMarkerList);
         };
 
         const removeMarker = () => {

@@ -178,8 +178,7 @@ const MarkerLists = ({ markerList }: any) => {
               />
               <button
                 onClick={() => window.open(`${place.place_url}`)}
-                className="bg-gray-50 ml-2 text-[14px] text-gray-500 rounded-2xl cursor-pointer"
-                style={{ padding: "8px 10px" }}
+                className="px-[8px] py-[10px] bg-gray-50 ml-2 text-[14px] text-gray-500 rounded-2xl cursor-pointer"
               >
                 상세보기
               </button>
