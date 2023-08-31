@@ -8,12 +8,12 @@ import MarkerLists from "@/components/restaurant/MarkerLists";
 
 const Restaurant = () => {
   // const { Kakao } = window;
+  //window오류로 useEffect안으로 이동
   useEffect(() => {
-    window.Kakao.init(process.env.NEXT_PUBLIC_KAKAOMAP_KEY);
-
-    // if (!Kakao.isInitialized()) {
-    //   window.Kakao.init(process.env.NEXT_PUBLIC_KAKAOMAP_KEY);
-    // }
+    const { Kakao } = window;
+    if (!Kakao.isInitialized()) {
+      window.Kakao.init(process.env.NEXT_PUBLIC_KAKAOMAP_KEY);
+    }
   }, []);
   return (
     <>
