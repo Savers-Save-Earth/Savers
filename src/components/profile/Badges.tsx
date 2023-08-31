@@ -90,41 +90,93 @@ const Badges = () => {
     // <div className="grid grid-cols-3 gap-4 w-full h-full">
     <div className="flex flex-col w-[317.5px] items-start gap-[30px] ">
       <div className="flex justify-between items-start self-stretch">
-        <div className="bg-gray-200 p-4">
-          [새싹 세이버] 회원가입시 받는 배지
-        </div>
-        <div className="bg-gray-200 p-4">
-          {shareBadge
-            ? "[나눔꾼] 물건 공유하기 배지"
-            : "아직 공유하기 배지를 획득하지 못했습니다."}
-        </div>
-        <div className="bg-gray-200 p-4">
-          {threeShareBadge
-            ? "[나눔꾼3] 물건 세번 공유하기 배지"
-            : "아직 세번 공유하기 배지를 획득하지 못했습니다."}
-        </div>
-      </div>
-
-      <div className="flex justify-between items-start self-stretch">
-        <div className="bg-gray-200 p-4">
-          {likeBadge
-            ? "[사랑꾼] 좋아요 1회 배지"
-            : "좋아요 배지를 획득하지 못했습니다."}
-        </div>
-
-        <div className="bg-gray-200 p-4">
-          {threeLikeBadge
-            ? "[사랑꾼] 좋아요 3회 배지"
-            : "좋아요 3회 배지를 획득하지 못했습니다."}
-        </div>
-        <div className="flex flex-col items-center gap-2">
-          {firstMission ? (
+        <div className="border-2 border-solid border-black flex flex-col items-center gap-2">
+          {bronzeTrophy ? (
             <>
               <img
                 className="w-[88px] h-[88px]"
                 src="https://img.myloview.com/posters/cute-earth-character-green-and-blue-planet-save-earth-day-funny-emoticon-in-flat-style-cartoon-emoji-vector-illustration-400-204245384.jpg"
               />
-              <p>[첫 미션 클리어]</p>
+              <p className="text-gray-500 text-[16px] font-normal leading-4 ">
+                [새싹 세이버]
+              </p>
+            </>
+          ) : (
+            <p>"아직 [새싹 세이버] 배지를 획득하지 못했습니다."</p>
+          )}
+        </div>
+        <div className="border-2 border-solid border-black flex flex-col items-center gap-2">
+          {silverTrophy ? (
+            <>
+              <img
+                className="w-[88px] h-[88px]"
+                src="https://img.myloview.com/posters/cute-earth-character-green-and-blue-planet-save-earth-day-funny-emoticon-in-flat-style-cartoon-emoji-vector-illustration-400-204245384.jpg"
+              />
+              <p className="text-gray-500 text-[16px] font-normal leading-4 ">
+                [나눔꾼]
+              </p>
+            </>
+          ) : (
+            <p>"아직 [나눔꾼] 배지를 획득하지 못했습니다."</p>
+          )}
+        </div>
+        <div className="border-2 border-solid border-black flex flex-col items-center gap-2">
+          {goldTrophy ? (
+            <>
+              <img
+                className="w-[88px] h-[88px]"
+                src="https://img.myloview.com/posters/cute-earth-character-green-and-blue-planet-save-earth-day-funny-emoticon-in-flat-style-cartoon-emoji-vector-illustration-400-204245384.jpg"
+              />
+              <p className="text-gray-500 text-[16px] font-normal leading-4">
+                [공.유]
+              </p>
+            </>
+          ) : (
+            <p>"아직 [공.유] 배지를 획득하지 못했습니다."</p>
+          )}
+        </div>
+      </div>
+      <div className="flex justify-between items-start self-stretch">
+        <div className="border-2 border-solid border-black flex flex-col items-center gap-2">
+          {bronzeTrophy ? (
+            <>
+              <img
+                className="w-[88px] h-[88px]"
+                src="https://img.myloview.com/posters/cute-earth-character-green-and-blue-planet-save-earth-day-funny-emoticon-in-flat-style-cartoon-emoji-vector-illustration-400-204245384.jpg"
+              />
+              <p className="text-gray-500 text-[16px] font-normal leading-4 ">
+                [사랑꾼]
+              </p>
+            </>
+          ) : (
+            <p>"아직 [사랑꾼] 배지를 획득하지 못했습니다."</p>
+          )}
+        </div>
+        <div className="border-2 border-solid border-black flex flex-col items-center gap-2">
+          {silverTrophy ? (
+            <>
+              <img
+                className="w-[88px] h-[88px]"
+                src="https://img.myloview.com/posters/cute-earth-character-green-and-blue-planet-save-earth-day-funny-emoticon-in-flat-style-cartoon-emoji-vector-illustration-400-204245384.jpg"
+              />
+              <p className="text-gray-500 text-[16px] font-normal leading-4 ">
+                [찐 사랑꾼]
+              </p>
+            </>
+          ) : (
+            <p>"아직 [찐 사랑꾼] 배지를 획득하지 못했습니다."</p>
+          )}
+        </div>
+        <div className="border-2 border-solid border-black flex flex-col items-center gap-2">
+          {goldTrophy ? (
+            <>
+              <img
+                className="w-[88px] h-[88px]"
+                src="https://img.myloview.com/posters/cute-earth-character-green-and-blue-planet-save-earth-day-funny-emoticon-in-flat-style-cartoon-emoji-vector-illustration-400-204245384.jpg"
+              />
+              <p className="text-gray-500 text-[16px] font-normal leading-4">
+                [첫 미션 클리어]
+              </p>
             </>
           ) : (
             <p>"아직 [첫 미션 클리어] 배지를 획득하지 못했습니다."</p>
@@ -147,7 +199,6 @@ const Badges = () => {
             <p>"아직 [미션 헌터] 배지를 획득하지 못했습니다."</p>
           )}
         </div>
-
         <div className="border-2 border-solid border-black flex flex-col items-center gap-2">
           {silverTrophy ? (
             <>

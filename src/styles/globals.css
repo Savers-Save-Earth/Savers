@@ -159,7 +159,13 @@ body {
 
 @layer components {
   .btn-profile-topbar {
-    @apply overflow-hidden text-gray-900 text-ellipsis text-[14px] font-bold leading-[14px] hover:underline;
+    @apply overflow-hidden text-gray-300 text-ellipsis text-[14px] font-bold leading-[14px] hover:underline focus:text-gray-900;
+  }
+}
+
+@layer components {
+  .badge-ctn-profile {
+    @apply border-2 border-solid border-black flex flex-col items-center gap-2;
   }
 }
 

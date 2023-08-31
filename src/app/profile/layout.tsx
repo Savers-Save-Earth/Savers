@@ -11,10 +11,10 @@ export default async function profileLayout({
   return (
     <div className="flex h-full">
       <div className="mt-20 w-[1200px] h-[3000px] flex items-start gap-x-8 bg-lightgreen bg-gray-100">
-        <div className="w-1/4 h-full border-dashed border-2 border-indigo-600 flex flex-col">
+        <div className="w-[379px] h-full flex flex-col">
           <SideBar />
         </div>
-        <section className="w-3/4 border-dashed border-2 border-red-600 flex flex-col">
+        <section className="w-[789px] flex flex-col shrink-0 self-stretch p-8 bg-white">
           {children}
         </section>
       </div>
