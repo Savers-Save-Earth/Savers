@@ -199,84 +199,94 @@ const ProductComponent = () => {
         />
       </form>
       <div className="mt-8 grid grid-cols-4 gap-4">
-        {sortedData
-          .filter(
-            (item) =>
-              item.name.includes(search.trim()) ||
-              item.company.includes(search.trim()),
-          )
-          .filter((item) => item.category.includes(category))
-          .map((item) => (
-            <div key={item.id} className=" flex-1 min-w-0 max-w-md mb-9">
-              <div className="relative">
-                <img
-                  src={item.img}
-                  className="w-full h-auto rounded-md point"
-                  alt={item.name}
-                  onClick={() => router.push(`/product/${item.id}`)}
-                />
-                {likedByUser.find(
-                  (likedItem) => likedItem.product_uid === item.id,
-                ) ? (
-                  <button
-                    onClick={() => likeHandler(item.id)}
-                    className="absolute bottom-2 right-2"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
+        {sortedData.filter(
+          (item) =>
+            item.name.includes(search.trim()) ||
+            item.company.includes(search.trim()),
+        ).length > 0 ? (
+          sortedData
+            .filter(
+              (item) =>
+                item.name.includes(search.trim()) ||
+                item.company.includes(search.trim()),
+            )
+            .filter((item) => item.category.includes(category))
+            .map((item) => (
+              <div key={item.id} className=" flex-1 min-w-0 max-w-md mb-9">
+                <div className="relative">
+                  <img
+                    src={item.img}
+                    className="w-full h-auto rounded-md point"
+                    alt={item.name}
+                    onClick={() => router.push(`/product/${item.id}`)}
+                  />
+                  {likedByUser.find(
+                    (likedItem) => likedItem.product_uid === item.id,
+                  ) ? (
+                    <button
+                      onClick={() => likeHandler(item.id)}
+                      className="absolute bottom-2 right-2"
                     >
-                      <path
-                        d="M16.6875 2.625C14.8041 2.625 13.1325 3.36844 12 4.64625C10.8675 3.36844 9.19594 2.625 7.3125 2.625C5.67208 2.62698 4.09942 3.27952 2.93947 4.43947C1.77952 5.59942 1.12698 7.17208 1.125 8.8125C1.125 15.5944 11.0447 21.0131 11.4666 21.2409C11.6305 21.3292 11.8138 21.3754 12 21.3754C12.1862 21.3754 12.3695 21.3292 12.5334 21.2409C12.9553 21.0131 22.875 15.5944 22.875 8.8125C22.873 7.17208 22.2205 5.59942 21.0605 4.43947C19.9006 3.27952 18.3279 2.62698 16.6875 2.625Z"
-                        fill="#5FD100"
-                      />
-                    </svg>
-                    <p className="text-[12px]" style={{ color: "#5FD100" }}>
-                      {item.like_count}
-                    </p>
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => likeHandler(item.id)}
-                    className="absolute bottom-2 right-2"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                      >
+                        <path
+                          d="M16.6875 2.625C14.8041 2.625 13.1325 3.36844 12 4.64625C10.8675 3.36844 9.19594 2.625 7.3125 2.625C5.67208 2.62698 4.09942 3.27952 2.93947 4.43947C1.77952 5.59942 1.12698 7.17208 1.125 8.8125C1.125 15.5944 11.0447 21.0131 11.4666 21.2409C11.6305 21.3292 11.8138 21.3754 12 21.3754C12.1862 21.3754 12.3695 21.3292 12.5334 21.2409C12.9553 21.0131 22.875 15.5944 22.875 8.8125C22.873 7.17208 22.2205 5.59942 21.0605 4.43947C19.9006 3.27952 18.3279 2.62698 16.6875 2.625Z"
+                          fill="#5FD100"
+                        />
+                      </svg>
+                      <p className="text-[12px]" style={{ color: "#5FD100" }}>
+                        {item.like_count}
+                      </p>
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => likeHandler(item.id)}
+                      className="absolute bottom-2 right-2"
                     >
-                      <path
-                        d="M16.6875 2.625C14.8041 2.625 13.1325 3.36844 12 4.64625C10.8675 3.36844 9.19594 2.625 7.3125 2.625C5.67208 2.62698 4.09942 3.27952 2.93947 4.43947C1.77952 5.59942 1.12698 7.17208 1.125 8.8125C1.125 15.5944 11.0447 21.0131 11.4666 21.2409C11.6305 21.3292 11.8138 21.3754 12 21.3754C12.1862 21.3754 12.3695 21.3292 12.5334 21.2409C12.9553 21.0131 22.875 15.5944 22.875 8.8125C22.873 7.17208 22.2205 5.59942 21.0605 4.43947C19.9006 3.27952 18.3279 2.62698 16.6875 2.625ZM16.1728 15.9713C14.8671 17.0792 13.4714 18.0764 12 18.9525C10.5286 18.0764 9.13287 17.0792 7.82719 15.9713C5.79562 14.2284 3.375 11.5706 3.375 8.8125C3.375 7.76821 3.78984 6.76669 4.52827 6.02827C5.26669 5.28984 6.26821 4.875 7.3125 4.875C8.98125 4.875 10.3781 5.75625 10.9584 7.17563C11.0429 7.38254 11.1871 7.55961 11.3726 7.68425C11.5581 7.80889 11.7765 7.87545 12 7.87545C12.2235 7.87545 12.4419 7.80889 12.6274 7.68425C12.8129 7.55961 12.9571 7.38254 13.0416 7.17563C13.6219 5.75625 15.0188 4.875 16.6875 4.875C17.7318 4.875 18.7333 5.28984 19.4717 6.02827C20.2102 6.76669 20.625 7.76821 20.625 8.8125C20.625 11.5706 18.2044 14.2284 16.1728 15.9713Z"
-                        fill="#D0D5DD"
-                      />
-                    </svg>
-                    <p className="text-[12px]" style={{ color: "#D0D5DD" }}>
-                      {item.like_count}
-                    </p>
-                  </button>
-                )}
-              </div>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                      >
+                        <path
+                          d="M16.6875 2.625C14.8041 2.625 13.1325 3.36844 12 4.64625C10.8675 3.36844 9.19594 2.625 7.3125 2.625C5.67208 2.62698 4.09942 3.27952 2.93947 4.43947C1.77952 5.59942 1.12698 7.17208 1.125 8.8125C1.125 15.5944 11.0447 21.0131 11.4666 21.2409C11.6305 21.3292 11.8138 21.3754 12 21.3754C12.1862 21.3754 12.3695 21.3292 12.5334 21.2409C12.9553 21.0131 22.875 15.5944 22.875 8.8125C22.873 7.17208 22.2205 5.59942 21.0605 4.43947C19.9006 3.27952 18.3279 2.62698 16.6875 2.625ZM16.1728 15.9713C14.8671 17.0792 13.4714 18.0764 12 18.9525C10.5286 18.0764 9.13287 17.0792 7.82719 15.9713C5.79562 14.2284 3.375 11.5706 3.375 8.8125C3.375 7.76821 3.78984 6.76669 4.52827 6.02827C5.26669 5.28984 6.26821 4.875 7.3125 4.875C8.98125 4.875 10.3781 5.75625 10.9584 7.17563C11.0429 7.38254 11.1871 7.55961 11.3726 7.68425C11.5581 7.80889 11.7765 7.87545 12 7.87545C12.2235 7.87545 12.4419 7.80889 12.6274 7.68425C12.8129 7.55961 12.9571 7.38254 13.0416 7.17563C13.6219 5.75625 15.0188 4.875 16.6875 4.875C17.7318 4.875 18.7333 5.28984 19.4717 6.02827C20.2102 6.76669 20.625 7.76821 20.625 8.8125C20.625 11.5706 18.2044 14.2284 16.1728 15.9713Z"
+                          fill="#D0D5DD"
+                        />
+                      </svg>
+                      <p className="text-[12px]" style={{ color: "#D0D5DD" }}>
+                        {item.like_count}
+                      </p>
+                    </button>
+                  )}
+                </div>
 
-              <p className="text-gray-300 text-sm mt-2">{item.company}</p>
-              <p className="text-sm text-gray-500">{item.name}</p>
-              {item.sales ? (
-                <span
-                  className=" font-bold mr-2 text-[16px]"
-                  style={{ color: "#5FD100" }}
-                >
-                  {item.sales}%
+                <p className="text-gray-300 text-sm mt-2">{item.company}</p>
+                <p className="text-sm text-gray-500">{item.name}</p>
+                {item.sales ? (
+                  <span
+                    className=" font-bold mr-2 text-[16px]"
+                    style={{ color: "#5FD100" }}
+                  >
+                    {item.sales}%
+                  </span>
+                ) : null}
+                <span className="font-bold  text-[16px]">
+                  {item.price.toLocaleString("ko-KR")}원
                 </span>
-              ) : null}
-              <span className="font-bold  text-[16px]">
-                {item.price.toLocaleString("ko-KR")}원
-              </span>
-            </div>
-          ))}
+              </div>
+            ))
+        ) : (
+          <div className="h-[500px]">
+            <h1>검색 결과가 존재하지 않습니다.</h1>
+          </div>
+        )}
       </div>
     </>
   );
