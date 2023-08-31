@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
-import { deletePost, getPostDetail, updatePost } from "@/api/community/post";
+import { deletePost, updatePost } from "@/api/community/post";
 import {
   cancelLikePost,
   createLikePost,
@@ -18,22 +18,15 @@ import ButtonContainer from "./ButtonContainer";
 import copy from "clipboard-copy";
 import { useSetRecoilState } from "recoil";
 import { editPostAtom } from "@/libs/atoms";
+import { DetailPostProps } from "@/types/types";
 
 type LikesType = Database["public"]["Tables"]["like_post"]["Insert"];
-type PostType = Database["public"]["Tables"]["community"]["Row"];
 
-const DetailPost = () => {
+const DetailPost = ({ postDetail, postUid }: DetailPostProps) => {
   const router = useRouter();
   const currentUser = useAuth();
   const [isLiked, setIsLiked] = useState<LikesType | null>(null);
   const [isToggled, setIsToggled] = useState(false);
-
-  const { postUid } = useParams() as { postUid: string };
-  const { data: postDetail } = useQuery<PostType>(
-    ["postDetail", postUid],
-    () => getPostDetail(postUid),
-    { cacheTime: 6000 },
-  );
 
   const { data: likesNumber } = useQuery(["likesNumber"], () =>
     getLikesNum(postUid),
@@ -63,7 +56,7 @@ const DetailPost = () => {
   // 수정, 삭제 드랍버튼 토글
   const handleToggle = () => {
     setIsToggled((prev) => !prev);
-  }
+  };
 
   // 게시글 삭제 mutate
   const queryClient = useQueryClient();
@@ -89,8 +82,8 @@ const DetailPost = () => {
 
   // 수정 버튼 누를 때 수정 페이지로 이동
   const handleEditClick = () => {
-    setEditPostState({ postDetail, isEditing: true })
-    router.push("/community/edit")
+    setEditPostState({ postDetail, isEditing: true });
+    router.push("/community/edit");
   };
 
   // 게시글 북마크
@@ -146,12 +139,12 @@ const DetailPost = () => {
     const currentUrl = window.location.href;
     copy(currentUrl)
       .then(() => window.alert("링크가 복사되었습니다!"))
-      .catch((err) => window.alert("링크 복사에 실패했습니다. 다시 시도해주세요!"))
-  }
+      .catch((err) => window.alert("링크 복사에 실패했습니다. 다시 시도해주세요!"));
+  };
 
   return (
     <div className="flex flex-col w-full">
-      <button onClick={() => router.back()} className="my-10">
+      <button onClick={() => router.back()} className="mb-10">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -167,7 +160,7 @@ const DetailPost = () => {
           />
         </svg>
       </button>
-      <div className="flex flex-col border-b pb-5">
+      <div className="flex flex-col pb-5">
         <CategoryTag>{postDetail?.category as string}</CategoryTag>
         <div className="mt-4 first-letter:flex items-end justify-between space-x-5 pb-5 border-b">
           <h1 className="text-3xl text-gray-700 font-semibold">
