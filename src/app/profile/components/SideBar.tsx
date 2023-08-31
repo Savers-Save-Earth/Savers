@@ -138,7 +138,6 @@ const SideBar = () => {
       }
     }
   };
-  console.log("호출확인용");
   return (
     <div className=" sticky top-20 flex flex-col items-start gap-16 text-gray-900">
       <h1 className="text-[24px] non-italic font-semibold">마이페이지</h1>
