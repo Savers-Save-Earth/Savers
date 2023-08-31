@@ -36,7 +36,31 @@ const ProductList = () => {
 
   return (
     <div className="items-start gap-16 self-stretch">
-      <h1 className="text-2xl pb-4">인기있는 친환경제품</h1>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <h1 className="text-2xl mb-6">인기있는 친환경제품</h1>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="10"
+          height="16"
+          viewBox="0 0 10 16"
+          fill="none"
+          onClick={() => router.push(`/product`)}
+          className="cursor-pointer"
+        >
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M0.792893 15.7071C0.402369 15.3166 0.402369 14.6834 0.792893 14.2929L7.08579 8L0.792893 1.70711C0.402368 1.31658 0.402368 0.683417 0.792893 0.292893C1.18342 -0.0976315 1.81658 -0.0976315 2.20711 0.292893L9.20711 7.29289C9.59763 7.68342 9.59763 8.31658 9.20711 8.70711L2.20711 15.7071C1.81658 16.0976 1.18342 16.0976 0.792893 15.7071Z"
+            fill="#D0D5DD"
+          />
+        </svg>
+      </div>
       <div>
         <Swiper
           // install Swiper modules

@@ -1,16 +1,17 @@
 "use client";
 import Link from "next/link";
 
-import { useQuery } from "@tanstack/react-query";
+import { useMemo } from "react";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { getPosts } from "@/api/community/post";
-import { getCommentsNum } from "@/api/community/post";
 
 import { usePathname } from "next/navigation";
 
 import { Database } from "@/types/supabase";
 import { removeHtmlTags } from "@/libs/util";
 import Loading from "@/app/loading";
-import { getLikesNum } from "@/api/community/like";
+
+import { ToTalDataType } from "@/types/types";
 
 type PostType = Database["public"]["Tables"]["community"]["Row"];
 type QueryKeyMap = {
@@ -18,9 +19,7 @@ type QueryKeyMap = {
 };
 
 const GetPosts = () => {
-  const POSTS_NUMBER = 10;
   const pathname = usePathname();
-  // 현재 pathname에 따라 쿼리키 설정하는 함수
   const getPathnameQueryKey = (pathname: string) => {
     const queryKeyMap: QueryKeyMap = {
       "/community": ["allPosts"],
@@ -29,10 +28,9 @@ const GetPosts = () => {
       "/community/recipe": ["recipePosts"],
       "/community/ohjiwan": ["ohjiwanPosts"],
     };
-
-    return queryKeyMap[pathname] || ["allPosts"];
+  
+    return queryKeyMap[pathname]
   };
-  // queryKey 변수에 쿼리키 설정함수의 return값 할당
   const queryKey = getPathnameQueryKey(pathname);
 
   const getCategoryName = (pathname: string) => {
@@ -48,29 +46,50 @@ const GetPosts = () => {
   };
 
   const {
-    isLoading,
     data: posts,
-    error,
-  } = useQuery<PostType[]>(queryKey, () => getPosts(pathname), {
-    staleTime: 60000,
-    cacheTime: 300000,
+    isLoading,
+    isError,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage
+  } = useInfiniteQuery<ToTalDataType>({
+    queryKey: queryKey,
+    queryFn: ({ pageParam }) => getPosts(pathname, pageParam),
+    getNextPageParam: (lastPage) => {
+      // 전체 페이지 개수보다 작을 때 다음 페이지로
+      if (lastPage.page < lastPage.total_pages) {
+        return lastPage.page + 1;
+      }
+    }
   });
+  
+  const accumulatePosts = useMemo(() => {
+    return posts?.pages
+      .map((page) => {
+        return page.posts;
+      })
+      .flat();
+      // flat() : 모든 하위 배열 요소를 지정한 깊이까지 재귀적으로 이어붙인 새로운 배열 생성
+  }, [posts]);
+  
+  const handleMoreViewClick = () => {
+    fetchNextPage();
+  }
 
   if (isLoading) return <Loading />;
-  if (error) {
-    console.error("데이터를 불러오는 중에 오류가 발생했습니다:", error);
+  if (isError) {
+    console.error("데이터를 불러오는 중에 오류가 발생했습니다:", isError);
     return "데이터를 불러오는 중에 오류가 발생했습니다.";
   }
   return (
-    <>
+    <section className="flex flex-col mb-20">
       {
-        <div className="flex flex-col mt-16 mb-10 justify-center divide-y-[1px]">
-          <h1 className="text-xl flex my-10">{getCategoryName(pathname)} 글</h1>
-          {Array.isArray(posts) &&
-            posts.map((post: PostType) => (
+        <div className="flex flex-col mb-5 justify-center">
+          <h1 className="text-xl flex mb-8">{getCategoryName(pathname)} 글</h1>
+          {accumulatePosts?.map((post: PostType) => (
               <div
                 key={post.post_uid}
-                className="flex flex-col justify-between max-w-[789px] px-4 py-4"
+                className="border-t last:border-b flex flex-col justify-between max-w-[789px] min-w-[725px] px-4 py-4"
               >
                 <div className="flex flex-col space-y-2">
                   <div>
@@ -108,7 +127,7 @@ const GetPosts = () => {
                               d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z"
                             />
                           </svg>
-                          <span>{getCommentsNum(post.post_uid)}</span>
+                          <span>{post.number_comments}</span>
                         </div>
                         <div className="space-x-1 items-center justify-center flex text-sm text-gray-500">
                           <svg
@@ -125,7 +144,7 @@ const GetPosts = () => {
                               d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"
                             />
                           </svg>
-                          <span>{getLikesNum(post.post_uid)}</span>
+                          <span>{post.number_likes}</span>
                         </div>
                       </div>
                       <span className="text-sm text-gray-400">
@@ -138,7 +157,16 @@ const GetPosts = () => {
             ))}
         </div>
       }
-    </>
+      {hasNextPage ?
+        <button
+          onClick={handleMoreViewClick}
+          className="mx-auto px-4 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-500">
+          더보기
+        </button>
+        :
+        null
+       }
+    </section>
   );
 };
 

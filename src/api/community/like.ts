@@ -22,6 +22,7 @@ export const cancelLikePost = async (cancleLike: newLikePostType) => {
   if (error) return error;
 };
 
+// 좋아요 개수
 export const getLikesNum = async (postUid: string) => {
   const { count } = await supabase
     .from("like_post")

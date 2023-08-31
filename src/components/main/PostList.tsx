@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import supabase from "@/libs/supabase";
 import { Post } from "@/types/types";
 import { useRouter } from "next/navigation";
-import { updateComment } from "@/api/community/comment";
 
 const PostList = () => {
   const [post, setPost] = useState<Post[]>([]);
@@ -15,52 +14,10 @@ const PostList = () => {
   const fetchPost = async () => {
     try {
       const { data } = await supabase.from("community").select();
+      // 북마크 숫자대로 정렬
+      const sortedData = data?.sort((a, b) => b.number_likes - a.number_likes);
 
-      const { data: likeCount } = await supabase.from("like_post").select();
-      if (data) {
-        // 북마크 숫자 세는 로직
-        const updatedData = data.map((item) => ({
-          ...item,
-          like_count: likeCount?.filter((i) => i.post_uid === item.post_uid)
-            .length,
-        }));
-
-        // 북마크 숫자대로 정렬
-        const sortedData = updatedData.sort(
-          (a, b) => b.like_count - a.like_count,
-        );
-
-        setPost(sortedData);
-        console.log(sortedData);
-      }
-
-      const { data: commentData } = await supabase
-        .from("community_comment")
-        .select();
-
-      if (commentData) {
-        // 댓글 숫자 세는 로직
-        const updatedCommentData = commentData.map((item) => ({
-          ...item,
-          comment_count: commentData.filter((i) => i.post_uid === item.post_uid)
-            .length,
-        }));
-
-        setPost((prevPost) =>
-          prevPost.map((postItem) => {
-            const updatedItem = updatedCommentData.find(
-              (commentItem) => commentItem.post_uid === postItem.post_uid,
-            );
-            if (updatedItem) {
-              return {
-                ...postItem,
-                comment_count: updatedItem.comment_count,
-              };
-            }
-            return postItem;
-          }),
-        );
-      }
+      setPost(sortedData!);
     } catch (error) {
       console.error("Error fetching products:", error);
     }
@@ -75,7 +32,31 @@ const PostList = () => {
 
   return (
     <div className="mt-16">
-      <h1 className="text-2xl mb-6">인기있는 글</h1>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <h1 className="text-2xl mb-6">인기있는 글</h1>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="10"
+          height="16"
+          viewBox="0 0 10 16"
+          fill="none"
+          onClick={() => router.push(`/community`)}
+          className="cursor-pointer"
+        >
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M0.792893 15.7071C0.402369 15.3166 0.402369 14.6834 0.792893 14.2929L7.08579 8L0.792893 1.70711C0.402368 1.31658 0.402368 0.683417 0.792893 0.292893C1.18342 -0.0976315 1.81658 -0.0976315 2.20711 0.292893L9.20711 7.29289C9.59763 7.68342 9.59763 8.31658 9.20711 8.70711L2.20711 15.7071C1.81658 16.0976 1.18342 16.0976 0.792893 15.7071Z"
+            fill="#D0D5DD"
+          />
+        </svg>
+      </div>
       {post.slice(0, showCount).map((item) => (
         <div
           key={item.post_uid}
@@ -122,7 +103,7 @@ const PostList = () => {
                 </g>
               </svg>
 
-              <span className="text-sm text-gray-400">{item.like_count}</span>
+              <span className="text-sm text-gray-400">{item.number_likes}</span>
               <svg
                 width="16"
                 height="16"
@@ -141,7 +122,7 @@ const PostList = () => {
               </svg>
 
               <span className="text-sm text-gray-400">
-                {item.comment_count ? item.comment_count : 0}
+                {item.number_comments ? item.number_comments : 0}
               </span>
             </div>
             <span className="mt-2 text-gray-300 font-[14px]">
