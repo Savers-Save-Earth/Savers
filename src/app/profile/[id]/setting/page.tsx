@@ -28,7 +28,7 @@ const ModifyingProgile = () => {
 
     setUser(data);
     setUserInfo(data);
-    console.log(data);
+
   };
   useEffect(() => {
     getUser();
@@ -42,7 +42,6 @@ const ModifyingProgile = () => {
   };
 
   const handleSubmit = async () => {
-    console.log(searchId);
     const { error: updateDataError } = await supabase
       .from("user")
       .update({ nickname: name, email, number, birthday })

@@ -32,7 +32,7 @@ const MissionDoing = ({ params }: { params: { id: string } }) => {
         setDailyMission(dailyMission!);
       }
     } catch (error) {
-      console.log("데이터가져올 때 에러남");
+      console.log("데이터가져올 때 에러", error);
       setIsLoading(false);
       return false;
     }

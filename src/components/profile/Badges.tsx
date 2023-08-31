@@ -25,7 +25,7 @@ const Badges = () => {
   const [badgesByMissionCount, setBadgesByMissionCount] = useState<number>(0);
 
   const fetchBadges = async (user: any) => {
-    console.log(user[0]);
+
     const { data: badgeData } = await supabase
       .from("badge")
       .select()
@@ -37,13 +37,13 @@ const Badges = () => {
   };
   ///===================👇동준작업👇=========================================================
   const fetchBadgesByMission = async (user: any) => {
-    console.log("미션의 유저===>", user[0]);
+
     const { data: badgeData2, count } = await supabase
       .from("missionList")
       .select("*", { count: "exact" })
       .eq("user_uid", user[0]?.uid)
       .eq("doingYn", false);
-    console.log("badgeData2====>", badgeData2);
+
     if (badgeData2 !== null && count !== null) {
       setBadgeByMission(badgeData2);
       setBadgesByMissionCount(count);

@@ -8,12 +8,12 @@ export default function UserComment({ comment }: any) {
   const [commentPost, setCommentPost] = useState<PostType[]>([]);
   useEffect(() => {
     const getPostDetail = async (post_uid: string) => {
-      console.log("post_uid==>", post_uid);
+
       const { data: commentedPost } = await supabase
         .from("community")
         .select("*")
         .eq("post_uid", post_uid);
-      console.log("postTitle==>", commentedPost);
+
       if (commentedPost!.length === 0) {
         setCommentPost([])
       }
@@ -23,7 +23,7 @@ export default function UserComment({ comment }: any) {
     };
     getPostDetail(comment.post_uid);
   }, []);
-  console.log("commentPost===",commentPost)
+
   return (
     <div
       className="flex flex-col items-start p-6 gap-4 self-stretch rounded-2xl bg-white border border-gray-200"
