@@ -7,6 +7,14 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/autoplay";
 
+const bannerList = [
+  { img: "/assets/product/banner1.png" },
+  { img: "/assets/product/banner2.png" },
+  { img: "/assets/product/banner3.png" },
+  { img: "/assets/product/banner4.png" },
+  { img: "/assets/product/banner5.png" },
+];
+
 const Carousel = () => {
   return (
     <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
@@ -22,30 +30,11 @@ const Carousel = () => {
         autoplay={{ delay: 2000 }}
         className="rounded-2xl"
       >
-        <SwiperSlide>
-          <img
-            src={
-              "https://images.unsplash.com/photo-1588514912908-8f5891714f8d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80"
-            }
-            style={{ width: "100%", height: "280px" }}
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src={
-              "https://images.unsplash.com/photo-1577962272294-564f38f71d90?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80"
-            }
-            style={{ width: "100%", height: "280px" }}
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src={
-              "https://images.unsplash.com/photo-1544468266-6a8948003cd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1474&q=80"
-            }
-            style={{ width: "100%", height: "280px" }}
-          />
-        </SwiperSlide>
+        {bannerList.map((item) => (
+          <SwiperSlide>
+            <img src={item.img} style={{ height: "280px" }} />
+          </SwiperSlide>
+        ))}
       </Swiper>
     </div>
   );
