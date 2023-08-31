@@ -23,7 +23,7 @@ const getCurrentCoordinate = async () => {
 
 const KakaoMap = () => {
   const [mapCenter, setMapCenter] = useState({ x: 127.1086228, y: 37.4012191 });
-  const [currentCategory, setCurrentCategory] = useState(""); // 기본값으로 "전체" 카테고리 설정
+  const [currentCategory, setCurrentCategory] = useState("비건"); // 기본값으로 "전체" 카테고리 설정
   const [markerList, setMarkerList] = useState([]); // 마커 리스트 상태 추가
   useEffect(() => {
     if (window.kakao) {
