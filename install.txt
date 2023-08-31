@@ -2,7 +2,7 @@ npm i
 yarn
 
 yarn add @supabase/supabase-js swiper react-hook-form @supabase/auth-helpers-nextjs react-query
-react-kakao-maps-sdk react-calendar
+ react-calendar
 
 yarn add @fortawesome/react-fontawesome @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg-icons @fortawesome/free-regular-svg-icons
-yarn add next-videos next-images encoding
+yarn add next-videos next-images encoding react-kakao-maps-sdk

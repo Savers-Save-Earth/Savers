@@ -2,7 +2,6 @@
 import React, { Suspense, useEffect, useState } from "react";
 import supabase from "@/libs/supabase";
 import { Database } from "@/types/supabase";
-import { useRouter } from "next/navigation";
 import UserPost from "./UserPost";
 
 type CommunityPost = Database["public"]["Tables"]["community"]["Row"];

@@ -89,82 +89,37 @@ const SocialLogin = () => {
 
   return (
     <>
-      <div
-        style={{
-          display: "flex",
-          height: "48px",
-          justifyContent: "center",
-          alignItems: "flex-start",
-          gap: "16px",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            height: "48px",
-            justifyContent: "center",
-            alignItems: "flex-start",
-            gap: "16px",
-          }}
-        >
-          <div>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                signInWithOAuthAndLog("kakao");
-              }}
-            >
-              <button style={{ width: "48px", height: "48px", flexShrink: 0 }}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                >
+      <div className="flex h-48 justify-center items-start space-x-4 pt-14">
+        <div>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              signInWithOAuthAndLog("kakao");
+            }}
+          >
+            <button className="flex-shrink-0">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="48px"
+                height="48px"
+                viewBox="0 0 48 48"
+                fill="none"
+              >
+                <path
+                  d="M24 48C10.7429 48 0 37.2571 0 24C0 10.7429 10.7429 0 24 0C37.1429 0 48 10.7429 48 24C48 37.2571 37.2571 48 24 48Z"
+                  fill="#FEE500"
+                />
+                <g transform="translate(40 40)">
                   <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M10 1.04889C4.76667 1.04889 0 5.25556 0 8.81445C0 11.4811 1.73111 13.8333 4.36778 15.2311L3.25889 19.3044C3.16 19.6656 3.57 19.9522 3.88444 19.7444L8.74778 16.5167C9.15778 16.5567 9.57556 16.58 10 16.58C15.5222 16.58 20 13.1033 20 8.81445C20 5.25556 15.5222 1.04889 10 1.04889Z"
-                    fill="#FEE500"
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M-14.5 -14.5C-22.054 -14.5 -28 -8.554 -28 -1C-28 6.554 -22.054 12.5 -14.5 12.5C-6.946 12.5 -1 6.554 -1 -1C-1 -8.554 -6.946 -14.5 -14.5 -14.5ZM-14.5 10.5C-21.08 10.5 -26 5.58 -26 -1C-26 -7.58 -21.08 -12.5 -14.5 -12.5C-7.92 -12.5 -3 -7.58 -3 -1C-3 5.58 -7.92 10.5 -14.5 10.5Z"
+                    fill="black"
                   />
-                </svg>
-              </button>
-            </form>
-          </div>
-
-          <div>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                signInWithOAuthAndLog("google");
-              }}
-            >
-              <button style={{ width: "48px", height: "48px", flexShrink: 0 }}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="48"
-                  height="48"
-                  viewBox="0 0 48 48"
-                  fill="none"
-                >
-                  <g clipPath="url(#clip0_1010_22070)">
-                    <path
-                      d="M24 48C10.7429 48 0 37.2571 0 24C0 10.7429 10.7429 0 24 0C37.1429 0 48 10.7429 48 24C48 37.2571 37.2571 48 24 48Z"
-                      fill="#FEE500"
-                      stroke="#E4E7EC"
-                    />
-                    {/* 나머지 SVG 내용 */}
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_1010_22070">
-                      <rect width="48" height="48" fill="white" />
-                    </clipPath>
-                  </defs>
-                </svg>
-              </button>
-            </form>
-          </div>
+                </g>
+              </svg>
+            </button>
+          </form>
         </div>
 
         <div>
@@ -174,7 +129,7 @@ const SocialLogin = () => {
               signInWithOAuthAndLog("google");
             }}
           >
-            <button className="pt-20">
+            <button className="flex-shrink-0">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="48"
@@ -218,6 +173,30 @@ const SocialLogin = () => {
                     <rect width="48" height="48" fill="white" />
                   </clipPath>
                 </defs>
+              </svg>
+            </button>
+          </form>
+        </div>
+
+        <div>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              signInWithOAuthAndLog("google");
+            }}
+          >
+            <button className="flex-shrink-0">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="48"
+                height="48"
+                viewBox="0 0 48 48"
+                fill="none"
+              >
+                <path
+                  d="M24 48C10.7429 48 0 37.2571 0 24C0 10.7429 10.7429 0 24 0C37.1429 0 48 10.7429 48 24C48 37.2571 37.2571 48 24 48Z"
+                  fill="#1877F2"
+                />
               </svg>
             </button>
           </form>

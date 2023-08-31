@@ -122,7 +122,7 @@ export const getPopularPosts = async (): Promise<PostType[]> => {
     .select("*")
     .order("number_comments", { ascending: false })
     .order("number_likes", { ascending: false })
-    .range(1, 8);
+    .limit(8);
   
   if (error) throw error;
   return popularPosts;

@@ -168,6 +168,19 @@ body {
     @apply border-2 border-solid border-black flex flex-col items-center gap-2;
   }
 }
+
+@layer components {
+  .badge-image {
+    @apply w-[88px] h-[88px] rounded-full;
+  }
+}
+
+@layer components {
+  .badge-text {
+    @apply text-gray-500 text-[14px] font-normal leading-[14px];
+  }
+}
+
 .categoryBtn {
   border-radius: 16px;
   border: 1px solid gray;
@@ -182,6 +195,23 @@ body {
   color: #5fd100;
   border-color: #5fd100;
 }
+
+/* intro 깜빡거리는 arrow */
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.blinking-text {
+  animation: blink 1.5s infinite;
+}
+
 /*width*/
 ::-webkit-scrollbar {
   width: 10px;
