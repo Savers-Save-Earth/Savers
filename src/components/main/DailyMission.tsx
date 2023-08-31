@@ -42,7 +42,7 @@ const DailyMission = () => {
 
   return (
     <>
-      <h1 className="text-2xl mb-6">일일미션</h1>
+      <h1 className="text-2xl mb-6 font-semibold">일일미션</h1>
       <div
         onClick={missionHandler}
         className="flex items-center justify-between w-full rounded-2xl p-8 mb-16 cursor-pointer"
