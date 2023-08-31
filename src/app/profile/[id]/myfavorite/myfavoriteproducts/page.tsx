@@ -59,17 +59,17 @@ const MyFavoriteProducts = ({ params }: { params: { id: string } }) => {
       {userLikedProducts?.map((product) => (
           <div
             // className="border-solid border-2 border-blue-900 p-5 m-3 cursor-pointer "
-            className="flex flex-col items-start gap-3 cursor-pointer"
+            className="flex flex-col items-start gap-[6px] cursor-pointer h-[222px]"
             key={product.like_id}
           >
             <img className="w-[152px] h-[152px] rounded-2xl shrink-0" src={product.img || ""} alt="No Image"/>
-            <p className="btn-profile-topbar">{product.product_company}</p>
+            <p className="truncate text-gray-300 text-ellipsis not-italic font-normal leading-[14px]">{product.product_company}</p>
             {/* window.open : 새 탭에서 해당 url로 이동 */}
             <p
-            className="btn-profile-topbar"
+            className="truncate text-gray-500 text-ellipsis not-italic font-normal leading-[14px]"
              onClick = {() => window.open(`/product/${product.product_uid}`)}>{product.product_name}</p>
             {/* <p>등록일: {post.created_date.slice(0, 10)}</p> */}
-            <p className="btn-profile-topbar">가격</p>
+            {/* <p className="truncate text-gray-600 text-ellipsis not-italic font-semibold">가격</p> */}
           </div>
       ))}
       
