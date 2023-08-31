@@ -59,7 +59,6 @@ const MissionDone = ({ params }: { params: { id: string } }) => {
       >
         <h1 className="text-center font-semibold">{mission.title}</h1>
         <div>{mission.content}</div>
-        <p>{mission}</p>
       </div>
     );
   })}
