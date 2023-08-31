@@ -51,27 +51,34 @@ const MyFavoriteProducts = ({ params }: { params: { id: string } }) => {
   const handleLoadMore = () => {
     setLoadCount((prev) => prev + 5);
   };
+  // 
   return (
     <>
-    <div className="flex flex-wrap mx-auto">
+    <div className="flex flex-wrap items-center gap-4 self-stretch bg-white mx-auto">
+    {/* <div className="flex flex-col justify-between items-start self-stretch"> */}
       {userLikedProducts?.map((product) => (
           <div
-            className="border-solid border-2 border-blue-900 p-5 m-3 cursor-pointer w-1/5"
+            // className="border-solid border-2 border-blue-900 p-5 m-3 cursor-pointer "
+            className="flex flex-col items-start gap-3 cursor-pointer"
             key={product.like_id}
           >
-            <img className="w-1/2 rounded-full mx-auto" src={product.img || ""} alt="No Image"/>
-            <p>브랜드 : {product.product_company}</p>
+            <img className="w-[152px] h-[152px] rounded-2xl shrink-0" src={product.img || ""} alt="No Image"/>
+            <p className="btn-profile-topbar">{product.product_company}</p>
             {/* window.open : 새 탭에서 해당 url로 이동 */}
             <p
-            className="hover:underline"
-             onClick = {() => window.open(`/product/${product.product_uid}`)}>제품 이름 : {product.product_name}</p>
+            className="btn-profile-topbar"
+             onClick = {() => window.open(`/product/${product.product_uid}`)}>{product.product_name}</p>
             {/* <p>등록일: {post.created_date.slice(0, 10)}</p> */}
+            <p className="btn-profile-topbar">가격</p>
           </div>
       ))}
       
-      </div>
-      <button onClick={handleLoadMore}>더 보기</button>
-    </>
+      {/* </div> */}
+ 
+    </div>
+         <button className="py-4 px-5 justify-center items-center gap-[10px] rounded-2xl bg-gray-50"
+         onClick={handleLoadMore}>더보기</button>
+         </>
   );
 };
 
