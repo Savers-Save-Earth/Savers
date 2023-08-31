@@ -1,28 +1,26 @@
 "use client";
-import { NextPage } from "next";
-import AddPost from "@/components/community/AddPost";
-import { useEffect, useState } from "react";
+import EditPost from "@/components/community/EditPost";
 import supabase from "@/libs/supabase";
 import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 
-const Write: NextPage = () => {
+const CommunityEdit = () => {
   const router = useRouter();
   const [sessionState, setSessionState] = useState<any>(null);
 
+  console.log("sessionState >>>> ", sessionState);
+
   useEffect(() => {
     const getSessionState = async () => {
-      const { data: session, error } = await supabase.auth.getSession();
+      const { data: session } = await supabase.auth.getSession();
       if (!session.session) router.push("/");
       setSessionState(session.session);
     }
     getSessionState();
   }, [router]);
-
   return (
-    <>
-      <AddPost />
-    </>
+    <EditPost />
   )
 }
 
-export default Write;
+export default CommunityEdit
