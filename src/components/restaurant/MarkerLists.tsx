@@ -85,7 +85,7 @@ const MarkerLists = ({ markerList }: any) => {
           .eq("user_id", user.id)
           .eq("restaurant_name", name);
 
-        alert("북마크가 해제되었습니다.");
+        alert("좋아요가 해제되었습니다.");
       } else {
         const { error: addMarkListError } = await supabase
           .from("like_restaurant")
@@ -96,7 +96,7 @@ const MarkerLists = ({ markerList }: any) => {
             user_id: user.id,
             restaurant_map: url,
           });
-        alert("북마크 되었습니다.");
+        alert("좋아요를 눌렀습니다.");
       }
     } else {
       alert("로그인 후 사용해주세요.");
@@ -112,8 +112,7 @@ const MarkerLists = ({ markerList }: any) => {
       content: {
         title: place.place_name,
         description: place.place_url,
-        imageUrl:
-          "https://media.istockphoto.com/id/485504378/photo/city-map-3d-rendering-image.webp?b=1&s=612x612&w=0&k=20&c=Se3HW4VNvbDeun0LnTbtpcjrmWoYg070rCPoRQAWM6Y=",
+        imageUrl: "https://ifh.cc/g/flbgkf.webp",
         link: {
           webUrl: "http:localhost:3000",
           mobileWebUrl: "http:localhost:3000",
@@ -137,7 +136,7 @@ const MarkerLists = ({ markerList }: any) => {
   }, []);
 
   return (
-    <div className="overflow-scroll h-[32rem]">
+    <div className="overflow-auto h-[33vw]">
       {/* display:flex; justify-content: center; */}
       <ul>
         {/* markerList 정보를 사용하여 리스트를 렌더링합니다 */}
@@ -160,14 +159,30 @@ const MarkerLists = ({ markerList }: any) => {
                   );
                   fetchMarkList();
                 }}
+                className="mr-3"
               >
-                <FontAwesomeIcon
-                  icon={faBookmark}
-                  size="xs"
-                  style={{ color: "#000000", marginRight: "5px" }}
+                <img
+                  src="/assets/like.png"
+                  className="inline-block mr-0.5"
+                  style={{ height: "auto", verticalAlign: "middle" }}
+                  alt="Icon"
                 />
+                <span className="text-gray-300">
+                  {bookmarkHandler(place.place_name)}
+                </span>
               </button>
-              <button onClick={() => shareBtn(place)}>공유하기</button>
+              <img
+                src="/assets/share.png"
+                className="border border-gray-300 p-2 rounded-full inline-block cursor-pointer"
+                onClick={() => shareBtn(place)}
+              />
+              <button
+                onClick={() => window.open(`${place.place_url}`)}
+                className="bg-gray-50 ml-2 text-[14px] text-gray-500 rounded-2xl cursor-pointer"
+                style={{ padding: "8px 10px" }}
+              >
+                상세보기
+              </button>
             </div>
           </div>
         ))}

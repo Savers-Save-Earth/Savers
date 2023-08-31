@@ -62,11 +62,11 @@ const Badges = () => {
 
   const shareBadge = badges.find((item) => item.badge_title === "share");
   const threeShareBadge =
-    badges.filter((item) => item.badge_title === "share").length >= 3;
+    badges.filter((item) => item.badge_title === "share").length >= 30;
 
   const likeBadge = badges.find((item) => item.badge_title === "like");
   const threeLikeBadge =
-    badges.filter((item) => item.badge_title === "like").length >= 3;
+    badges.filter((item) => item.badge_title === "like").length >= 30;
 
   ///===================👇동준작업👇=========================================================
   /*
@@ -78,9 +78,9 @@ const Badges = () => {
   //  const bronzeTrophy
   const firstMission = badgesByMissionCount >= 1;
   //아래 뱃지 얻는 조건은 추후에 수정해야 함.
-  const bronzeTrophy = badgesByMissionCount >= 1;
-  const silverTrophy = badgesByMissionCount >= 2;
-  const goldTrophy = badgesByMissionCount >= 3;
+  const bronzeTrophy = badgesByMissionCount >= 10;
+  const silverTrophy = badgesByMissionCount >= 20;
+  const goldTrophy = badgesByMissionCount >= 30;
   ///===================👆동준작업👆=========================================================
   useEffect(() => {
     fetchUser();
@@ -91,22 +91,42 @@ const Badges = () => {
     <div className="flex flex-col w-[317.5px] items-start gap-[30px] ">
       <div className="flex justify-between items-start self-stretch">
         <div className="flex flex-col items-center gap-2">
+<<<<<<< HEAD
           {bronzeTrophy ? (
             <>
               <img
                 className="badge-image"
                 src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/sign/badge/true.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJiYWRnZS90cnVlLnN2ZyIsImlhdCI6MTY5MzQ1NjI2NywiZXhwIjoxNjk2MDQ4MjY3fQ.VOB1STTxO1I0y6VAbEiTtaDVplvFiUOYyVt6-cLW_Jg&t=2023-08-31T04%3A31%3A05.175Z"
+=======
+          {badges ? (
+            <>
+              <img
+                className="badge-image"
+                src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/sign/badge/01sproutsaver.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJiYWRnZS8wMXNwcm91dHNhdmVyLnN2ZyIsImlhdCI6MTY5MzQ2NTYzNywiZXhwIjoxNjk2MDU3NjM3fQ.y9emdOUGzuWiaGTUZDAorTZa6-ezqX_VqwXMHbZgspY&t=2023-08-31T07%3A07%3A17.651Z"
+>>>>>>> f7de48ef8d3436736eb7e896c6e0c2969f853fd3
               />
               <p className="badge-text">
                 새싹 세이버
               </p>
             </>
           ) : (
-            <p>"아직 [새싹 세이버] 배지를 획득하지 못했습니다."</p>
+            <>
+              <img
+                className="badge-image"
+                src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/sign/badge/false/01falsesproutsaver.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJiYWRnZS9mYWxzZS8wMWZhbHNlc3Byb3V0c2F2ZXIuc3ZnIiwiaWF0IjoxNjkzNDc3OTY2LCJleHAiOjE2OTYwNjk5NjZ9.Ka9dv9qJiO9Ze1y-_sRiXk5VAz7wU9mxkxmKxTHk4yE&t=2023-08-31T10%3A32%3A46.858Z"
+              />
+              <p className="badge-text">
+                새싹 세이버
+              </p>
+            </>
           )}
         </div>
         <div className="flex flex-col items-center gap-2">
+<<<<<<< HEAD
           {silverTrophy ? (
+=======
+          {shareBadge ? (
+>>>>>>> f7de48ef8d3436736eb7e896c6e0c2969f853fd3
             <>
               <img
                 className="badge-image"
@@ -117,11 +137,23 @@ const Badges = () => {
               </p>
             </>
           ) : (
-            <p>"아직 [나눔꾼] 배지를 획득하지 못했습니다."</p>
+            <>
+              <img
+                className="badge-image"
+                src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/sign/badge/false/02falsesharer.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJiYWRnZS9mYWxzZS8wMmZhbHNlc2hhcmVyLnN2ZyIsImlhdCI6MTY5MzQ3Nzk4MiwiZXhwIjoxNjk2MDY5OTgyfQ.rKVIXFoC28devo6HEr-cFGVYgQfI82r9egdLbmEPGVM&t=2023-08-31T10%3A33%3A02.378Z"
+              />
+              <p className="badge-text">
+                나눔꾼
+              </p>
+            </>
           )}
         </div>
         <div className="flex flex-col items-center gap-2">
+<<<<<<< HEAD
           {goldTrophy ? (
+=======
+          {threeShareBadge ? (
+>>>>>>> f7de48ef8d3436736eb7e896c6e0c2969f853fd3
             <>
               <img
                 className="badge-image"
@@ -132,13 +164,25 @@ const Badges = () => {
               </p>
             </>
           ) : (
-            <p>"아직 [공.유] 배지를 획득하지 못했습니다."</p>
+            <>
+              <img
+                className="badge-image"
+                src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/sign/badge/false/03falsegongyou.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJiYWRnZS9mYWxzZS8wM2ZhbHNlZ29uZ3lvdS5zdmciLCJpYXQiOjE2OTM0NzgwMDQsImV4cCI6MTY5NjA3MDAwNH0.FVmBhiR5gHPhljvXFnckJU_qZpENqUpSMqijPp-6sLs&t=2023-08-31T10%3A33%3A24.026Z"
+              />
+              <p className="badge-text">
+                공.유
+              </p>
+            </>
           )}
         </div>
       </div>
       <div className="flex justify-between items-start self-stretch">
         <div className="flex flex-col items-center gap-2">
+<<<<<<< HEAD
           {bronzeTrophy ? (
+=======
+          {likeBadge ? (
+>>>>>>> f7de48ef8d3436736eb7e896c6e0c2969f853fd3
             <>
               <img
                 className="badge-image"
@@ -149,11 +193,23 @@ const Badges = () => {
               </p>
             </>
           ) : (
-            <p>"아직 [사랑꾼] 배지를 획득하지 못했습니다."</p>
+            <>
+              <img
+                className="badge-image"
+                src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/sign/badge/false/04falselover.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJiYWRnZS9mYWxzZS8wNGZhbHNlbG92ZXIuc3ZnIiwiaWF0IjoxNjkzNDc4MDIzLCJleHAiOjE2OTYwNzAwMjN9.PguP1om9pw4-iL9_SP7m7k093ZOo4ymHFbuOt1J8JAs&t=2023-08-31T10%3A33%3A43.732Z"
+              />
+              <p className="badge-text ">
+                사랑꾼
+              </p>
+            </>
           )}
         </div>
         <div className="flex flex-col items-center gap-2">
+<<<<<<< HEAD
           {silverTrophy ? (
+=======
+          {threeLikeBadge ? (
+>>>>>>> f7de48ef8d3436736eb7e896c6e0c2969f853fd3
             <>
               <img
                 className="badge-image"
@@ -164,11 +220,23 @@ const Badges = () => {
               </p>
             </>
           ) : (
-            <p>"아직 [찐 사랑꾼] 배지를 획득하지 못했습니다."</p>
+            <>
+              <img
+                className="badge-image"
+                src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/sign/badge/false/05falsereallover.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJiYWRnZS9mYWxzZS8wNWZhbHNlcmVhbGxvdmVyLnN2ZyIsImlhdCI6MTY5MzQ3ODAzNiwiZXhwIjoxNjk2MDcwMDM2fQ.cvAxtPBIi3e-7UTItEGOnEsTgSRgbfqvjO1E8AsQ_ek&t=2023-08-31T10%3A33%3A56.581Z"
+              />
+              <p className="badge-text ">
+                찐 사랑꾼
+              </p>
+            </>
           )}
         </div>
         <div className="flex flex-col items-center gap-2">
+<<<<<<< HEAD
           {goldTrophy ? (
+=======
+          {firstMission ? (
+>>>>>>> f7de48ef8d3436736eb7e896c6e0c2969f853fd3
             <>
               <img
                 className="badge-image"
@@ -179,7 +247,19 @@ const Badges = () => {
               </p>
             </>
           ) : (
+<<<<<<< HEAD
             <p>"아직 [첫 미션] 배지를 획득하지 못했습니다."</p>
+=======
+            <>
+              <img
+                className="badge-image"
+                src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/sign/badge/false/06falsefirstmission.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJiYWRnZS9mYWxzZS8wNmZhbHNlZmlyc3RtaXNzaW9uLnN2ZyIsImlhdCI6MTY5MzQ3ODA3MywiZXhwIjoxNjk2MDcwMDczfQ.B4Hf7XmiMZnv3I_f7pMyUSYAronGHsO4rEhS6OycXJw&t=2023-08-31T10%3A34%3A33.019Z"
+              />
+              <p className="badge-text">
+                첫 미션
+              </p>
+            </>
+>>>>>>> f7de48ef8d3436736eb7e896c6e0c2969f853fd3
           )}
         </div>
       </div>
@@ -196,7 +276,15 @@ const Badges = () => {
               </p>
             </>
           ) : (
-            <p>"아직 [미션 헌터] 배지를 획득하지 못했습니다."</p>
+            <>
+              <img
+                className="badge-image"
+                src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/sign/badge/false/07falsemissionhunter.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJiYWRnZS9mYWxzZS8wN2ZhbHNlbWlzc2lvbmh1bnRlci5zdmciLCJpYXQiOjE2OTM0NzgwOTAsImV4cCI6MTY5NjA3MDA5MH0.C-39d8jnNM2S0r4ExwukUWAi0DTjKwid8foBjgAuPjQ&t=2023-08-31T10%3A34%3A50.132Z"
+              />
+              <p className="badge-text ">
+                미션 헌터
+              </p>
+            </>
           )}
         </div>
         <div className="flex flex-col items-center gap-2">
@@ -211,7 +299,15 @@ const Badges = () => {
               </p>
             </>
           ) : (
-            <p>"아직 [미션 프로] 배지를 획득하지 못했습니다."</p>
+            <>
+              <img
+                className="badge-image"
+                src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/sign/badge/false/08falsefalsemissionpro.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJiYWRnZS9mYWxzZS8wOGZhbHNlZmFsc2VtaXNzaW9ucHJvLnN2ZyIsImlhdCI6MTY5MzQ3ODEwNiwiZXhwIjoxNjk2MDcwMTA2fQ.i9i1p9QpToFkkPZfDnuy9-97Gf7jbxYKEOjNp92vRGE&t=2023-08-31T10%3A35%3A06.410Z"
+              />
+              <p className="badge-text ">
+                미션 프로
+              </p>
+            </>
           )}
         </div>
         <div className="flex flex-col items-center gap-2">
@@ -226,7 +322,15 @@ const Badges = () => {
               </p>
             </>
           ) : (
-            <p>"아직 [미션 마스터] 배지를 획득하지 못했습니다."</p>
+            <>
+              <img
+                className="badge-image"
+                src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/sign/badge/false/09falsefalsemissionmaster.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJiYWRnZS9mYWxzZS8wOWZhbHNlZmFsc2VtaXNzaW9ubWFzdGVyLnN2ZyIsImlhdCI6MTY5MzQ3ODEyNCwiZXhwIjoxNjk2MDcwMTI0fQ.GErEqFTHPdubAUPf43SZcT2GoJrAcwT-AXFZmjVnObo&t=2023-08-31T10%3A35%3A24.339Z"
+              />
+              <p className="badge-text ">
+                미션 마스터
+              </p>
+            </>
           )}
         </div>
       </div>
