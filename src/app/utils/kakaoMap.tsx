@@ -23,7 +23,7 @@ const getCurrentCoordinate = async () => {
 
 const KakaoMap = () => {
   const [mapCenter, setMapCenter] = useState({ x: 127.1086228, y: 37.4012191 });
-  const [currentCategory, setCurrentCategory] = useState(""); // 기본값으로 "전체" 카테고리 설정
+  const [currentCategory, setCurrentCategory] = useState("비건"); // 기본값으로 "전체" 카테고리 설정
   const [markerList, setMarkerList] = useState([]); // 마커 리스트 상태 추가
   useEffect(() => {
     if (window.kakao) {
@@ -132,7 +132,7 @@ const KakaoMap = () => {
               map: map,
             });
 
-            var iwContent = `<div style= "padding: 5px; width: 250px; border-radius:5px">
+            var iwContent = `<div style= "padding: 5px; width: 250px;">
             
         <h1 class="infoWindow-name" style="font-weight: bold">${place.place_name}</h1>
         <p class="infoWindow-address" style="font-size: 13px; color: #1f1f1f">${place.address_name}</p>
@@ -195,12 +195,10 @@ const KakaoMap = () => {
 
   return (
     <div>
-      <div className="border-red-400 w-[1200px] mt-20 mx-auto">
-        <div id="pageTitle" className="text-lg mb-3 font-semibold">
-          비건식당 찾기
-        </div>
+      <div className="mt-20">
+        <div className="text-lg mb-3 font-semibold ">비건식당 찾기</div>
         <div id="pageBody">
-          <div id="pageLeft" className=" border w-80 float-left">
+          <div id="pageLeft" className="  w-[29%] float-left">
             <div id="buttons" className="mb-3">
               <button
                 onClick={() => setCurrentCategory("비건")}
@@ -237,7 +235,7 @@ const KakaoMap = () => {
             </div>
             <MarkerLists markerList={markerList} />
           </div>
-          <div id="map" className="w-[100vh] h-[75vh] float-left ml-4"></div>
+          <div id="map" className="w-[70%] h-[36vw] float-right"></div>
         </div>
       </div>
     </div>
@@ -245,25 +243,3 @@ const KakaoMap = () => {
 };
 
 export default KakaoMap;
-
-/* .kakaoMap {
-  width: 100vh;
-  height: 75vh;
-  float: left;
-  margin-left: 20px;
-} */
-
-// .categoryBtn {
-//   border-radius: 16px;
-//   border: 1px solid gray;
-//   width: auto;
-//   padding: 6px 12px;
-//   font-size: small;
-//   margin-right: 5px;
-//   line-height: 1;
-// }
-
-// .categoryBtn.active {
-//   color: #5fd100;
-//   border-color: #5fd100;
-// }

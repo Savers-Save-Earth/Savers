@@ -185,7 +185,7 @@ body {
   border-radius: 16px;
   border: 1px solid gray;
   width: auto;
-  padding: 6px 12px;
+  padding: 5px 12px 6px 12px;
   font-size: small;
   margin-right: 5px;
   line-height: 1;
@@ -210,4 +210,25 @@ body {
 
 .blinking-text {
   animation: blink 1.5s infinite;
+}
+
+/*width*/
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
