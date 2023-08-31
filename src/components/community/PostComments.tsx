@@ -307,6 +307,7 @@ const PostComments = () => {
                 value={editingComment}
                 onChange={handleEditInputChange}
                 rows={4}
+                maxLength={300}
                 className="rounded-md px-4 py-2 pb-5 border focus:outline-none resize-none"
               />
             ) : (
@@ -335,6 +336,7 @@ const PostComments = () => {
                       value={newReply}
                       onChange={(e) => setNewReply(e.currentTarget.value)}
                       rows={4}
+                      maxLength={300}
                       className="mt-2 px-4 py-3 pb-5 border focus:outline-none resize-none rounded-md"
                     />
                     <button
@@ -399,6 +401,7 @@ const PostComments = () => {
                               setEditingReply(e.currentTarget.value)
                             }
                             rows={4}
+                            maxLength={300}
                             className="rounded-md px-4 py-2 pb-5 border focus:outline-none resize-none"
                           />
                         ) : (

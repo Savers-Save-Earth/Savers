@@ -6,6 +6,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updatePost } from "@/api/community/post";
 import { convertTimestamp } from "@/libs/util";
 import { Database } from "@/types/supabase";
+import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
 
 type PostType = Database["public"]["Tables"]["community"]["Update"];
 type EditPostProps = {
@@ -14,6 +16,9 @@ type EditPostProps = {
 }
 
 const EditPost: React.FC<EditPostProps> = ({ postDetail, postUid }) => {
+  const currentUser = useAuth();
+  const router = useRouter();
+
   const [category, setCategory] = useState(postDetail?.category ?? "");
   const [title, setTitle] = useState(postDetail?.title);
   const [content, setContent] = useState(postDetail?.content ?? "");
@@ -43,13 +48,16 @@ const EditPost: React.FC<EditPostProps> = ({ postDetail, postUid }) => {
   
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const writtenTime = new Date();
+    if (!currentUser) {
+      return router.push("/login");
+    } else {
+      const writtenTime = new Date();
     const editPost: PostType = {
       post_uid: postDetail?.post_uid,
       category,
       title,
       content,
-      author_name: "수정닉네임",
+      author_name: currentUser.nickname,
       updated_date: convertTimestamp(writtenTime),
     };
   
@@ -67,6 +75,7 @@ const EditPost: React.FC<EditPostProps> = ({ postDetail, postUid }) => {
     }
   
     updateMutation.mutate(editPost);
+    }
   };  
 
   return (

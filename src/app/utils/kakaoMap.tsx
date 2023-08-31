@@ -195,7 +195,7 @@ const KakaoMap = () => {
 
   return (
     <div>
-      <div className="border pt-20 ">
+      <div className="border-red-400 w-[1200px] mt-20 mx-auto">
         <div id="pageTitle" className="text-lg mb-3 font-semibold">
           비건식당 찾기
         </div>
@@ -237,7 +237,7 @@ const KakaoMap = () => {
             </div>
             <MarkerLists markerList={markerList} />
           </div>
-          <div id="map" className="w-[100vh] h-[75vh] float-left"></div>
+          <div id="map" className="w-[100vh] h-[75vh] float-left ml-4"></div>
         </div>
       </div>
     </div>

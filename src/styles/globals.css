@@ -151,6 +151,23 @@ body {
   background-color: rgb(245, 245, 245);
 }
 
+@layer components {
+  .btn-sidebar {
+    @apply text-gray-400 font-normal leading-6 hover:text-[#10C800] focus:text-[#10C800]
+  }
+}
+
+@layer components {
+  .btn-profile-topbar {
+    @apply overflow-hidden text-gray-300 text-ellipsis text-[14px] font-bold leading-[14px] hover:underline focus:text-gray-900
+  }
+}
+
+@layer components {
+  .badge-ctn-profile {
+    @apply border-2 border-solid border-black flex flex-col items-center gap-2
+  }
+}
 .categoryBtn {
   border-radius: 16px;
   border: 1px solid gray;

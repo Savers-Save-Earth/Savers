@@ -53,29 +53,62 @@ const MyFavoriteRestaurants = ({ params }: { params: { id: string } }) => {
   };
   return (
     <>
-    <p>식당 좋아요가 추가되면 여기에 추가하도록 할게요!!! 지금은 북마크한 제품 데이터입니다!!!</p>
-      {userLikedRestaurants?.map((restaurants) => (
+  <div className="flex flex-wrap justify-between self-stretch bg-white mx-auto w-full gap-2">
+    {userLikedRestaurants?.map((item) => (
+      <div
+        key={item.id}
+        className="flex items-center justify-center w-[49%] h-1/2"
+      >
+        <div className="w-full p-4 border border-gray-200 rounded-lg bg-white flex items-center">
           <div
-            className="border-solid border-2 border-blue-900 p-5 m-5 cursor-pointer"
-            key={restaurants.id}
-          >
-            {/* <img className="w-1/6 rounded-full" src={product.img} alt="No Image"/> */}
-            <p>레스토랑 이름 : {restaurants.restaurant_name}</p>
-            <p>레스토랑 업종 : {restaurants.restaurant_category}</p>
-            {/* window.open : 새 탭에서 해당 url로 이동 */}
-            {/* <p onClick = {() => window.open(`/product/${product.product_uid}`)}>제품 uid : {product.product_uid}</p> */}
-            {/* <p>등록일: {post.created_date.slice(0, 10)}</p> */}
+            style={{
+              width: "60px",
+              height: "60px",
+              background: "lightgray",
+              display: "inline-block",
+              marginRight: "10px",
+            }}
+          ></div>
+          <div style={{ display: "inline-block" }}>
+            <p className="font-bold text-[16px]">
+              {item.restaurant_name.length > 13
+                ? `${item.restaurant_name.slice(0, 10) + `...`}`
+                : item.restaurant_name}
+            </p>
+            <span className="text-sm text-gray-400">
+              {item.restaurant_address}
+            </span>
+            <p className="text-sm">
+              <img
+                src="/assets/like.png"
+                className="inline-block mr-0.5"
+                style={{ height: "auto", verticalAlign: "middle" }}
+                alt="Icon"
+              />
+              <span className="text-gray-300">{item.bookmarkCount}</span>
+            </p>
+            <p>
+              <img
+                src="/assets/share.png"
+                className="border border-gray-300 p-2 rounded-full inline-block cursor-pointer"
+                // onClick={shareHandler}
+              />
+              <span
+                className="bg-gray-50 ml-2 text-[14px] text-gray-500 rounded-2xl cursor-pointer"
+                style={{ padding: "8px 10px" }}
+                onClick={() => window.open(`${item?.restaurant_map}`)}
+              >
+                상세보기
+              </span>
+            </p>
           </div>
-      ))}
-      <button onClick={handleLoadMore}>더 보기</button>
-      <div>MyFavoriteRestaurants</div>
-      <div>MyFavoriteRestaurants</div>
-      <div>MyFavoriteRestaurants</div>
-      <div>MyFavoriteRestaurants</div>
-      <div>MyFavoriteRestaurants</div>
-      <div>MyFavoriteRestaurants</div>
-      <div>MyFavoriteRestaurants</div>
-    </>
+        </div>
+      </div>
+    ))}
+  </div>
+  <button onClick={handleLoadMore}>더 보기</button>
+</>
+
   );
 };
 
