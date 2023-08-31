@@ -91,7 +91,12 @@ const ProductComponent = () => {
 
   // 좋아요 눌렀을 때, 물품 및 유저에 좋아요 데이터 업데이트
 
-  const likeHandler = async (id: string) => {
+  const likeHandler = async (
+    id: string,
+    img: string,
+    company: string,
+    name: string,
+  ) => {
     const userId = user.id;
 
     if (!user) {
@@ -134,7 +139,13 @@ const ProductComponent = () => {
         // 좋아요 구현하는 로직
         const { error: insertError } = await supabase
           .from("like_product")
-          .insert({ product_uid: id, user_id: userId });
+          .insert({
+            product_uid: id,
+            user_id: userId,
+            img,
+            product_company: company,
+            product_name: name,
+          });
 
         // 좋아요 count 올리는 로직
         const { error: likeCountError } = await supabase
@@ -224,7 +235,9 @@ const ProductComponent = () => {
                     (likedItem) => likedItem.product_uid === item.id,
                   ) ? (
                     <button
-                      onClick={() => likeHandler(item.id)}
+                      onClick={() =>
+                        likeHandler(item.id, item.img, item.company, item.name)
+                      }
                       className="absolute bottom-2 right-2"
                     >
                       <svg
@@ -245,7 +258,9 @@ const ProductComponent = () => {
                     </button>
                   ) : (
                     <button
-                      onClick={() => likeHandler(item.id)}
+                      onClick={() =>
+                        likeHandler(item.id, item.img, item.company, item.name)
+                      }
                       className="absolute bottom-2 right-2"
                     >
                       <svg
