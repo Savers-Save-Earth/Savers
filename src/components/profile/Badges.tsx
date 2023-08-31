@@ -95,7 +95,7 @@ const Badges = () => {
             <>
               <img
                 className="badge-image"
-                src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/sign/badge/true.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJiYWRnZS90cnVlLnN2ZyIsImlhdCI6MTY5MzQ1NjI2NywiZXhwIjoxNjk2MDQ4MjY3fQ.VOB1STTxO1I0y6VAbEiTtaDVplvFiUOYyVt6-cLW_Jg&t=2023-08-31T04%3A31%3A05.175Z"
+                src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/sign/badge/01sproutsaver.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJiYWRnZS8wMXNwcm91dHNhdmVyLnN2ZyIsImlhdCI6MTY5MzQ2NTYzNywiZXhwIjoxNjk2MDU3NjM3fQ.y9emdOUGzuWiaGTUZDAorTZa6-ezqX_VqwXMHbZgspY&t=2023-08-31T07%3A07%3A17.651Z"
               />
               <p className="badge-text">
                 새싹 세이버
