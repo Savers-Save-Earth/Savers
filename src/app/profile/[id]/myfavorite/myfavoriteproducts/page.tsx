@@ -64,7 +64,6 @@ const MyFavoriteProducts = ({ params }: { params: { id: string } }) => {
           >
             <img className="w-[152px] h-[152px] rounded-2xl shrink-0" src={product.img || ""} alt="No Image"/>
             <p className="truncate text-gray-300 text-ellipsis not-italic font-normal leading-[14px]">{product.product_company}</p>
-            {/* window.open : 새 탭에서 해당 url로 이동 */}
             <p
             className="truncate text-gray-500 text-ellipsis not-italic font-normal leading-[14px]"
              onClick = {() => window.open(`/product/${product.product_uid}`)}>{product.product_name}</p>

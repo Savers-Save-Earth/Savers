@@ -41,22 +41,29 @@ const MissionDone = ({ params }: { params: { id: string } }) => {
 
   return (
     <>
-    {isLoading ? ( // isLoading이 true이면 로딩 표시를 표시합니다.
+      {isLoading ? ( // isLoading이 true이면 로딩 표시를 표시합니다.
         <p>Loading...</p>
       ) : (
-        <div className="bg-green-200 h-full justify-center items-center gap-x-16 text-white">
-        {missionDone!.map((mission: MissionDoneProp) => {
-          return (
-            <div className="bg-slate-500 mb-5" key={mission.id}>
-              <p>{mission.id}</p>
-              <p>미션 제목 : {mission.title}</p>
-              <p>미션 내용 : {mission.content}</p>
-              <p>미션 생성일 : {mission.createdAt}</p>
-              {/* <p>미션 수행중인가요? : {mission.doingYn!.toString()}</p> */}
-            </div>
-          );
-        })}
+<div className="flex flex-wrap justify-start items-center gap-4 text-gray-800">
+  {missionDone?.map((mission) => {
+    return (
+      <div
+        className="py-[40px] relative flex flex-col justify-start items-center w-[169px] h-[280px] rounded-2xl break-words gap-[40px] p-1"
+        style={{
+          backgroundImage: `url('https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/sign/badge/missionDOneCard_200_300.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJiYWRnZS9taXNzaW9uRE9uZUNhcmRfMjAwXzMwMC5wbmciLCJpYXQiOjE2OTM0NzYzNjUsImV4cCI6MTY5NjA2ODM2NX0.crCRDp7gU6YrfvgzNyIYtE4Bq6JREBNsMBc79i2iH9k&t=2023-08-31T10%3A06%3A05.635Z')`,
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center',
+          backgroundSize: 'cover',
+        }}
+        key={mission.id}
+      >
+        <h1 className="text-center font-semibold">{mission.title}</h1>
+        <div>{mission.content}</div>
       </div>
+    );
+  })}
+</div>
+
       )}
     </>
 
