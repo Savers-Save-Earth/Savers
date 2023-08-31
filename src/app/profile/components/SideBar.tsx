@@ -223,12 +223,12 @@ const SideBar = () => {
                   <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-120 height-[729px] bg-white outline-none focus:outline-none">
                     {/* 모달 body */}
                     <div className="relative p-6 flex-auto h-3/4 ">
-                      <div className="bg-gray-200 shadow-md rounded px-8 pt-6 pb-8 w-full">
+                      <div className="bg-gray-500 shadow-md rounded px-8 pt-6 pb-8 w-full">
                         <section className="bg-pink-900 h-full flex justify-center items-center gap-x-16 text-white">
                           {dailyMission.map((missionItem) => (
                             <div
                               key={missionItem.id}
-                              className="w-[300px] h-[420px] bg-transparent cursor-pointer group perspective"
+                              className="w-[200px] h-[320px] bg-transparent cursor-pointer group perspective"
                             >
                               <div className="relative preserve-3d my-rotate-y-180 w-full h-full">
                                 <div className="absolute w-full h-full my-rotate-y-180-withoutkey bg-gray-100">
