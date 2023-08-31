@@ -55,7 +55,7 @@ const RestaurantList = () => {
           justifyContent: "space-between",
         }}
       >
-        <h1 className="text-2xl mb-6">인기있는 비건식당</h1>
+        <h1 className="text-2xl mb-6 font-semibold">인기있는 비건식당</h1>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="10"
