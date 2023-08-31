@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import "@/styles/globals.css";
 import type { Metadata } from "next";
 import Script from "next/script";
+import Recoil from "./Recoil";
 
 export const metadata: Metadata = {
   title: "Savers",
@@ -36,10 +37,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <QueryProvider>
-          <Header />
-          {children}
-        </QueryProvider>
+        <Recoil>
+          <QueryProvider>
+            <Header />
+            {children}
+          </QueryProvider>
+        </Recoil>
       </body>
       {/* 해당 부분에 Script를 추가한다. */}
       <Script src="https://developers.kakao.com/sdk/js/kakao.js" async />

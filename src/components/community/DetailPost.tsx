@@ -1,35 +1,38 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
-import EditPost from "./EditPost";
-import { deletePost, getPostDetail, updatePost } from "@/api/community/post";
-import { cancelLikePost, createLikePost, getLikeStatus, getLikesNum } from "@/api/community/like";
+import { deletePost, updatePost } from "@/api/community/post";
+import {
+  cancelLikePost,
+  createLikePost,
+  getLikeStatus,
+  getLikesNum,
+} from "@/api/community/like";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { Database } from "@/types/supabase";
 import { useAuth } from "@/hooks/useAuth";
+import CategoryTag from "./CategoryTag";
+import ButtonContainer from "./ButtonContainer";
+import copy from "clipboard-copy";
+import { useSetRecoilState } from "recoil";
+import { editPostAtom } from "@/libs/atoms";
+import { DetailPostProps } from "@/types/types";
 
 type LikesType = Database["public"]["Tables"]["like_post"]["Insert"];
-type PostType = Database["public"]["Tables"]["community"]["Row"];
 
-const DetailPost = () => {
+const DetailPost = ({ postDetail, postUid }: DetailPostProps) => {
+  const router = useRouter();
   const currentUser = useAuth();
   const [isLiked, setIsLiked] = useState<LikesType | null>(null);
-  const [isEditing, setIsEditing] = useState(false);
-  const router = useRouter();
+  const [isToggled, setIsToggled] = useState(false);
 
-  const { postUid } = useParams() as { postUid: string; };
-  const { data: postDetail } = useQuery<PostType>(
-    ["postDetail", postUid],
-    () => getPostDetail(postUid),
-    { cacheTime: 6000 }
+  const { data: likesNumber } = useQuery(["likesNumber"], () =>
+    getLikesNum(postUid),
   );
 
-  const { data: likesNumber } = useQuery(
-    ["likesNumber"],
-    () => getLikesNum(postUid),
-  );
+  const setEditPostState = useSetRecoilState(editPostAtom);
 
   useEffect(() => {
     updatePost({ post_uid: postUid, number_likes: likesNumber || 0 });
@@ -50,6 +53,11 @@ const DetailPost = () => {
     getLikedStatus();
   }, [currentUser, postUid]);
 
+  // 수정, 삭제 드랍버튼 토글
+  const handleToggle = () => {
+    setIsToggled((prev) => !prev);
+  };
+
   // 게시글 삭제 mutate
   const queryClient = useQueryClient();
   const deleteMutation = useMutation(deletePost, {
@@ -60,18 +68,22 @@ const DetailPost = () => {
     },
     onError: (error) => {
       console.error("게시글 삭제 에러:", error);
-      window.alert("게시글이 정상적으로 삭제되지 않았습니다. 다시 시도해주세요!");
+      window.alert(
+        "게시글이 정상적으로 삭제되지 않았습니다. 다시 시도해주세요!",
+      );
     },
   });
 
-  const handleDelete = () => {
+  const handleDeleteClick = () => {
     const ok = window.confirm("게시글을 정말 삭제하시겠습니까?");
     if (!ok) return false;
     if (ok) deleteMutation.mutate(postUid);
   };
 
+  // 수정 버튼 누를 때 수정 페이지로 이동
   const handleEditClick = () => {
-    setIsEditing(true);
+    setEditPostState({ postDetail, isEditing: true });
+    router.push("/community/edit");
   };
 
   // 게시글 북마크
@@ -123,61 +135,68 @@ const DetailPost = () => {
     }
   };
 
+  const handleCopyUrl = () => {
+    const currentUrl = window.location.href;
+    copy(currentUrl)
+      .then(() => window.alert("링크가 복사되었습니다!"))
+      .catch((err) => window.alert("링크 복사에 실패했습니다. 다시 시도해주세요!"));
+  };
+
   return (
-    <div className="flex flex-col">
-      <button
-        onClick={() => router.back()}
-        className="w-28 mb-10 bg-green-200 px-5 py-2 rounded-md shadow-sm hover:bg-green-300 hover:-translate-y-1 transition ease-in-out duration-200"
-      >
-        뒤로가기
+    <div className="flex flex-col w-full">
+      <button onClick={() => router.back()} className="mb-10">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth="1.5"
+          stroke="currentColor"
+          className="w-6 h-6"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M15.75 19.5L8.25 12l7.5-7.5"
+          />
+        </svg>
       </button>
-      {isEditing ? (
-        // 수정 모드
-        <EditPost postDetail={postDetail} postUid={postUid} />
-      ) : (
-        // 상세 정보 모드
-        <div className="flex flex-col border-b pb-5">
-          <h2 className="text-lg mb-3 text-gray-400 font-semibold">
-            {postDetail?.category}
-          </h2>
-          <div className="flex items-end justify-between space-x-5 pb-5 border-b">
-            <h1 className="text-3xl text-gray-700 font-semibold">
-              {postDetail?.title}
-            </h1>
+      <div className="flex flex-col pb-5">
+        <CategoryTag>{postDetail?.category as string}</CategoryTag>
+        <div className="mt-4 first-letter:flex items-end justify-between space-x-5 pb-5 border-b">
+          <h1 className="text-3xl text-gray-700 font-semibold">
+            {postDetail?.title}
+          </h1>
+        </div>
+        <div className="flex mt-3 py-3">
+          <div className="flex w-full justify-between">
+            <div className="flex items-center justify-center space-x-3">
+              <div className="bg-slate-200 rounded-full p-6" />
+              <div className="flex flex-col items-start justify-center">
+                <span className="text-gray-600">{postDetail?.author_name}</span>
+                <span className="text-sm text-gray-400">
+                  {postDetail?.updated_date}
+                </span>
+              </div>
+            </div>
             {currentUser?.uid === postDetail?.author_uid ? (
-              <div className="flex space-x-3">
-                <button
-                  onClick={handleEditClick}
-                  className="w-20 text-sm border-b-4 border-blue-300 px-5 pb-1 shadow-sm hover:-translate-y-1 transition ease-in-out duration-200"
-                >
-                  수정
-                </button>
-                <button
-                  onClick={handleDelete}
-                  className="w-20 text-sm border-b-4 border-blue-300 px-5 pb-1 shadow-sm hover:-translate-y-1 transition ease-in-out duration-200"
-                >
-                  삭제
-                </button>
+              <div onClick={handleToggle}>
+                <ButtonContainer
+                  toggleState={isToggled}
+                  onEditClick={handleEditClick}
+                  onDeleteClick={handleDeleteClick}
+                />
               </div>
             ) : null}
           </div>
-          <div className="flex justify-between mt-3 py-3">
-            <div className="flex space-x-5 items-center justify-center">
-              <span>{postDetail?.author_name}</span>
-              <span className="text-sm">{postDetail?.updated_date}</span>
-            </div>
-            <div className="flex space-x-3">
-              <span>조회수 0</span>
-              <span>북마크 {likesNumber}</span>
-            </div>
-          </div>
-          {postDetail && (
-            <div
-              dangerouslySetInnerHTML={{ __html: postDetail.content }}
-              className="mt-10"
-            />
-          )}
-          <div className="mt-5 mx-auto space-x-5">
+        </div>
+        {postDetail && (
+          <div
+            dangerouslySetInnerHTML={{ __html: postDetail.content }}
+            className="mt-14 px-2"
+          />
+        )}
+        <div className="flex justify-center items-center mt-20 mb-3 mx-auto space-x-5">
+          <div className="flex justify-center items-center space-x-1">
             <button onClick={handleLikeClick}>
               {isLiked ? (
                 <svg
@@ -209,25 +228,26 @@ const DetailPost = () => {
                 </svg>
               )}
             </button>
-            <button>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z"
-                />
-              </svg>
-            </button>
+            <span>{likesNumber}</span>
           </div>
+          <button id="shareLinkButton" onClick={handleCopyUrl}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z"
+              />
+            </svg>
+          </button>
         </div>
-      )}
+      </div>
     </div>
   );
 };

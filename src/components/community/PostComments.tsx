@@ -6,7 +6,7 @@ import {
   updateComment,
 } from "@/api/community/comment";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { Database } from "@/types/supabase";
@@ -14,6 +14,9 @@ import { cls, convertTimestamp } from "@/libs/util";
 import { useAuth } from "@/hooks/useAuth";
 import { createReply, deleteReply, getReplies, updateReply } from "@/api/community/reply";
 import { updatePost } from "@/api/community/post";
+
+import CommentTag from "./CommentTag";
+import { DetailPostProps } from "@/types/types";
 
 type CommentType = Database["public"]["Tables"]["community_comment"]["Row"];
 type NewCommentType =
@@ -25,10 +28,9 @@ type ReplyType = Database["public"]["Tables"]["community_reply"]["Row"];
 type NewReplyType = Database["public"]["Tables"]["community_reply"]["Insert"];
 type EditReplyType = Database["public"]["Tables"]["community_reply"]["Update"];
 
-const PostComments = () => {
+const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
   const router = useRouter();
   const currentUser = useAuth();
-  const { postUid } = useParams() as { postUid: string };
   const { data: comments } = useQuery<CommentType[]>(
     ["comments", postUid],
     () => getComments(postUid),
@@ -38,6 +40,7 @@ const PostComments = () => {
   );
 
   const [newComment, setNewComment] = useState("");
+
   const [editingComment, setEditingComment] = useState("");
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
 
@@ -47,12 +50,13 @@ const PostComments = () => {
   const [editingReplyId, setEditingReplyId] = useState<string | null>(null);
 
   useEffect(() => {
-    updatePost({post_uid: postUid, number_comments: (comments?.length ?? 0) + (replies?.length ?? 0)})
-  }, [comments?.length, replies?.length])
+    updatePost({ post_uid: postUid, number_comments: (comments?.length ?? 0) + (replies?.length ?? 0) });
+  }, [comments?.length, replies?.length]);
+
 
   // 댓글 등록 mutation
   const queryClient = useQueryClient();
-  const createMutation = useMutation(createComment, {
+  const createCommentMutation = useMutation(createComment, {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["comments", postUid] });
       setNewComment("");
@@ -80,12 +84,12 @@ const PostComments = () => {
       updated_date: convertTimestamp(writtenTime),
       isDeleted: false,
     };
-    createMutation.mutate(commentData);
+    createCommentMutation.mutate(commentData);
     setNewComment("");
   };
 
   // 댓글 삭제 mutation
-  const deleteMutation = useMutation(deleteComment, {
+  const deleteCommentMutation = useMutation(deleteComment, {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["comments", postUid] });
       window.alert("댓글이 정상적으로 삭제되었습니다.");
@@ -99,14 +103,14 @@ const PostComments = () => {
   });
 
   // 댓글 삭제 submit handler
-  const handleDelete = (commentUid: string) => {
+  const handleDeleteComment = (commentUid: string) => {
     const ok = window.confirm("댓글을 정말 삭제하시겠습니까?");
     if (!ok) return false;
-    deleteMutation.mutate(commentUid);
+    deleteCommentMutation.mutate(commentUid);
   };
 
   // 댓글 수정 mutation
-  const updateMutation = useMutation(updateComment, {
+  const updateCommentMutation = useMutation(updateComment, {
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["comments", postUid] });
       console.log("댓글 수정 onSuccess data >> ", data);
@@ -117,12 +121,8 @@ const PostComments = () => {
     },
   });
 
-  const handleEditInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setEditingComment(e.currentTarget.value);
-  };
-
   // 댓글 수정 상태 handler
-  const handleEditState = (commentUid: string) => {
+  const handleEditCommentState = (commentUid: string) => {
     const commentToEdit = comments?.find(
       (comment) => comment.comment_uid === commentUid,
     );
@@ -133,13 +133,13 @@ const PostComments = () => {
   };
 
   // 댓글 수정 취소 시 수정 모드 종료
-  const handleCancelEdit = () => {
-    setEditingReply("");
+  const handleCancleEditComment = () => {
+    setEditingComment("");
     setEditingCommentId(null);
   };
 
   // 댓글 수정 submit handler
-  const handleSaveEdit = (commentUid: string) => {
+  const handleSaveEditComment = (commentUid: string) => {
     const writtenTime = new Date();
     const editCommentData: EditCommentType = {
       comment_uid: commentUid,
@@ -147,7 +147,7 @@ const PostComments = () => {
       writer_name: currentUser?.nickname,
       updated_date: convertTimestamp(writtenTime),
     };
-    updateMutation.mutate(editCommentData);
+    updateCommentMutation.mutate(editCommentData);
     setEditingComment("");
     setEditingCommentId(null);
   };
@@ -190,7 +190,7 @@ const PostComments = () => {
         "대댓글이 정상적으로 수정되지 않았습니다. 다시 시도해주세요!",
       );
     },
-  })
+  });
 
   const handleReplySubmit = (commentUid: string) => {
     if (!currentUser) {
@@ -219,7 +219,7 @@ const PostComments = () => {
   };
 
   // 대댓글 수정 상태 handler
-  const handleEditReplyState = (replyUid: string) => {
+  const handleEditReply = (replyUid: string) => {
     const replyToEdit = replies?.find((reply) => reply.reply_uid === replyUid);
     if (replyToEdit) {
       setEditingReply(replyToEdit.content);
@@ -256,174 +256,214 @@ const PostComments = () => {
 
   return (
     <>
-      <div className="mb-10 flex flex-col mx-auto">
-        <div className="border-b py-4">
-          <span>댓글 {(comments?.length ?? 0) + (replies?.length ?? 0)}개</span>
+      <div
+        id="comments-container"
+        className="flex flex-col w-full border-t mb-20"
+      >
+        <div className="py-5 border-b">
+          <p>
+            댓글
+            <span className="text-gray-400 ml-1">
+              {(comments?.length || 0) + (replies?.length || 0)}
+            </span>
+          </p>
         </div>
-        {comments?.map((comment: CommentType) => (
-          <div
-            key={comment.comment_uid}
-            className="flex flex-col px-8 py-4 border-b"
-          >
-            <div className="flex justify-between mb-2">
-              <div className="flex flex-col">
-                <span>{comment.writer_name}</span>
-                <span className="text-sm text-gray-400">
-                  {comment.updated_date}
-                </span>
-              </div>
-              <div className="flex space-x-3 mr-2">
-                {currentUser?.uid === comment.writer_uid && (
-                  <div className="space-x-2">
-                    {editingCommentId === comment.comment_uid ? (
-                      <>
+        <div className="flex flex-col w-full">
+          {comments?.map((comment) => (
+            <div
+              className="flex flex-col w-full border-b"
+              key={comment.comment_uid}
+            >
+              <div className="flex items-start space-x-4 p-4 w-full">
+                <div className="p-6 rounded-full bg-slate-200" />
+                <div className="flex flex-col w-full">
+                  <div className="flex flex-col">
+                    <div className="flex justify-between">
+                      <div className="flex space-x-1 items-center">
+                        <span className="mr-1">{comment.writer_name}</span>
+                        {postDetail?.author_uid === comment.writer_uid ? (
+                          <CommentTag>작성자</CommentTag>
+                        ) : null}
+                        {currentUser?.uid === comment.writer_uid ? (
+                          <CommentTag>내댓글</CommentTag>
+                        ) : null}
+                      </div>
+                      {
+                        editingCommentId === comment.comment_uid
+                          ?
+                          null
+                          :
+                        (currentUser?.uid === comment.writer_uid ? (
+                          <div className="space-x-2 text-sm text-gray-700">
+                            <button
+                              onClick={() => handleEditCommentState(comment.comment_uid)}
+                            >
+                              수정
+                            </button>
+                            <button onClick={() => handleDeleteComment(comment.comment_uid)}>삭제</button>
+                          </div>
+                        ) : null)
+                      }
+                    </div>
+                    <span className="mt-1 text-sm text-gray-400">
+                      {comment.updated_date}
+                    </span>
+                  </div>
+                  {editingCommentId === comment.comment_uid ? (
+                    <div className="flex relative">
+                      <textarea
+                        value={editingComment}
+                        onChange={(e) =>
+                          setEditingComment(e.currentTarget.value)
+                        }
+                        rows={2}
+                        maxLength={200}
+                        className="w-full no-scrollbar mt-2 px-4 pt-3 pb-16 border focus:outline-none resize-none rounded-2xl"
+                      />
+                      <div className="text-sm absolute space-x-2 bottom-4 right-6">
                         <button
-                          onClick={() => handleSaveEdit(comment.comment_uid)}
+                          onClick={handleCancleEditComment}
+                          className="text-gray-400"
                         >
-                          저장
-                        </button>
-                        <button onClick={handleCancelEdit}>취소</button>
-                      </>
-                    ) : (
-                      <>
-                        <button
-                          onClick={() => handleEditState(comment.comment_uid)}
-                        >
-                          수정
+                          취소
                         </button>
                         <button
-                          onClick={() => handleDelete(comment.comment_uid)}
+                          onClick={() => handleSaveEditComment(comment.comment_uid)}
+                          className="text-mainGreen">수정</button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="py-2 pr-6 text-gray-700 mt-2">
+                      <p>{comment.content}</p>
+                      {currentUser ? (
+                        <button
+                          onClick={() => {
+                            if (replyCommentUid === comment.comment_uid) {
+                              setReplyCommentUid(null);
+                            } else {
+                              setReplyCommentUid(comment.comment_uid);
+                            }
+                          }}
+                          className="flex items-center space-x-1 text-sm text-gray-500 mt-4"
                         >
-                          삭제
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth="1.5"
+                            stroke="currentColor"
+                            className="w-4 h-4"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z"
+                            />
+                          </svg>
+                          <span>답글</span>
                         </button>
-                      </>
+                      ) : null}
+                    </div>
+                  )}
+                  <div>
+                    {replyCommentUid === comment.comment_uid && (
+                      <div className="flex flex-col relative">
+                        <textarea
+                          placeholder={`${comment.writer_name}님께 답글 달기`}
+                          value={newReply}
+                          onChange={(e) => setNewReply(e.currentTarget.value)}
+                          rows={2}
+                          maxLength={200}
+                          className="no-scrollbar mt-2 px-4 pt-3 pb-16 border focus:outline-none resize-none rounded-2xl"
+                        />
+                        <button
+                          onClick={() => handleReplySubmit(replyCommentUid)}
+                          className="flex absolute bottom-4 right-8 text-mainGreen"
+                        >
+                          등록
+                        </button>
+                      </div>
                     )}
                   </div>
-                )}
+                </div>
               </div>
-            </div>
-            {editingCommentId === comment.comment_uid ? (
-              <textarea
-                value={editingComment}
-                onChange={handleEditInputChange}
-                rows={4}
-                maxLength={300}
-                className="rounded-md px-4 py-2 pb-5 border focus:outline-none resize-none"
-              />
-            ) : (
-              <>
-                <p>{comment.content}</p>
-                {currentUser ? (
-                  <div className="mt-2">
-                    <button
-                      onClick={() => {
-                        if (replyCommentUid === comment.comment_uid) {
-                          setReplyCommentUid(null);
-                        } else {
-                          setReplyCommentUid(comment.comment_uid);
-                        }
-                      }}
-                      className="text-gray-400 text-sm"
-                    >
-                      답글
-                    </button>
-                  </div>
-                ) : null}
-                {replyCommentUid === comment.comment_uid && (
-                  <div className="flex flex-col">
-                    <textarea
-                      placeholder={`${comment.writer_name}님께 답글 달기`}
-                      value={newReply}
-                      onChange={(e) => setNewReply(e.currentTarget.value)}
-                      rows={4}
-                      maxLength={300}
-                      className="mt-2 px-4 py-3 pb-5 border focus:outline-none resize-none rounded-md"
-                    />
-                    <button
-                      onClick={() => handleReplySubmit(replyCommentUid)}
-                      className="flex"
-                    >
-                      등록
-                    </button>
-                  </div>
-                )}
-
-                {/* ------- 현재 댓글에 대한 대댓글 ------- */}
-                {replies?.map((reply: ReplyType) => {
-                  if (reply.comment_uid === comment.comment_uid) {
-                    return (
-                      <div
-                        key={reply.reply_uid}
-                        className="flex flex-col ml-4 border-y p-4 rounded-sm my-2"
-                      >
-                        <div className="flex justify-between">
-                          <span>{reply.writer_name}</span>
-                          {currentUser?.uid === reply.writer_uid ? (
-                            <div className="space-x-2 text-sm text-gray-700">
-                              {editingReplyId === reply.reply_uid ? (
-                                <>
-                                  <button
-                                    onClick={() =>
-                                      handleSaveEditReply(reply.reply_uid)
-                                    }
-                                  >
-                                    저장
-                                  </button>
-                                  <button onClick={handleCancelEditReply}>
-                                    취소
-                                  </button>
-                                </>
-                              ) : (
-                                <>
-                                  <button
-                                    onClick={() =>
-                                      handleEditReplyState(reply.reply_uid)
-                                    }
-                                  >
-                                    수정
-                                  </button>
-                                  <button
-                                    onClick={() =>
-                                      handleDeleteReply(reply.reply_uid)
-                                    }
-                                  >
-                                    삭제
-                                  </button>
-                                </>
-                              )}
+              {replies
+                ?.filter(
+                  (replyData) => replyData.comment_uid === comment.comment_uid,
+                )
+                .map((reply) => (
+                  <div
+                    className="flex flex-col border-y w-full bg-gray-100 p-4"
+                    key={reply.reply_uid}
+                  >
+                    <div className="flex items-start space-x-4 pl-14">
+                      <div className="p-6 rounded-full bg-slate-200" />
+                      <div className="flex flex-col w-full">
+                        <div className="flex flex-col">
+                          <div className="flex justify-between">
+                            <div className="flex space-x-1 items-center">
+                              <span className="mr-1">{reply.writer_name}</span>
+                              {postDetail?.author_uid === reply.writer_uid ? (
+                                <CommentTag>작성자</CommentTag>
+                              ) : null}
+                              {currentUser?.uid === reply.writer_uid ? (
+                                <CommentTag>내댓글</CommentTag>
+                              ) : null}
                             </div>
-                          ) : null}
-                        </div>
-                        {editingReplyId === reply.reply_uid ? (
-                          <textarea
-                            value={editingReply}
-                            onChange={(e) =>
-                              setEditingReply(e.currentTarget.value)
+                            {
+                              editingReplyId === reply.reply_uid
+                                ?
+                                null
+                                :
+                                (currentUser?.uid === reply.writer_uid ? (
+                                  <div className="space-x-2 text-sm text-gray-700">
+                                    <button onClick={() => handleEditReply(reply.reply_uid)}>수정</button>
+                                    <button onClick={() => handleDeleteReply(reply.reply_uid)}>삭제</button>
+                                  </div>
+                                ) : null)
                             }
-                            rows={4}
-                            maxLength={300}
-                            className="rounded-md px-4 py-2 pb-5 border focus:outline-none resize-none"
-                          />
-                        ) : (
-                          <p>{reply.content}</p>
-                        )}
+                          </div>
+                          <span className="mt-1 text-sm text-gray-400">
+                            {reply.update_date}
+                          </span>
+                        </div>
+                        {
+                          editingReplyId === reply.reply_uid
+                            ?
+                            <div className="flex relative">
+                              <textarea
+                                value={editingReply}
+                                onChange={(e) => setEditingReply(e.currentTarget.value)}
+                                rows={2}
+                                maxLength={200}
+                                className="w-full no-scrollbar mt-2 px-4 pt-3 pb-16 border focus:outline-none resize-none rounded-2xl"
+                                />
+                            <div className="text-sm absolute space-x-2 bottom-4 right-6">
+                              <button
+                                onClick={handleCancelEditReply}
+                                className="text-gray-400"
+                              >
+                                취소
+                              </button>
+                              <button
+                                onClick={() => handleSaveEditReply(reply.reply_uid)}
+                                className="text-mainGreen">수정</button>
+                            </div>
+                    </div>
+                          :
+                          <div className="py-2 pr-6 text-gray-700 mt-2">
+                            <p>{reply.content}</p>
+                          </div>
+                        }
                       </div>
-                    );
-                  }
-                  return null;
-                })}
-              </>
-            )}
-          </div>
-        ))}
-
+                    </div>
+                  </div>
+                ))}
+            </div>
+          ))}
+        </div>
         {/* ------- 새 댓글 등록 textarea -------  */}
-        <div className="relative flex flex-col mt-5 space-y-3">
-          {currentUser ? (
-            <span className="absolute top-6 left-4 font-semibold bg-white">
-              {currentUser?.nickname}
-            </span>
-          ) : null}
+        <div className="relative flex flex-col mt-5">
           <textarea
             id="commentInput"
             placeholder={
@@ -432,21 +472,20 @@ const PostComments = () => {
                 : "댓글을 등록하려면 로그인 해주세요."
             }
             disabled={!currentUser}
-            rows={4}
+            rows={2}
             value={newComment}
             onChange={(e) => setNewComment(e.currentTarget.value)}
-            maxLength={300}
-            className={cls(
-              "px-4 pb-5 border focus:outline-none resize-none rounded-md",
-              currentUser ? "pt-12" : "pt-5",
-            )}
+            maxLength={200}
+            className="w-full no-scrollbar mt-2 px-4 pt-3 pb-16 border focus:outline-none resize-none rounded-2xl"
           />
           <button
             onClick={handleCommentSubmit}
-            disabled={newComment.length === 0}
+            disabled={newComment.length === 0 || !currentUser}
             className={cls(
-              "absolute bottom-3 right-3 px-4 py-1 rounded-md",
-              newComment.length === 0 ? "text-gray-200" : "bg-slate-200",
+              "absolute bottom-2 right-1 px-4 py-1 rounded-md",
+              newComment.length === 0 || !currentUser
+                ? "text-gray-200"
+                : "text-mainGreen",
             )}
           >
             등록
