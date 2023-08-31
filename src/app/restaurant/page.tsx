@@ -7,11 +7,13 @@ import { useEffect } from "react";
 import MarkerLists from "@/components/restaurant/MarkerLists";
 
 const Restaurant = () => {
-  const { Kakao } = window;
+  // const { Kakao } = window;
   useEffect(() => {
-    if (!Kakao.isInitialized()) {
-      window.Kakao.init(process.env.NEXT_PUBLIC_KAKAOMAP_KEY);
-    }
+    window.Kakao.init(process.env.NEXT_PUBLIC_KAKAOMAP_KEY);
+
+    // if (!Kakao.isInitialized()) {
+    //   window.Kakao.init(process.env.NEXT_PUBLIC_KAKAOMAP_KEY);
+    // }
   }, []);
   return (
     <>
