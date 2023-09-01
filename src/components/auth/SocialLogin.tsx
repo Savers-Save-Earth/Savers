@@ -14,14 +14,19 @@ const SocialLogin = () => {
   const [user, setUser] = useState<any>(null);
   const router = useRouter();
   const [nickname, setNickname] = useState<string | null>(null);
-
+  const currentUrl = window.location.href;
+  console.log("url>>>>>", currentUrl);
   const signInWithOAuthAndLog = async (provider: Provider) => {
     try {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: provider,
+        options: {
+          redirectTo: `${currentUrl}/loginloading`,
+        },
       });
 
-      console.log(data);
+      console.log("소셜로그인 되었을 때 data", data);
+
       if (error) {
         throw error;
       }
@@ -48,41 +53,47 @@ const SocialLogin = () => {
     }
   };
 
-  useEffect(() => {
-    // router.push("/login/loginloading");
-    console.log("Header가 마운트됐다.");
-    supabase.auth.onAuthStateChange((event, session) => {
-      console.log("onAuthStateChanged: ", event, session);
-      if (!session?.user) {
-        setUser(null);
-      } else {
-        setUser(session.user);
-        getUserInfo(session.user);
-      }
-    });
-    async function exe() {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
+  // useEffect(() => {
+  //   console.log("마운트됐다.");
+  //   supabase.auth.onAuthStateChange((event, session) => {
+  //     console.log("onAuthStateChanged: ", event, session);
+  //     if (!session?.user) {
+  //       setUser(null);
+  //     } else {
+  //       setUser(session.user);
+  //       getUserInfo(session.user);
+  //       console.log("getUserInfo>>>", getUserInfo);
+  //     }
+  //   });
+  // async function exe() {
+  //   const {
+  //     data: { user },
+  //   } = await supabase.auth.getUser();
 
-      console.log("getUser>>>", user);
+  //   console.log("getUser>>>", user);
 
-      // loginUpdater();
-      await setUser(user);
-      await getUserInfo(user);
-      router.push("/");
-    }
-    exe();
-  }, [user]);
+  //   // loginUpdater();
+  //   await setUser(user);
+  //   await getUserInfo(user);
+  //   router.push("/");
+  // }
+  // exe();
+  // }, []);
 
   const getUserInfo = async (user: any) => {
+    if (!user) {
+      console.log("getUerInfo User 없음");
+      return;
+    }
+
     const { data: userInfo } = await supabase
       .from("user")
-      .select("id")
+      .select("*")
       .eq("uid", user!.id)
       .single();
-    if (userInfo) {
-      console.log("유저정보등록되어있음");
+
+    if (userInfo?.nickname) {
+      console.log("닉네임등록되어있음", userInfo.nickname);
       return;
     } else {
       updateUserInfo(user);
@@ -91,13 +102,19 @@ const SocialLogin = () => {
   };
 
   const updateUserInfo = async (user: any) => {
-    await supabase.from("user").insert({
-      uid: user!.id,
+    const generatedNickname = generateNickname();
+    console.log("nickname>>", generatedNickname);
+    console.log("user가져왔나?>>>", user);
+
+    await supabase.from("user").upsert({
+      uid: user?.id,
       email: user!.user_metadata["email"],
-      nickname: generateNickname,
+      nickname: generatedNickname,
+      provider: user!.app_metadata.provider,
     });
+
     console.log("userInfo반영");
-    setNickname(generateNickname);
+    setNickname(generatedNickname);
   };
 
   const generateNickname = () => {

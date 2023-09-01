@@ -25,19 +25,6 @@ const Header = () => {
     setUserNickname(userNickname);
   };
 
-  const getUser = async () => {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    console.log({ getUser: user });
-    if (!user) {
-      setUser(null);
-    } else {
-      setUser(user);
-      getUserNickname(user.id);
-    }
-  };
-
   useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
       if (!session?.user) {
