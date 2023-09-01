@@ -19,9 +19,8 @@ import copy from "clipboard-copy";
 import { useSetRecoilState } from "recoil";
 import { editPostAtom } from "@/libs/atoms";
 import { DetailPostProps } from "@/types/types";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import Image from "next/image";
+import { ToastInfo } from "@/libs/toastifyAlert";
 
 type LikesType = Database["public"]["Tables"]["like_post"]["Insert"];
 
@@ -112,11 +111,10 @@ const DetailPost = ({ postDetail, postUid }: DetailPostProps) => {
 
   const handleLikeClick = async () => {
     if (!currentUser) {
-      toast.info("로그인이 필요한 서비스 입니다.", {
-        onClose: () => {
-          router.push(`/login`);
-        },
-      });
+      ToastInfo("로그인이 필요한 서비스 입니다.");
+      setTimeout(() => {
+        router.push("/login");
+      }, 4000);
       return false;
     }
 
@@ -263,18 +261,6 @@ const DetailPost = ({ postDetail, postUid }: DetailPostProps) => {
           </button>
         </div>
       </div>
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
     </div>
   );
 };

@@ -4,6 +4,8 @@ import "@/styles/globals.css";
 import type { Metadata } from "next";
 import Script from "next/script";
 import Recoil from "./Recoil";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/ReactToastify.css"
 
 export const metadata: Metadata = {
   title: "Savers",
@@ -41,6 +43,7 @@ export default function RootLayout({
           <QueryProvider>
             <Header />
             {children}
+            <ToastContainer />
           </QueryProvider>
         </Recoil>
       </body>
