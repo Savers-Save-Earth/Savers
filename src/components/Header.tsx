@@ -39,9 +39,7 @@ const Header = () => {
   };
 
   useEffect(() => {
-    console.log("Header가 마운트됐다.");
     supabase.auth.onAuthStateChange((event, session) => {
-      console.log("onAuthStateChanged: ", event, session);
       if (!session?.user) {
         setUser(null);
       } else {
@@ -61,9 +59,11 @@ const Header = () => {
 
   const loginLogoutSwitcher = async () => {
     if (user) {
-      await supabase.auth.signOut();
-      alert("로그아웃되었습니다");
+      const ok = window.confirm("로그아웃 하시겠어요?")
+      if (ok) {
+        await supabase.auth.signOut();
       router.push("/");
+      }
     } else {
       router.push("/login");
     }
