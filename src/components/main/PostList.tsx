@@ -47,7 +47,7 @@ const PostList = () => {
           viewBox="0 0 10 16"
           fill="none"
           onClick={() => router.push(`/community`)}
-          className="cursor-pointer"
+          className="cursor-pointer mb-6 "
         >
           <path
             fillRule="evenodd"

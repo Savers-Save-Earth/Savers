@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { useState, useEffect } from "react";
+
 const Intro = () => {
   const [scrollY, setScrollY] = useState(0);
 
@@ -46,7 +47,7 @@ const Intro = () => {
                 scrollY > 3000 ? Math.max(0, 1 - (scrollY - 3000) / 500) : 1,
               transition: "opacity 0.3s ease", // Add transition for smooth effect
             }}
-            src={require("../../../public/assets/environment5.mp4")}
+            src={require("../../../public/assets/environment6.mp4")}
           />
         </div>
         <div
@@ -101,7 +102,7 @@ const Intro = () => {
           className="fade-element fixed left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-4xl font-bold transition-opacity duration-100 ease-in-out"
           style={{
             textAlign: "center",
-            top: "calc(50% - 20px)",
+            top: "calc(50% - 10px)",
             opacity: Math.min(1, scrollY / 2000),
             transform: `translate(-50%, calc(-50% - ${Math.min(
               20,
@@ -118,7 +119,7 @@ const Intro = () => {
           className="fade-element fixed left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl font-bold text-white transition-opacity duration-100 ease-in-out"
           style={{
             textAlign: "center",
-            top: "calc(75% - 20px)",
+            top: "calc(77% - 15px)",
             opacity: Math.min(1, scrollY / 3000),
             transform: `translate(-50%, calc(-50% - ${Math.min(
               20,

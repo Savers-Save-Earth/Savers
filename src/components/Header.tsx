@@ -59,10 +59,10 @@ const Header = () => {
 
   const loginLogoutSwitcher = async () => {
     if (user) {
-      const ok = window.confirm("로그아웃 하시겠어요?")
+      const ok = window.confirm("로그아웃 하시겠어요?");
       if (ok) {
         await supabase.auth.signOut();
-      router.push("/");
+        router.push("/");
       }
     } else {
       router.push("/login");

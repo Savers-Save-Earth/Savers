@@ -4,6 +4,9 @@ import React, { useState, useEffect } from "react";
 import NicknameMaker from "@/components/auth/NicknameMaker";
 import { Database } from "@/types/supabase";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import kakao from "../../../public/images/kakao.png";
+import facebook from "../../../public/images/facebook.png";
 
 type Provider = "google" | "kakao" | "facebook";
 
@@ -16,9 +19,6 @@ const SocialLogin = () => {
     try {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: provider,
-        options: {
-          redirectTo: "http://localhost:3000/login/loginloading",
-        },
       });
 
       console.log(data);
@@ -49,13 +49,16 @@ const SocialLogin = () => {
   };
 
   useEffect(() => {
-    if (user) {
-      async function exeGetUserInfo() {
-        await getUserInfo();
+    console.log("Header가 마운트됐다.");
+    supabase.auth.onAuthStateChange((event, session) => {
+      console.log("onAuthStateChanged: ", event, session);
+      if (!session?.user) {
+        setUser(null);
+      } else {
+        setUser(session.user);
       }
-      exeGetUserInfo();
-    }
-  }, [user]);
+    });
+  }, []);
 
   const getUserInfo = async () => {
     const { data: userInfo } = await supabase
@@ -93,14 +96,24 @@ const SocialLogin = () => {
         <button onClick={() => signInWithOAuthAndLog("kakao")}>
           <div className="flex items-center justify-center bg-[#FEE500] rounded-full">
             <div className="rounded-full items-center justify-center">
-              <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                width="50" height="50" viewBox="0 0 78.000000 78.000000"
-                preserveAspectRatio="xMidYMid meet">
-                <g transform="translate(0.000000,78.000000) scale(0.100000,-0.100000)"
-                fill="#000000" stroke="none">
-                <path d="M305 551 c-64 -30 -90 -64 -90 -121 0 -43 5 -54 36 -87 33 -35 36
+              <svg
+                version="1.0"
+                xmlns="http://www.w3.org/2000/svg"
+                width="50"
+                height="50"
+                viewBox="0 0 78.000000 78.000000"
+                preserveAspectRatio="xMidYMid meet"
+              >
+                <g
+                  transform="translate(0.000000,78.000000) scale(0.100000,-0.100000)"
+                  fill="#000000"
+                  stroke="none"
+                >
+                  <path
+                    d="M305 551 c-64 -30 -90 -64 -90 -121 0 -43 5 -54 36 -87 33 -35 36
                 -41 27 -72 -5 -18 -7 -35 -4 -38 2 -3 25 9 50 26 27 19 57 31 78 31 43 1 106
-                30 138 64 19 22 25 38 25 76 0 38 -6 54 -25 76 -57 61 -158 81 -235 45z"/>
+                30 138 64 19 22 25 38 25 76 0 38 -6 54 -25 76 -57 61 -158 81 -235 45z"
+                  />
                 </g>
               </svg>
             </div>
@@ -153,12 +166,21 @@ const SocialLogin = () => {
           </svg>
         </button>
         <button onClick={() => signInWithOAuthAndLog("facebook")} className="">
-        <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-          width="50px" height="50px" viewBox="0 0 1072.000000 1067.000000"
-          preserveAspectRatio="xMidYMid meet">
-          <g transform="translate(0.000000,1067.000000) scale(0.100000,-0.100000)"
-          fill="#1877f2" stroke="none">
-          <path d="M5145 10653 c-1562 -62 -3013 -805 -3981 -2038 -921 -1172 -1304
+          <svg
+            version="1.0"
+            xmlns="http://www.w3.org/2000/svg"
+            width="50px"
+            height="50px"
+            viewBox="0 0 1072.000000 1067.000000"
+            preserveAspectRatio="xMidYMid meet"
+          >
+            <g
+              transform="translate(0.000000,1067.000000) scale(0.100000,-0.100000)"
+              fill="#1877f2"
+              stroke="none"
+            >
+              <path
+                d="M5145 10653 c-1562 -62 -3013 -805 -3981 -2038 -921 -1172 -1304
           -2680 -1058 -4165 181 -1088 701 -2096 1488 -2883 829 -829 1881 -1352 3046
           -1512 433 -59 985 -60 1430 0 1246 166 2408 781 3249 1720 664 741 1098 1623
           1276 2592 98 534 112 1138 40 1673 -185 1378 -893 2616 -1990 3481 -991 781
@@ -174,8 +196,9 @@ const SocialLogin = () => {
           8 499 8 l486 0 5 533 c5 438 8 550 23 637 9 58 21 114 25 125 5 11 11 41 15
           67 3 26 10 50 15 53 4 3 11 23 15 45 4 22 11 42 16 46 5 3 9 13 9 23 0 31 116
           249 173 325 84 111 188 212 292 281 33 22 62 43 65 46 10 12 197 98 260 120
-          88 30 219 59 365 82 38 7 598 0 645 -7z"/>
-          </g>
+          88 30 219 59 365 82 38 7 598 0 645 -7z"
+              />
+            </g>
           </svg>
         </button>
       </div>

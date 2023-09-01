@@ -3,6 +3,8 @@ import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import supabase from "@/libs/supabase";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface FormValue {
   email: string;
@@ -31,11 +33,14 @@ const PwLogin: React.FC = () => {
 
     if (error) {
       console.error("로그인 에러:", error);
-      alert("로그인 실패");
+      toast.error("로그인에 실패하였습니다.");
     } else {
       console.log("로그인 성공");
-      alert("로그인⚡️");
-      router.push("/");
+      toast.success("로그인 되었습니다. 🌱", {
+        onClose: () => {
+          router.push(`/`);
+        },
+      });
       loginUpdater();
     }
   };
@@ -127,7 +132,7 @@ const PwLogin: React.FC = () => {
                     message: "올바른 메일 형식이 아닙니다",
                   },
                 })}
-                className="flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50"
+                className="flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50 mb-4 outline-none"
               />
               {errors.email && (
                 <p className="text-red-500">{errors.email.message}</p>
@@ -145,7 +150,7 @@ const PwLogin: React.FC = () => {
                     message: "비밀번호는 최소 6자리 이상이어야 합니다",
                   },
                 })}
-                className="flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50"
+                className="flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50 mb-4 outline-none"
               />
               {errors.password && (
                 <p className="text-red-500">{errors.password.message}</p>
@@ -175,6 +180,18 @@ const PwLogin: React.FC = () => {
           </div>
         </form>
       </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </>
   );
 };
