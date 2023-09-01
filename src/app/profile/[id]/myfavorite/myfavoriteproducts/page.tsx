@@ -56,7 +56,7 @@ const MyFavoriteProducts = ({ params }: { params: { id: string } }) => {
   //
   return (
     <>
-      <div className="flex flex-wrap items-center gap-4 self-stretch bg-white mx-auto">
+      <div className="flex flex-wrap items-center justify-start gap-4 self-stretch bg-white mx-auto">
         {userLikedProducts?.map((product) => (
           <div
             className="flex flex-col items-start gap-[6px] cursor-pointer h-[222px]"

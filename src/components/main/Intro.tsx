@@ -47,7 +47,7 @@ const Intro = () => {
                 scrollY > 3000 ? Math.max(0, 1 - (scrollY - 3000) / 500) : 1,
               transition: "opacity 0.3s ease", // Add transition for smooth effect
             }}
-            src={require("../../../public/assets/environment5.mp4")}
+            src={require("../../../public/assets/environment6.mp4")}
           />
         </div>
         <div

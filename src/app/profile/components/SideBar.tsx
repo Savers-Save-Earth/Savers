@@ -7,6 +7,7 @@ import { Database } from "@/types/supabase";
 import { convertDate } from "@/libs/util";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
+import Image from "next/image";
 
 type Profile = Database["public"]["Tables"]["user"]["Row"];
 export interface DailyMission {
@@ -149,10 +150,10 @@ const SideBar = () => {
       {profile ? (
         <>
           <div className="flex flex-col justify-center items-center gap-6 self-stretch leading-none">
-            <div className="rounded-full overflow-hidden w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 xl:w-40 xl:h-40 flex items-center justify-center">
-              <img
-                className="object-cover w-full h-full"
-                src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/profileImage/default_profile_image.svg?t=2023-09-01T06%3A08%3A07.510Z"
+            <div className="relative w-[140px] h-[140px] object-contain">
+              <Image
+                fill={true}
+                src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/profileImage/default_profile_image.svg"
                 alt="프로필 이미지"
               />
             </div>
@@ -230,9 +231,9 @@ const SideBar = () => {
             <>
               <div
                 onClick={() => setShowModal(false)}
-                className="fixed inset-0 z-50 bg-slate-400 bg-opacity-50"
+                className="fixed inset-0 bg-slate-400 bg-opacity-50"
               ></div>
-              <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+              <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 outline-none focus:outline-none">
                 <div className="border-2 border-slate-600 bg-white relative w-[480px] h-[729px] gap-3 p-8 flex flex-wrap items-center justify-center rounded-2xl">
                   <div className="flex flex-col gap-5 justify-center items-center">
                     <h1 className="text-gray-900 w-full text-2xl font-semibold leading-6">
@@ -285,7 +286,7 @@ const SideBar = () => {
                             </button>
                           </div>
                         </div>
-                        <div className="absolute backface-hidden w-full h-[280px] rounded-2xl">
+                        <div className="border border-[#56BE00] absolute backface-hidden w-full h-[280px] rounded-2xl">
                           {/* 카드 뒷면 */}
                           <svg
                             width="200"
