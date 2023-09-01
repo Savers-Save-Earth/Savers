@@ -141,7 +141,7 @@ const SideBar = () => {
     }
   };
   return (
-    <div className=" sticky top-20 flex flex-col items-start gap-16 text-gray-900">
+    <div className="flex flex-col items-start gap-16 text-gray-900">
       <h1 className="text-[24px] non-italic font-semibold">마이페이지</h1>
       {profile ? (
         <>
@@ -234,7 +234,7 @@ const SideBar = () => {
                             >
                               <div className="relative preserve-3d my-rotate-y-180">
                                 <div className="absolute my-rotate-y-180-withoutkey min-w-[200px] min-h-[280px] bg-[#DBF8D9] rounded-2xl break-words">
-                                  <div className="flex flex-col items-center justify-center text-gray-800 gap-4 min-h-[230px]">
+                                  <div className="px-3 flex flex-col items-center justify-center text-gray-800 gap-4 min-h-[230px]">
                                     <p className=" text-gray-900 fixed top-1 w-full text-[20px] font-semibold text-center ">{missionItem.title}</p>
                                     <p>
                                       {missionItem.content}

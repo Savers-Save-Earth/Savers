@@ -3,7 +3,6 @@
 import supabase from "@/libs/supabase";
 import { convertDate } from "@/libs/util";
 import { Database } from "@/types/supabase";
-import { ListMission } from "@/types/types";
 import React, { useEffect, useState } from "react";
 
 type MissionDoingProp = Database["public"]["Tables"]["missionList"]["Row"];
@@ -32,7 +31,7 @@ const MissionDoing = ({ params }: { params: { id: string } }) => {
         setDailyMission(dailyMission!);
       }
     } catch (error) {
-      console.log("데이터가져올 때 에러남");
+      console.log("데이터가져올 때 에러", error);
       setIsLoading(false);
       return false;
     }
@@ -55,13 +54,13 @@ const MissionDoing = ({ params }: { params: { id: string } }) => {
           {dailyMission?.map((mission) => {
             return (
               <div
-                className=" py-[40px] relative flex flex-col justify-start items-center bg-[#DBF8D9] w-[169px] h-[280px] rounded-2xl break-words gap-[40px] p-1"
+                className="py-[40px] px-3 flex flex-col justify-start items-center bg-[#DBF8D9] w-[169px] h-[280px] rounded-2xl break-words gap-[40px] p-1"
                 key={mission.id}
               >
                 <h1 className="text-center font-semibold">{mission.title}</h1>
                 <div>{mission.content}</div>
                 <button
-                  className="absolute bottom-8 py-1 px-3 rounded-full border-2 border-[#42723e] text-[#42723e] font-semibold hover:bg-[#42723e] hover:text-white hover:duration-500"
+                  className="bottom-8 py-1 px-3 rounded-full border-2 border-[#42723e] text-[#42723e] font-semibold hover:bg-[#42723e] hover:text-white hover:duration-500"
                   onClick={() =>
                     mission.bigCategory === "글쓰기"
                       ? window.open("/community")
