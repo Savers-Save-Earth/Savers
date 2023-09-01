@@ -23,7 +23,6 @@ export const getMissionHandler = async (
   setMissionUid: any,
   bigCategory: string,
 ) => {
-  console.log("currentuser 체크미션==>", currentUser);
   if (!currentUser) {
     console.log("체크미션 커렌트유저 없음");
     return false;
@@ -37,7 +36,6 @@ export const getMissionHandler = async (
     .eq("smallCategory", category)
     .eq("doingYn", true);
   if (error) return error;
-  console.log("missionLists==>", missionLists);
   if (missionLists!.length < 1) return false;
   const matchingMission = missionLists!.find(
     (missionList) => missionList.smallCategory === category,
@@ -58,7 +56,7 @@ export const likeShareMissionHandler = async (
   setMissionUid: any,
   bigCategory: string,
 ) => {
-  console.log("currentuser 체크미션==>", currentUser);
+
   if (!currentUser) {
     console.log("체크미션 커렌트유저 없음");
     return false
@@ -73,7 +71,7 @@ export const likeShareMissionHandler = async (
       .eq("smallCategory", category)
       .eq("doingYn", true);
     if (error) return error;
-    console.log("missionLists==>", missionLists);
+
     if (missionLists!.length < 1) return false;
     const matchingMission = missionLists!.find(
       (missionList) => missionList.smallCategory === category,
