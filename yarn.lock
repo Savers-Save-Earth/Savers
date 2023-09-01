@@ -1088,7 +1088,7 @@ enhanced-resolve@^5.12.0:
     graceful-fs "^4.2.4"
     tapable "^2.2.0"
 
-es-abstract@^1.19.0, es-abstract@^1.20.4, es-abstract@^1.21.2, es-abstract@^1.21.3, es-abstract@^1.22.1:
+es-abstract@^1.19.0, es-abstract@^1.20.4, es-abstract@^1.21.2, es-abstract@^1.21.3:
   version "1.22.1"
   resolved "https://registry.npmjs.org/es-abstract/-/es-abstract-1.22.1.tgz"
   integrity sha512-ioRRcXMO6OFyRpyzV3kE1IIBd4WG5/kltnzdxSCqoP8CMGs/Li+M1uF5o7lOkZVFjDs+NLesthnF66Pg/0q0Lw==
@@ -1892,6 +1892,11 @@ internal-slot@^1.0.3, internal-slot@^1.0.5:
     get-intrinsic "^1.2.0"
     has "^1.0.3"
     side-channel "^1.0.4"
+
+intersection-observer@^0.12.2:
+  version "0.12.2"
+  resolved "https://registry.yarnpkg.com/intersection-observer/-/intersection-observer-0.12.2.tgz#4a45349cc0cd91916682b1f44c28d7ec737dc375"
+  integrity sha512-7m1vEcPCxXYI8HqnL8CKI6siDyD+eIWSwgB3DZA+ZTogxk9I4CDnj4wilt9x/+/QbHI4YG5YZNmC6458/e9Ktg==
 
 is-arguments@^1.0.4:
   version "1.1.1"

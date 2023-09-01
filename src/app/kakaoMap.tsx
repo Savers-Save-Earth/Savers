@@ -164,7 +164,7 @@ const KakaoMap = () => {
             var info = document.createElement("div");
             // info.appendChild(document.createTextNode(pos.title));
             info.className = "overlay";
-            info.innerHTML = `<div style= "background-color:white; padding: 10px; padding-left:15px; width: 250px; border-radius: 20px;">
+            info.innerHTML = `<div style= "background-color:white; padding: 10px; padding-left:15px; width: 250px; border-radius: 20px; cursor:text;">
             <h1 class="infoWindow-name" style="font-weight: bold">${place.place_name}</h1>
              <p class="infoWindow-address" style="font-size: 13px; color: rgb(148 163 184)">${place.address_name}</p>
              <p class="infoWindow-road-address" style="font-size: 13px; color: rgb(148 163 184)">(지번)${place.road_address_name}</p>

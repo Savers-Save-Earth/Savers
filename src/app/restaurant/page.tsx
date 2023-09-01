@@ -2,9 +2,8 @@
 
 import React from "react";
 
-import KakaoMap from "../utils/kakaoMap";
+import KakaoMap from "../kakaoMap";
 import { useEffect } from "react";
-import MarkerLists from "@/components/restaurant/MarkerLists";
 
 const Restaurant = () => {
   // const { Kakao } = window;
