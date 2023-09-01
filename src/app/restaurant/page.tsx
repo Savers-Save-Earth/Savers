@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import KakaoMap from "@/libs/kakaoMap";
+import KakaoMap from "@/app/kakaoMap";
 import { useEffect } from "react";
 import MarkerLists from "@/components/restaurant/MarkerLists";
 
