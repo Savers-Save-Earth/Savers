@@ -3,7 +3,6 @@
 import supabase from "@/libs/supabase";
 import { convertDate } from "@/libs/util";
 import { Database } from "@/types/supabase";
-import { ListMission } from "@/types/types";
 import React, { useEffect, useState } from "react";
 
 type MissionDoingProp = Database["public"]["Tables"]["missionList"]["Row"];
