@@ -18,7 +18,6 @@ const LoginLoading = () => {
 
       console.log("getUser>>>", user);
 
-      // loginUpdater();
       await setUser(user);
       await getUserInfo(user);
       router.push("/");
