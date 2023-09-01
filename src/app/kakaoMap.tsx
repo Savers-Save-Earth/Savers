@@ -226,8 +226,10 @@ const KakaoMap = () => {
 
   return (
     <div>
-      <div className="mt-20">
-        <div className="text-lg mb-3 font-semibold ">비건식당 찾기</div>
+      <div className="pt-28">
+        <h1 className=" mb-3 text-2xl text-gray-900  font-semibold">
+          비건식당 찾기
+        </h1>
         <div id="pageBody">
           <div id="pageLeft" className="  w-[29%] float-left">
             <div id="buttons" className="mb-3">
