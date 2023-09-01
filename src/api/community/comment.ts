@@ -19,8 +19,11 @@ export const updateComment = async (editComment: EditCommentType) => {
  };
 
 // 댓글 삭제
-export const deleteComment = async (commentUid: string): Promise<void> => {
-  await supabase.from("community_comment").delete().eq("comment_uid", commentUid);
+export const deleteComment = async (commentUid: string)=> {
+  // await supabase.from("community_comment").delete().eq("comment_uid", commentUid);
+  const { data, error } = await supabase.from("community_comment").update({isDeleted: true}).eq("comment_uid", commentUid);
+  if (error) return error;
+  return data;
 };
  
 // 댓글 조회
