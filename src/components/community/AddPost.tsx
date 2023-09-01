@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createPost } from "@/api/community/post";
-import { convertDate, convertTimestamp } from "@/libs/util";
+import { convertDate, convertTimestamp, removeHtmlTags } from "@/libs/util";
 
 import { getMissionHandler, updateMissionHandler } from "@/api/mission/checkMission";
 import { NewPostType } from "@/types/types";
@@ -18,7 +18,6 @@ const AddPost: NextComponentType = () => {
   const [category, setCategory] = useState("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-
 
   // 미션 관련 부분(동준님)
   const [missionUid, setMissionUid] = useState<any>("")
@@ -71,11 +70,11 @@ const AddPost: NextComponentType = () => {
       window.alert("카테고리를 선택해주세요!");
       return false;
     }
-    if (title === "") {
+    if (title.length < 1) {
       window.alert("제목을 입력해주세요!");
       return false;
     }
-    if (content === "") {
+    if (removeHtmlTags(content).length < 1) {
       window.alert("본문을 작성해주세요!");
       return false;
     }
