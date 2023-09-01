@@ -17,6 +17,8 @@ export interface DailyMission {
   content: string;
   doingYn: boolean;
   address: string;
+  bigCategory: string;
+  smallCategory: string;
 }
 
 const initialProfile: any = {
@@ -39,6 +41,7 @@ const initialProfile: any = {
 
 const SideBar = () => {
   const currentDate = convertDate(new Date());
+  const currentDateModify = currentDate.replaceAll('-', '.')
   const params = useParams().id as string;
   const decodedParams = decodeURIComponent(params);
 
@@ -149,8 +152,11 @@ const SideBar = () => {
             <div className="rounded-full overflow-hidden w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 xl:w-40 xl:h-40 flex items-center justify-center">
               <img
                 className="object-cover w-full h-full"
-                src={profile.profileImage || ""}
-                alt="이미지"
+                src={
+                  profile.profileImage ||
+                  "https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/profileImage/default_profile_image.svg?t=2023-09-01T06%3A08%3A07.510Z"
+                }
+                alt="프로필 이미지"
               />
             </div>
             <div className="flex flex-col items-center gap-4">
@@ -227,8 +233,9 @@ const SideBar = () => {
             <>
               <div
                 onClick={() => setShowModal(false)}
-                className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
-              >
+                className="fixed inset-0 z-50 bg-slate-400 bg-opacity-50"
+              ></div>
+              <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
                 <div className="border-2 border-slate-600 bg-white relative w-[480px] h-[729px] gap-3 p-8 flex flex-wrap items-center justify-center rounded-2xl">
                   <div className="flex flex-col gap-5 justify-center items-center">
                     <h1 className="text-gray-900 w-full text-2xl font-semibold leading-6">
@@ -239,27 +246,42 @@ const SideBar = () => {
                     </p>
                   </div>
                   <FontAwesomeIcon
-                    className="absolute top-[20px] right-[20px] hover:scale-[120%]"
+                    className="absolute top-[20px] right-[20px] hover:scale-[120%] cursor-pointer"
                     icon={faCircleXmark}
+                    onClick={() => setShowModal(false)}
                   />
-                  {/* 모달 body */}
                   {dailyMission.map((missionItem) => (
                     <div
                       key={missionItem.id}
-                      className="min-w-[200px] min-h-[280px] bg-transparent cursor-pointer group perspective rounded-2xl "
+                      className="min-w-[200px] min-h-[290px] bg-transparent cursor-pointer group perspective rounded-2xl "
                     >
                       <div className="relative preserve-3d my-rotate-y-180">
-                        <div className="absolute my-rotate-y-180-withoutkey min-w-[200px] min-h-[280px] bg-[#DBF8D9] rounded-2xl break-words">
-                          <div className="px-3 flex flex-col items-center justify-center text-gray-800 gap-4 min-h-[230px]">
-                            <p className=" text-gray-900 fixed top-1 w-full text-[20px] font-semibold text-center ">
-                              {missionItem.title}
-                            </p>
-                            <p>{missionItem.content}</p>
-                            {/* <p>안나옴?{missionItem?.address}</p> */}
+                        <div className="absolute my-rotate-y-180-withoutkey min-w-[200px] min-h-[290px] bg-red-400 rounded-2xl break-words">
+                          <div
+                            className="py-6 px-4 flex flex-col justify-between items-center min-w-[200px] min-h-[290px] rounded-2xl break-words bg-[#F3FFEA]"
+                            key={missionItem.id}
+                          >
+                            <div className="flex flex-col gap-3 items-start self-stretch">
+                              <h1 className="text-[24px] leading-[31px] font-semibold text-[#4DAB00]">
+                                {missionItem.title}
+                              </h1>
+
+                              <div className="flex flex-col items-start gap-2 self-stretch">
+                                <div className="min-h-[127px] min-w-[121px] flex py-4 px-2 flex-col justify-between items-start gap-2 self-stretch bg-[#E8FFD4] rounded-2xl">
+                                  <p className="text-[14px] font-medium text-[#5FD100]">
+                                    {missionItem.content}
+                                  </p>
+                                  <p>{currentDateModify}까지</p>
+                                </div>
+                              </div>
+                            </div>
+
                             <button
-                              className="fixed bottom-2 py-1 px-3 rounded-full border-2 border-[#42723e] text-[#42723e] font-semibold hover:bg-[#42723e] hover:text-white hover:duration-500"
+                              className="flex py-2 px-[10px] justify-center items-center gap-[10px] bg-[#5FD100] rounded-2xl text-[#FCFCFD]"
                               onClick={() =>
-                                window.open(`${missionItem?.address}`)
+                                missionItem.bigCategory === "글쓰기"
+                                  ? window.open("/community")
+                                  : window.open("/product")
                               }
                             >
                               미션하러 가기
@@ -267,10 +289,23 @@ const SideBar = () => {
                           </div>
                         </div>
                         <div className="absolute backface-hidden w-full h-[280px] rounded-2xl">
-                          <img
-                            src="https://img4.yna.co.kr/photo/ap/2012/12/11/PAP20121211146101034_P2.jpg"
-                            className="w-full h-full rounded-2xl"
-                          />
+                          {/* 카드 뒷면 */}
+                          <svg width="200" height="280" viewBox="0 0 200 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <rect width="200" height="280" rx="16" fill="#56BE00"/>
+                          <path d="M80.2876 161.888C80.2876 161.888 98.9123 160.641 102.986 147.546C107.061 134.45 108.225 120.107 128.596 112C127.431 119.483 127.781 124.659 128.479 130.895C129.178 137.069 129.469 143.243 127.839 149.292C126.209 155.528 122.426 160.828 116.955 163.759C100.658 172.49 84.3617 165.63 80.2876 161.888Z" fill="url(#paint0_linear_1308_24651)"/>
+                          <path d="M119.712 161.888C119.712 161.888 101.071 160.641 96.9933 147.546C92.9155 134.45 91.7504 120.107 71.3614 112C72.5265 119.483 72.177 124.659 71.4779 130.895C70.8372 137.007 70.5459 143.18 72.1187 149.229C73.8081 155.528 77.5364 160.828 83.0123 163.759C99.3235 172.49 115.635 165.63 119.712 161.888Z" fill="url(#paint1_linear_1308_24651)"/>
+                          <defs>
+                          <linearGradient id="paint0_linear_1308_24651" x1="100.507" y1="112" x2="100.507" y2="168" gradientUnits="userSpaceOnUse">
+                          <stop stop-color="#66AB28"/>
+                          <stop offset="1" stop-color="#4F891C"/>
+                          </linearGradient>
+                          <linearGradient id="paint1_linear_1308_24651" x1="95.3377" y1="112" x2="95.3377" y2="168" gradientUnits="userSpaceOnUse">
+                          <stop stop-color="#8AE63F"/>
+                          <stop offset="1" stop-color="#77CA33"/>
+                          </linearGradient>
+                          </defs>
+                          </svg>
+
                         </div>
                       </div>
                     </div>

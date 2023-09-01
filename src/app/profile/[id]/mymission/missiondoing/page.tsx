@@ -54,13 +54,26 @@ const MissionDoing = ({ params }: { params: { id: string } }) => {
           {dailyMission?.map((mission) => {
             return (
               <div
-                className="py-[40px] px-3 flex flex-col justify-start items-center bg-[#DBF8D9] w-[169px] h-[280px] rounded-2xl break-words gap-[40px] p-1"
+                className="py-6 px-4 flex flex-col justify-between items-center w-[200px] h-[300px] rounded-2xl break-words bg-[#F3FFEA]"
                 key={mission.id}
               >
-                <h1 className="text-center font-semibold">{mission.title}</h1>
-                <div>{mission.content}</div>
+                <div className="flex flex-col gap-3 items-start self-stretch">
+                  <h1 className="text-[24px] leading-[31px] font-semibold text-[#4DAB00]">
+                    {mission.title}
+                  </h1>
+
+                  <div className="flex flex-col items-start gap-2 self-stretch ">
+                    <div className="min-h-[127px] min-w-[121px] flex py-4 px-2 flex-col justify-between items-start gap-2 self-stretch bg-[#E8FFD4] rounded-2xl">
+                      <p className="text-[14px] font-medium text-[#5FD100]">
+                        {mission.content}
+                      </p>
+                      <p>{mission && mission.createdAt && mission.createdAt.replaceAll('-', '.')}까지</p>
+                    </div>
+                  </div>
+                </div>
+
                 <button
-                  className="bottom-8 py-1 px-3 rounded-full border-2 border-[#42723e] text-[#42723e] font-semibold hover:bg-[#42723e] hover:text-white hover:duration-500"
+                  className="flex py-2 px-[10px] justify-center items-center gap-[10px] bg-[#5FD100] rounded-2xl text-[#FCFCFD]"
                   onClick={() =>
                     mission.bigCategory === "글쓰기"
                       ? window.open("/community")
