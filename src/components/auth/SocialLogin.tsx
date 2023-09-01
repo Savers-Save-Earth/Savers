@@ -89,164 +89,95 @@ const SocialLogin = () => {
 
   return (
     <>
-      <div className="flex h-48 justify-center items-start space-x-4 pt-14">
-        <div>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              signInWithOAuthAndLog("kakao");
-            }}
-          >
-            <button className="flex-shrink-0 relative">
-              <div className="flex items-center justify-center">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="48"
-                  height="48"
-                  viewBox="0 0 48 48"
-                  fill="none"
-                  className="absolute"
-                  style={{ top: 0, left: 0 }}
-                >
-                  <path
-                    d="M24 48C10.7429 48 0 37.2571 0 24C0 10.7429 10.7429 0 24 0C37.1429 0 48 10.7429 48 24C48 37.2571 37.2571 48 24 48Z"
-                    fill="#FEE500"
-                  />
-                </svg>
-
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  className="absolute"
-                  style={{ top: 14, left: 14 }} // Adjust the top and left values as needed
-                >
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M10 1.04889C4.76667 1.04889 0 5.25556 0 8.81445C0 11.4811 1.73111 13.8333 4.36778 15.2311L3.25889 19.3044C3.16 19.6656 3.57 19.9522 3.88444 19.7444L8.74778 16.5167C9.15778 16.5567 9.57556 16.58 10 16.58C15.5222 16.58 20 13.1033 20 8.81445C20 5.25556 15.5222 1.04889 10 1.04889Z"
-                    fill="black"
-                  />
-                </svg>
-              </div>
-            </button>
-          </form>
-        </div>
-
-        <div>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              signInWithOAuthAndLog("google");
-            }}
-          >
-            <button className="flex-shrink-0">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="48"
-                height="48"
-                viewBox="0 0 48 48"
-                fill="none"
-              >
-                <g clip-path="url(#clip0_1010_22070)">
-                  <path
-                    d="M24 47.5C11.019 47.5 0.5 36.981 0.5 24C0.5 11.019 11.019 0.5 24 0.5C36.8683 0.5 47.5 11.0205 47.5 24C47.5 36.981 36.981 47.5 24 47.5Z"
-                    fill="white"
-                    stroke="#E4E7EC"
-                  />
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M33.6005 24.2273C33.6005 23.5182 33.5369 22.8364 33.4187 22.1819H24.0005V26.0501H29.3823C29.1505 27.3001 28.4459 28.3591 27.3869 29.0682V31.5773H30.6187C32.5096 29.8364 33.6005 27.2728 33.6005 24.2273Z"
-                    fill="#4285F4"
-                  />
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M24.0003 33.9999C26.7003 33.9999 28.964 33.1044 30.6185 31.5772L27.3867 29.0681C26.4912 29.6681 25.3458 30.0226 24.0003 30.0226C21.3958 30.0226 19.1912 28.2635 18.4049 25.8999H15.064V28.4908C16.7094 31.759 20.0912 33.9999 24.0003 33.9999Z"
-                    fill="#34A853"
-                  />
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M18.4045 25.9001C18.2045 25.3001 18.0909 24.6592 18.0909 24.0001C18.0909 23.341 18.2045 22.7001 18.4045 22.1001V19.5092H15.0636C14.3864 20.8592 14 22.3864 14 24.0001C14 25.6137 14.3864 27.141 15.0636 28.491L18.4045 25.9001Z"
-                    fill="#FBBC05"
-                  />
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M24.0003 17.9773C25.4685 17.9773 26.7867 18.4818 27.8231 19.4727L30.6912 16.6045C28.9594 14.9909 26.6958 14 24.0003 14C20.0912 14 16.7094 16.2409 15.064 19.5091L18.4049 22.1C19.1912 19.7364 21.3958 17.9773 24.0003 17.9773Z"
-                    fill="#EA4335"
-                  />
+      <div className="w-full mt-8 flex items-center justify-center space-x-6">
+        <button onClick={() => signInWithOAuthAndLog("kakao")}>
+          <div className="flex items-center justify-center bg-[#FEE500] rounded-full">
+            <div className="rounded-full items-center justify-center">
+              <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+                width="50" height="50" viewBox="0 0 78.000000 78.000000"
+                preserveAspectRatio="xMidYMid meet">
+                <g transform="translate(0.000000,78.000000) scale(0.100000,-0.100000)"
+                fill="#000000" stroke="none">
+                <path d="M305 551 c-64 -30 -90 -64 -90 -121 0 -43 5 -54 36 -87 33 -35 36
+                -41 27 -72 -5 -18 -7 -35 -4 -38 2 -3 25 9 50 26 27 19 57 31 78 31 43 1 106
+                30 138 64 19 22 25 38 25 76 0 38 -6 54 -25 76 -57 61 -158 81 -235 45z"/>
                 </g>
-                <defs>
-                  <clipPath id="clip0_1010_22070">
-                    <rect width="48" height="48" fill="white" />
-                  </clipPath>
-                </defs>
               </svg>
-            </button>
-          </form>
-        </div>
-
-        <div>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              signInWithOAuthAndLog("facebook");
-            }}
+            </div>
+          </div>
+        </button>
+        <button onClick={() => signInWithOAuthAndLog("google")}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="50"
+            height="50"
+            viewBox="0 0 48 48"
+            fill="none"
           >
-            <button className="flex-shrink-0">
-              <div className="flex items-center justify-center">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="48"
-                  height="48"
-                  viewBox="0 0 48 48"
-                  fill="none"
-                  style={{
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                  }}
-                >
-                  <path
-                    d="M24 48C10.7429 48 0 37.2571 0 24C0 10.7429 10.7429 0 24 0C37.1429 0 48 10.7429 48 24C48 37.2571 37.2571 48 24 48Z"
-                    fill="#1877F2"
-                  />
-                </svg>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  style={{
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                  }}
-                >
-                  <g clip-path="url(#clip0_1010_22161)">
-                    <path
-                      d="M24 12C24 5.376 18.624 0 12 0C5.376 0 0 5.376 0 12C0 17.808 4.128 22.644 9.6 23.76V15.6H7.2V12H9.6V9C9.6 6.684 11.484 4.8 13.8 4.8H16.8V8.4H14.4C13.74 8.4 13.2 8.94 13.2 9.6V12H16.8V15.6H13.2V23.94C19.26 23.34 24 18.228 24 12Z"
-                      fill="white"
-                    />
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_1010_22161">
-                      <rect width="24" height="24" fill="white" />
-                    </clipPath>
-                  </defs>
-                </svg>
-              </div>
-            </button>
-          </form>
-        </div>
+            <g clip-path="url(#clip0_1010_22070)">
+              <path
+                d="M24 47.5C11.019 47.5 0.5 36.981 0.5 24C0.5 11.019 11.019 0.5 24 0.5C36.8683 0.5 47.5 11.0205 47.5 24C47.5 36.981 36.981 47.5 24 47.5Z"
+                fill="white"
+                stroke="#E4E7EC"
+              />
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M33.6005 24.2273C33.6005 23.5182 33.5369 22.8364 33.4187 22.1819H24.0005V26.0501H29.3823C29.1505 27.3001 28.4459 28.3591 27.3869 29.0682V31.5773H30.6187C32.5096 29.8364 33.6005 27.2728 33.6005 24.2273Z"
+                fill="#4285F4"
+              />
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M24.0003 33.9999C26.7003 33.9999 28.964 33.1044 30.6185 31.5772L27.3867 29.0681C26.4912 29.6681 25.3458 30.0226 24.0003 30.0226C21.3958 30.0226 19.1912 28.2635 18.4049 25.8999H15.064V28.4908C16.7094 31.759 20.0912 33.9999 24.0003 33.9999Z"
+                fill="#34A853"
+              />
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M18.4045 25.9001C18.2045 25.3001 18.0909 24.6592 18.0909 24.0001C18.0909 23.341 18.2045 22.7001 18.4045 22.1001V19.5092H15.0636C14.3864 20.8592 14 22.3864 14 24.0001C14 25.6137 14.3864 27.141 15.0636 28.491L18.4045 25.9001Z"
+                fill="#FBBC05"
+              />
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M24.0003 17.9773C25.4685 17.9773 26.7867 18.4818 27.8231 19.4727L30.6912 16.6045C28.9594 14.9909 26.6958 14 24.0003 14C20.0912 14 16.7094 16.2409 15.064 19.5091L18.4049 22.1C19.1912 19.7364 21.3958 17.9773 24.0003 17.9773Z"
+                fill="#EA4335"
+              />
+            </g>
+            <defs>
+              <clipPath id="clip0_1010_22070">
+                <rect width="48" height="48" fill="white" />
+              </clipPath>
+            </defs>
+          </svg>
+        </button>
+        <button onClick={() => signInWithOAuthAndLog("facebook")} className="">
+        <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+          width="50px" height="50px" viewBox="0 0 1072.000000 1067.000000"
+          preserveAspectRatio="xMidYMid meet">
+          <g transform="translate(0.000000,1067.000000) scale(0.100000,-0.100000)"
+          fill="#1877f2" stroke="none">
+          <path d="M5145 10653 c-1562 -62 -3013 -805 -3981 -2038 -921 -1172 -1304
+          -2680 -1058 -4165 181 -1088 701 -2096 1488 -2883 829 -829 1881 -1352 3046
+          -1512 433 -59 985 -60 1430 0 1246 166 2408 781 3249 1720 664 741 1098 1623
+          1276 2592 98 534 112 1138 40 1673 -185 1378 -893 2616 -1990 3481 -991 781
+          -2233 1183 -3500 1132z m1495 -2937 c19 -3 78 -10 130 -16 167 -17 319 -38
+          330 -45 7 -4 10 -168 10 -496 l0 -489 -302 0 c-283 0 -395 -8 -440 -31 -10 -5
+          -24 -9 -31 -9 -7 0 -44 -16 -82 -35 -123 -63 -213 -179 -261 -335 -14 -47 -17
+          -120 -21 -487 l-5 -433 540 0 c439 0 542 -2 551 -13 6 -8 9 -16 6 -18 -2 -3
+          -20 -108 -39 -234 -19 -127 -37 -246 -40 -265 -10 -56 -35 -228 -46 -315 -5
+          -44 -14 -96 -20 -115 -5 -19 -12 -62 -15 -95 -4 -33 -9 -70 -12 -82 l-5 -23
+          -459 0 -459 0 0 -1370 0 -1370 -26 -10 c-14 -6 -47 -10 -74 -10 -30 0 -50 -5
+          -52 -12 -6 -18 -918 -19 -939 -2 -8 6 -42 14 -76 17 -34 3 -66 8 -72 12 -8 4
+          -11 415 -11 1375 l0 1370 -497 2 -498 3 -3 569 c-2 449 0 571 10 578 7 4 232
+          8 499 8 l486 0 5 533 c5 438 8 550 23 637 9 58 21 114 25 125 5 11 11 41 15
+          67 3 26 10 50 15 53 4 3 11 23 15 45 4 22 11 42 16 46 5 3 9 13 9 23 0 31 116
+          249 173 325 84 111 188 212 292 281 33 22 62 43 65 46 10 12 197 98 260 120
+          88 30 219 59 365 82 38 7 598 0 645 -7z"/>
+          </g>
+          </svg>
+        </button>
       </div>
     </>
   );

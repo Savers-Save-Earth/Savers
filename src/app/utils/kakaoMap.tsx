@@ -106,18 +106,17 @@ const KakaoMap = () => {
               place.y,
               place.x,
             );
-
+            if (currentCategory === "비건") {
+              imgSrc = "/images/Pin.svg";
+            }
             if (currentCategory === "비건베이커리") {
-              imgSrc =
-                "https://cdn2.iconfinder.com/data/icons/bakery-and-baking-filled/64/bakery_baked_flour-125-512.png";
+              imgSrc = "/images/bakeryPin.svg";
             }
             if (currentCategory === "비건식당") {
-              imgSrc =
-                "https://cdn4.iconfinder.com/data/icons/food-delivery-59/64/15-Location-256.png";
+              imgSrc = "/images/foodPin.svg";
             }
             if (currentCategory === "비건카페") {
-              imgSrc =
-                "https://cdn1.iconfinder.com/data/icons/location-107/64/08-Coffee-shop-512.png";
+              imgSrc = "/images/cafePin.svg";
             }
             let imgSize = new kakao.maps.Size(38, 38),
               imgOption = { offset: new kakao.maps.Point(27, 69) };
@@ -175,7 +174,7 @@ const KakaoMap = () => {
             content.appendChild(info);
 
             var closeBtn = document.createElement("button");
-            closeBtn.innerHTML = `<p style="border: 1px solid black; margin-top:5px; margin-left: 105px; padding-top:2px; font-weight:bold; background-color: rgb(241 245 249);height:30px; width:30px; border-radius: 50px ">X</p>`;
+            closeBtn.innerHTML = `<p style="border: 1px solid rgb(203 213 225); margin-top:5px; margin-left: 105px; padding-top:2px; font-weight:bold; background-color: rgb(241 245 249);height:30px; width:30px; border-radius: 50px ">X</p>`;
             // 닫기 이벤트 추가
             closeBtn.onclick = function () {
               overlay.setMap(null);
