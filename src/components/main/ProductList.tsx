@@ -51,7 +51,7 @@ const ProductList = () => {
           viewBox="0 0 10 16"
           fill="none"
           onClick={() => router.push(`/product`)}
-          className="cursor-pointer"
+          className="cursor-pointer mb-6 "
         >
           <path
             fillRule="evenodd"
@@ -68,7 +68,7 @@ const ProductList = () => {
           spaceBetween={10}
           slidesPerView={4}
           navigation
-          autoplay={{ delay: 2000 }}
+          autoplay={{ delay: 3000 }}
         >
           {sortedData.map((item) => (
             <SwiperSlide key={item.id}>

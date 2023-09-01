@@ -41,7 +41,7 @@ const initialProfile: any = {
 
 const SideBar = () => {
   const currentDate = convertDate(new Date());
-  const currentDateModify = currentDate.replaceAll('-', '.')
+  const currentDateModify = currentDate.replaceAll("-", ".");
   const params = useParams().id as string;
   const decodedParams = decodeURIComponent(params);
 
@@ -152,10 +152,7 @@ const SideBar = () => {
             <div className="rounded-full overflow-hidden w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 xl:w-40 xl:h-40 flex items-center justify-center">
               <img
                 className="object-cover w-full h-full"
-                src={
-                  profile.profileImage ||
-                  "https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/profileImage/default_profile_image.svg?t=2023-09-01T06%3A08%3A07.510Z"
-                }
+                src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/profileImage/default_profile_image.svg?t=2023-09-01T06%3A08%3A07.510Z"
                 alt="프로필 이미지"
               />
             </div>
@@ -290,22 +287,52 @@ const SideBar = () => {
                         </div>
                         <div className="absolute backface-hidden w-full h-[280px] rounded-2xl">
                           {/* 카드 뒷면 */}
-                          <svg width="200" height="280" viewBox="0 0 200 280" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <rect width="200" height="280" rx="16" fill="#56BE00"/>
-                          <path d="M80.2876 161.888C80.2876 161.888 98.9123 160.641 102.986 147.546C107.061 134.45 108.225 120.107 128.596 112C127.431 119.483 127.781 124.659 128.479 130.895C129.178 137.069 129.469 143.243 127.839 149.292C126.209 155.528 122.426 160.828 116.955 163.759C100.658 172.49 84.3617 165.63 80.2876 161.888Z" fill="url(#paint0_linear_1308_24651)"/>
-                          <path d="M119.712 161.888C119.712 161.888 101.071 160.641 96.9933 147.546C92.9155 134.45 91.7504 120.107 71.3614 112C72.5265 119.483 72.177 124.659 71.4779 130.895C70.8372 137.007 70.5459 143.18 72.1187 149.229C73.8081 155.528 77.5364 160.828 83.0123 163.759C99.3235 172.49 115.635 165.63 119.712 161.888Z" fill="url(#paint1_linear_1308_24651)"/>
-                          <defs>
-                          <linearGradient id="paint0_linear_1308_24651" x1="100.507" y1="112" x2="100.507" y2="168" gradientUnits="userSpaceOnUse">
-                          <stop stop-color="#66AB28"/>
-                          <stop offset="1" stop-color="#4F891C"/>
-                          </linearGradient>
-                          <linearGradient id="paint1_linear_1308_24651" x1="95.3377" y1="112" x2="95.3377" y2="168" gradientUnits="userSpaceOnUse">
-                          <stop stop-color="#8AE63F"/>
-                          <stop offset="1" stop-color="#77CA33"/>
-                          </linearGradient>
-                          </defs>
+                          <svg
+                            width="200"
+                            height="280"
+                            viewBox="0 0 200 280"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <rect
+                              width="200"
+                              height="280"
+                              rx="16"
+                              fill="#56BE00"
+                            />
+                            <path
+                              d="M80.2876 161.888C80.2876 161.888 98.9123 160.641 102.986 147.546C107.061 134.45 108.225 120.107 128.596 112C127.431 119.483 127.781 124.659 128.479 130.895C129.178 137.069 129.469 143.243 127.839 149.292C126.209 155.528 122.426 160.828 116.955 163.759C100.658 172.49 84.3617 165.63 80.2876 161.888Z"
+                              fill="url(#paint0_linear_1308_24651)"
+                            />
+                            <path
+                              d="M119.712 161.888C119.712 161.888 101.071 160.641 96.9933 147.546C92.9155 134.45 91.7504 120.107 71.3614 112C72.5265 119.483 72.177 124.659 71.4779 130.895C70.8372 137.007 70.5459 143.18 72.1187 149.229C73.8081 155.528 77.5364 160.828 83.0123 163.759C99.3235 172.49 115.635 165.63 119.712 161.888Z"
+                              fill="url(#paint1_linear_1308_24651)"
+                            />
+                            <defs>
+                              <linearGradient
+                                id="paint0_linear_1308_24651"
+                                x1="100.507"
+                                y1="112"
+                                x2="100.507"
+                                y2="168"
+                                gradientUnits="userSpaceOnUse"
+                              >
+                                <stop stop-color="#66AB28" />
+                                <stop offset="1" stop-color="#4F891C" />
+                              </linearGradient>
+                              <linearGradient
+                                id="paint1_linear_1308_24651"
+                                x1="95.3377"
+                                y1="112"
+                                x2="95.3377"
+                                y2="168"
+                                gradientUnits="userSpaceOnUse"
+                              >
+                                <stop stop-color="#8AE63F" />
+                                <stop offset="1" stop-color="#77CA33" />
+                              </linearGradient>
+                            </defs>
                           </svg>
-
                         </div>
                       </div>
                     </div>

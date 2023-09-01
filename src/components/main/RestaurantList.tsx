@@ -63,7 +63,7 @@ const RestaurantList = () => {
           viewBox="0 0 10 16"
           fill="none"
           onClick={() => router.push(`/restaurant`)}
-          className="cursor-pointer"
+          className="cursor-pointer mb-6 "
         >
           <path
             fillRule="evenodd"
@@ -80,7 +80,7 @@ const RestaurantList = () => {
         slidesPerView={3}
         navigation
         // navigation={{ prevEl: ".swiper-prev-1", nextEl: ".swiper-next-1" }}
-        autoplay={{ delay: 2000 }}
+        autoplay={{ delay: 3000 }}
         style={{ width: "100%" }}
       >
         {restaurantList

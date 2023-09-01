@@ -16,6 +16,8 @@ import {
   updateMissionHandler,
 } from "@/api/mission/checkMission";
 import { convertDate } from "@/libs/util";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ProductPost = () => {
   const [product, setProduct] = useState<Product>();
@@ -71,7 +73,7 @@ const ProductPost = () => {
     const userId = user.id;
 
     if (!user) {
-      alert("로그인 후 이용 가능합니다.");
+      toast.info("로그인이 필요한 서비스 입니다.");
       return;
     } else {
       // 현재 유저가 해당 게시물에 대해 좋아요를 눌렀는지 안눌렀는지에 대한 데이터
@@ -300,6 +302,18 @@ const ProductPost = () => {
           </div>
         </div>
       </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </section>
   );
 };

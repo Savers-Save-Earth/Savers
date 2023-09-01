@@ -3,9 +3,12 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import supabase from "@/libs/supabase";
 import { useRouter } from "next/navigation";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const DailyMission = () => {
   const [user, setUser] = useState<any>(null);
+  const [isHovered, setIsHovered] = useState(false);
   const router = useRouter();
 
   const fetchUser = async () => {
@@ -31,8 +34,11 @@ const DailyMission = () => {
 
   const missionHandler = () => {
     if (!user) {
-      alert("로그인 후 이용해주세요.");
-      router.push(`/login`);
+      toast.info("로그인이 필요한 서비스 입니다.", {
+        onClose: () => {
+          router.push(`/login`);
+        },
+      });
     } else {
       router.push(`/profile/${user[0]?.nickname}/mymission/missiondoing`);
     }
@@ -43,11 +49,25 @@ const DailyMission = () => {
 
   return (
     <>
-      <h1 className="text-2xl mb-6 font-semibold">일일미션</h1>
+      <h1 className="text-2xl mb-6 font-semibold inline-block">일일미션</h1>
+
+      <span
+        className={`text-gray-700 ml-2 text-[14px] relative cursor-pointer${
+          isHovered ? "hovered" : ""
+        }`}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        ?
+        {isHovered && (
+          <div className="absolute left-1 bottom-3 bg-[#eaf0e5] w-[220px] rounded-md p-1.5">
+            하루마다 주어지는 일일미션을 완료해 나만의 미션 캘린더를 채워보세요!
+          </div>
+        )}
+      </span>
       <div
         onClick={missionHandler}
-        className="flex items-center justify-between w-full rounded-2xl p-8 mb-16 cursor-pointer"
-        style={{ background: "#5FD100" }}
+        className="bg-[#5FD100] flex items-center justify-between w-full rounded-2xl p-8 mb-16 cursor-pointer"
       >
         <div>
           <span className="text-white text-[20px]">지구를 지키는</span>
@@ -73,6 +93,18 @@ const DailyMission = () => {
           />
         </svg>
       </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </>
   );
 };
