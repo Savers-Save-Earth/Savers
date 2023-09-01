@@ -17,6 +17,7 @@ import { updatePost } from "@/api/community/post";
 
 import CommentTag from "./CommentTag";
 import { CommentType, DetailPostProps, EditCommentType, EditReplyType, NewCommentType, NewReplyType, ReplyType } from "@/types/types";
+import Image from "next/image";
 
 const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
   const router = useRouter();
@@ -268,7 +269,13 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
               key={comment.comment_uid}
             >
               <div className="flex items-start space-x-4 p-4 w-full">
-                <div className="p-6 rounded-full bg-slate-200" />
+              <div className="w-12 h-12 relative object-contain">
+                <Image
+                  src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/profileImage/default_profile_image.svg"
+                  alt="profile"
+                  fill={true}
+                />
+              </div>
                 <div className="flex flex-col w-full">
                   <div className="flex flex-col">
                     <div className="flex justify-between">
@@ -286,7 +293,9 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
                           ?
                           null
                           :
-                        (currentUser?.uid === comment.writer_uid ? (
+                          (currentUser?.uid === comment.writer_uid
+                            && comment.isDeleted === false
+                            ? (
                           <div className="space-x-2 text-sm text-gray-700">
                             <button
                               onClick={() => handleEditCommentState(comment.comment_uid)}
@@ -327,8 +336,8 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
                     </div>
                   ) : (
                     <div className="py-2 pr-6 text-gray-700 mt-2">
-                      <p>{comment.content}</p>
-                      {currentUser ? (
+                      {comment.isDeleted === false ? <p>{comment.content}</p> : <p className="text-gray-300">삭제된 댓글입니다.</p>}
+                      {currentUser && comment.isDeleted === false ? (
                         <button
                           onClick={() => {
                             if (replyCommentUid === comment.comment_uid) {
@@ -390,7 +399,13 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
                     key={reply.reply_uid}
                   >
                     <div className="flex items-start space-x-4 pl-14">
-                      <div className="p-6 rounded-full bg-slate-200" />
+                    <div className="w-12 h-12 relative object-contain">
+                      <Image
+                        src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/profileImage/default_profile_image.svg"
+                        alt="profile"
+                        fill={true}
+                      />
+                    </div>
                       <div className="flex flex-col w-full">
                         <div className="flex flex-col">
                           <div className="flex justify-between">
