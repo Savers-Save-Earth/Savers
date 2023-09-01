@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import supabase from "@/libs/supabase";
 import { Product } from "@/types/types";
 import { useRouter } from "next/navigation";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const productCategory = [
   { value: "", label: "전체", img: "assets/product/all.png" },
@@ -100,7 +102,7 @@ const ProductComponent = () => {
     const userId = user.id;
 
     if (!user) {
-      alert("로그인 후 이용 가능합니다.");
+      toast.info("로그인이 필요한 서비스 입니다.");
       return;
     } else {
       // 현재 유저가 해당 게시물에 대해 좋아요를 눌렀는지 안눌렀는지에 대한 데이터
@@ -206,7 +208,7 @@ const ProductComponent = () => {
           onChange={(e) => setSearch(e.target.value)}
           className=" bg-gray-100"
           style={{ width: "300px", outline: "none", display: "flex" }}
-          placeholder="검색어 입력"
+          placeholder="제품명 또는 회사명을 입력해주세요."
         />
       </form>
       <div className="mt-8 grid grid-cols-4 gap-4">
@@ -312,6 +314,18 @@ const ProductComponent = () => {
           </div>
         )}
       </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </>
   );
 };
