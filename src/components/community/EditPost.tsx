@@ -11,7 +11,7 @@ import { updatePost } from "@/api/community/post";
 import { editPostAtom } from "@/libs/atoms";
 import { useRecoilValue } from "recoil";
 
-import { convertTimestamp } from "@/libs/util";
+import { convertTimestamp, removeHtmlTags } from "@/libs/util";
 
 import { EditPostType } from "@/types/types";
 
@@ -67,7 +67,7 @@ const EditPost = () => {
       window.alert("제목을 입력해주세요!");
       return false;
     }
-    if (content === "") {
+    if (removeHtmlTags(content).length < 1) {
       window.alert("본문을 작성해주세요!");
       return false;
     }

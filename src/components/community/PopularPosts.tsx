@@ -55,7 +55,7 @@ const PopularPosts = () => {
         <div className="grid grid-cols-4 gap-2.5">
           {Array.isArray(currentPagePosts) &&
             currentPagePosts.map((post: PostType) => (
-              <Link href={`community/${post.post_uid}`} key={post.post_uid}>
+              <Link href={`/community/${post.post_uid}`} key={post.post_uid}>
                 <div
                   className="w-[170px] h-[250px] border rounded-md p-3  ease-in-out duration-200 shadow-sm"
                   key={post.post_uid}

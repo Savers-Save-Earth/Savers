@@ -68,7 +68,7 @@ const CommunityLayout = ({ children }: { children: React.ReactNode }) => {
             || pathname === "/community/recipe"
             || pathname === "/community/ohjiwan"
           ?
-          <TopButton />
+          <TopButton user={user} />
           :
           null
         }
