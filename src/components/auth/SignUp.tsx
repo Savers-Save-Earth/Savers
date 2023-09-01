@@ -63,7 +63,7 @@ const SignUp: React.FC = () => {
         return;
       }
 
-      alert("가입완료!");
+      alert("회원가입이 완료되었습니다!");
 
       const { data: loginData, error: loginError } =
         await supabase.auth.signInWithPassword({
@@ -77,7 +77,6 @@ const SignUp: React.FC = () => {
         setUserData(loginData);
         userInfoUpdater(loginData, nickname);
         router.push("/");
-        alert("로그인되었습니다!");
       }
     } catch (error) {
       console.error("가입 및 로그인 에러:", error);
