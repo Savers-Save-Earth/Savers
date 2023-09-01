@@ -194,7 +194,7 @@ const DetailPost = ({ postDetail, postUid }: DetailPostProps) => {
             dangerouslySetInnerHTML={{ __html: postDetail.content }}
             className="mt-14 px-2"
           />
-        )}
+        )}\
         <div className="flex justify-center items-center mt-20 mb-3 mx-auto space-x-5">
           <div className="flex justify-center items-center space-x-1">
             <button onClick={handleLikeClick}>

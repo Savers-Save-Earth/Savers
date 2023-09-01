@@ -8,11 +8,9 @@ import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createPost } from "@/api/community/post";
 import { convertDate, convertTimestamp } from "@/libs/util";
-import { Database } from "@/types/supabase";
 
 import { getMissionHandler, updateMissionHandler } from "@/api/mission/checkMission";
-
-type NewPost = Database["public"]["Tables"]["community"]["Insert"];
+import { NewPostType } from "@/types/types";
 
 const currentDate = convertDate(new Date());
 
@@ -59,7 +57,7 @@ const AddPost: NextComponentType = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const writtenTime = new Date();
-    const newPost: NewPost = {
+    const newPost: NewPostType = {
       category,
       title,
       content,

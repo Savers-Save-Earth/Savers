@@ -1,18 +1,19 @@
 "use client";
-import TextEditor from "./quill/TextEditor";
 import { useState } from "react";
 
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updatePost } from "@/api/community/post";
-import { convertTimestamp } from "@/libs/util";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 
+import TextEditor from "./quill/TextEditor";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { updatePost } from "@/api/community/post";
+
 import { editPostAtom } from "@/libs/atoms";
 import { useRecoilValue } from "recoil";
-import { Database } from "@/types/supabase";
 
-type PostType = Database["public"]["Tables"]["community"]["Update"];
+import { convertTimestamp } from "@/libs/util";
+
+import { EditPostType } from "@/types/types";
 
 const EditPost = () => {
   const currentUser = useAuth();
@@ -49,7 +50,7 @@ const EditPost = () => {
       return router.push("/login");
     } else {
       const writtenTime = new Date();
-    const editPost: PostType = {
+    const editPost: EditPostType = {
       post_uid: postDetail?.post_uid,
       category,
       title,
