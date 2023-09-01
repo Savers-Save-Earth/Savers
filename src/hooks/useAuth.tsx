@@ -1,7 +1,7 @@
 import supabase from "@/libs/supabase";
 import { useState, useEffect } from "react";
 
-interface currentUserType {
+export interface currentUserType {
   uid: string;
   nickname: string;
   email: string;
