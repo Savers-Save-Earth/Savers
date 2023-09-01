@@ -16,28 +16,11 @@ import { createReply, deleteReply, getReplies, updateReply } from "@/api/communi
 import { updatePost } from "@/api/community/post";
 
 import CommentTag from "./CommentTag";
-import { DetailPostProps } from "@/types/types";
-
-type CommentType = Database["public"]["Tables"]["community_comment"]["Row"];
-type NewCommentType =
-  Database["public"]["Tables"]["community_comment"]["Insert"];
-type EditCommentType =
-  Database["public"]["Tables"]["community_comment"]["Update"];
-
-type ReplyType = Database["public"]["Tables"]["community_reply"]["Row"];
-type NewReplyType = Database["public"]["Tables"]["community_reply"]["Insert"];
-type EditReplyType = Database["public"]["Tables"]["community_reply"]["Update"];
+import { CommentType, DetailPostProps, EditCommentType, EditReplyType, NewCommentType, NewReplyType, ReplyType } from "@/types/types";
 
 const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
   const router = useRouter();
   const currentUser = useAuth();
-  const { data: comments } = useQuery<CommentType[]>(
-    ["comments", postUid],
-    () => getComments(postUid),
-  );
-  const { data: replies } = useQuery<ReplyType[]>(["replies", postUid], () =>
-    getReplies(postUid),
-  );
 
   const [newComment, setNewComment] = useState("");
 
@@ -49,9 +32,20 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
   const [editingReply, setEditingReply] = useState("");
   const [editingReplyId, setEditingReplyId] = useState<string | null>(null);
 
+  const { data: comments } = useQuery<CommentType[]>(
+    ["comments", postUid],
+    () => getComments(postUid),
+  );
+  const { data: replies } = useQuery<ReplyType[]>(["replies", postUid], () =>
+    getReplies(postUid),
+  );
+
+  const totalCommentsNumber = (comments?.length || 0) + (replies?.length || 0)
+
+  // 댓글 개수 변동 있을 때 Post-number_comments에 숫자 업데이트
   useEffect(() => {
-    updatePost({ post_uid: postUid, number_comments: (comments?.length ?? 0) + (replies?.length ?? 0) });
-  }, [comments?.length, replies?.length]);
+    updatePost({ post_uid: postUid, number_comments: totalCommentsNumber });
+  }, [totalCommentsNumber]);
 
 
   // 댓글 등록 mutation
@@ -192,6 +186,7 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
     },
   });
 
+  // 대댓글 등록 submit handler
   const handleReplySubmit = (commentUid: string) => {
     if (!currentUser) {
       window.alert("대댓글을 등록하려면 로그인 해주세요!");
@@ -233,7 +228,7 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
     setEditingReplyId(null);
   };
 
-  // 대댓글 수정 저장
+  // 대댓글 수정 저장 submit handler
   const handleSaveEditReply = (replyUid: string) => {
     const writtenTime = new Date();
     const editReplyData: EditReplyType = {
@@ -247,7 +242,7 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
     setEditingReplyId(null);
   };
 
-  // 대댓글 삭제
+  // 대댓글 삭제 submit handler
   const handleDeleteReply = (replyUid: string) => {
     const ok = window.confirm("댓글을 정말 삭제하시겠습니까?");
     if (!ok) return false;
@@ -260,13 +255,11 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
         id="comments-container"
         className="flex flex-col w-full border-t mb-20"
       >
-        <div className="py-5 border-b">
-          <p>
-            댓글
+        <div className="flex py-5 border-b">
+          <p>댓글</p>
             <span className="text-gray-400 ml-1">
-              {(comments?.length || 0) + (replies?.length || 0)}
+              {totalCommentsNumber}
             </span>
-          </p>
         </div>
         <div className="flex flex-col w-full">
           {comments?.map((comment) => (

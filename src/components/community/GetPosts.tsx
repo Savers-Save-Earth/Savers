@@ -7,14 +7,12 @@ import { getPosts } from "@/api/community/post";
 
 import { usePathname } from "next/navigation";
 
-import { Database } from "@/types/supabase";
 import { removeHtmlTags } from "@/libs/util";
 import Loading from "@/app/loading";
-
-import { ToTalDataType } from "@/types/types";
 import CategoryTag from "./CategoryTag";
 
-type PostType = Database["public"]["Tables"]["community"]["Row"];
+import { PostType, ToTalDataType } from "@/types/types";
+
 type QueryKeyMap = {
   [key: string]: string[];
 };

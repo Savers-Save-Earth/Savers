@@ -43,7 +43,15 @@ export interface ListMission {
   address: string;
 }
 
-type PostType = Database["public"]["Tables"]["community"]["Row"];
+export type PostType = Database["public"]["Tables"]["community"]["Row"];
+export type NewPostType = Database["public"]["Tables"]["community"]["Insert"];
+export type EditPostType = Database["public"]["Tables"]["community"]["Update"];
+export type CommentType = Database["public"]["Tables"]["community_comment"]["Row"];
+export type NewCommentType = Database["public"]["Tables"]["community_comment"]["Insert"];
+export type EditCommentType = Database["public"]["Tables"]["community_comment"]["Update"];
+export type ReplyType = Database["public"]["Tables"]["community_reply"]["Row"];
+export type NewReplyType = Database["public"]["Tables"]["community_reply"]["Insert"];
+export type EditReplyType = Database["public"]["Tables"]["community_reply"]["Update"];
 export interface ToTalDataType {
   posts: PostType[];
   page: number;
