@@ -1,18 +1,19 @@
 "use client";
-import TextEditor from "./quill/TextEditor";
 import { useState } from "react";
 
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updatePost } from "@/api/community/post";
-import { convertTimestamp } from "@/libs/util";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 
+import TextEditor from "./quill/TextEditor";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { updatePost } from "@/api/community/post";
+
 import { editPostAtom } from "@/libs/atoms";
 import { useRecoilValue } from "recoil";
-import { Database } from "@/types/supabase";
 
-type PostType = Database["public"]["Tables"]["community"]["Update"];
+import { convertTimestamp, removeHtmlTags } from "@/libs/util";
+
+import { EditPostType } from "@/types/types";
 
 const EditPost = () => {
   const currentUser = useAuth();
@@ -49,7 +50,7 @@ const EditPost = () => {
       return router.push("/login");
     } else {
       const writtenTime = new Date();
-    const editPost: PostType = {
+    const editPost: EditPostType = {
       post_uid: postDetail?.post_uid,
       category,
       title,
@@ -66,7 +67,7 @@ const EditPost = () => {
       window.alert("제목을 입력해주세요!");
       return false;
     }
-    if (content === "") {
+    if (removeHtmlTags(content).length < 1) {
       window.alert("본문을 작성해주세요!");
       return false;
     }

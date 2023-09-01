@@ -1,15 +1,15 @@
 "use client";
+import { useState } from "react";
+import Link from "next/link";
 
 import { getPopularPosts } from "@/api/community/post";
+import { useQuery } from "@tanstack/react-query";
+
+import { PostType } from "@/types/types";
+
 import Loading from "@/app/loading";
 import { removeHtmlTags } from "@/libs/util";
-import { Database } from "@/types/supabase";
-import { useQuery } from "@tanstack/react-query";
-import Link from "next/link";
-import { useState } from "react";
 import CategoryTag from "./CategoryTag";
-
-type PostType = Database["public"]["Tables"]["community"]["Row"];
 
 const PopularPosts = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -32,7 +32,7 @@ const PopularPosts = () => {
       <h1 className="text-xl flex mb-8">인기 글</h1>
       {currentPage === 2 && (
         <button
-          className="z-10 absolute -left-[16px] top-1/2 p-1.5 rounded-full bg-mainGreen text-white shadow-md hover:scale-110 duration-150 ease-in-out"
+          className="z-10 absolute -left-[32px] top-1/2 p-1.5 rounded-full bg-white text-gray-900 shadow-md duration-150 ease-in-out"
           onClick={() => setCurrentPage((prev) => prev - 1)}
         >
           <svg
@@ -41,7 +41,7 @@ const PopularPosts = () => {
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            className="w-5 h-5"
+            className="w-4 h-4"
           >
             <path
               strokeLinecap="round"
@@ -55,9 +55,9 @@ const PopularPosts = () => {
         <div className="grid grid-cols-4 gap-2.5">
           {Array.isArray(currentPagePosts) &&
             currentPagePosts.map((post: PostType) => (
-              <Link href={`community/${post.post_uid}`} key={post.post_uid}>
+              <Link href={`/community/${post.post_uid}`} key={post.post_uid}>
                 <div
-                  className="w-[170px] h-[250px] border rounded-md p-3 hover:scale-105 ease-in-out duration-200 shadow-sm"
+                  className="w-[170px] h-[250px] border rounded-md p-3  ease-in-out duration-200 shadow-sm"
                   key={post.post_uid}
                 >
                   <h2 className="text-base text-gray-800 font-semibold">
@@ -112,7 +112,7 @@ const PopularPosts = () => {
       </div>
       {currentPage === 1 && (
         <button
-          className="z-10 absolute -right-[12px] top-1/2 p-1.5 rounded-full bg-mainGreen text-white shadow-md hover:scale-110 duration-150 ease-in-out"
+          className="z-10 absolute -right-[32px] top-1/2 p-1.5 rounded-full bg-white text-gray-900 shadow-md duration-150 ease-in-out"
           onClick={() => setCurrentPage((prev) => prev + 1)}
         >
           <svg
@@ -121,7 +121,7 @@ const PopularPosts = () => {
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            className="w-5 h-5"
+            className="w-4 h-4"
           >
             <path
               strokeLinecap="round"

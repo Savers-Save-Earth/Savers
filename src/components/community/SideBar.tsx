@@ -8,9 +8,9 @@ const SideBar = () => {
   return (
     <>
       <aside className="flex flex-col">
-        <div className="flex flex-col space-y-4">
+        <div className="flex flex-col space-y-10">
           <h1 className="text-2xl font-semibold">커뮤니티</h1>
-            <ul className="flex flex-col space-y-3">
+            <ul className="flex flex-col space-y-3 text-[20px]">
               <li className={cls(pathname === "/community" ? "text-mainGreen" : "text-gray-500")}>
                 <Link href={"/community"}>
                   전체
