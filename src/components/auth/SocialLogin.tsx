@@ -56,11 +56,25 @@ const SocialLogin = () => {
         setUser(null);
       } else {
         setUser(session.user);
+        getUserInfo(session.user);
       }
     });
-  }, []);
+    async function exe() {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
 
-  const getUserInfo = async () => {
+      console.log("getUser>>>", user);
+
+      // loginUpdater();
+      await setUser(user);
+      await getUserInfo(user);
+      router.push("/");
+    }
+    exe();
+  }, [user]);
+
+  const getUserInfo = async (user: any) => {
     const { data: userInfo } = await supabase
       .from("user")
       .select("id")
@@ -70,11 +84,12 @@ const SocialLogin = () => {
       console.log("유저정보등록되어있음");
       return;
     } else {
-      updateUserInfo();
+      updateUserInfo(user);
+      console.log("닉네임 및 유저정보 등록하러감");
     }
   };
 
-  const updateUserInfo = async () => {
+  const updateUserInfo = async (user: any) => {
     await supabase.from("user").insert({
       uid: user!.id,
       email: user!.user_metadata["email"],
