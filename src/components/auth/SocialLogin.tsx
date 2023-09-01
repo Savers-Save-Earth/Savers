@@ -207,6 +207,7 @@ const SocialLogin = () => {
                   viewBox="0 0 48 48"
                   fill="none"
                   style={{
+                    position: "absolute",
                     top: "50%",
                     left: "50%",
                     transform: "translate(-50%, -50%)",
@@ -224,6 +225,7 @@ const SocialLogin = () => {
                   viewBox="0 0 24 24"
                   fill="none"
                   style={{
+                    position: "absolute",
                     top: "50%",
                     left: "50%",
                     transform: "translate(-50%, -50%)",
