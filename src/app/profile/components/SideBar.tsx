@@ -149,8 +149,8 @@ const SideBar = () => {
             <div className="rounded-full overflow-hidden w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 xl:w-40 xl:h-40 flex items-center justify-center">
               <img
                 className="object-cover w-full h-full"
-                src={profile.profileImage || ""}
-                alt="이미지"
+                src={profile.profileImage || "https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/profileImage/default_profile_image.svg?t=2023-09-01T06%3A08%3A07.510Z"}
+                alt="프로필 이미지"
               />
             </div>
             <div className="flex flex-col items-center gap-4">
@@ -239,7 +239,7 @@ const SideBar = () => {
                     </p>
                   </div>
                   <FontAwesomeIcon
-                    className="absolute top-[20px] right-[20px] hover:scale-[120%]"
+                    className="absolute top-[20px] right-[20px] hover:scale-[120%] cursor-pointer"
                     icon={faCircleXmark}
                   />
                   {/* 모달 body */}
