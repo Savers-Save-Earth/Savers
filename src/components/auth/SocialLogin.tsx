@@ -49,6 +49,7 @@ const SocialLogin = () => {
   };
 
   useEffect(() => {
+    // router.push("/login/loginloading");
     console.log("Header가 마운트됐다.");
     supabase.auth.onAuthStateChange((event, session) => {
       console.log("onAuthStateChanged: ", event, session);
