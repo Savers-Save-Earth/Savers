@@ -31,7 +31,7 @@ export default function UserLikedPost({ post }: any) {
 
     getPostDetail(post.post_uid);
   }, [post.post_uid]);
-  console.log("userLikedPost==>",userLikedPost)
+
   return (
     <>
       {isLoading ? (

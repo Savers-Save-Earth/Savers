@@ -141,7 +141,7 @@ const SideBar = () => {
     }
   };
   return (
-    <div className=" sticky top-20 flex flex-col items-start gap-16 text-gray-900">
+    <div className="flex flex-col items-start gap-16 text-gray-900">
       <h1 className="text-[24px] non-italic font-semibold">마이페이지</h1>
       {profile ? (
         <>
@@ -154,32 +154,40 @@ const SideBar = () => {
               />
             </div>
             <div className="flex flex-col items-center gap-4">
-              <p className="text-gray-900 text-[24px] non-italic font-semibold leading-7">{profile.nickname}</p>
-              <button className="text-gray-400 text-[16px] non-italic font-normal leading-4">프로필 수정</button>
-              </div>
+              <p className="text-gray-900 text-[24px] non-italic font-semibold leading-7">
+                {profile.nickname}
+              </p>
+              <button className="text-gray-400 text-[16px] non-italic font-normal leading-4">
+                프로필 수정
+              </button>
+            </div>
           </div>
 
           <div className="flex flex-col items-start gap-6">
-            <button className="btn-sidebar"
+            <button
+              className="btn-sidebar"
               onClick={() => router.push(`/profile/${searchId}/myprofile`)}
             >
               프로필
             </button>
-            <button className="btn-sidebar"
+            <button
+              className="btn-sidebar"
               onClick={() =>
                 router.push(`/profile/${searchId}/mymission/missiondoing`)
               }
             >
               나의 미션
             </button>
-            <button className="btn-sidebar"
+            <button
+              className="btn-sidebar"
               onClick={() =>
                 router.push(`/profile/${searchId}/mycommunity/myposts`)
               }
             >
               커뮤니티 활동
             </button>
-            <button className="btn-sidebar"
+            <button
+              className="btn-sidebar"
               onClick={() =>
                 router.push(
                   `/profile/${searchId}/myfavorite/myfavoriteproducts`,
@@ -189,7 +197,8 @@ const SideBar = () => {
               좋아요
             </button>
             {user && user.id == profile.uid ? (
-              <button className="btn-sidebar"
+              <button
+                className="btn-sidebar"
                 onClick={() => {
                   // 일일미션 뽑기 함수
                   insertMissionListData();
@@ -202,7 +211,7 @@ const SideBar = () => {
             ) : (
               ""
             )}
-            {user && user.id == profile.uid ? (
+            {/* {user && user.id == profile.uid ? (
               <button className="btn-sidebar"
                 onClick={() => {
                   router.push(`/profile/${searchId}/setting`);
@@ -212,7 +221,7 @@ const SideBar = () => {
               </button>
             ) : (
               ""
-            )}
+            )} */}
           </div>
           {showModal && (
             <>
@@ -222,44 +231,52 @@ const SideBar = () => {
               >
                 <div className="border-2 border-slate-600 bg-white relative w-[480px] h-[729px] gap-3 p-8 flex flex-wrap items-center justify-center rounded-2xl">
                   <div className="flex flex-col gap-5 justify-center items-center">
-                  <h1 className="text-gray-900 w-full text-2xl font-semibold leading-6">오늘의 세이버 일일미션 랜덤 뽑기</h1> 
-                  <p className="text-center text-gray-400 w-full text-lg font-normal leading-4">미션을 클리어하고 배지를 받아보세요!</p>
+                    <h1 className="text-gray-900 w-full text-2xl font-semibold leading-6">
+                      오늘의 세이버 일일미션 랜덤 뽑기
+                    </h1>
+                    <p className="text-center text-gray-400 w-full text-lg font-normal leading-4">
+                      미션을 클리어하고 배지를 받아보세요!
+                    </p>
                   </div>
-                  <FontAwesomeIcon className="absolute top-[20px] right-[20px] hover:scale-[120%]" icon={faCircleXmark} />
-                    {/* 모달 body */}
-                          {dailyMission.map((missionItem) => (
-                            <div
-                              key={missionItem.id}
-                              className="min-w-[200px] min-h-[280px] bg-transparent cursor-pointer group perspective rounded-2xl "
+                  <FontAwesomeIcon
+                    className="absolute top-[20px] right-[20px] hover:scale-[120%]"
+                    icon={faCircleXmark}
+                  />
+                  {/* 모달 body */}
+                  {dailyMission.map((missionItem) => (
+                    <div
+                      key={missionItem.id}
+                      className="min-w-[200px] min-h-[280px] bg-transparent cursor-pointer group perspective rounded-2xl "
+                    >
+                      <div className="relative preserve-3d my-rotate-y-180">
+                        <div className="absolute my-rotate-y-180-withoutkey min-w-[200px] min-h-[280px] bg-[#DBF8D9] rounded-2xl break-words">
+                          <div className="px-3 flex flex-col items-center justify-center text-gray-800 gap-4 min-h-[230px]">
+                            <p className=" text-gray-900 fixed top-1 w-full text-[20px] font-semibold text-center ">
+                              {missionItem.title}
+                            </p>
+                            <p>{missionItem.content}</p>
+                            {/* <p>안나옴?{missionItem?.address}</p> */}
+                            <button
+                              className="fixed bottom-2 py-1 px-3 rounded-full border-2 border-[#42723e] text-[#42723e] font-semibold hover:bg-[#42723e] hover:text-white hover:duration-500"
+                              onClick={() =>
+                                window.open(`${missionItem?.address}`)
+                              }
                             >
-                              <div className="relative preserve-3d my-rotate-y-180">
-                                <div className="absolute my-rotate-y-180-withoutkey min-w-[200px] min-h-[280px] bg-[#DBF8D9] rounded-2xl break-words">
-                                  <div className="flex flex-col items-center justify-center text-gray-800 gap-4 min-h-[230px]">
-                                    <p className=" text-gray-900 fixed top-1 w-full text-[20px] font-semibold text-center ">{missionItem.title}</p>
-                                    <p>
-                                      {missionItem.content}
-                                    </p>
-                                    {/* <p>안나옴?{missionItem?.address}</p> */}
-                                    <button className="fixed bottom-2 py-1 px-3 rounded-full border-2 border-[#42723e] text-[#42723e] font-semibold hover:bg-[#42723e] hover:text-white hover:duration-500"
-                                      onClick={() =>
-                                        window.open(`${missionItem?.address}`)
-                                      }
-                                    >
-                                      미션하러 가기
-                                    </button>
-                                  </div>
-                                </div>
-                                <div className="absolute backface-hidden w-full h-[280px] rounded-2xl">
-                                  <img 
-                                    src="https://img4.yna.co.kr/photo/ap/2012/12/11/PAP20121211146101034_P2.jpg"
-                                    className="w-full h-full rounded-2xl"
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                          ))}
+                              미션하러 가기
+                            </button>
+                          </div>
+                        </div>
+                        <div className="absolute backface-hidden w-full h-[280px] rounded-2xl">
+                          <img
+                            src="https://img4.yna.co.kr/photo/ap/2012/12/11/PAP20121211146101034_P2.jpg"
+                            className="w-full h-full rounded-2xl"
+                          />
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                  ))}
+                </div>
+              </div>
             </>
           )}
         </>

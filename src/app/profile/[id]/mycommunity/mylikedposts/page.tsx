@@ -24,12 +24,11 @@ const MyLikedPosts = ({ params }: { params: { id: string } }) => {
     try {
       let { data:user } = await supabase.from("user").select("uid").eq("nickname", decodedParams)
       if (user!.length === 0) {
-        console.log("에러난듯??")
+
 setUserLikedPosts([])
 return <div>죄송합니다. 에러가 발생했습니다.</div>;
       }
       else {
-        console.log("user===>",user)
         fetchCommunity(user![0].uid)
       }
 
@@ -40,7 +39,7 @@ return <div>죄송합니다. 에러가 발생했습니다.</div>;
   }
   const fetchCommunity = async (id: string) => {
     try {
-      console.log("id",id)
+
       let { data: posts, count } = await supabase
         .from("like_post")
         .select("*", { count: "exact" })
@@ -79,7 +78,7 @@ return <div>죄송합니다. 에러가 발생했습니다.</div>;
   const handleLoadMore = () => {
     setLoadCount((prev) => prev + loadBoundaryValue);
   };
-  console.log("userLikedPosts--<",userLikedPosts)
+
   return (
     <div className="space-y-4">
       {userLikedPosts.length === 0 ? (

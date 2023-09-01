@@ -10,9 +10,9 @@ export default async function profileLayout({
   // const profiledata = await getProfile(id)
   return (
     <div className="flex h-full">
-      <div className="mt-20 w-[1200px] h-[3000px] flex items-start gap-x-8 bg-lightgreen bg-gray-100">
-        <div className="w-[379px] h-full flex flex-col">
-          <SideBar />
+      <div className="mt-20 w-[1200px] h-full flex items-start gap-x-8 bg-lightgreen bg-gray-100">
+        <div className="sticky top-20 w-[379px] h-full flex flex-col">
+          <SideBar/>
         </div>
         <section className="w-[789px] flex flex-col shrink-0 self-stretch p-8 bg-white">
           {children}

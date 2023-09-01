@@ -112,38 +112,45 @@ const PwLogin: React.FC = () => {
           </defs>
         </svg>
       </div>
+
       <div>
         <form onSubmit={handleSubmit(loginButtonHandler)}>
           <div className="pt-16 flex flex-col items-center gap-4 self-stretch">
-            <input
-              type="email"
-              placeholder="메일주소를 입력하세요"
-              {...register("email", {
-                required: "메일을 입력하세요",
-                pattern: {
-                  value: /^\S+@\S+$/i,
-                  message: "올바른 메일 형식이 아닙니다",
-                },
-              })}
-              className="flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50"
-            />
-            {errors.email && <p>{errors.email.message}</p>}
+            <div className="flex flex-grow flex-col">
+              <input
+                type="email"
+                placeholder="메일주소를 입력하세요"
+                {...register("email", {
+                  required: "메일을 입력하세요",
+                  pattern: {
+                    value: /^\S+@\S+$/i,
+                    message: "올바른 메일 형식이 아닙니다",
+                  },
+                })}
+                className="flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50"
+              />
+              {errors.email && (
+                <p className="text-red-500">{errors.email.message}</p>
+              )}
+            </div>
 
-            <input
-              type="password"
-              placeholder="패스워드를 입력하세요"
-              {...register("password", {
-                required: "비밀번호를 입력하세요",
-                minLength: {
-                  value: 6,
-                  message: "비밀번호는 최소 6자리 이상이어야 합니다",
-                },
-              })}
-              className="flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50"
-            />
-            {errors.password && (
-              <p className="text-red-500">{errors.password.message}</p>
-            )}
+            <div className="flex flex-grow flex-col">
+              <input
+                type="password"
+                placeholder="패스워드를 입력하세요"
+                {...register("password", {
+                  required: "비밀번호를 입력하세요",
+                  minLength: {
+                    value: 6,
+                    message: "비밀번호는 최소 6자리 이상이어야 합니다",
+                  },
+                })}
+                className="flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50"
+              />
+              {errors.password && (
+                <p className="text-red-500">{errors.password.message}</p>
+              )}
+            </div>
 
             <button
               type="submit"
