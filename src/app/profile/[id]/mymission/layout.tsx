@@ -16,7 +16,7 @@ export default function MymissionLayout ({
         <div className="flex gap-10 ">
         <MyMissionTopBar/>
       </div>
-      <section className="">{children}</section>
+      <section>{children}</section>
     </div>
   );
 }
