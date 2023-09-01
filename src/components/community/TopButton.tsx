@@ -1,13 +1,17 @@
+import { currentUserType } from "@/hooks/useAuth";
+import { cls } from "@/libs/util";
 import React from "react";
 
-const TopButton = () => {
+const TopButton = ({ user }: { user: currentUserType | null; }) => {
   const handleScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
   return (
     <button
       onClick={handleScrollToTop}
-      className="fixed right-10 bottom-28 bg-white text-gray-400 rounded-full p-4 shadow-lg hover:bg-melon-400 transition ease-in-out duration-200"
+      className={cls("fixed right-10 bg-white text-gray-400 rounded-full p-4 shadow-lg hover:bg-melon-400 transition ease-in-out duration-200",
+        user ? "bottom-28" : "bottom-10"
+      )}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
