@@ -54,7 +54,7 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
   const queryClient = useQueryClient();
   const createCommentMutation = useMutation(createComment, {
     onSuccess: () => {
-      ToastSuccess("댓글이 정상적으로 등록되었습니다.")
+      ToastSuccess("댓글이 등록되었습니다")
       queryClient.invalidateQueries({ queryKey: ["comments", postUid] });
       setNewComment("");
     },
@@ -89,7 +89,7 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
   const deleteCommentMutation = useMutation(deleteComment, {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["comments", postUid] });
-      ToastSuccess("댓글이 정상적으로 삭제되었습니다.");
+      ToastSuccess("댓글이 정상적으로 삭제되었습니다");
     },
     onError: (error) => {
       console.error("댓글 삭제 에러:", error);
@@ -110,7 +110,6 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
   const updateCommentMutation = useMutation(updateComment, {
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["comments", postUid] });
-      console.log("댓글 수정 onSuccess data >> ", data);
     },
     onError: (error) => {
       console.error("댓글 수정 에러:", error);

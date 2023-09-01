@@ -18,6 +18,7 @@ import {
 import { convertDate } from "@/libs/util";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { ToastSuccess } from "@/libs/toastifyAlert";
 
 const ProductPost = () => {
   const [product, setProduct] = useState<Product>();
@@ -152,7 +153,7 @@ const ProductPost = () => {
     const userId = user.id;
     const currentURL = window.location.href;
     navigator.clipboard.writeText(currentURL).then(() => {
-      alert("링크가 복사되었습니다.");
+      ToastSuccess("링크가 복사되었습니다.")
     });
     // 제품 공유하기 눌렀을 때 얻는 배지
     if (user) {
