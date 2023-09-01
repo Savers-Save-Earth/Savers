@@ -4,17 +4,16 @@ import Link from "next/link";
 import { useMemo } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getPosts } from "@/api/community/post";
+import { InView, useInView } from "react-intersection-observer";
 
 import { usePathname } from "next/navigation";
 
-import { Database } from "@/types/supabase";
 import { removeHtmlTags } from "@/libs/util";
 import Loading from "@/app/loading";
-
-import { ToTalDataType } from "@/types/types";
 import CategoryTag from "./CategoryTag";
 
-type PostType = Database["public"]["Tables"]["community"]["Row"];
+import { PostType, ToTalDataType } from "@/types/types";
+
 type QueryKeyMap = {
   [key: string]: string[];
 };
@@ -73,10 +72,14 @@ const GetPosts = () => {
       .flat();
       // flat() : 모든 하위 배열 요소를 지정한 깊이까지 재귀적으로 이어붙인 새로운 배열 생성
   }, [posts]);
-  
-  const handleMoreViewClick = () => {
-    fetchNextPage();
-  }
+
+  const { ref } = useInView({
+    threshold: 1,
+    onChange: (InView) => {
+      if (!InView || !hasNextPage || isFetchingNextPage) return;
+      fetchNextPage();
+    }
+  })
 
   if (isLoading) return <Loading />;
   if (isError) {
@@ -157,15 +160,7 @@ const GetPosts = () => {
             ))}
         </div>
       }
-      {hasNextPage ?
-        <button
-          onClick={handleMoreViewClick}
-          className="mx-auto px-4 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-500">
-          더보기
-        </button>
-        :
-        null
-       }
+        <div ref={ref} className="w-full h-3" />
     </section>
   );
 };
