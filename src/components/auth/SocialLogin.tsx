@@ -4,6 +4,9 @@ import React, { useState, useEffect } from "react";
 import NicknameMaker from "@/components/auth/NicknameMaker";
 import { Database } from "@/types/supabase";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import kakao from "../../../public/images/kakao.png";
+import facebook from "../../../public/images/facebook.png";
 
 type Provider = "google" | "kakao" | "facebook";
 
@@ -16,9 +19,9 @@ const SocialLogin = () => {
     try {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: provider,
-        options: {
-          redirectTo: "http://localhost:3000/login/loginloading",
-        },
+        // options: {
+        //   redirectTo: "http://localhost:3000/login/loginloading",
+        // },
       });
 
       console.log(data);
@@ -49,13 +52,16 @@ const SocialLogin = () => {
   };
 
   useEffect(() => {
-    if (user) {
-      async function exeGetUserInfo() {
-        await getUserInfo();
+    console.log("Header가 마운트됐다.");
+    supabase.auth.onAuthStateChange((event, session) => {
+      console.log("onAuthStateChanged: ", event, session);
+      if (!session?.user) {
+        setUser(null);
+      } else {
+        setUser(session.user);
       }
-      exeGetUserInfo();
-    }
-  }, [user]);
+    });
+  }, []);
 
   const getUserInfo = async () => {
     const { data: userInfo } = await supabase
