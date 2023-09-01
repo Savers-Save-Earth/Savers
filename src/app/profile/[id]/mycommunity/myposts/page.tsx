@@ -3,6 +3,7 @@ import React, { Suspense, useEffect, useState } from "react";
 import supabase from "@/libs/supabase";
 import { Database } from "@/types/supabase";
 import UserPost from "./UserPost";
+import NoMyPosts from "@/components/profile/NoMyPosts";
 
 type CommunityPost = Database["public"]["Tables"]["community"]["Row"];
 const MyPosts = ({ params }: { params: { id: string } }) => {
@@ -14,6 +15,7 @@ const MyPosts = ({ params }: { params: { id: string } }) => {
   const [loadMoreBtn, setLoadMoreBtn] = useState<string>("");
   // decoded params : 유저 닉네임.
   const decodedParams = decodeURIComponent(params.id);
+  const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태 추가
 
   useEffect(() => {
     fetchCommunity();
@@ -28,9 +30,10 @@ const MyPosts = ({ params }: { params: { id: string } }) => {
         .range(0, loadCount - 1);
       setUserPosts(posts || []);
       console.log("count: " + count);
-
+      setIsLoading(false)
       if (posts!.length === 0) {
         setUserPosts([]);
+        
         return <div>지금까지 작성한 글이 없네요!!</div>;
       }
 
@@ -61,13 +64,19 @@ const MyPosts = ({ params }: { params: { id: string } }) => {
   };
   return (
     <div className="space-y-4">
-      <form className="flex items-center gap-2 self-stretch px-[2px] py-[16px] rounded-lg bg-gray-50">
+      {isLoading ? (
+        <div className="text-center">데이터를 불러오는 중입니다...</div>
+      ) : userPosts.length === 0 ? (
+        <NoMyPosts/>
+      ) : (
+        <>
+        <form className="flex items-center gap-2 self-stretch px-[2px] py-[16px] rounded-lg bg-gray-50">
         <div className="w-full flex flex-[1,0,0%] p-2">
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full flex-[1,0,0%] bg-gray-50 text-{14px} font-normal leading-4 text-gray-900 placeholder-gray-300"
+            className="w-full flex-[1,0,0%] bg-gray-50 text-{14px} font-normal leading-4 text-gray-900 placeholder-gray-300 outline-none"
             placeholder="검색어를 입력하세요."
           />
         </div>
@@ -89,6 +98,10 @@ const MyPosts = ({ params }: { params: { id: string } }) => {
           ""
         )}
       </div>
+      </>
+      )}
+      
+
     </div>
   );
 };

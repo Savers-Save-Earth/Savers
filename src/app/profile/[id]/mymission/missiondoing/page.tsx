@@ -50,11 +50,11 @@ const MissionDoing = ({ params }: { params: { id: string } }) => {
       {isLoading ? ( // isLoading이 true이면 로딩 표시를 표시합니다.
         <p>Loading...</p>
       ) : (
-        <div className="flex justify-center items-center gap-x-4 text-gray-800">
+        <div className="flex justify-center items-center gap-x-4 text-gray-800 px-2">
           {dailyMission?.map((mission) => {
             return (
               <div
-                className="py-6 px-4 flex flex-col justify-between items-center w-[200px] h-[300px] rounded-2xl break-words bg-[#F3FFEA]"
+                className="py-6 px-4 flex flex-col justify-between items-center w-[180px] h-[300px] rounded-2xl break-words hover:scale-110 hover:duration-500 bg-[#F3FFEA]"
                 key={mission.id}
               >
                 <div className="flex flex-col gap-3 items-start self-stretch">

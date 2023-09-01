@@ -7,7 +7,7 @@ export default function MycommunityLayout ({
 }) 
 {
   return (
-    <div className="w-full h-full space-y-6">
+    <div className="w-[789px] flex flex-col items-start gap-6 shrink-0 self-stretch rounded-2xl">
     <h1 className="self-stretch text-gray-900 text-[24px] non-italic font-semibold leading-6">좋아요</h1>
         <div className="flex gap-10">
         <FavoriteTopBar/>

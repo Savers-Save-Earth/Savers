@@ -4,11 +4,12 @@ import supabase from "@/libs/supabase";
 import { Database } from "@/types/supabase";
 import { useRouter } from "next/navigation";
 import UserComment from "./UserComment";
+import NoMyComments from "@/components/profile/NoMyComments";
 
 type CommunityComment =
   Database["public"]["Tables"]["community_comment"]["Row"];
 const MyComments = ({ params }: { params: { id: string } }) => {
-  const loadBoundaryValue = 10;
+  const loadBoundaryValue = 5;
   const [userComments, setUserComments] = useState<CommunityComment[]>([]);
   const [loadCount, setLoadCount] = useState<number>(loadBoundaryValue);
   const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태 추가
@@ -58,21 +59,25 @@ const MyComments = ({ params }: { params: { id: string } }) => {
 
   return (
     <div className="space-y-4">
-      {userComments?.map((comment) => (
-        <UserComment key={comment.comment_uid} comment={comment}/>
-      ))}
-      <div className="flex justify-center">
-      {loadMoreBtn ? (
+      {isLoading ? (
+        <div className="text-center">데이터를 불러오는 중입니다...</div>
+      ) : userComments.length === 0 ? (
+        <NoMyComments />
+      ) : (
+        userComments.map((comment) => (
+          <UserComment key={comment.comment_uid} comment={comment} />
+        ))
+      )}
+      {userComments.length > 0 && (
+        <div className="flex justify-center">
           <button
             className="py-4 px-5 justify-center items-center gap-[10px] rounded-2xl bg-gray-50"
             onClick={handleLoadMore}
           >
             {loadMoreBtn}
           </button>
-        ) : (
-          ""
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
