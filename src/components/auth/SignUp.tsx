@@ -2,6 +2,8 @@ import React, { useState, useRef } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import supabase from "@/libs/supabase";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface FormValues {
   email: string;
@@ -35,7 +37,7 @@ const SignUp: React.FC = () => {
         .single();
 
       if (existingUser) {
-        alert("이미 가입된 메일입니다");
+        toast.warning("이미 가입된 메일입니다");
         return;
       }
 
@@ -47,7 +49,7 @@ const SignUp: React.FC = () => {
           .single();
 
       if (existingNickname) {
-        alert("이미 사용 중인 닉네임입니다");
+        toast.warning("이미 사용 중인 닉네임입니다");
         return;
       }
 
@@ -59,11 +61,11 @@ const SignUp: React.FC = () => {
       if (error) {
         const errorDescription =
           (error as any).error_description || error.message;
-        alert(errorDescription);
+        toast.error(errorDescription);
         return;
       }
 
-      alert("가입완료!");
+      toast.success("회원가입이 완료되었습니다.");
 
       const { data: loginData, error: loginError } =
         await supabase.auth.signInWithPassword({
@@ -77,7 +79,6 @@ const SignUp: React.FC = () => {
         setUserData(loginData);
         userInfoUpdater(loginData, nickname);
         router.push("/");
-        alert("로그인되었습니다!");
       }
     } catch (error) {
       console.error("가입 및 로그인 에러:", error);
@@ -98,7 +99,6 @@ const SignUp: React.FC = () => {
 
       <div className="flex flex-col items-center gap-16 self-stretch">
         <svg
-          pb-16
           xmlns="http://www.w3.org/2000/svg"
           width="142"
           height="24"
@@ -161,8 +161,8 @@ const SignUp: React.FC = () => {
       </div>
 
       <form onSubmit={handleSubmit(signupHandler)}>
-        <div className="pt-16 flex flex-col items-center gap-4 self-stretch">
-          <div className="flex items-center gap-2">
+        <div className="pt-4 flex flex-col items-center gap-4 self-stretch">
+          <div className="flex items-center gap-2 mb-4">
             <label className="w-24 shrink-0 flex items-center">이메일</label>
             <div className="flex flex-grow flex-col">
               <input
@@ -170,13 +170,13 @@ const SignUp: React.FC = () => {
                 type="email"
                 placeholder="이메일 입력"
                 {...register("email", {
-                  required: "메일을 입력하세요",
+                  required: "이메일을 입력하세요",
                   pattern: {
                     value: /^\S+@\S+$/i,
                     message: "올바른 메일 형식이 아닙니다",
                   },
                 })}
-                className="flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50"
+                className="flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50 outline-none"
               />
               {errors.email && (
                 <span className="text-red-500">{errors.email.message}</span>
@@ -184,7 +184,7 @@ const SignUp: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 mb-4">
             <label className="w-24 shrink-0 flex items-center">비밀번호</label>
             <div className="flex flex-grow flex-col">
               <input
@@ -192,7 +192,7 @@ const SignUp: React.FC = () => {
                 type="password"
                 placeholder="8자리 이상 영문, 숫자 포함"
                 {...register("password", { required: true })}
-                className="flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50"
+                className="flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50 outline-none"
               />
               {errors.password && (
                 <span className="text-red-500">
@@ -202,7 +202,7 @@ const SignUp: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 mb-4">
             <label className="w-24 shrink-0">비밀번호 확인</label>
             <div className="flex flex-grow flex-col">
               <input
@@ -213,7 +213,7 @@ const SignUp: React.FC = () => {
                   required: true,
                   validate: (value) => value === passwordRef.current,
                 })}
-                className="flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50"
+                className="flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50 outline-none"
               />
               {errors.passwordConfirmation &&
                 errors.passwordConfirmation.type === "required" && (
@@ -230,7 +230,7 @@ const SignUp: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 mb-4">
             <label className="w-24 shrink-0 flex items-center">닉네임</label>
             <div className="flex flex-grow flex-col">
               <input
@@ -238,7 +238,7 @@ const SignUp: React.FC = () => {
                 type="nickname"
                 placeholder="닉네임 입력"
                 {...register("nickname", { required: true })}
-                className="flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50"
+                className="flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50 outline-none"
               />
               {errors.nickname && errors.nickname.type === "required" && (
                 <span className="text-red-500">닉네임을 입력해주세요</span>
@@ -254,6 +254,18 @@ const SignUp: React.FC = () => {
           </button>
         </div>
       </form>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 };

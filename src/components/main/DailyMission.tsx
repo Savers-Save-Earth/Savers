@@ -50,8 +50,9 @@ const DailyMission = () => {
   return (
     <>
       <h1 className="text-2xl mb-6 font-semibold inline-block">일일미션</h1>
+
       <span
-        className={`text-gray-700 ml-2 text-[14px] relative cursor-pointer ${
+        className={`text-gray-700 ml-2 text-[14px] relative cursor-pointer${
           isHovered ? "hovered" : ""
         }`}
         onMouseEnter={() => setIsHovered(true)}

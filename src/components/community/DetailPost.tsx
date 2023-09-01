@@ -19,6 +19,8 @@ import copy from "clipboard-copy";
 import { useSetRecoilState } from "recoil";
 import { editPostAtom } from "@/libs/atoms";
 import { DetailPostProps } from "@/types/types";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 type LikesType = Database["public"]["Tables"]["like_post"]["Insert"];
 
@@ -109,8 +111,11 @@ const DetailPost = ({ postDetail, postUid }: DetailPostProps) => {
 
   const handleLikeClick = async () => {
     if (!currentUser) {
-      window.alert("북마크를 누르시려면 로그인 해주세요!");
-      router.push("/login");
+      toast.info("로그인이 필요한 서비스 입니다.", {
+        onClose: () => {
+          router.push(`/login`);
+        },
+      });
       return false;
     }
 
@@ -139,7 +144,9 @@ const DetailPost = ({ postDetail, postUid }: DetailPostProps) => {
     const currentUrl = window.location.href;
     copy(currentUrl)
       .then(() => window.alert("링크가 복사되었습니다!"))
-      .catch((err) => window.alert("링크 복사에 실패했습니다. 다시 시도해주세요!"));
+      .catch((err) =>
+        window.alert("링크 복사에 실패했습니다. 다시 시도해주세요!"),
+      );
   };
 
   return (
@@ -194,7 +201,8 @@ const DetailPost = ({ postDetail, postUid }: DetailPostProps) => {
             dangerouslySetInnerHTML={{ __html: postDetail.content }}
             className="mt-14 px-2"
           />
-        )}\
+        )}
+        \
         <div className="flex justify-center items-center mt-20 mb-3 mx-auto space-x-5">
           <div className="flex justify-center items-center space-x-1">
             <button onClick={handleLikeClick}>
@@ -248,6 +256,18 @@ const DetailPost = ({ postDetail, postUid }: DetailPostProps) => {
           </button>
         </div>
       </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 };

@@ -27,6 +27,7 @@
     "eslint": "8.47.0",
     "eslint-config-next": "13.4.18",
     "force": "^0.0.3",
+    "intersection-observer": "^0.12.2",
     "moment": "^2.29.4",
     "next": "13.4.18",
     "next-images": "^1.8.5",
