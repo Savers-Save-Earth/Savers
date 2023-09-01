@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { useState, useEffect } from "react";
+
 const Intro = () => {
   const [scrollY, setScrollY] = useState(0);
 
