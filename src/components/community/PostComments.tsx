@@ -293,7 +293,9 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
                           ?
                           null
                           :
-                        (currentUser?.uid === comment.writer_uid ? (
+                          (currentUser?.uid === comment.writer_uid
+                            && comment.isDeleted === false
+                            ? (
                           <div className="space-x-2 text-sm text-gray-700">
                             <button
                               onClick={() => handleEditCommentState(comment.comment_uid)}
@@ -334,8 +336,8 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
                     </div>
                   ) : (
                     <div className="py-2 pr-6 text-gray-700 mt-2">
-                      <p>{comment.content}</p>
-                      {currentUser ? (
+                      {comment.isDeleted === false ? <p>{comment.content}</p> : <p className="text-gray-300">삭제된 댓글입니다.</p>}
+                      {currentUser && comment.isDeleted === false ? (
                         <button
                           onClick={() => {
                             if (replyCommentUid === comment.comment_uid) {
