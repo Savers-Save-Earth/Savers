@@ -19,9 +19,6 @@ const SocialLogin = () => {
     try {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: provider,
-        // options: {
-        //   redirectTo: "http://localhost:3000/login/loginloading",
-        // },
       });
 
       console.log(data);
