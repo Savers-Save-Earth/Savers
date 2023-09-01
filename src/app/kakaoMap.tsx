@@ -266,7 +266,10 @@ const KakaoMap = () => {
                 카페
               </button>
             </div>
-            <MarkerLists markerList={markerList} />
+            <MarkerLists
+              markerList={markerList}
+              currentCategory={currentCategory}
+            />
           </div>
           <div id="map" className="w-[70%] h-[36vw] float-right"></div>
         </div>
