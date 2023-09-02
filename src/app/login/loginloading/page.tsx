@@ -20,7 +20,7 @@ const LoginLoading = () => {
 
       await setUser(user);
       await getUserInfo(user);
-      router.push("/");
+      // router.push("/");
     }
     exe();
   });
