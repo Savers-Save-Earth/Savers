@@ -4,9 +4,6 @@ import React, { useState, useEffect } from "react";
 import NicknameMaker from "@/components/auth/NicknameMaker";
 import { Database } from "@/types/supabase";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
-import kakao from "../../../public/images/kakao.png";
-import facebook from "../../../public/images/facebook.png";
 
 type Provider = "google" | "kakao" | "facebook";
 
@@ -14,19 +11,48 @@ const SocialLogin = () => {
   const [user, setUser] = useState<any>(null);
   const router = useRouter();
   const [nickname, setNickname] = useState<string | null>(null);
-  const currentUrl = window.location.href;
-  console.log("url>>>>>", currentUrl);
+  // const currentUrl = window.location.href;
+  // console.log(`${currentUrl}/loginloading`);
+
+  // const signInWithOAuthAndLog = async (provider: Provider) => {
+  //   try {
+  //     const { data, error } = await supabase.auth.signInWithOAuth({
+  //       provider: provider,
+
+  //       // options: {
+  //       //   redirectTo: `${currentUrl}/loginloading`,
+  //       // },
+  //     });
+
+  //     console.log("소셜로그인 되었을 때 data", data);
+
+  //     if (error) {
+  //       throw error;
+  //     }
+
+  //     await getUser();
+  //     window.alert("로그인⚡️");
+  //   } catch (error: any) {
+  //     window.alert(`${provider} 로그인 에러: ${error.message}`);
+  //   }
+  // };
+
   const signInWithOAuthAndLog = async (provider: Provider) => {
     try {
+      const currentUrl = window.location.href;
+      const options = {
+        redirectTo:
+          currentUrl === "http://localhost:3000/login"
+            ? `${currentUrl}/loginloading`
+            : "https://savers-git-dev-team-climbers.vercel.app/login/loginloading",
+      };
+
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: provider,
-        // options: {
-        //   redirectTo: `${currentUrl}/loginloading`,
-        // },
+        options: options,
       });
 
       console.log("소셜로그인 되었을 때 data", data);
-
       if (error) {
         throw error;
       }

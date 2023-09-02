@@ -23,7 +23,7 @@ const LoginLoading = () => {
       router.push("/");
     }
     exe();
-  }, []);
+  });
 
   console.log("getUser확인", user?.id);
 
