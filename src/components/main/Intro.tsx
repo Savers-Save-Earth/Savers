@@ -41,7 +41,7 @@ const Intro = () => {
 
               height: "100vh",
               position: scrollY < 4600 ? "fixed" : "absolute",
-              display: scrollY > 3600 ? "none" : "block",
+              display: scrollY > 3400 ? "none" : "block",
               top: scrollY < 3600 ? 0 : 3600,
               opacity:
                 scrollY > 3000 ? Math.max(0, 1 - (scrollY - 3000) / 500) : 1,

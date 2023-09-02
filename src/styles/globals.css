@@ -265,5 +265,38 @@ body {
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: none !important;
+}
+
+.react-calendar__tile--hasActive {
+  background: #76baff;
+}
+
+.react-calendar__tile--hasActive:enabled:hover,
+.react-calendar__tile--hasActive:enabled:focus {
+  background: #a9d4ff;
+}
+
+.react-calendar__tile--active {
+  background: none !important;
+  color: black !important;
+  pointer-events: none !important;
+}
+
+.react-calendar__tile--active:hover,
+.react-calendar__tile--active:focus {
+  background: none !important;
+  pointer-events: none !important; /* 이벤트 처리를 비활성화합니다. */
+}
+
+.react-calendar__tile--now {
+  background: none !important;
+  pointer-events: none !important;
+  color: black !important;
+}
+
+.react-calendar__tile--now:enabled:hover,
+.react-calendar__tile--now:enabled:focus {
+  pointer-events: none !important;
+  color: black !important;
 }
