@@ -171,7 +171,7 @@ const SideBar = () => {
         <>
           <div className="flex flex-col justify-center items-center gap-6 self-stretch leading-none">
             <div className="relative w-[140px] h-[140px] object-contain">
-              {<img src={profileImg} alt="프로필 이미지" /> ? (
+              {profileImg ? (
                 <img src={profileImg} alt="프로필 이미지" />
               ) : (
                 <Image

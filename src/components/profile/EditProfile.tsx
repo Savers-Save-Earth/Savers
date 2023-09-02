@@ -8,6 +8,8 @@ const EditProfile = () => {
   const [nickname, setNickname] = useState<string>();
   const [selectedFile, setSelectedFile] = useState();
   const [open, setOpen] = useState(false);
+  const [editImage, setEditImage] = useState<string>("");
+  const [editNickname, setEditNickname] = useState("");
 
   const fetchUser = async () => {
     try {
@@ -21,6 +23,13 @@ const EditProfile = () => {
         .from("user")
         .select()
         .eq("uid", user?.id);
+
+      const userDataTable = userData ? userData[0] : null; // 배열의 첫 번째 요소 또는 null로 설정
+
+      if (userDataTable) {
+        setEditImage(userDataTable.profileImage);
+        setEditNickname(userDataTable.nickname);
+      }
     } catch (error) {
       console.error("Error fetching user:", error);
     }
@@ -52,9 +61,11 @@ const EditProfile = () => {
         .eq("uid", user?.id);
 
       alert("수정이 완료되었습니다.");
+      setOpen(!open);
     }
   };
-  const profileEditModalHandler = () => {
+  const profileEditModalHandler = (e: any) => {
+    e.preventDefault();
     setOpen(!open);
   };
 
@@ -74,15 +85,45 @@ const EditProfile = () => {
           open ? "block" : "hidden"
         }`}
       >
-        <div className="w-550 h-400 z-10 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white">
-          <form onSubmit={submitHandler} className="text-center">
+        <div className="w-[480px] h-[468px] z-10 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl p-8">
+          <form className="text-center">
+            <h1 className="text-xl font-semibold flex">프로필 수정</h1>
+            {editImage ? (
+              <img
+                src={editImage}
+                alt="기존 프로필이미지"
+                className="w-[140px] h-[140px] rounded-full object-cover mx-auto"
+              />
+            ) : (
+              <img
+                src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/profileImage/default_profile_image.svg"
+                alt="프로필 이미지"
+                className="w-[140px] h-[140px] rounded-full object-cover mx-auto"
+              />
+            )}
+            <input type="file" onChange={fileSelectHandler} />
+            <p className="flex pl-12 text-[14px] text-gray-400 mt-2 mb-3">
+              닉네임
+            </p>
             <input
               type="text"
               value={nickname}
+              placeholder={editNickname}
               onChange={(e) => setNickname(e.target.value)}
+              className="flex h-[48px] p-4 items-center bg-gray-50 rounded-2xl self-stretch w-[320px] outline-none  justify-center mx-auto mb-8"
             />
-            사진 :<input type="file" onChange={fileSelectHandler} />
-            <button>제출</button>
+            <button
+              onClick={profileEditModalHandler}
+              className="w-[156px] h-[48px] bg-gray-100 rounded-2xl "
+            >
+              취소
+            </button>
+            <button
+              onClick={submitHandler}
+              className="w-[156px] h-[48px] bg-black rounded-2xl text-white"
+            >
+              제출
+            </button>
           </form>
         </div>
       </div>
