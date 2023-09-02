@@ -133,13 +133,6 @@ body {
   opacity: 1; /* 활성화된 불릿의 투명도 */
 }
 
-.highlight {
-  color: rgb(255, 255, 255);
-
-  background-color: #5fd100 !important;
-  border-radius: 100px;
-}
-
 .react-calendar {
   width: 280px !important;
   height: 300px !important;
@@ -254,7 +247,7 @@ body {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: none;
 }
 
 /* Handle */
@@ -281,22 +274,33 @@ body {
   background: none !important;
   color: black !important;
   pointer-events: none !important;
+  cursor: not-allowed !important;
 }
 
 .react-calendar__tile--active:hover,
 .react-calendar__tile--active:focus {
   background: none !important;
-  pointer-events: none !important; /* 이벤트 처리를 비활성화합니다. */
+  pointer-events: none !important;
+  cursor: not-allowed !important;
 }
 
 .react-calendar__tile--now {
   background: none !important;
   pointer-events: none !important;
-  color: black !important;
+  cursor: not-allowed !important;
 }
 
 .react-calendar__tile--now:enabled:hover,
 .react-calendar__tile--now:enabled:focus {
   pointer-events: none !important;
   color: black !important;
+  cursor: not-allowed !important;
+}
+
+.highlight {
+  color: rgb(255, 255, 255);
+  cursor: not-allowed !important;
+  background-color: #5fd100 !important;
+
+  border-radius: 100px;
 }
