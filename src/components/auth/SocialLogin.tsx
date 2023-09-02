@@ -20,9 +20,9 @@ const SocialLogin = () => {
     try {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: provider,
-        options: {
-          redirectTo: `${currentUrl}/loginloading`,
-        },
+        // options: {
+        //   redirectTo: `${currentUrl}/loginloading`,
+        // },
       });
 
       console.log("소셜로그인 되었을 때 data", data);
