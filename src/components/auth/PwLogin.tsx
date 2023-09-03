@@ -54,7 +54,7 @@ const PwLogin: React.FC = () => {
     <>
       <div className="flex flex-col items-center gap-16 self-stretch">
         <svg
-          pb-16
+          pb-16="true"
           xmlns="http://www.w3.org/2000/svg"
           width="142"
           height="24"

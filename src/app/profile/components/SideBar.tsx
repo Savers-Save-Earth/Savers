@@ -41,14 +41,10 @@ const initialProfile: any = {
 };
 
 const SideBar = () => {
-  const currentDate = convertDate(new Date());
-  const currentDateModify = currentDate.replaceAll("-", ".") as string;
   const searchId = useParams().id as string;
   // const decodedParams = decodeURIComponent(params);
-
   const router = useRouter();
   // const searchId = decodedParams as string;
-
   const getProfile = async () => {
     let { data: user, error } = await supabase
       .from("user")
@@ -78,22 +74,19 @@ const SideBar = () => {
     // 우정작업 //
 
     const { data: userData } = await supabase
-    .from("user")
-    .select()
-    .eq("uid", searchId);
-    
+      .from("user")
+      .select()
+      .eq("uid", searchId);
+
     if (userData) {
-    setProfileImg(userData[0]?.profileImage);
+      setProfileImg(userData[0]?.profileImage);
     } else {
-    return;
+      return;
     }
-    
 
     // 우정작업 //
   };
-  // useEffect(() => {
-  //   const idParams = useParams().id as string | undefined
-  // })
+
   useEffect(() => {
     getUser();
   }, []);

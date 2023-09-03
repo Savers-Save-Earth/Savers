@@ -35,7 +35,7 @@ export default function UserLikedPost({ post }: any) {
   return (
     <>
       {isLoading ? (
-        <p>Loading...</p>
+        <></>
       ) : (
         <div className="flex flex-col items-start p-6 gap-4 self-stretch rounded-2xl bg-white border border-gray-200">
           {userLikedPost.length > 0 ? (
