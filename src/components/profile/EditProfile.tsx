@@ -88,6 +88,7 @@ const EditProfile = () => {
         <div className="w-[480px] h-[468px] z-10 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl p-8">
           <form className="text-center">
             <h1 className="text-xl font-semibold flex">프로필 수정</h1>
+
             {editImage ? (
               <img
                 src={editImage}
@@ -101,7 +102,10 @@ const EditProfile = () => {
                 className="w-[140px] h-[140px] rounded-full object-cover mx-auto"
               />
             )}
-            <input type="file" onChange={fileSelectHandler} />
+            <label htmlFor="input-file">
+              <input type="file" onChange={fileSelectHandler} />
+            </label>
+
             <p className="flex pl-12 text-[14px] text-gray-400 mt-2 mb-3">
               닉네임
             </p>

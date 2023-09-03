@@ -63,7 +63,6 @@ const SideBar = () => {
   // const [searchId, setSearchId] = useState<string | undefined>(undefined);
   // 우정작업 //
   const [profileImg, setProfileImg] = useState<string>("");
-  const [open, setOpen] = useState(false);
 
   const getUser = async () => {
     const {
