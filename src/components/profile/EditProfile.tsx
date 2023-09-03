@@ -62,6 +62,7 @@ const EditProfile = () => {
 
       alert("수정이 완료되었습니다.");
       setOpen(!open);
+      window.location.reload();
     }
   };
   const profileEditModalHandler = (e: any) => {
