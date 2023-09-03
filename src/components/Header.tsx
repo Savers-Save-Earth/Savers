@@ -12,17 +12,38 @@ const Header = () => {
   const router = useRouter();
   const [scrollY, setScrollY] = useState(0);
   const [user, setUser] = useState<any>(null);
+  const [toastId, setToastId] = useState(null);
 
   //toastify yes,no selector
-  const Msg = ({ closeToast }) => (
-    <div>
-      로그아웃 하시겠어요?
-      <>
-      <button onClick={handleLogout}>로그아웃</button>
-      <button onClick={closeToast}>취소</button>
-    </>
-    </div>
-  );
+  // const Msg = ({ closeToast }) => (
+  //   <div>
+  //     로그아웃 하시겠어요?
+  //     <div>
+  //       <button onClick={handleLogout}>로그아웃</button>
+  //       <button onClick={closeToast}>취소</button>
+  //     </div>
+  //   </div>
+  // );
+
+  // const handleLogout = async () => {
+  //   await supabase.auth.signOut();
+  //   router.push("/");
+  //   toast.success("로그아웃되었습니다.");
+  // };
+
+  // const loginLogoutSwitcher = async () => {
+  //   if (user) {
+  //     // 이미 열려있는 토스트 창이 있는지 확인
+  //     if (!toast.isActive("logoutToast")) {
+  //       // toastId 상태 변수를 설정
+  //       const toastId = toast.info(
+  //         <Msg closeToast={() => toast.dismiss("logoutToast")} />,
+  //       );
+  //     }
+  //   } else {
+  //     router.push("/login");
+  //   }
+  // };
 
   const getUser = async () => {
     const {
@@ -54,27 +75,13 @@ const Header = () => {
     };
   }, []);
 
-  // const loginLogoutSwitcher = async () => {
-  //   if (user) {
-  //     const ok = toast.info(<Msg />) window.어쩌구팝업;
-  //     if (ok) {
-  //       await supabase.auth.signOut();
-  //       router.push("/");
-  //     }
-  //   } else {
-  //     router.push("/login");
-  //   }
-  // };
-
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    router.push("/");
-    toast.success("로그아웃되었습니다.");
-  };
-
   const loginLogoutSwitcher = async () => {
     if (user) {
-      toast.info(<Msg />);
+      const ok = window.confirm("로그아웃 하시겠습니까?");
+      if (ok) {
+        await supabase.auth.signOut();
+        router.push("/");
+      }
     } else {
       router.push("/login");
     }
@@ -356,6 +363,7 @@ const Header = () => {
                 className="border-0 py-1 px-3 focus:outline-none rounded text-base"
               >
                 {user ? "로그아웃" : "로그인"}
+                <ToastContainer />
               </button>
               {user ? (
                 <button
