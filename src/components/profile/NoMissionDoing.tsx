@@ -72,7 +72,7 @@ const NoMissionDoing = () => {
           {/** 텍스트 및 버튼 */}
           <div className="text-center lg:w-2/3 w-full">
             <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">
-              현재 진행중인 일일미션이 없습니다!
+              진행중인 일일미션이 없군요!
             </h1>
             <p className="mb-8 leading-relaxed">
               일일미션을 통해 배지를 획득할 수 있어요!

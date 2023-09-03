@@ -78,7 +78,8 @@ const MissionCalendar = () => {
 
   const marks: string[] = [];
   mission.map((item) => marks.push(`${item.createdAt}`));
-
+  console.log("user===>",user)
+  console.log("profile===>",profile)
   return (
     <div style={{ background: "rgb(245, 245, 245)", borderRadius: "10px" }}>
       <Calendar
@@ -97,22 +98,25 @@ const MissionCalendar = () => {
           }
         }}
       />
-      <p
-        style={{
-          background: "rgb(245, 245, 245)",
-          textAlign: "center",
-          color: "gray",
-          padding: "15px 0 15px 0",
-          borderRadius: "10px",
-        }}
-        onClick={() => {
-
-          setShowModal(true);
-        }}
-      >
-        일일미션 하러가기
-      </p>
-      <RandomMission showModal={showModal} user={ user } setShowModal={setShowModal} profile={profile}/>
+      {user && profile.uid === user.id && (
+  <>
+    <p
+      style={{
+        background: "rgb(245, 245, 245)",
+        textAlign: "center",
+        color: "gray",
+        padding: "15px 0 15px 0",
+        borderRadius: "10px",
+        cursor: "pointer",
+      }}
+      onClick={() => setShowModal(true)}
+    >
+      일일미션 하러가기
+    </p>
+    <RandomMission showModal={showModal} user={user} setShowModal={setShowModal} profile={profile} />
+  </>
+)}
+      
 
     </div>
   );
