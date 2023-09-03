@@ -11,31 +11,6 @@ const SocialLogin = () => {
   const [user, setUser] = useState<any>(null);
   const router = useRouter();
   const [nickname, setNickname] = useState<string | null>(null);
-  // const currentUrl = window.location.href;
-  // console.log(`${currentUrl}/loginloading`);
-
-  // const signInWithOAuthAndLog = async (provider: Provider) => {
-  //   try {
-  //     const { data, error } = await supabase.auth.signInWithOAuth({
-  //       provider: provider,
-
-  //       // options: {
-  //       //   redirectTo: `${currentUrl}/loginloading`,
-  //       // },
-  //     });
-
-  //     console.log("소셜로그인 되었을 때 data", data);
-
-  //     if (error) {
-  //       throw error;
-  //     }
-
-  //     await getUser();
-  //     window.alert("로그인⚡️");
-  //   } catch (error: any) {
-  //     window.alert(`${provider} 로그인 에러: ${error.message}`);
-  //   }
-  // };
 
   const signInWithOAuthAndLog = async (provider: Provider) => {
     try {
@@ -78,33 +53,6 @@ const SocialLogin = () => {
       console.log(user.user_metadata);
     }
   };
-
-  // useEffect(() => {
-  //   console.log("마운트됐다.");
-  //   supabase.auth.onAuthStateChange((event, session) => {
-  //     console.log("onAuthStateChanged: ", event, session);
-  //     if (!session?.user) {
-  //       setUser(null);
-  //     } else {
-  //       setUser(session.user);
-  //       getUserInfo(session.user);
-  //       console.log("getUserInfo>>>", getUserInfo);
-  //     }
-  //   });
-  // async function exe() {
-  //   const {
-  //     data: { user },
-  //   } = await supabase.auth.getUser();
-
-  //   console.log("getUser>>>", user);
-
-  //   // loginUpdater();
-  //   await setUser(user);
-  //   await getUserInfo(user);
-  //   router.push("/");
-  // }
-  // exe();
-  // }, []);
 
   const getUserInfo = async (user: any) => {
     if (!user) {

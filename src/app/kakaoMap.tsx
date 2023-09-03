@@ -2,6 +2,13 @@
 
 import React, { useEffect, useState } from "react";
 import MarkerLists from "@/components/restaurant/MarkerLists";
+import dynamic from "next/dynamic";
+
+//3.dynamic추가
+const DynamicComponent = dynamic(
+  () => import("../components/restaurant/MarkerLists"),
+  { loading: () => <p>Loading ...</p> },
+);
 
 const getCurrentCoordinate = async () => {
   return new Promise((res, rej) => {
@@ -270,7 +277,7 @@ const KakaoMap = () => {
                 카페
               </button>
             </div>
-            <MarkerLists
+            <DynamicComponent
               markerList={markerList}
               currentCategory={currentCategory}
             />
