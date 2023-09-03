@@ -44,7 +44,6 @@ const SideBar = () => {
   const currentDate = convertDate(new Date());
   const currentDateModify = currentDate.replaceAll("-", ".") as string
   const searchId = useParams().id as string;
-  console.log("searchId===>",searchId)
   // const decodedParams = decodeURIComponent(params);
 
   const router = useRouter();
@@ -62,11 +61,9 @@ const SideBar = () => {
   
   const [showModal, setShowModal] = useState(false);
   const [user, setUser] = useState<any>();
-  console.log("user사이드바===>",user)
   // const [searchId, setSearchId] = useState<string | undefined>(undefined);
   // 우정작업 //
   const [profileImg, setProfileImg] = useState<string>("");
-  console.log("마이페이지 profile===>",profile)
   const getUser = async () => {
     const {
       data: { user },
