@@ -42,9 +42,9 @@ const initialProfile: any = {
 
 const SideBar = () => {
   const currentDate = convertDate(new Date());
-  const currentDateModify = currentDate.replaceAll("-", ".") as string
+  const currentDateModify = currentDate.replaceAll("-", ".") as string;
   const searchId = useParams().id as string;
-  console.log("searchId===>",searchId)
+  console.log("searchId===>", searchId);
   // const decodedParams = decodeURIComponent(params);
 
   const router = useRouter();
@@ -59,14 +59,15 @@ const SideBar = () => {
   };
 
   const [profile, setProfile] = useState<any>(initialProfile);
-  
+
   const [showModal, setShowModal] = useState(false);
   const [user, setUser] = useState<any>();
-  console.log("user사이드바===>",user)
+  console.log("user사이드바===>", user);
   // const [searchId, setSearchId] = useState<string | undefined>(undefined);
   // 우정작업 //
   const [profileImg, setProfileImg] = useState<string>("");
-  console.log("마이페이지 profile===>",profile)
+
+  console.log("마이페이지 profile===>", profile);
   const getUser = async () => {
     const {
       data: { user },
@@ -83,10 +84,10 @@ const SideBar = () => {
     const { data: userData } = await supabase
       .from("user")
       .select()
-      .eq("uid", user?.id);
+      .eq("uid", searchId);
 
     if (userData) {
-      setProfileImg(profile[0]?.profileImage);
+      setProfileImg(userData[0]?.profileImage);
     } else {
       return;
     }
@@ -118,7 +119,11 @@ const SideBar = () => {
           <div className="flex flex-col justify-center items-center gap-6 self-stretch leading-none">
             <div className="relative w-[140px] h-[140px] object-contain">
               {profileImg ? (
-                <img className="w-[140px] h-[140px] rounded-full object-cover mx-auto" src={profileImg} alt="프로필 이미지" />
+                <img
+                  className="w-[140px] h-[140px] rounded-full object-cover mx-auto"
+                  src={profileImg}
+                  alt="프로필 이미지"
+                />
               ) : (
                 <Image
                   fill={true}
@@ -131,7 +136,7 @@ const SideBar = () => {
               <p className="text-gray-900 text-[24px] non-italic font-semibold leading-7">
                 {profile.nickname}
               </p>
-              {(profile.uid === user?.uid) ? <EditProfile /> : ""}
+              {searchId == user?.id ? <EditProfile /> : ""}
             </div>
           </div>
 
@@ -172,7 +177,6 @@ const SideBar = () => {
               <button
                 className="btn-sidebar"
                 onClick={() => {
-
                   setShowModal(true);
                 }}
               >
@@ -182,7 +186,12 @@ const SideBar = () => {
               ""
             )}
           </div>
-            <RandomMission showModal={showModal} user={ user } setShowModal={setShowModal} profile={profile}/>
+          <RandomMission
+            showModal={showModal}
+            user={user}
+            setShowModal={setShowModal}
+            profile={profile}
+          />
         </>
       ) : (
         <>{/* <Loading /> */}</>
