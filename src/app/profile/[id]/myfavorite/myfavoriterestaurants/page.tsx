@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from "react";
 import supabase from "@/libs/supabase";
 import { Database } from "@/types/supabase";
+import Loading from "@/app/loading";
+import NoBookmarkedRestaurant from "@/components/profile/NoBookmarkedRestaurant";
 
 
 type UserFavoriteRestaurant =
@@ -13,37 +15,24 @@ const MyFavoriteRestaurants = ({ params }: { params: { id: string } }) => {
   const [userLikedRestaurants, setUserLikedRestaurants] = useState<UserFavoriteRestaurant[]>([]);
   // const [userId, setUserId] = useState<string | null>(null);
   const [loadCount, setLoadCount] = useState<number>(5);
+  const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태 추가
 
   // decoded params : 유저 닉네임.
-  const decodedParams = decodeURIComponent(params.id);
+  const searchId = params.id
 
   useEffect(() => {
-    fetchUserData();
+    fetchLikeProductData();
   }, [loadCount]);
 
-  const fetchUserData = async () => {
-    try {
-      let { data: user } = await supabase
-        .from("user")
-        .select("uid")
-        .eq("nickname", decodedParams);
-      const fetchedUserId = user![0].uid;
-      // setUserId(fetchedUserId)
-      fetchLikeProductData(fetchedUserId);
-    } catch (error) {
-      console.error("An error occurred:", error); // 예상치 못한 에러 처리
-      return false; // 에러 처리 후 함수 종료
-    }
-  };
-
-  const fetchLikeProductData = async (fetchedUserId: string) => {
+  const fetchLikeProductData = async () => {
     try {
       let { data: likedRestaurant } = await supabase
         .from("like_restaurant")
         .select("*")
-        .eq("user_id", fetchedUserId);
+        .eq("user_id", searchId);
       // .range(0, loadCount - 1);
       setUserLikedRestaurants(likedRestaurant || []);
+      setIsLoading(false)
     } catch (error) {
       console.error("An error occurred:", error); // 예상치 못한 에러 처리
       return false; // 에러 처리 후 함수 종료
@@ -60,8 +49,16 @@ const MyFavoriteRestaurants = ({ params }: { params: { id: string } }) => {
     });
   };
   return (
+<div className="space-y-4">
+      {isLoading ? (
+        <Loading/>
+      ) : userLikedRestaurants.length === 0 ? (
+        <NoBookmarkedRestaurant/>
+      ) : 
+    (
+
     <>
-      <div className="flex flex-wrap justify-between self-stretch bg-white mx-auto w-full gap-2">
+      <div className="flex flex-wrap justify-between self-stretch bg-white mx-auto min-w-[700px] gap-2">
         {userLikedRestaurants?.map((item) => (
           <div
             key={item.id}
@@ -198,6 +195,8 @@ const MyFavoriteRestaurants = ({ params }: { params: { id: string } }) => {
       </div>
       <button onClick={handleLoadMore}>더 보기</button>
     </>
+    )}
+    </div>
   );
 };
 

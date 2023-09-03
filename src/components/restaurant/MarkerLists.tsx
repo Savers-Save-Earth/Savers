@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Database } from "@/types/supabase";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Loading from "@/app/loading";
 
 interface MarkList {
   id: number;

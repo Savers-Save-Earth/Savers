@@ -5,6 +5,7 @@ import { Database } from "@/types/supabase";
 import { useRouter } from "next/navigation";
 import UserComment from "./UserComment";
 import NoMyComments from "@/components/profile/NoMyComments";
+import Loading from "@/app/loading";
 
 type CommunityComment =
   Database["public"]["Tables"]["community_comment"]["Row"];
@@ -14,8 +15,7 @@ const MyComments = ({ params }: { params: { id: string } }) => {
   const [loadCount, setLoadCount] = useState<number>(loadBoundaryValue);
   const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태 추가
   const [loadMoreBtn, setLoadMoreBtn] = useState<string>("");
-  const router = useRouter();
-  const decodedParams = decodeURIComponent(params.id);
+  const searchId = params.id
 
   useEffect(() => {
     fetchCommunity();
@@ -26,7 +26,7 @@ const MyComments = ({ params }: { params: { id: string } }) => {
       let { data: comments, count } = await supabase
         .from("community_comment")
         .select("*", { count: "exact" })
-        .eq("writer_name", decodedParams)
+        .eq("writer_uid", searchId)
         .eq("isDeleted", false)
         .range(0, loadCount - 1);
       setUserComments(comments || []);
@@ -60,7 +60,7 @@ const MyComments = ({ params }: { params: { id: string } }) => {
   return (
     <div className="space-y-4">
       {isLoading ? (
-        <div className="text-center">데이터를 불러오는 중입니다...</div>
+        <Loading/>
       ) : userComments.length === 0 ? (
         <NoMyComments />
       ) : (

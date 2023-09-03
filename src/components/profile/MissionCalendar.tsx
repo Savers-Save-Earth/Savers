@@ -4,6 +4,7 @@ import "react-calendar/dist/Calendar.css";
 import { format } from "date-fns";
 import supabase from "@/libs/supabase";
 import { useParams } from "next/navigation";
+import RandomMission from "@/app/profile/components/RandomMission";
 
 type ValuePiece = Date | null;
 
@@ -19,15 +20,35 @@ interface Mission {
 const MissionCalendar = () => {
   const [value, onChange] = useState<Value>(new Date());
   const [mission, setMission] = useState<Mission[]>([]);
+  const [profile, setProfile] = useState<any>([]);
   const params = useParams();
-  const searchId = decodeURIComponent(`${params.id}`);
-  console.log(searchId);
+  const searchId = params.id
+
+  const [showModal, setShowModal] = useState(false);
+  const [user, setUser] = useState<any>();
+  // console.log(searchId);
+
+  //추후에 useAuth hoo으로 바꿔줘야 함.
+  const getUser = async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      setUser(false);
+    } else {
+      setUser(user);
+    }
+  };
+  useEffect(() => {
+    getUser();
+  }, []);
 
   const fetchMissionList = async () => {
     const { data: missionData } = await supabase
       .from("missionList")
       .select()
-      .eq("userId", searchId)
+      .eq("user_uid", searchId)
       .eq("doingYn", false);
 
     if (missionData !== null) {
@@ -35,9 +56,25 @@ const MissionCalendar = () => {
     }
   };
 
+    const getProfile = async () => {
+    let { data: user, error } = await supabase
+      .from("user")
+      .select("*")
+      .eq("uid", searchId);
+    return user![0];
+  };
+
   useEffect(() => {
     fetchMissionList();
   }, []);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const fetchedProfile = await getProfile();
+      setProfile(fetchedProfile);
+    };
+    fetchProfile();
+  }, [searchId]);
 
   const marks: string[] = [];
   mission.map((item) => marks.push(`${item.createdAt}`));
@@ -68,9 +105,15 @@ const MissionCalendar = () => {
           padding: "15px 0 15px 0",
           borderRadius: "10px",
         }}
+        onClick={() => {
+
+          setShowModal(true);
+        }}
       >
         일일미션 하러가기
       </p>
+      <RandomMission showModal={showModal} user={ user } setShowModal={setShowModal} profile={profile}/>
+
     </div>
   );
 };

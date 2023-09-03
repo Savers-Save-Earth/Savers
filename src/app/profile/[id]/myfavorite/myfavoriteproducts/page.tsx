@@ -4,46 +4,33 @@ import React, { useEffect, useState } from "react";
 import supabase from "@/libs/supabase";
 import { Database } from "@/types/supabase";
 import { useRouter } from "next/navigation";
+import Loading from "@/app/loading";
+import NoBookmarkedProduct from "@/components/profile/NoBookmarkedProduct";
 
 type UserFavoriteProducts = Database["public"]["Tables"]["like_product"]["Row"];
 
 const MyFavoriteProducts = ({ params }: { params: { id: string } }) => {
-  const [userLikedProducts, setUserLikedProducts] = useState<
-    UserFavoriteProducts[]
-  >([]);
+  const [userLikedProducts, setUserLikedProducts] = useState<UserFavoriteProducts[]>([]);
   // const [userId, setUserId] = useState<string | null>(null);
   const [loadCount, setLoadCount] = useState<number>(5);
+  const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태 추가
 
   // decoded params : 유저 닉네임.
-  const decodedParams = decodeURIComponent(params.id);
+  const searchId = decodeURIComponent(params.id);
 
   useEffect(() => {
-    fetchUserData();
+    fetchLikeProductData();
   }, [loadCount]);
 
-  const fetchUserData = async () => {
-    try {
-      let { data: user } = await supabase
-        .from("user")
-        .select("uid")
-        .eq("nickname", decodedParams);
-      const fetchedUserId = user![0].uid;
-      // setUserId(fetchedUserId)
-      fetchLikeProductData(fetchedUserId);
-    } catch (error) {
-      console.error("An error occurred:", error); // 예상치 못한 에러 처리
-      return false; // 에러 처리 후 함수 종료
-    }
-  };
-
-  const fetchLikeProductData = async (fetchedUserId: string) => {
+  const fetchLikeProductData = async () => {
     try {
       let { data: likedProduct } = await supabase
         .from("like_product")
         .select("*")
-        .eq("user_id", fetchedUserId);
+        .eq("user_id", searchId);
       // .range(0, loadCount - 1);
       setUserLikedProducts(likedProduct || []);
+      setIsLoading(false)
     } catch (error) {
       console.error("An error occurred:", error); // 예상치 못한 에러 처리
       return false; // 에러 처리 후 함수 종료
@@ -55,6 +42,14 @@ const MyFavoriteProducts = ({ params }: { params: { id: string } }) => {
   };
   //
   return (
+<div className="space-y-4">
+      {isLoading ? (
+        <Loading/>
+      ) : userLikedProducts.length === 0 ? (
+        <NoBookmarkedProduct/>
+      ) : 
+    (
+
     <>
       <div className="flex flex-wrap items-center justify-start gap-4 self-stretch bg-white mx-auto">
         {userLikedProducts?.map((product) => (
@@ -89,6 +84,10 @@ const MyFavoriteProducts = ({ params }: { params: { id: string } }) => {
         더보기
       </button>
     </>
+
+    )}
+    </div>
+
   );
 };
 
