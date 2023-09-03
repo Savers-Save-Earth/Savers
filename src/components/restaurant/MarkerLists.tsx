@@ -25,9 +25,9 @@ const MarkerLists = ({ markerList, currentCategory }: any) => {
   useEffect(() => {
     const { Kakao } = window;
     if (window.Kakao) {
-      // if (!Kakao.isInitialized()) {
-      window.Kakao.init(process.env.NEXT_PUBLIC_KAKAOMAP_KEY);
-      // }
+      if (!Kakao.isInitialized()) {
+        window.Kakao.init(process.env.NEXT_PUBLIC_KAKAOMAP_KEY);
+      }
     }
   }, []);
 
