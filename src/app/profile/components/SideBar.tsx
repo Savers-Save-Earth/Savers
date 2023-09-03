@@ -66,6 +66,7 @@ const SideBar = () => {
   // const [searchId, setSearchId] = useState<string | undefined>(undefined);
   // 우정작업 //
   const [profileImg, setProfileImg] = useState<string>("");
+
   console.log("마이페이지 profile===>", profile);
   const getUser = async () => {
     const {
@@ -83,10 +84,10 @@ const SideBar = () => {
     const { data: userData } = await supabase
       .from("user")
       .select()
-      .eq("uid", user?.id);
+      .eq("uid", searchId);
 
     if (userData) {
-      setProfileImg(profile[0]?.profileImage);
+      setProfileImg(userData[0]?.profileImage);
     } else {
       return;
     }
