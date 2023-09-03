@@ -4,6 +4,9 @@ import React, { useState, useEffect } from "react";
 import NicknameMaker from "@/components/auth/NicknameMaker";
 import { Database } from "@/types/supabase";
 import { useRouter } from "next/navigation";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastError, ToastSuccess } from "@/libs/toastifyAlert";
 
 type Provider = "google" | "kakao" | "facebook";
 
@@ -33,9 +36,9 @@ const SocialLogin = () => {
       }
 
       await getUser();
-      window.alert("로그인⚡️");
+      ToastSuccess("로그인 되었습니다. 🌱");
     } catch (error: any) {
-      window.alert(`${provider} 로그인 에러: ${error.message}`);
+      ToastError(`${provider} 로그인 에러: ${error.message}`);
     }
   };
 

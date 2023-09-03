@@ -4,12 +4,25 @@ import { usePathname, useRouter } from "next/navigation";
 import supabase from "@/libs/supabase";
 import Link from "next/link";
 import { cls } from "@/libs/util";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Header = () => {
   const pathname = usePathname();
   const router = useRouter();
   const [scrollY, setScrollY] = useState(0);
   const [user, setUser] = useState<any>(null);
+
+  //toastify yes,no selector
+  const Msg = ({ closeToast }) => (
+    <div>
+      로그아웃 하시겠어요?
+      <>
+      <button onClick={handleLogout}>로그아웃</button>
+      <button onClick={closeToast}>취소</button>
+    </>
+    </div>
+  );
 
   const getUser = async () => {
     const {
@@ -41,13 +54,27 @@ const Header = () => {
     };
   }, []);
 
+  // const loginLogoutSwitcher = async () => {
+  //   if (user) {
+  //     const ok = toast.info(<Msg />) window.어쩌구팝업;
+  //     if (ok) {
+  //       await supabase.auth.signOut();
+  //       router.push("/");
+  //     }
+  //   } else {
+  //     router.push("/login");
+  //   }
+  // };
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    router.push("/");
+    toast.success("로그아웃되었습니다.");
+  };
+
   const loginLogoutSwitcher = async () => {
     if (user) {
-      const ok = window.confirm("로그아웃 하시겠어요?");
-      if (ok) {
-        await supabase.auth.signOut();
-        router.push("/");
-      }
+      toast.info(<Msg />);
     } else {
       router.push("/login");
     }
@@ -60,6 +87,7 @@ const Header = () => {
       router.push("/signup");
     }
   };
+
   return (
     <>
       {pathname === "/" ? (
