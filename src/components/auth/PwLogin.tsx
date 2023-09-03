@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import supabase from "@/libs/supabase";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { ToastError, ToastSuccess } from "@/libs/toastifyAlert";
 
 interface FormValue {
   email: string;
@@ -33,14 +34,11 @@ const PwLogin: React.FC = () => {
 
     if (error) {
       console.error("로그인 에러:", error);
-      toast.error("로그인에 실패하였습니다.");
+      ToastError("로그인에 실패하였습니다.");
     } else {
       console.log("로그인 성공");
-      toast.success("로그인 되었습니다. 🌱", {
-        onClose: () => {
-          router.push(`/`);
-        },
-      });
+      ToastSuccess("로그인 되었습니다. 🌱");
+      router.push("/")
       loginUpdater();
     }
   };
@@ -180,18 +178,6 @@ const PwLogin: React.FC = () => {
           </div>
         </form>
       </div>
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
     </>
   );
 };

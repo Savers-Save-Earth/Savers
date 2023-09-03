@@ -14,6 +14,7 @@ import { useRecoilValue } from "recoil";
 import { convertTimestamp, removeHtmlTags } from "@/libs/util";
 
 import { EditPostType } from "@/types/types";
+import { ToastError, ToastSuccess, ToastWarn } from "@/libs/toastifyAlert";
 
 const EditPost = () => {
   const currentUser = useAuth();
@@ -35,12 +36,12 @@ const EditPost = () => {
   const updateMutation = useMutation(updatePost, {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["postDetail", postDetail?.post_uid] });
-      window.alert("게시글이 정상적으로 수정되었습니다.");
+      ToastSuccess("게시글이 정상적으로 수정되었습니다.");
       location.href = `/community/${postDetail?.post_uid}`;
     },
     onError: (error) => {
       console.error("게시글 수정 에러:", error);
-      window.alert("게시글이 정상적으로 수정되지 않았습니다. 다시 시도해주세요!");
+      ToastError("게시글이 정상적으로 수정되지 않았습니다. 다시 시도해주세요!");
     },
   });
   
@@ -60,15 +61,15 @@ const EditPost = () => {
     };
   
     if (category === "") {
-      window.alert("카테고리를 선택해주세요!");
+      ToastWarn("카테고리를 선택해주세요!");
       return false;
     }
     if (title === "") {
-      window.alert("제목을 입력해주세요!");
+      ToastWarn("제목을 입력해주세요!");
       return false;
     }
     if (removeHtmlTags(content).length < 1) {
-      window.alert("본문을 작성해주세요!");
+      ToastWarn("본문을 작성해주세요!");
       return false;
     }
   

@@ -11,6 +11,7 @@ import { convertDate, convertTimestamp, removeHtmlTags } from "@/libs/util";
 
 import { getMissionHandler, updateMissionHandler } from "@/api/mission/checkMission";
 import { NewPostType } from "@/types/types";
+import { ToastError, ToastSuccess, ToastWarn } from "@/libs/toastifyAlert";
 
 const currentDate = convertDate(new Date());
 
@@ -36,12 +37,12 @@ const AddPost: NextComponentType = () => {
   const createMutation = useMutation(createPost, {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["communityAllPosts"] });
-      window.alert("게시글이 정상적으로 등록되었습니다.");
+      ToastSuccess("게시글이 정상적으로 등록되었습니다.");
       location.href = "/community";
     },
     onError: (error) => {
       console.error("게시글 등록 에러:", error);
-      window.alert("게시글이 정상적으로 등록되지 않았습니다. 다시 시도해주세요!");
+      ToastError("게시글이 정상적으로 등록되지 않았습니다. 다시 시도해주세요!");
     },
   });
   
@@ -67,15 +68,15 @@ const AddPost: NextComponentType = () => {
     }
 
     if (category === "") {
-      window.alert("카테고리를 선택해주세요!");
+      ToastWarn("카테고리를 선택해주세요!");
       return false;
     }
     if (title.length < 1) {
-      window.alert("제목을 입력해주세요!");
+      ToastWarn("제목을 입력해주세요!");
       return false;
     }
     if (removeHtmlTags(content).length < 1) {
-      window.alert("본문을 작성해주세요!");
+      ToastWarn("본문을 작성해주세요!");
       return false;
     }
     createMutation.mutate(newPost);

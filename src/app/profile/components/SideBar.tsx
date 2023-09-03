@@ -7,6 +7,7 @@ import { Database } from "@/types/supabase";
 import { convertDate } from "@/libs/util";
 import Image from "next/image";
 import RandomMission from "./RandomMission";
+import EditProfile from "@/components/profile/EditProfile";
 
 type Profile = Database["public"]["Tables"]["user"]["Row"];
 export interface DailyMission {
@@ -60,6 +61,9 @@ const SideBar = () => {
   const [showModal, setShowModal] = useState(false);
   const [user, setUser] = useState<any>();
   // const [searchId, setSearchId] = useState<string | undefined>(undefined);
+  // 우정작업 //
+  const [profileImg, setProfileImg] = useState<string>("");
+  const [open, setOpen] = useState(false);
 
   const getUser = async () => {
     const {
@@ -71,6 +75,21 @@ const SideBar = () => {
     } else {
       setUser(user);
     }
+
+    // 우정작업 //
+
+    const { data: userData } = await supabase
+      .from("user")
+      .select()
+      .eq("uid", user?.id);
+
+    if (userData) {
+      setProfileImg(userData[0]?.profileImage);
+    } else {
+      return;
+    }
+
+    // 우정작업 //
   };
   // useEffect(() => {
   //   const idParams = useParams().id as string | undefined
@@ -78,7 +97,8 @@ const SideBar = () => {
   useEffect(() => {
     getUser();
   }, []);
-  // getUser()
+
+  // 우정 작업 -> 프로필모달 열기 //
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -95,19 +115,21 @@ const SideBar = () => {
         <>
           <div className="flex flex-col justify-center items-center gap-6 self-stretch leading-none">
             <div className="relative w-[140px] h-[140px] object-contain">
-              <Image
-                fill={true}
-                src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/profileImage/default_profile_image.svg"
-                alt="프로필 이미지"
-              />
+              {profileImg ? (
+                <img src={profileImg} alt="프로필 이미지" />
+              ) : (
+                <Image
+                  fill={true}
+                  src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/profileImage/default_profile_image.svg"
+                  alt="프로필 이미지"
+                />
+              )}
             </div>
             <div className="flex flex-col items-center gap-4">
               <p className="text-gray-900 text-[24px] non-italic font-semibold leading-7">
                 {profile.nickname}
               </p>
-              <button className="text-gray-400 text-[16px] non-italic font-normal leading-4">
-                프로필 수정
-              </button>
+              <EditProfile />
             </div>
           </div>
 

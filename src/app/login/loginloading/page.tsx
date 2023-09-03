@@ -4,7 +4,6 @@ import Header from "@/components/Header";
 import supabase from "@/libs/supabase";
 import { useRouter } from "next/navigation";
 import NicknameMaker from "@/components/auth/NicknameMaker";
-// import { User } from "@supabase/supabase-js";
 
 const LoginLoading = () => {
   const [user, setUser] = useState<any>(null);
@@ -19,21 +18,14 @@ const LoginLoading = () => {
 
       console.log("getUser>>>", user);
 
-      // loginUpdater();
       await setUser(user);
       await getUserInfo(user);
       router.push("/");
     }
     exe();
-  }, []);
+  });
 
   console.log("getUser확인", user?.id);
-
-  // const loginUpdater = async () => {
-  //   await supabase.from("user").upsert({
-  //     isLogin: true,
-  //   });
-  // };
 
   const getUserInfo = async (user: any) => {
     if (!user) {
