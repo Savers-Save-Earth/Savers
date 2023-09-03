@@ -22,12 +22,12 @@ const MarkerLists = ({ markerList, currentCategory }: any) => {
   const [markedByUser, setMarkedByUser] = useState<any[]>([]);
 
   //2.useEffect자리 옮김
-  //if문 삭제
   useEffect(() => {
     const { Kakao } = window;
-
-    if (!Kakao.isInitialized()) {
+    if (window.kakao) {
+      // if (!Kakao.isInitialized()) {
       window.Kakao.init(process.env.NEXT_PUBLIC_KAKAOMAP_KEY);
+      // }
     }
   }, []);
 
