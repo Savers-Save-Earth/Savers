@@ -19,12 +19,12 @@ const NoMissionDone = () => {
              일일미션을 차곡차곡 수행해서 배지를 받아보세요!!
             </p>
             <div className="flex justify-center">
-              <button
+              {/* <button
                 onClick={() => window.open("/restaurant")}
                 className="inline-flex text-white bg-[#5FD100] border-0 py-2 px-6 focus:outline-none hover:bg-[#0ad100] rounded text-lg"
               >
                 여기 누르면 일일미션 뽑기 나오게 수정해야함.
-              </button>
+              </button> */}
             </div>
           </div>
         </div>
