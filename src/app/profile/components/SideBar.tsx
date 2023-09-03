@@ -3,11 +3,11 @@ import supabase from "@/libs/supabase";
 import { useParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Database } from "@/types/supabase";
 import { convertDate } from "@/libs/util";
 import Image from "next/image";
 import RandomMission from "./RandomMission";
 import EditProfile from "@/components/profile/EditProfile";
+import { Database } from "@/types/supabase";
 
 type Profile = Database["public"]["Tables"]["user"]["Row"];
 export interface DailyMission {
@@ -44,6 +44,7 @@ const SideBar = () => {
   const currentDate = convertDate(new Date());
   const currentDateModify = currentDate.replaceAll("-", ".") as string
   const searchId = useParams().id as string;
+  console.log("searchId===>",searchId)
   // const decodedParams = decodeURIComponent(params);
 
   const router = useRouter();
@@ -57,13 +58,15 @@ const SideBar = () => {
     return user![0];
   };
 
-  const [profile, setProfile] = useState<Profile>(initialProfile);
+  const [profile, setProfile] = useState<any>(initialProfile);
+  
   const [showModal, setShowModal] = useState(false);
   const [user, setUser] = useState<any>();
+  console.log("user사이드바===>",user)
   // const [searchId, setSearchId] = useState<string | undefined>(undefined);
   // 우정작업 //
   const [profileImg, setProfileImg] = useState<string>("");
-
+  console.log("마이페이지 profile===>",profile)
   const getUser = async () => {
     const {
       data: { user },
@@ -83,7 +86,7 @@ const SideBar = () => {
       .eq("uid", user?.id);
 
     if (userData) {
-      setProfileImg(userData[0]?.profileImage);
+      setProfileImg(profile[0]?.profileImage);
     } else {
       return;
     }
@@ -128,7 +131,7 @@ const SideBar = () => {
               <p className="text-gray-900 text-[24px] non-italic font-semibold leading-7">
                 {profile.nickname}
               </p>
-              <EditProfile />
+              {(profile.uid === user?.uid) ? <EditProfile /> : ""}
             </div>
           </div>
 
