@@ -24,7 +24,7 @@ const MarkerLists = ({ markerList, currentCategory }: any) => {
   //2.useEffect자리 옮김
   useEffect(() => {
     const { Kakao } = window;
-    if (window.kakao) {
+    if (window.Kakao) {
       // if (!Kakao.isInitialized()) {
       window.Kakao.init(process.env.NEXT_PUBLIC_KAKAOMAP_KEY);
       // }
