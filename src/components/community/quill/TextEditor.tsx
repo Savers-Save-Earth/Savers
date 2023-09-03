@@ -39,7 +39,6 @@ const TextEditor = ({content, setContent}: EditorProps) => {
 
     input.addEventListener("change", async () => {
       if (input.files) {
-        // const file = input.files[0];
         const file = input.files[0]
 
         try {

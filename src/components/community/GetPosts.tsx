@@ -1,14 +1,15 @@
 "use client";
 import Link from "next/link";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getPosts } from "@/api/community/post";
-import { InView, useInView } from "react-intersection-observer";
+import { useInView } from "react-intersection-observer";
 
 import { usePathname } from "next/navigation";
 
-import { removeHtmlTags } from "@/libs/util";
+import Image from "next/image";
+import { getFirstImage, getImgUrl, removeHtmlTags } from "@/libs/util";
 import Loading from "@/app/loading";
 import CategoryTag from "./CategoryTag";
 
@@ -19,6 +20,7 @@ type QueryKeyMap = {
 };
 
 const GetPosts = () => {
+  const [thumbnail, setThumbnail] = useState<string>("");
   const pathname = usePathname();
   const getPathnameQueryKey = (pathname: string) => {
     const queryKeyMap: QueryKeyMap = {
@@ -101,17 +103,31 @@ const GetPosts = () => {
                     {post.category}
                   </CategoryTag>
                   <div>
-                    <div>
-                      <Link href={`/community/${post.post_uid}`}>
-                        <h2 className="font-medium text-lg flex items-center space-x-2 cursor-pointer hover:underline my-2">
-                          {post.title}
-                        </h2>
-                      </Link>
-                      <Link href={`/community/${post.post_uid}`}>
-                        <p className="text-gray-500 text-sm cursor-pointer hover:underline text-ellipsis line-clamp-2">
-                          {removeHtmlTags(post.content)}
-                        </p>
-                      </Link>
+                    <div className="flex justify-between">
+                      <div className="flex flex-col">
+                        <Link href={`/community/${post.post_uid}`}>
+                          <h2 className="font-medium text-lg flex items-center space-x-2 cursor-pointer hover:underline my-2">
+                            {post.title}
+                          </h2>
+                        </Link>
+                        <Link href={`/community/${post.post_uid}`}>
+                          <p className="text-gray-500 text-sm cursor-pointer hover:underline text-ellipsis line-clamp-2">
+                            {removeHtmlTags(post.content)}
+                          </p>
+                        </Link>
+                      </div>
+                      <div className="w-24">
+                      {
+                        getFirstImage(post.content)
+                          ?
+                          <img
+                            src={getImgUrl(getFirstImage(post.content))}
+                            alt="thumbnail"
+                          />
+                          :
+                          null
+                      }
+                      </div>
                     </div>
                     <div className="flex justify-between mt-5">
                       <div className="flex space-x-3">

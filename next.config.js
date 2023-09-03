@@ -1,14 +1,32 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
 
-module.exports = nextConfig;
+const nextConfig = {
+  reactStrictMode: true,
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL,
+        port: "",
+        pathname: "/profileImage/**"
+      },
+      {
+        protocol: "https",
+        hostname: process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL,
+        port: "",
+        pathname: "/community/**"
+      }
+    ]
+  },
+}
+
 
 // video
 const withVideos = require("next-videos");
-
 module.exports = withVideos();
 
-// image
+module.exports = nextConfig;
 
+// image
 // const withImages = require("next-images");
 // module.exports = withImages();

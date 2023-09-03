@@ -178,7 +178,7 @@ const DetailPost = ({ postDetail, postUid }: DetailPostProps) => {
             <div className="flex items-center justify-center space-x-3">
               <div className="w-12 h-12 relative object-contain">
                 <Image
-                  src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/profileImage/default_profile_image.svg"
+                  src={`${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}/profileImage/default_profile_image.svg`}
                   alt="profile"
                   fill={true}
                 />
@@ -207,7 +207,6 @@ const DetailPost = ({ postDetail, postUid }: DetailPostProps) => {
             className="mt-14 px-2"
           />
         )}
-        \
         <div className="flex justify-center items-center mt-20 mb-3 mx-auto space-x-5">
           <div className="flex justify-center items-center space-x-1">
             <button onClick={handleLikeClick}>
