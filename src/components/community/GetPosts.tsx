@@ -119,7 +119,7 @@ const GetPosts = () => {
                       {
                         getFirstImage(post.content)
                         ?
-                        <div className="flex-shrink-0 w-24 h-24">
+                        <div className="flex-shrink-0 w-24 h-24 ml-2 bg-gray-50">
                           <img
                             className="flex-shrink-0 w-24 h-24 rounded-md"
                             src={getImgUrl(getFirstImage(post.content))}
