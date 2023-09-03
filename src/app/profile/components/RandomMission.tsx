@@ -135,7 +135,7 @@ const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
             className="fixed inset-0 bg-slate-400 bg-opacity-50"
           ></div>
           <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 outline-none focus:outline-none">
-            <div className="border-2 border-slate-600 bg-white relative w-[480px] h-[729px] gap-3 p-8 flex flex-wrap items-center justify-center rounded-2xl">
+            <div className=" bg-white relative w-[480px] h-[729px] gap-3 p-8 flex flex-wrap items-center justify-center rounded-2xl">
               <div className="flex flex-col gap-5 justify-center items-center">
                 <h1 className="text-gray-900 w-full text-2xl font-semibold leading-6">
                   오늘의 세이버 일일미션 랜덤 뽑기
@@ -209,28 +209,28 @@ const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
                             </div>
 
                             <div className="absolute top-0 left-0 w-full h-full flex flex-col justify-center items-center object-cover gap-4">
-                              
                               <div className="bg-white rounded-full p-4 flex justify-center ">
-                              <svg
-                                width="41"
-                                height="40"
-                                viewBox="0 0 41 40"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <g id="Icon">
-                                  <path
-                                    id="Vector (Stroke)"
-                                    fill-rule="evenodd"
-                                    clip-rule="evenodd"
-                                    d="M35.0118 10.4882C35.6627 11.139 35.6627 12.1943 35.0118 12.8452L18.3452 29.5118C17.6943 30.1627 16.639 30.1627 15.9881 29.5118L7.65481 21.1785C7.00394 20.5276 7.00394 19.4724 7.65481 18.8215C8.30569 18.1706 9.36096 18.1706 10.0118 18.8215L17.1667 25.9763L32.6548 10.4882C33.3057 9.83728 34.361 9.83728 35.0118 10.4882Z"
-                                    fill="#5FD100"
-                                  />
-                                </g>
-                              </svg>
-                              
+                                <svg
+                                  width="41"
+                                  height="40"
+                                  viewBox="0 0 41 40"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <g id="Icon">
+                                    <path
+                                      id="Vector (Stroke)"
+                                      fill-rule="evenodd"
+                                      clip-rule="evenodd"
+                                      d="M35.0118 10.4882C35.6627 11.139 35.6627 12.1943 35.0118 12.8452L18.3452 29.5118C17.6943 30.1627 16.639 30.1627 15.9881 29.5118L7.65481 21.1785C7.00394 20.5276 7.00394 19.4724 7.65481 18.8215C8.30569 18.1706 9.36096 18.1706 10.0118 18.8215L17.1667 25.9763L32.6548 10.4882C33.3057 9.83728 34.361 9.83728 35.0118 10.4882Z"
+                                      fill="#5FD100"
+                                    />
+                                  </g>
+                                </svg>
                               </div>
-                              <p className="text-[#4DAB00] text-2xl leading-6 font-semibold">미션 완료!</p>
+                              <p className="text-[#4DAB00] text-2xl leading-6 font-semibold">
+                                미션 완료!
+                              </p>
                             </div>
 
                             <button
