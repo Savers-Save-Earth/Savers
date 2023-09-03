@@ -81,15 +81,16 @@ const SideBar = () => {
     // 우정작업 //
 
     const { data: userData } = await supabase
-      .from("user")
-      .select()
-      .eq("uid", user?.id);
-
+    .from("user")
+    .select()
+    .eq("uid", searchId);
+    
     if (userData) {
-      setProfileImg(profile[0]?.profileImage);
+    setProfileImg(userData[0]?.profileImage);
     } else {
-      return;
+    return;
     }
+    
 
     // 우정작업 //
   };
@@ -131,7 +132,7 @@ const SideBar = () => {
               <p className="text-gray-900 text-[24px] non-italic font-semibold leading-7">
                 {profile.nickname}
               </p>
-              {(profile.uid === user?.uid) ? <EditProfile /> : ""}
+              {searchId == user?.id ? <EditProfile /> : ""}
             </div>
           </div>
 
@@ -172,7 +173,6 @@ const SideBar = () => {
               <button
                 className="btn-sidebar"
                 onClick={() => {
-
                   setShowModal(true);
                 }}
               >

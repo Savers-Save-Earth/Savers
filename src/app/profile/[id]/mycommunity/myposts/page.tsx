@@ -4,6 +4,7 @@ import supabase from "@/libs/supabase";
 import { Database } from "@/types/supabase";
 import UserPost from "./UserPost";
 import NoMyPosts from "@/components/profile/NoMyPosts";
+import Loading from "@/app/loading";
 
 type CommunityPost = Database["public"]["Tables"]["community"]["Row"];
 const MyPosts = ({ params }: { params: { id: string } }) => {
@@ -66,7 +67,7 @@ const MyPosts = ({ params }: { params: { id: string } }) => {
   return (
     <div className="space-y-4">
       {isLoading ? (
-        <div className="text-center">데이터를 불러오는 중입니다...</div>
+        <Loading/>
       ) : userPosts.length === 0 ? (
         <NoMyPosts/>
       ) : (

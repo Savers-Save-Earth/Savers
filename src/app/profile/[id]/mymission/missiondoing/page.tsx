@@ -5,6 +5,9 @@ import { convertDate } from "@/libs/util";
 import { Database } from "@/types/supabase";
 import React, { useEffect, useState } from "react";
 
+import Loading from "@/app/loading";
+import NoMissionDoing from "@/components/profile/NoMissionDoing";
+
 type MissionDoingProp = Database["public"]["Tables"]["missionList"]["Row"];
 
 const MissionDoing = ({ params }: { params: { id: string } }) => {
@@ -40,8 +43,11 @@ const MissionDoing = ({ params }: { params: { id: string } }) => {
   return (
     <>
       {isLoading ? ( // isLoading이 true이면 로딩 표시를 표시합니다.
-        <p>Loading...</p>
-      ) : (
+       <Loading/>
+      ) : dailyMission.length === 0 ? (
+        <NoMissionDoing />
+      ) :
+       (
         <div className="flex justify-center items-center gap-x-4 text-gray-800 px-2">
           {dailyMission?.map((mission) => {
             return (

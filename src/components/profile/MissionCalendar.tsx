@@ -20,6 +20,7 @@ interface Mission {
 const MissionCalendar = () => {
   const [value, onChange] = useState<Value>(new Date());
   const [mission, setMission] = useState<Mission[]>([]);
+  const [profile, setProfile] = useState<any>([]);
   const params = useParams();
   const searchId = params.id
   console.log("params.id-->",params.id)
@@ -56,9 +57,25 @@ const MissionCalendar = () => {
     }
   };
 
+    const getProfile = async () => {
+    let { data: user, error } = await supabase
+      .from("user")
+      .select("*")
+      .eq("uid", searchId);
+    return user![0];
+  };
+
   useEffect(() => {
     fetchMissionList();
   }, []);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const fetchedProfile = await getProfile();
+      setProfile(fetchedProfile);
+    };
+    fetchProfile();
+  }, [searchId]);
 
   const marks: string[] = [];
   mission.map((item) => marks.push(`${item.createdAt}`));
@@ -96,7 +113,7 @@ const MissionCalendar = () => {
       >
         일일미션 하러가기
       </p>
-      <RandomMission showModal={showModal} user={ user } setShowModal={setShowModal}/>
+      <RandomMission showModal={showModal} user={ user } setShowModal={setShowModal} profile={profile}/>
 
     </div>
   );

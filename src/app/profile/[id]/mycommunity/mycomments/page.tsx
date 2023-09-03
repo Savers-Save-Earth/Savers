@@ -5,6 +5,7 @@ import { Database } from "@/types/supabase";
 import { useRouter } from "next/navigation";
 import UserComment from "./UserComment";
 import NoMyComments from "@/components/profile/NoMyComments";
+import Loading from "@/app/loading";
 
 type CommunityComment =
   Database["public"]["Tables"]["community_comment"]["Row"];
@@ -59,7 +60,7 @@ const MyComments = ({ params }: { params: { id: string } }) => {
   return (
     <div className="space-y-4">
       {isLoading ? (
-        <div className="text-center">데이터를 불러오는 중입니다...</div>
+        <Loading/>
       ) : userComments.length === 0 ? (
         <NoMyComments />
       ) : (

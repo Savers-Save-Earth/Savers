@@ -6,6 +6,7 @@ import { Database } from "@/types/supabase";
 import { useRouter } from "next/navigation";
 import UserLikedPost from "./UserLikedPost";
 import NoBookmarkedPost from "@/components/profile/NoBookmarkedPost";
+import Loading from "@/app/loading";
 
 type UserLikedPost = Database["public"]["Tables"]["community"]["Row"];
 
@@ -65,7 +66,7 @@ const MyLikedPosts = ({ params }: { params: { id: string } }) => {
   return (
     <div className="space-y-4">
       {isLoading ? (
-        <div className="text-center">데이터를 불러오는 중입니다...</div>
+        <Loading/>
       ) : userLikedPosts.length === 0 ? (
         <NoBookmarkedPost />
       ) : (
