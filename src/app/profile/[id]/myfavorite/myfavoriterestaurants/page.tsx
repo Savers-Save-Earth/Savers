@@ -15,33 +15,18 @@ const MyFavoriteRestaurants = ({ params }: { params: { id: string } }) => {
   const [loadCount, setLoadCount] = useState<number>(5);
 
   // decoded params : 유저 닉네임.
-  const decodedParams = decodeURIComponent(params.id);
+  const searchId = params.id
 
   useEffect(() => {
-    fetchUserData();
+    fetchLikeProductData();
   }, [loadCount]);
 
-  const fetchUserData = async () => {
-    try {
-      let { data: user } = await supabase
-        .from("user")
-        .select("uid")
-        .eq("nickname", decodedParams);
-      const fetchedUserId = user![0].uid;
-      // setUserId(fetchedUserId)
-      fetchLikeProductData(fetchedUserId);
-    } catch (error) {
-      console.error("An error occurred:", error); // 예상치 못한 에러 처리
-      return false; // 에러 처리 후 함수 종료
-    }
-  };
-
-  const fetchLikeProductData = async (fetchedUserId: string) => {
+  const fetchLikeProductData = async () => {
     try {
       let { data: likedRestaurant } = await supabase
         .from("like_restaurant")
         .select("*")
-        .eq("user_id", fetchedUserId);
+        .eq("user_id", searchId);
       // .range(0, loadCount - 1);
       setUserLikedRestaurants(likedRestaurant || []);
     } catch (error) {
@@ -61,7 +46,7 @@ const MyFavoriteRestaurants = ({ params }: { params: { id: string } }) => {
   };
   return (
     <>
-      <div className="flex flex-wrap justify-between self-stretch bg-white mx-auto w-full gap-2">
+      <div className="flex flex-wrap justify-between self-stretch bg-white mx-auto min-w-[700px] gap-2">
         {userLikedRestaurants?.map((item) => (
           <div
             key={item.id}

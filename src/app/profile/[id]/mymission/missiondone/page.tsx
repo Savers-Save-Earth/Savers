@@ -9,18 +9,18 @@ type MissionDoneProp = Database["public"]["Tables"]["missionList"]["Row"];
 const MissionDone = ({ params }: { params: { id: string } }) => {
   const [missionDone, setMissionDone] = useState<MissionDoneProp[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태 추가
-  const searchId = decodeURIComponent(params.id);
+  const searchId = params.id
 
   useEffect(() => {
-    fetchMissionData(searchId);
+    fetchMissionData();
   }, []);
 
-  const fetchMissionData = async (searchId: string) => {
+  const fetchMissionData = async () => {
     try {
       let { data: missionDone } = await supabase
         .from("missionList")
         .select("*")
-        .eq("userId", searchId)
+        .eq("user_uid", searchId)
         .eq("doingYn", false);
 
       setIsLoading(false); // 데이터 가져오기 후 로딩 상태를 false로 설정

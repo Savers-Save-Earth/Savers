@@ -4,6 +4,7 @@ import "react-calendar/dist/Calendar.css";
 import { format } from "date-fns";
 import supabase from "@/libs/supabase";
 import { useParams } from "next/navigation";
+import RandomMission from "@/app/profile/components/RandomMission";
 
 type ValuePiece = Date | null;
 
@@ -21,7 +22,26 @@ const MissionCalendar = () => {
   const [mission, setMission] = useState<Mission[]>([]);
   const params = useParams();
   const searchId = decodeURIComponent(`${params.id}`);
-  console.log(searchId);
+
+  const [showModal, setShowModal] = useState(false);
+  const [user, setUser] = useState<any>();
+  // console.log(searchId);
+
+  //추후에 useAuth hoo으로 바꿔줘야 함.
+  const getUser = async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      setUser(false);
+    } else {
+      setUser(user);
+    }
+  };
+  useEffect(() => {
+    getUser();
+  }, []);
 
   const fetchMissionList = async () => {
     const { data: missionData } = await supabase
@@ -68,9 +88,15 @@ const MissionCalendar = () => {
           padding: "15px 0 15px 0",
           borderRadius: "10px",
         }}
+        onClick={() => {
+
+          setShowModal(true);
+        }}
       >
         일일미션 하러가기
       </p>
+      <RandomMission showModal={showModal} user={ user } setShowModal={setShowModal}/>
+
     </div>
   );
 };

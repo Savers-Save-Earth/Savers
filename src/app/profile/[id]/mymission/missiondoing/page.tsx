@@ -11,19 +11,19 @@ const MissionDoing = ({ params }: { params: { id: string } }) => {
   const [dailyMission, setDailyMission] = useState<MissionDoingProp[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태 추가
   const currentDate = convertDate(new Date());
-  const searchId = decodeURIComponent(params.id);
+  const searchId = params.id
 
   useEffect(() => {
-    fetchMissionData(searchId);
+    fetchMissionData();
   }, []);
 
-  const fetchMissionData = async (searchId: string) => {
+  const fetchMissionData = async () => {
     try {
       let { data: dailyMission } = await supabase
         .from("missionList")
         .select("*")
         .eq("createdAt", currentDate)
-        .eq("userId", searchId)
+        .eq("user_uid", searchId)
         .eq("doingYn", true);
       setIsLoading(false);
       if (dailyMission?.length === 0) return <div>일일미션을 받아주세요!</div>;
@@ -37,14 +37,6 @@ const MissionDoing = ({ params }: { params: { id: string } }) => {
     }
   };
 
-  // const routTo = (obj: any) => {
-  //   if (obj.bigCategory === "글쓰기") {
-  //     window.open(`/community`)
-  //   }
-  //   else {
-  //     window.open(`/product`)
-  //   }
-  // }
   return (
     <>
       {isLoading ? ( // isLoading이 true이면 로딩 표시를 표시합니다.

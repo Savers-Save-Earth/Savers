@@ -5,6 +5,7 @@ import supabase from "@/libs/supabase";
 import { useRouter } from "next/navigation";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import RandomMission from "@/app/profile/components/RandomMission";
 
 const DailyMission = () => {
   const [user, setUser] = useState<any>(null);
@@ -75,6 +76,7 @@ const DailyMission = () => {
           <span className="font-semibold text-white text-[20px]">
             일일미션 랜덤 뽑기
           </span>
+          
         </div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -93,6 +95,7 @@ const DailyMission = () => {
           />
         </svg>
       </div>
+      
       <ToastContainer
         position="top-center"
         autoClose={5000}
@@ -105,6 +108,7 @@ const DailyMission = () => {
         pauseOnHover
         theme="light"
       />
+      
     </>
   );
 };

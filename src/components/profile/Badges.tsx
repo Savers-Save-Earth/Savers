@@ -18,8 +18,8 @@ interface BadgeByMission {
 
 const Badges = () => {
   const [badges, setBadges] = useState<Badge[]>([]);
-  const params = useParams();
-  const searchId = decodeURIComponent(`${params.id}`);
+  const searchId = useParams().id
+  // const searchId = decodeURIComponent(`${params.id}`);
 
   const [badgeByMission, setBadgeByMission] = useState<BadgeByMission[]>([]);
   const [badgesByMissionCount, setBadgesByMissionCount] = useState<number>(0);

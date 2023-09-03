@@ -10,20 +10,6 @@ const Header = () => {
   const router = useRouter();
   const [scrollY, setScrollY] = useState(0);
   const [user, setUser] = useState<any>(null);
-  const [userNickname, setUserNickname] = useState<any>(null);
-
-  const getUserNickname = async (id: string) => {
-    const { data: userNickDB, error } = await supabase
-      .from("user")
-      .select("nickname")
-      .eq("uid", id);
-    if (error) {
-      console.log(error);
-      return false;
-    }
-    const userNickname = userNickDB[0].nickname;
-    setUserNickname(userNickname);
-  };
 
   const getUser = async () => {
     const {
@@ -34,7 +20,6 @@ const Header = () => {
       setUser(null);
     } else {
       setUser(user);
-      getUserNickname(user.id);
     }
   };
 
@@ -44,7 +29,6 @@ const Header = () => {
         setUser(null);
       } else {
         setUser(session.user);
-        getUserNickname(session.user.id);
       }
     });
     const handleScroll = () => {
@@ -71,9 +55,7 @@ const Header = () => {
 
   const signupProfileSwitcher = () => {
     if (user) {
-      // router.push(`/profile/${user.id}/myprofile`);
-      const queryEncode = encodeURIComponent(userNickname);
-      router.push(`/profile/${queryEncode}/myprofile`);
+      router.push(`/profile/${user.id}/myprofile`);
     } else {
       router.push("/signup");
     }

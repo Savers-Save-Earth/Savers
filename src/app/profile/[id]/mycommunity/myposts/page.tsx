@@ -14,7 +14,8 @@ const MyPosts = ({ params }: { params: { id: string } }) => {
   const [search, setSearch] = useState("");
   const [loadMoreBtn, setLoadMoreBtn] = useState<string>("");
   // decoded params : 유저 닉네임.
-  const decodedParams = decodeURIComponent(params.id);
+  const searchId = params.id
+  // const decodedParams = decodeURIComponent(params.id);
   const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태 추가
 
   useEffect(() => {
@@ -26,10 +27,10 @@ const MyPosts = ({ params }: { params: { id: string } }) => {
       let { data: posts, count } = await supabase
         .from("community")
         .select("*", { count: "exact" })
-        .eq("author_name", decodedParams)
+        .eq("author_uid", searchId)
         .range(0, loadCount - 1);
       setUserPosts(posts || []);
-      console.log("count: " + count);
+      // console.log("count: " + count);
       setIsLoading(false)
       if (posts!.length === 0) {
         setUserPosts([]);
