@@ -1,9 +1,11 @@
-import dynamic from 'next/dynamic';
-import { useMemo, useRef } from 'react';
+import dynamic from "next/dynamic";
+import { useEffect, useMemo, useRef, useState } from "react";
 
-import Loading from '@/app/loading';
-import ReactQuill, { ReactQuillProps } from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+import Loading from "@/app/loading";
+import ReactQuill, { ReactQuillProps } from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import supabase from "@/libs/supabase";
+import { ToastError } from "@/libs/toastifyAlert";
 
 interface ForwardedQuillComponent extends ReactQuillProps {
   forwardedRef: React.Ref<ReactQuill>;
@@ -12,7 +14,7 @@ interface ForwardedQuillComponent extends ReactQuillProps {
 // dynamic import: react-quill은 SSR을 지원하지 않음
 const QuillWrapper = dynamic(
   async () => {
-    const { default: QuillComponent } = await import('react-quill');
+    const { default: QuillComponent } = await import("react-quill");
     const Quill = ({ forwardedRef, ...props }: ForwardedQuillComponent) => (
       <QuillComponent ref={forwardedRef} {...props} />
     );
@@ -21,10 +23,6 @@ const QuillWrapper = dynamic(
   { loading: () => <Loading />, ssr: false },
 );
 
-const imageHandler = () => {
-  // 이미지 핸들러
-};
-
 interface EditorProps {
   content: string;
   setContent: React.Dispatch<React.SetStateAction<string>>;
@@ -32,6 +30,47 @@ interface EditorProps {
 
 const TextEditor = ({content, setContent}: EditorProps) => {
   const quillInstance = useRef<ReactQuill>(null);
+  
+  const imageHandler = () => {
+    const input = document.createElement("input");
+    input.setAttribute("type", "file");
+    input.setAttribute("accept", "image/*");
+    input.click();
+
+    input.addEventListener("change", async () => {
+      if (input.files) {
+        // const file = input.files[0];
+        const file = input.files[0]
+
+        try {
+          const { data: res, error } = await supabase.storage
+            .from("community")
+            .upload(`image_${Date.now()}.png`, file);
+          
+          if (error) {
+            ToastError("이미지 업로드 오류")
+          }
+          
+          if (res) {
+            const imageUrl = res.path;
+
+            const editor = quillInstance.current?.getEditor();
+            if (editor) {
+              const range = editor.getSelection();
+              editor.insertEmbed(
+                range?.index || 0,
+                "image",
+                `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}/community/${imageUrl}`
+              );
+              editor.setSelection((range?.index || 0) + 1, 0);
+            }
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    });
+  };
 
   // react-quill module - 에디터 toolbar 설정
   // useMemo: 렌더링될 때마다 모듈 객체가 새로 생성되어 cursor focus가 에디터에서 벗어나는 것 방지
@@ -39,8 +78,9 @@ const TextEditor = ({content, setContent}: EditorProps) => {
     () => ({
       toolbar: {
         container: [
+          [{ header: [1, 2, false] }],
           ["bold", "italic", "underline", "strike", "blockquote"],
-          [{ size: ["small", false, "large", "huge"] }, { color: [] }],
+          [{ 'color': [] }, { 'background': [] }],
           [
             { list: "ordered" },
             { list: "bullet" },
@@ -48,7 +88,7 @@ const TextEditor = ({content, setContent}: EditorProps) => {
             { indent: "+1" },
             { align: [] },
           ],
-          ["image"],
+          ["image", "link"],
         ],
         handlers: {
           image: imageHandler,
@@ -79,16 +119,18 @@ const TextEditor = ({content, setContent}: EditorProps) => {
   ];
 
   return (
-    <QuillWrapper
-      className="h-[800px]"
-      forwardedRef={quillInstance}
-      value={content}
-      onChange={setContent}
-      modules={modules}
-      formats={formats}
-      theme="snow"
-      placeholder="내용을 입력해주세요."
-    />
+    <>
+      <QuillWrapper
+        className="h-[800px]"
+        forwardedRef={quillInstance}        
+        value={content}
+        onChange={setContent}
+        modules={modules}
+        formats={formats}
+        theme="snow"
+        placeholder="내용을 입력해주세요."
+      />
+    </>
   )
 }
 
