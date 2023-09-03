@@ -14,38 +14,21 @@ const MyLikedPosts = ({ params }: { params: { id: string } }) => {
   const [userLikedPosts, setUserLikedPosts] = useState<UserLikedPost[]>([]);
   const [loadCount, setLoadCount] = useState<number>(loadBoundaryValue);
   const [loadMoreBtn, setLoadMoreBtn] = useState<string>("");
-  const decodedParams = decodeURIComponent(params.id);
+  const searchId = params.id
   const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태 추가
 
   useEffect(() => {
-    fetchUser();
+    fetchCommunity();
   }, [loadCount]);
 
-  const fetchUser = async () => {
-    try {
-      let { data: user } = await supabase
-        .from("user")
-        .select("uid")
-        .eq("nickname", decodedParams);
-      if (user!.length === 0) {
-        setUserLikedPosts([]);
-        setIsLoading(false); // 데이터 가져오기 후 로딩 상태를 false로 설정
-      } else {
-        fetchCommunity(user![0].uid);
-      }
-    } catch (error) {
-      console.log("error", error);
-      setIsLoading(false);
-    }
-  };
-  const fetchCommunity = async (id: string) => {
+  const fetchCommunity = async () => {
     try {
       let { data: posts, count } = await supabase
         .from("like_post")
         .select("*", { count: "exact" })
-        .eq("like_user", id)
+        .eq("like_user", searchId)
         .range(0, loadCount - 1);
-      console.log("posts=======++>", posts);
+      // console.log("posts=======++>", posts);
       setIsLoading(false);
       setUserLikedPosts(posts || []);
       if (posts!.length === 0) {

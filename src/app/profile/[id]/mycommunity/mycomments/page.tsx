@@ -14,8 +14,7 @@ const MyComments = ({ params }: { params: { id: string } }) => {
   const [loadCount, setLoadCount] = useState<number>(loadBoundaryValue);
   const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태 추가
   const [loadMoreBtn, setLoadMoreBtn] = useState<string>("");
-  const router = useRouter();
-  const decodedParams = decodeURIComponent(params.id);
+  const searchId = params.id
 
   useEffect(() => {
     fetchCommunity();
@@ -26,7 +25,7 @@ const MyComments = ({ params }: { params: { id: string } }) => {
       let { data: comments, count } = await supabase
         .from("community_comment")
         .select("*", { count: "exact" })
-        .eq("writer_name", decodedParams)
+        .eq("writer_uid", searchId)
         .eq("isDeleted", false)
         .range(0, loadCount - 1);
       setUserComments(comments || []);
