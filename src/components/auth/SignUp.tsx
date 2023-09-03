@@ -237,11 +237,14 @@ const SignUp: React.FC = () => {
                 id="nickname"
                 type="nickname"
                 placeholder="닉네임 입력"
-                {...register("nickname", { required: true })}
+                {...register("nickname", { required: true, maxLength: 20 })}
                 className="flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50 outline-none"
               />
               {errors.nickname && errors.nickname.type === "required" && (
                 <span className="text-red-500">닉네임을 입력해주세요</span>
+              )}
+              {errors.nickname && errors.nickname.type === "maxLength" && (
+                <span className="text-red-500">20자 이내로 작성해주세요</span>
               )}
             </div>
           </div>
