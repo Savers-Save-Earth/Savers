@@ -64,7 +64,6 @@ const SideBar = () => {
   const [user, setUser] = useState<any>();
   // 우정작업 //
   const [profileImg, setProfileImg] = useState<string>("");
-  const [open, setOpen] = useState(false);
 
   const getUser = async () => {
     const {
