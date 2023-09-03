@@ -115,7 +115,7 @@ const DetailPost = ({ postDetail, postUid }: DetailPostProps) => {
       ToastInfo("로그인이 필요한 서비스 입니다.");
       setTimeout(() => {
         router.push("/login");
-      }, 4000);
+      }, 1000);
       return false;
     }
 
