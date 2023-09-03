@@ -32,7 +32,11 @@ const Carousel = () => {
       >
         {bannerList.map((item) => (
           <SwiperSlide key={item.id}>
-            <img src={item.img} style={{ height: "280px" }} />
+            <img
+              src={item.img}
+              style={{ height: "280px" }}
+              alt="banner image"
+            />
           </SwiperSlide>
         ))}
       </Swiper>
