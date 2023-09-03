@@ -21,6 +21,16 @@ const MarkerLists = ({ markerList, currentCategory }: any) => {
   const [user, setUser] = useState<any>(null);
   const [markedByUser, setMarkedByUser] = useState<any[]>([]);
 
+  //2.useEffect자리 옮김
+  useEffect(() => {
+    const { Kakao } = window;
+    if (window.Kakao) {
+      if (!Kakao.isInitialized()) {
+        window.Kakao.init(process.env.NEXT_PUBLIC_KAKAOMAP_KEY);
+      }
+    }
+  }, []);
+
   const fetchMarkList = async () => {
     const { data: markedData } = await supabase
       .from("like_restaurant")
