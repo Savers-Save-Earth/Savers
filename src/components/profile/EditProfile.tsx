@@ -56,7 +56,7 @@ const EditProfile = () => {
         .from("user")
         .update({
           nickname,
-          profileImage: `https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/profileImage/${data?.path}`,
+          profileImage: `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}/profileImage/${data?.path}`,
         })
         .eq("uid", user?.id);
 

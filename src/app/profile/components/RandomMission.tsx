@@ -135,7 +135,7 @@ const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
             className="fixed inset-0 bg-slate-400 bg-opacity-50"
           ></div>
           <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 outline-none focus:outline-none">
-            <div className="border-2 border-slate-600 bg-white relative w-[480px] h-[729px] gap-3 p-8 flex flex-wrap items-center justify-center rounded-2xl">
+            <div className=" bg-white relative w-[480px] h-[729px] gap-3 p-8 flex flex-wrap items-center justify-center rounded-2xl">
               <div className="flex flex-col gap-5 justify-center items-center">
                 <h1 className="text-gray-900 w-full text-2xl font-semibold leading-6">
                   오늘의 세이버 일일미션 랜덤 뽑기
@@ -209,7 +209,6 @@ const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
                             </div>
 
                             <div className="absolute top-0 left-0 w-full h-full flex flex-col justify-center items-center object-cover gap-4">
-                              
                               <div className="bg-white rounded-full p-4 flex justify-center ">
                               <svg
                                 width="41"
@@ -230,7 +229,9 @@ const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
                               </svg>
                               
                               </div>
-                              <p className="text-[#4DAB00] text-2xl leading-6 font-semibold">미션 완료!</p>
+                              <p className="text-[#4DAB00] text-2xl leading-6 font-semibold">
+                                미션 완료!
+                              </p>
                             </div>
 
                             <button
