@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 
 import { useAuth } from "@/hooks/useAuth";
 import { createReply, deleteReply, getReplies, updateReply } from "@/api/community/reply";
-import { updatePost } from "@/api/community/post";
+import { getProfileImg, updatePost } from "@/api/community/post";
 
 import CommentTag from "./CommentTag";
 import { CommentType, DetailPostProps, EditCommentType, EditReplyType, NewCommentType, NewReplyType, ReplyType } from "@/types/types";
@@ -19,6 +19,7 @@ import Image from "next/image";
 
 import { cls, convertTimestamp } from "@/libs/util";
 import { ToastError, ToastSuccess, ToastWarn } from "@/libs/toastifyAlert";
+import ProfileImage from "./ProfileImage";
 
 const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
   const router = useRouter();
@@ -270,13 +271,7 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
               key={comment.comment_uid}
             >
               <div className="flex items-start space-x-4 p-4 w-full">
-              <div className="w-12 h-12 relative object-contain">
-                <Image
-                  src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/profileImage/default_profile_image.svg"
-                  alt="profile"
-                  fill={true}
-                />
-              </div>
+                <ProfileImage userUid={comment.writer_uid} />
                 <div className="flex flex-col w-full">
                   <div className="flex flex-col">
                     <div className="flex justify-between">
@@ -400,13 +395,7 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
                     key={reply.reply_uid}
                   >
                     <div className="flex items-start space-x-4 pl-14">
-                    <div className="w-12 h-12 relative object-contain">
-                      <Image
-                        src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/profileImage/default_profile_image.svg"
-                        alt="profile"
-                        fill={true}
-                      />
-                    </div>
+                    <ProfileImage userUid={reply.writer_uid} />
                       <div className="flex flex-col w-full">
                         <div className="flex flex-col">
                           <div className="flex justify-between">

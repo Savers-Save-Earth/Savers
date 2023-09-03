@@ -127,3 +127,14 @@ export const getPopularPosts = async (): Promise<PostType[]> => {
   if (error) throw error;
   return popularPosts;
 };
+
+// 작성자 프로필 이미지 가져오기
+export const getProfileImg = async (userUid: string): Promise<any> => {
+  const { data: profileImg, error } = await supabase
+    .from("user")
+    .select("profileImage")
+    .eq("uid", userUid);
+  
+  if (error) return error;
+  return profileImg;
+};

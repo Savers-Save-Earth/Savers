@@ -35,3 +35,23 @@ export const removeHtmlTags = (text: string) => {
 export const cls = (...classnames: string[]) => {
   return classnames.join(" ");
 }
+
+export const getFirstImage = (content: string) => {
+  const regex = /<img[^>]+src="([^"]+)">/;
+  const match = content.match(regex);
+  if (match) {
+    return match[0];
+  } else {
+    return "";
+  }
+};
+
+export const getImgUrl = (imgMarkup: string) => {
+  const regex = /<img src="(.*?)">/;
+  const match = imgMarkup.match(regex);
+  if (match) {
+    return match[1];
+  } else {
+    return "";
+  }
+}

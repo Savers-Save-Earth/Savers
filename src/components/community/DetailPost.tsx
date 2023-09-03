@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { deletePost, updatePost } from "@/api/community/post";
+import { deletePost, getProfileImg, updatePost } from "@/api/community/post";
 import {
   cancelLikePost,
   createLikePost,
@@ -20,7 +20,8 @@ import { useSetRecoilState } from "recoil";
 import { editPostAtom } from "@/libs/atoms";
 import { DetailPostProps } from "@/types/types";
 import Image from "next/image";
-import { ToastInfo } from "@/libs/toastifyAlert";
+import { ToastError, ToastInfo, ToastSuccess } from "@/libs/toastifyAlert";
+import ProfileImage from "./ProfileImage";
 
 type LikesType = Database["public"]["Tables"]["like_post"]["Insert"];
 
@@ -142,9 +143,9 @@ const DetailPost = ({ postDetail, postUid }: DetailPostProps) => {
   const handleCopyUrl = () => {
     const currentUrl = window.location.href;
     copy(currentUrl)
-      .then(() => window.alert("링크가 복사되었습니다!"))
+      .then(() => ToastSuccess("링크가 복사되었습니다!"))
       .catch((err) =>
-        window.alert("링크 복사에 실패했습니다. 다시 시도해주세요!"),
+        ToastError("링크 복사에 실패했습니다. 다시 시도해주세요!"),
       );
   };
 
@@ -176,13 +177,7 @@ const DetailPost = ({ postDetail, postUid }: DetailPostProps) => {
         <div className="flex mt-3 py-3">
           <div className="flex w-full justify-between">
             <div className="flex items-center justify-center space-x-3">
-              <div className="w-12 h-12 relative object-contain">
-                <Image
-                  src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/profileImage/default_profile_image.svg"
-                  alt="profile"
-                  fill={true}
-                />
-              </div>
+              <ProfileImage userUid={postDetail?.author_uid} />
               <div className="flex flex-col items-start justify-center">
                 <span className="text-gray-600">{postDetail?.author_name}</span>
                 <span className="text-sm text-gray-400">
@@ -207,7 +202,6 @@ const DetailPost = ({ postDetail, postUid }: DetailPostProps) => {
             className="mt-14 px-2"
           />
         )}
-        \
         <div className="flex justify-center items-center mt-20 mb-3 mx-auto space-x-5">
           <div className="flex justify-center items-center space-x-1">
             <button onClick={handleLikeClick}>
