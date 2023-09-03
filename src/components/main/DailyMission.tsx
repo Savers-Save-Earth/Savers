@@ -18,15 +18,10 @@ const DailyMission = () => {
         data: { user },
       } = await supabase.auth.getUser();
 
-      const { data: userData } = await supabase
-        .from("user")
-        .select()
-        .eq("uid", user?.id);
-
       if (!user) {
         setUser(false);
       } else {
-        setUser(userData);
+        setUser(user);
       }
     } catch (error) {
       console.error("Error fetching user:", error);
@@ -41,7 +36,7 @@ const DailyMission = () => {
         },
       });
     } else {
-      router.push(`/profile/${user[0]?.nickname}/mymission/missiondoing`);
+      router.push(`/profile/${user.id}/mymission/missiondoing`);
     }
   };
   useEffect(() => {
@@ -76,7 +71,6 @@ const DailyMission = () => {
           <span className="font-semibold text-white text-[20px]">
             일일미션 랜덤 뽑기
           </span>
-          
         </div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -95,7 +89,7 @@ const DailyMission = () => {
           />
         </svg>
       </div>
-      
+
       <ToastContainer
         position="top-center"
         autoClose={5000}
@@ -108,7 +102,6 @@ const DailyMission = () => {
         pauseOnHover
         theme="light"
       />
-      
     </>
   );
 };

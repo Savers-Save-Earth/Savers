@@ -30,6 +30,27 @@ const PostList = () => {
     setShowCount(showCount + 10);
   };
 
+  const getThumbnail = (content: string) => {
+    // 이미지 태그를 추출하는 정규식
+    const imgRegex = /<img[^>]+src=["']([^"']+)["'][^>]*>/;
+
+    // 정규식에 맞는 첫 번째 이미지 태그를 추출
+    const firstImgTag = content?.match(imgRegex);
+
+    // 첫 번째 이미지 태그가 존재하면 src 속성의 내용을 추출
+    let srcContent = "";
+    if (firstImgTag) {
+      const srcMatch = firstImgTag[0].match(/src=["']([^"']+)["']/);
+      if (srcMatch && srcMatch[1]) {
+        srcContent = srcMatch[1];
+      }
+    }
+
+    console.log(firstImgTag);
+
+    return srcContent; // 추출한 src 속성의 내용을 반환합니다.
+  };
+
   return (
     <div className="mt-16">
       <div
@@ -84,7 +105,12 @@ const PostList = () => {
               ? `${item.content.replace(/<[^>]*>/g, "").slice(0, 190)}...`
               : item.content.replace(/<[^>]*>/g, "")}
           </p>
-
+          {getThumbnail(item.content) && (
+            <img
+              src={getThumbnail(item.content)}
+              className="w-[84px] h-[84px] object-cover ml-auto"
+            ></img>
+          )}
           <div className="flex items-center justify-between mt-4">
             <div className="flex items-center">
               <svg
