@@ -16,7 +16,7 @@ const EditProfile = () => {
       const {
         data: { user },
       } = await supabase.auth.getUser();
-      console.log(user);
+      // console.log(user);
       setUser(user);
 
       const { data: userData } = await supabase

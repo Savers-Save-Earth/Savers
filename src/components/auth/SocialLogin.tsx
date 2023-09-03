@@ -134,7 +134,7 @@ const SocialLogin = () => {
             viewBox="0 0 48 48"
             fill="none"
           >
-            <g clip-path="url(#clip0_1010_22070)">
+            <g clipPath="url(#clip0_1010_22070)">
               <path
                 d="M24 47.5C11.019 47.5 0.5 36.981 0.5 24C0.5 11.019 11.019 0.5 24 0.5C36.8683 0.5 47.5 11.0205 47.5 24C47.5 36.981 36.981 47.5 24 47.5Z"
                 fill="white"
