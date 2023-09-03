@@ -38,14 +38,13 @@ const PwLogin: React.FC = () => {
     } else {
       console.log("로그인 성공");
       ToastSuccess("로그인 되었습니다. 🌱");
-      router.push("/")
+      router.push("/");
       loginUpdater();
     }
   };
 
   const loginUpdater = async () => {
     await supabase.from("user").upsert({
-      isLogin: true,
       provider: "email",
     });
   };
