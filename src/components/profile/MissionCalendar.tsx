@@ -23,7 +23,6 @@ const MissionCalendar = () => {
   const [profile, setProfile] = useState<any>([]);
   const params = useParams();
   const searchId = params.id
-  console.log("params.id-->",params.id)
 
   const [showModal, setShowModal] = useState(false);
   const [user, setUser] = useState<any>();
