@@ -5,23 +5,17 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import Recoil from "./Recoil";
 import { ToastContainer } from "react-toastify";
-import "react-toastify/ReactToastify.css"
+import "react-toastify/ReactToastify.css";
 
 export const metadata: Metadata = {
-  title: "Savers",
+  title: "Savers | 지구를 위한 작은 실천",
   description: "Savers 세이버스 - 지구를 위한 작은 실천",
   icons: {
-    icon: [
-      '/favicon.ico?v=4',
-    ],
-    apple: [
-      'apple-touch-icon.png?v=4',
-    ],
-    shortcut: [
-      'apple-tough-icon.png'
-    ]
+    icon: ["/favicon.ico?v=4"],
+    apple: ["apple-touch-icon.png?v=4"],
+    shortcut: ["apple-tough-icon.png"],
   },
-  manifest: 'stie.webmanifest'
+  manifest: "stie.webmanifest",
 };
 
 declare global {
