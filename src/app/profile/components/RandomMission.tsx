@@ -40,7 +40,7 @@ const initialProfile: any = {
   writePosts: "",
 };
 
-const RandomMission = ({ user, showModal, setShowModal }: any) => {
+const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
   const currentDate = convertDate(new Date());
   const currentDateModify = currentDate.replaceAll("-", ".") as string;
   // const searchId = useParams().id as string;
@@ -51,35 +51,25 @@ const RandomMission = ({ user, showModal, setShowModal }: any) => {
   const router = useRouter();
   // const searchId = decodedParams as string;
 
-  const getProfile = async () => {
-    let { data: user, error } = await supabase
-      .from("user")
-      .select("*")
-      .eq("uid", searchId);
-      console.log("getProfile의 user",user)
-      if(user && user.length > 0) {
+  // const getProfile = async () => {
+  //   let { data: user, error } = await supabase
+  //     .from("user")
+  //     .select("*")
+  //     .eq("uid", searchId);
+  //     console.log("getProfile의 user",user)
+  //   return user![0];
+  // };
 
-        insertMissionListData(user![0].uid);
-      }
-    return user![0];
-  };
-
-  const [profile, setProfile] = useState<Profile>(initialProfile);
+  // const [modalProfile, setModalProfile] = useState<Profile>(initialProfile);
   const [dailyMission, setDailyMission] = useState<DailyMission[]>([]);
   const [modalController, setModalController] = useState(showModal);
 
   useEffect(() => {
     setModalController(showModal)
   }, [showModal])
-  useEffect(() => {
-    const fetchProfile = async () => {
-      const fetchedProfile = await getProfile();
-      setProfile(fetchedProfile);
-    };
-    fetchProfile();
-  }, [searchId]);
 
-  const insertMissionListData = async (id: string) => {
+  const insertMissionListData = async () => {
+    console.log("insertMissionListData 두번 뜨는지 테스트")
     if(!searchId) {
       console.log("insertMissionListData searchId 없을 때")
       console.error("searchId is undefined")

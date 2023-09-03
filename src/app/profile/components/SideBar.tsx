@@ -116,7 +116,7 @@ const SideBar = () => {
           <div className="flex flex-col justify-center items-center gap-6 self-stretch leading-none">
             <div className="relative w-[140px] h-[140px] object-contain">
               {profileImg ? (
-                <img src={profileImg} alt="프로필 이미지" />
+                <img className="w-[140px] h-[140px] rounded-full object-cover mx-auto" src={profileImg} alt="프로필 이미지" />
               ) : (
                 <Image
                   fill={true}
@@ -180,7 +180,7 @@ const SideBar = () => {
               ""
             )}
           </div>
-            <RandomMission showModal={showModal} user={ user } setShowModal={setShowModal}/>
+            <RandomMission showModal={showModal} user={ user } setShowModal={setShowModal} profile={profile}/>
         </>
       ) : (
         <>{/* <Loading /> */}</>

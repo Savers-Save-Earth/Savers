@@ -54,7 +54,7 @@ const Badges = () => {
     const { data } = await supabase
       .from("user")
       .select()
-      .eq("nickname", searchId);
+      .eq("uid", searchId);
 
     fetchBadges(data);
     fetchBadgesByMission(data);

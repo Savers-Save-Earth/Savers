@@ -21,7 +21,8 @@ const MissionCalendar = () => {
   const [value, onChange] = useState<Value>(new Date());
   const [mission, setMission] = useState<Mission[]>([]);
   const params = useParams();
-  const searchId = decodeURIComponent(`${params.id}`);
+  const searchId = params.id
+  console.log("params.id-->",params.id)
 
   const [showModal, setShowModal] = useState(false);
   const [user, setUser] = useState<any>();
@@ -47,7 +48,7 @@ const MissionCalendar = () => {
     const { data: missionData } = await supabase
       .from("missionList")
       .select()
-      .eq("userId", searchId)
+      .eq("user_uid", searchId)
       .eq("doingYn", false);
 
     if (missionData !== null) {
