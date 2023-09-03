@@ -116,18 +116,19 @@ const GetPosts = () => {
                           </p>
                         </Link>
                       </div>
-                      <div className="w-24">
                       {
                         getFirstImage(post.content)
-                          ?
+                        ?
+                        <div className="flex-shrink-0 w-24 h-24 ml-2 bg-gray-50">
                           <img
+                            className="flex-shrink-0 w-24 h-24 rounded-md"
                             src={getImgUrl(getFirstImage(post.content))}
                             alt="thumbnail"
                           />
+                        </div>
                           :
                           null
                       }
-                      </div>
                     </div>
                     <div className="flex justify-between mt-5">
                       <div className="flex space-x-3">
