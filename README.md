@@ -106,6 +106,9 @@ Next.js, typescript 를 이용하였으며 환경보호운동, 제로웨이스�
 
 <img width="1423" alt="image" src="https://github.com/Passionhruit/Savers/assets/92542456/f8511d29-e545-4a1e-8ca5-d52672545e43">
 
+<img width="1431" alt="image" src="https://github.com/Savers-Save-Earth/Savers/assets/92542456/825cc1a3-51ad-40ad-ad8e-07d28dd8a786">
+
+
 ### 2) 로그인/ 회원가입 페이지
 
 <img width="1440" alt="image" src="https://github.com/Passionhruit/Savers/assets/92542456/9d126d2a-fef6-440a-a09a-808ceb43abe0">
@@ -126,7 +129,15 @@ Next.js, typescript 를 이용하였으며 환경보호운동, 제로웨이스�
 
 ### 4) 커뮤니티 페이지
 
-<img width="1431" alt="image" src="https://github.com/Passionhruit/Savers/assets/92542456/a254ba17-3034-481c-ac84-92bff6e9467e">
+<img width="1427" alt="image" src="https://github.com/Savers-Save-Earth/Savers/assets/92542456/519e691e-8697-43b8-bc33-5e9512aea41a">
+
+<img width="1430" alt="image" src="https://github.com/Savers-Save-Earth/Savers/assets/92542456/edb36df8-d39e-4153-9cd0-dfc4d3ae4050">
+
+<img width="1428" alt="image" src="https://github.com/Savers-Save-Earth/Savers/assets/92542456/cbae3a3b-7ecb-4fb5-a5a7-4a7aa8c7bc2d">
+
+<img width="1426" alt="image" src="https://github.com/Savers-Save-Earth/Savers/assets/92542456/3dddd96f-c2fb-43fa-8bce-e9f9a7b4d6eb">
+
+
 
 ### 5) 마이 페이지
 
