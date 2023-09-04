@@ -1,9 +1,10 @@
 import dynamic from "next/dynamic";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef } from "react";
 
 import Loading from "@/app/loading";
 import ReactQuill, { ReactQuillProps } from "react-quill";
 import "react-quill/dist/quill.snow.css";
+
 import supabase from "@/libs/supabase";
 import { ToastError } from "@/libs/toastifyAlert";
 

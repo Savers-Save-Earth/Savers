@@ -1,4 +1,4 @@
-import GetPosts from "@/components/community/GetPosts";
+import GetPosts from "@/components/community/posts/GetPosts";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

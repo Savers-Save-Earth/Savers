@@ -9,7 +9,7 @@ import { PostType } from "@/types/types";
 
 import Loading from "@/app/loading";
 import { getFirstImage, getImgUrl, removeHtmlTags } from "@/libs/util";
-import CategoryTag from "./CategoryTag";
+import CategoryTag from "../ui/CategoryTag";
 
 const PopularPosts = () => {
   const [currentPage, setCurrentPage] = useState(1);

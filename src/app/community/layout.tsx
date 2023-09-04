@@ -1,8 +1,8 @@
 "use client";
-import FloatingButton from "@/components/community/FloatingButton";
-import PopularPosts from "@/components/community/PopularPosts";
-import SideBar from "@/components/community/SideBar";
-import TopButton from "@/components/community/TopButton";
+import FloatingButton from "@/components/community/ui/FloatingButton";
+import PopularPosts from "@/components/community/posts/PopularPosts";
+import SideBar from "@/components/community/ui/SideBar";
+import TopButton from "@/components/community/ui/TopButton";
 import { useAuth } from "@/hooks/useAuth";
 import { usePathname } from "next/navigation";
 
