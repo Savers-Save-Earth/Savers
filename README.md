@@ -18,7 +18,7 @@
 | 이우정 |  부리더    | https://github.com/Passionhruit|   https://passionfruit6.tistory.com/                       |    
 | 박지원 |  팀원    | https://github.com/xoxojw|        |
 | 이동준 |  팀원     | https://github.com/podoDJ |                             |
-| 최다연 |  팀원     | https://github.com/podoDJ |                               |
+| 최다연 |  팀원     | https://github.com/cheddaryeon |                               |
 | 한지희 |  팀원(디자이너) |  |  |
 
 ## 목차
