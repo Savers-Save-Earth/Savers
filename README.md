@@ -47,7 +47,8 @@ Next.js, typescript 를 이용하였으며 환경보호운동, 제로웨이스�
   * Javascript
   * html/css
   * react
-  * next.js 
+  * next.js
+  * tailwind css
   * TypeScript
   * Supabase
     
@@ -57,6 +58,7 @@ Next.js, typescript 를 이용하였으며 환경보호운동, 제로웨이스�
   <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white">
   <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=white">
      <img src="https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=next.js&logoColor=white"> 
+	   <img src="https://img.shields.io/badge/tailwindcss-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white"> 
   <img src="https://img.shields.io/badge/typescript-3178C6?style=for-the-badge&logo=typescript&logoColor=white">
  <img src="https://img.shields.io/badge/supabase-3FCF8E?style=for-the-badge&logo=supabase&logoColor=white">     
   </div>
