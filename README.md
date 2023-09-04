@@ -14,7 +14,7 @@
 
 | 팀원   |  팀원구분 | 깃허브                                      | 블로그                                  |
 | ------ | -------- | ------------------------------------------- | --------------------------------- |
-| 이은한 | 리더   | https://github.com/TerryEHLee  | terryehlee.tistory.com        |
+| 이은한 | 리더   | https://github.com/TerryEHLee  | https://terryehlee.tistory.com/     |
 | 이우정 |  부리더    | https://github.com/Passionhruit|   https://passionfruit6.tistory.com/                       |    
 | 박지원 |  팀원    | https://github.com/xoxojw|  https://xoxojw.tistory.com/      |
 | 이동준 |  팀원     | https://github.com/podoDJ |                             |
