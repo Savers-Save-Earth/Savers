@@ -1,10 +1,7 @@
 import supabase from "@/libs/supabase";
-import { Database } from "@/types/supabase";
-import { ToTalDataType } from "@/types/types";
 
-type PostType = Database["public"]["Tables"]["community"]["Row"];
-type NewPostType = Database["public"]["Tables"]["community"]["Insert"];
-type EditPostType = Database["public"]["Tables"]["community"]["Update"];
+import { PATHNAME_OHJIWAN, PATHNAME_PRODUCT, PATHNAME_RECIPE, PATHNAME_RESTAURANT } from "@/enums/community";
+import { PostType, NewPostType, EditPostType, ToTalDataType } from "@/types/types";
 
 // 게시글 등록
 export const createPost = async (newPost: NewPostType) => {
@@ -30,7 +27,7 @@ export const getPosts = async (pathname: string, pageParam: number = 1): Promise
   let data: any = [];
   let count = null;
     
-    if (pathname === "/community/product") {
+    if (pathname === PATHNAME_PRODUCT) {
       const productPosts = await supabase
         .from("community")
         .select("*")
@@ -43,7 +40,7 @@ export const getPosts = async (pathname: string, pageParam: number = 1): Promise
       const { count: productCount } = await supabase.from("community").select("count", { count: "exact" }).eq("category", "제품");
       count = productCount;
 
-    } else if (pathname === "/community/restaurant") {
+    } else if (pathname === PATHNAME_RESTAURANT) {
       const restaurantPosts = await supabase
         .from("community")
         .select("*")
@@ -56,7 +53,7 @@ export const getPosts = async (pathname: string, pageParam: number = 1): Promise
       const { count: restaurantCount } = await supabase.from("community").select("count", { count: "exact" }).eq("category", "식당");
       count = restaurantCount;
       
-    } else if (pathname === "/community/recipe") {
+    } else if (pathname === PATHNAME_RECIPE) {
       const recipePosts = await supabase
         .from("community")
         .select("*")
@@ -69,7 +66,7 @@ export const getPosts = async (pathname: string, pageParam: number = 1): Promise
       const { count: recipeCount } = await supabase.from("community").select("count", { count: "exact" }).eq("category", "레시피");
       count = recipeCount;
       
-    } else if (pathname === "/community/ohjiwan") {
+    } else if (pathname === PATHNAME_OHJIWAN) {
       const ohjiwanPosts = await supabase
         .from("community")
         .select("*")
