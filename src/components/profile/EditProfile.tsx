@@ -27,6 +27,7 @@ const EditProfile = () => {
       const userDataTable = userData ? userData[0] : null; // 배열의 첫 번째 요소 또는 null로 설정
 
       if (userDataTable) {
+        setNickname(userDataTable.nickname);
         setEditImage(userDataTable.profileImage);
         setEditNickname(userDataTable.nickname);
       }
@@ -62,8 +63,19 @@ const EditProfile = () => {
 
       alert("수정이 완료되었습니다.");
       setOpen(!open);
-      window.location.reload();
+    } else {
+      const { error: insertImageError } = await supabase
+        .from("user")
+        .update({
+          nickname,
+        })
+        .eq("uid", user?.id);
+
+      alert("수정이 완료되었습니다.");
+      setOpen(!open);
     }
+
+    window.location.reload();
   };
   const profileEditModalHandler = (e: any) => {
     e.preventDefault();
