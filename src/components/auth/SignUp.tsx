@@ -2,8 +2,7 @@ import React, { useState, useRef } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import supabase from "@/libs/supabase";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { ToastError, ToastSuccess, ToastWarn } from "@/libs/toastifyAlert";
 
 interface FormValues {
   email: string;
@@ -37,7 +36,7 @@ const SignUp: React.FC = () => {
         .single();
 
       if (existingUser) {
-        toast.warning("이미 가입된 메일입니다");
+        ToastWarn("이미 가입된 메일입니다");
         return;
       }
 
@@ -49,7 +48,7 @@ const SignUp: React.FC = () => {
           .single();
 
       if (existingNickname) {
-        toast.warning("이미 사용 중인 닉네임입니다");
+        ToastWarn("이미 사용 중인 닉네임입니다");
         return;
       }
 
@@ -61,11 +60,11 @@ const SignUp: React.FC = () => {
       if (error) {
         const errorDescription =
           (error as any).error_description || error.message;
-        toast.error(errorDescription);
+        ToastError(errorDescription);
         return;
       }
 
-      toast.success("회원가입이 완료되었습니다.");
+      ToastSuccess("회원가입이 완료되었습니다.");
 
       const { data: loginData, error: loginError } =
         await supabase.auth.signInWithPassword({
@@ -257,18 +256,6 @@ const SignUp: React.FC = () => {
           </button>
         </div>
       </form>
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
     </div>
   );
 };

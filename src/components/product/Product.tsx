@@ -3,8 +3,7 @@ import React, { useEffect, useState } from "react";
 import supabase from "@/libs/supabase";
 import { Product } from "@/types/types";
 import { useRouter } from "next/navigation";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { ToastInfo } from "@/libs/toastifyAlert";
 
 const productCategory = [
   { value: "", label: "전체", img: "assets/product/all.png" },
@@ -102,8 +101,9 @@ const ProductComponent = () => {
     const userId = user.id;
 
     if (!user) {
-      toast.info("로그인이 필요한 서비스 입니다.");
-      return;
+      ToastInfo("로그인이 필요한 서비스 입니다.");
+      router.push("/login")
+      return false;
     } else {
       // 현재 유저가 해당 게시물에 대해 좋아요를 눌렀는지 안눌렀는지에 대한 데이터
       // => 빈값인경우 좋아요누르면 추가, 데이터가있을경우 좋아요누르면 삭제
@@ -314,18 +314,6 @@ const ProductComponent = () => {
           </div>
         )}
       </div>
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
     </>
   );
 };

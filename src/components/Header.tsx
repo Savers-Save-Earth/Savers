@@ -4,7 +4,6 @@ import { usePathname, useRouter } from "next/navigation";
 import supabase from "@/libs/supabase";
 import Link from "next/link";
 import { cls } from "@/libs/util";
-import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Header = () => {
@@ -363,7 +362,6 @@ const Header = () => {
                 className="border-0 py-1 px-3 focus:outline-none rounded text-base"
               >
                 {user ? "로그아웃" : "로그인"}
-                <ToastContainer />
               </button>
               {user ? (
                 <button
