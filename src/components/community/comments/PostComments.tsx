@@ -11,15 +11,15 @@ import { useEffect, useState } from "react";
 
 import { useAuth } from "@/hooks/useAuth";
 import { createReply, deleteReply, getReplies, updateReply } from "@/api/community/reply";
-import { getProfileImg, updatePost } from "@/api/community/post";
+import { updatePost } from "@/api/community/post";
 
-import CommentTag from "./CommentTag";
+import CommentTag from "../ui/CommentTag";
 import { CommentType, DetailPostProps, EditCommentType, EditReplyType, NewCommentType, NewReplyType, ReplyType } from "@/types/types";
 import Image from "next/image";
 
 import { cls, convertTimestamp } from "@/libs/util";
 import { ToastError, ToastSuccess, ToastWarn } from "@/libs/toastifyAlert";
-import ProfileImage from "./ProfileImage";
+import ProfileImage from "../ui/ProfileImage";
 
 const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
   const router = useRouter();

@@ -1,8 +1,8 @@
 "use client";
-import FloatingButton from "@/components/community/FloatingButton";
-import PopularPosts from "@/components/community/PopularPosts";
-import SideBar from "@/components/community/SideBar";
-import TopButton from "@/components/community/TopButton";
+import FloatingButton from "@/components/community/ui/FloatingButton";
+import PopularPosts from "@/components/community/posts/PopularPosts";
+import SideBar from "@/components/community/ui/SideBar";
+import TopButton from "@/components/community/ui/TopButton";
 import { useAuth } from "@/hooks/useAuth";
 import { usePathname } from "next/navigation";
 
@@ -62,16 +62,13 @@ const CommunityLayout = ({ children }: { children: React.ReactNode }) => {
         )
       }
       {
-          pathname === "/community"
-            || pathname === "/community/product"
-            || pathname === "/community/restaurant"
-            || pathname === "/community/recipe"
-            || pathname === "/community/ohjiwan"
-          ?
-          <TopButton user={user} />
-          :
-          null
-        }
+        pathname === "/community/write"
+          || pathname === "/community/edit"
+        ?
+        null
+        :
+        <TopButton user={user} />
+      }
     </div>
   );
 };

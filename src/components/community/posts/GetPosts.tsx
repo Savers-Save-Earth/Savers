@@ -11,7 +11,7 @@ import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { getFirstImage, getImgUrl, removeHtmlTags } from "@/libs/util";
 import Loading from "@/app/loading";
-import CategoryTag from "./CategoryTag";
+import CategoryTag from "../ui/CategoryTag";
 
 import { PostType, ToTalDataType } from "@/types/types";
 

@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import GetPosts from "@/components/community/GetPosts";
+import GetPosts from "@/components/community/posts/GetPosts";
 
 export const metadata: Metadata = {
   title: "커뮤니티 메인 | Savers",

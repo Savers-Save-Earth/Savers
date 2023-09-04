@@ -1,6 +1,6 @@
 "use client";
 import { NextPage } from "next";
-import AddPost from "@/components/community/AddPost";
+import AddPost from "@/components/community/write/AddPost";
 import { useEffect, useState } from "react";
 import supabase from "@/libs/supabase";
 import { useRouter } from "next/navigation";
