@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Database } from "@/types/supabase";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastInfo } from "@/libs/toastifyAlert";
+import Loading from "@/app/loading";
 
 interface MarkList {
   id: number;
@@ -20,6 +21,7 @@ const MarkerLists = ({ markerList, currentCategory }: any) => {
   const [markedList, setMarkedList] = useState<MarkList[]>([]);
   const [user, setUser] = useState<any>(null);
   const [markedByUser, setMarkedByUser] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태 추가
 
   //2.useEffect자리 옮김
   useEffect(() => {
@@ -38,6 +40,7 @@ const MarkerLists = ({ markerList, currentCategory }: any) => {
 
     if (markedData) {
       setMarkedList(markedData);
+      setIsLoading(false);
     } else {
       return;
     }
@@ -165,6 +168,7 @@ const MarkerLists = ({ markerList, currentCategory }: any) => {
       {/* display:flex; justify-content: center; */}
       <ul>
         {/* markerList 정보를 사용하여 리스트를 렌더링합니다 */}
+        {isLoading && <Loading />}
         {markerList.map((place: any, index: number) => (
           <div
             key={index}
