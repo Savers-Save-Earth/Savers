@@ -34,7 +34,7 @@
 
 ## 프로젝트 소개
 
-Next.js, typescript 를 이용하였으며 환경보호운동, 제로웨이스트를 함께 실천하자는 취지로 제작된 웹 페이지 savers 입니다.
+Next.js, tailwind css, typescript 를 사용하였으며 환경보호운동, 제로웨이스트를 함께 실천하자는 취지로 제작된 웹 페이지 savers 입니다.
 친환경 제품구매, 비건식당 검색, 커뮤니티활동, 데일리 미션 등 다양한 활동을 할 수 있습니다.
 
 ## 프로젝트 링크
@@ -71,6 +71,7 @@ Next.js, typescript 를 이용하였으며 환경보호운동, 제로웨이스�
   * react-quill
   * react-query
   * recoil
+  * react-calendar
   * react-hook-form
   * next-videos
   * next-images
@@ -79,7 +80,7 @@ Next.js, typescript 를 이용하였으며 환경보호운동, 제로웨이스�
   * react-intersection-observer 
 
 ## 사용한 API
-  * KAKAO MAP
+  * Kakao map
 
 ## 버전 관리 시스템
    * Git/Github
