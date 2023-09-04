@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getPosts } from "@/api/community/post";
 import { useInView } from "react-intersection-observer";
@@ -14,13 +14,13 @@ import Loading from "@/app/loading";
 import CategoryTag from "../ui/CategoryTag";
 
 import { PostType, ToTalDataType } from "@/types/types";
+import { PATHNAME_OHJIWAN, PATHNAME_PRODUCT, PATHNAME_RECIPE, PATHNAME_RESTAURANT } from "@/enums/community";
 
 type QueryKeyMap = {
   [key: string]: string[];
 };
 
 const GetPosts = () => {
-  const [thumbnail, setThumbnail] = useState<string>("");
   const pathname = usePathname();
   const getPathnameQueryKey = (pathname: string) => {
     const queryKeyMap: QueryKeyMap = {
@@ -36,13 +36,13 @@ const GetPosts = () => {
   const queryKey = getPathnameQueryKey(pathname);
 
   const getCategoryName = (pathname: string) => {
-    if (pathname === "/community/product") {
+    if (pathname === PATHNAME_PRODUCT) {
       return "제품";
-    } else if (pathname === "/community/restaurant") {
+    } else if (pathname === PATHNAME_RESTAURANT) {
       return "식당";
-    } else if (pathname === "/community/recipe") {
+    } else if (pathname === PATHNAME_RECIPE) {
       return "레시피";
-    } else if (pathname === "/community/ohjiwan") {
+    } else if (pathname === PATHNAME_OHJIWAN) {
       return "오지완";
     } else return "전체"
   };

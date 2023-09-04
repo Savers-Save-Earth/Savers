@@ -5,6 +5,7 @@ import SideBar from "@/components/community/ui/SideBar";
 import TopButton from "@/components/community/ui/TopButton";
 import { useAuth } from "@/hooks/useAuth";
 import { usePathname } from "next/navigation";
+import { PATHNAME_EDIT, PATHNAME_MAIN, PATHNAME_OHJIWAN, PATHNAME_PRODUCT, PATHNAME_RECIPE, PATHNAME_RESTAURANT, PATHNAME_WRITE } from "@/enums/community";
 
 const CommunityLayout = ({ children }: { children: React.ReactNode }) => {
   const user = useAuth();
@@ -12,11 +13,11 @@ const CommunityLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="flex items-start self-stretch mt-28">
       {
-        pathname === "/community"
-          || pathname === "/community/product"
-          || pathname === "/community/restaurant"
-          || pathname === "/community/recipe"
-          || pathname === "/community/ohjiwan"
+        pathname === PATHNAME_MAIN
+          || pathname === PATHNAME_PRODUCT
+          || pathname === PATHNAME_RESTAURANT
+          || pathname === PATHNAME_RECIPE
+          || pathname === PATHNAME_OHJIWAN
         ?
         <div className="w-full h-full">
           <SideBar />
@@ -26,11 +27,11 @@ const CommunityLayout = ({ children }: { children: React.ReactNode }) => {
       }
       <main className="w-full">
         {
-          pathname === "/community"
-            || pathname === "/community/product"
-            || pathname === "/community/restaurant"
-            || pathname === "/community/recipe"
-            || pathname === "/community/ohjiwan"
+          pathname === PATHNAME_MAIN
+            || pathname === PATHNAME_PRODUCT
+            || pathname === PATHNAME_RESTAURANT
+            || pathname === PATHNAME_RECIPE
+            || pathname === PATHNAME_OHJIWAN
           ?
           <PopularPosts />
           :
@@ -38,12 +39,12 @@ const CommunityLayout = ({ children }: { children: React.ReactNode }) => {
         }
         {children}
       </main>
-      {!user || pathname === "/community/write" || pathname === "/community/edit"
+      {!user || pathname === PATHNAME_WRITE || pathname === PATHNAME_EDIT
         ? 
         null
         :
         (
-          <FloatingButton href="/community/write">
+          <FloatingButton href={PATHNAME_WRITE}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -62,8 +63,8 @@ const CommunityLayout = ({ children }: { children: React.ReactNode }) => {
         )
       }
       {
-        pathname === "/community/write"
-          || pathname === "/community/edit"
+        pathname === PATHNAME_WRITE
+          || pathname === PATHNAME_EDIT
         ?
         null
         :
