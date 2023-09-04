@@ -62,13 +62,13 @@ const CommunityLayout = ({ children }: { children: React.ReactNode }) => {
         )
       }
       {
-          pathname === "/community/write"
-            || pathname === "/community/edit"
-          ?
-          null
-          :
-          <TopButton user={user} />
-        }
+        pathname === "/community/write"
+          || pathname === "/community/edit"
+        ?
+        null
+        :
+        <TopButton user={user} />
+      }
     </div>
   );
 };

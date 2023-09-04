@@ -8,8 +8,6 @@ const CommunityEdit = () => {
   const router = useRouter();
   const [sessionState, setSessionState] = useState<any>(null);
 
-  console.log("sessionState >>>> ", sessionState);
-
   useEffect(() => {
     const getSessionState = async () => {
       const { data: session } = await supabase.auth.getSession();
@@ -18,6 +16,7 @@ const CommunityEdit = () => {
     }
     getSessionState();
   }, [router]);
+  
   return (
     <EditPost />
   )
