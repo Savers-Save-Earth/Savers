@@ -90,12 +90,10 @@ Next.js, typescript 를 이용하였으며 환경보호운동, 제로웨이스�
   * Visual Studio
   * Slack
   * figma
-  * google sheets
 <div align=“center”>
 	  <img src="https://img.shields.io/badge/visualstudio-5C2D91?style=for-the-badge&logo=visualstudio&logoColor=white">
     <img src="https://img.shields.io/badge/slack-4A154B?style=for-the-badge&logo=slack&logoColor=white">
   <img src="https://img.shields.io/badge/figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white">
-  <img src="https://img.shields.io/badge/googlesheets-34A853?style=for-the-badge&logo=googlesheets&logoColor=white">
   </div>
    
 ## 구현 페이지 
