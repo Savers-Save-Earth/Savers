@@ -2,8 +2,10 @@ import dynamic from "next/dynamic";
 import { useMemo, useRef } from "react";
 
 import Loading from "@/app/loading";
-import ReactQuill, { ReactQuillProps } from "react-quill";
+import ReactQuill, { Quill, ReactQuillProps } from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { ImageActions } from "@xeger/quill-image-actions";
+import { ImageFormats } from "@xeger/quill-image-formats";
 
 import supabase from "@/libs/supabase";
 import { ToastError } from "@/libs/toastifyAlert";
@@ -11,6 +13,9 @@ import { ToastError } from "@/libs/toastifyAlert";
 interface ForwardedQuillComponent extends ReactQuillProps {
   forwardedRef: React.Ref<ReactQuill>;
 }
+
+Quill.register("modules/imageActions", ImageActions);
+Quill.register("modules/imageFormats", ImageFormats);
 
 // dynamic import: react-quill은 SSR을 지원하지 않음
 const QuillWrapper = dynamic(
@@ -80,7 +85,7 @@ const TextEditor = ({content, setContent}: EditorProps) => {
         container: [
           [{ header: [1, 2, false] }],
           ["bold", "italic", "underline", "strike", "blockquote"],
-          [{ 'color': [] }, { 'background': [] }],
+          [{ "color": [] }, { "background": [] }],
           [
             { list: "ordered" },
             { list: "bullet" },
@@ -93,6 +98,11 @@ const TextEditor = ({content, setContent}: EditorProps) => {
         handlers: {
           image: imageHandler,
         },
+        ImageResize: {
+          modules: ["Resize"],
+        },
+        imageActions: {},
+        imageFormats: {},
       },
     }),
   
@@ -114,6 +124,9 @@ const TextEditor = ({content, setContent}: EditorProps) => {
     "indent",
     "link",
     "image",
+    "float",
+    "width",
+    "height",
     "color",
     "align",
   ];
