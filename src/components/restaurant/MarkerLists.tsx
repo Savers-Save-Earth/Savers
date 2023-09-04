@@ -3,9 +3,8 @@ import supabase from "@/libs/supabase";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { Database } from "@/types/supabase";
-import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Loading from "@/app/loading";
+import { ToastInfo } from "@/libs/toastifyAlert";
 
 interface MarkList {
   id: number;
@@ -110,7 +109,7 @@ const MarkerLists = ({ markerList, currentCategory }: any) => {
         // alert("좋아요를 눌렀습니다.");
       }
     } else {
-      toast.info("로그인이 필요한 서비스 입니다.");
+      ToastInfo("로그인이 필요한 서비스 입니다.");
       return;
     }
   };
@@ -343,18 +342,6 @@ const MarkerLists = ({ markerList, currentCategory }: any) => {
           </div>
         ))}
       </ul>
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
     </div>
   );
 };

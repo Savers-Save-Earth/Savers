@@ -3,9 +3,9 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import supabase from "@/libs/supabase";
 import { useRouter } from "next/navigation";
-import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import RandomMission from "@/app/profile/components/RandomMission";
+import { ToastInfo } from "@/libs/toastifyAlert";
 
 const DailyMission = () => {
   const [user, setUser] = useState<any>(null);
@@ -30,11 +30,8 @@ const DailyMission = () => {
 
   const missionHandler = () => {
     if (!user) {
-      toast.info("로그인이 필요한 서비스 입니다.", {
-        onClose: () => {
-          router.push(`/login`);
-        },
-      });
+      ToastInfo("로그인이 필요한 서비스 입니다.")
+      router.push("/login")
     } else {
       router.push(`/profile/${user.id}/mymission/missiondoing`);
     }
@@ -89,19 +86,6 @@ const DailyMission = () => {
           />
         </svg>
       </div>
-
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
     </>
   );
 };
