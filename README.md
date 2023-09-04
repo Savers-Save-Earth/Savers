@@ -17,7 +17,7 @@
 | 이은한 | 리더   | https://github.com/TerryEHLee  | https://terryehlee.tistory.com/     |
 | 이우정 |  부리더    | https://github.com/Passionhruit|   https://passionfruit6.tistory.com/                       |    
 | 박지원 |  팀원    | https://github.com/xoxojw|  https://xoxojw.tistory.com/      |
-| 이동준 |  팀원     | https://github.com/podoDJ |                             |
+| 이동준 |  팀원     | https://github.com/podoDJ | https://florentine-shawl-685.notion.site/2f0a4e2eb99e46e984b0eb3cf8f4f9ca?v=e2972c99943a4bdab5f4251b20db3546&pvs=4                            |
 | 최다연 |  팀원     | https://github.com/cheddaryeon |                               |
 | 한지희 |  팀원(디자이너) |  |  |
 
