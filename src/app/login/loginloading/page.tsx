@@ -20,12 +20,16 @@ const LoginLoading = () => {
 
       await setUser(user);
       await getUserInfo(user);
-      router.push("/");
+      back();
     }
     exe();
   });
 
-  console.log("getUser확인", user?.id);
+  const back = () => {
+    router.back();
+    router.back();
+    router.back();
+  };
 
   const getUserInfo = async (user: any) => {
     if (!user) {
