@@ -80,8 +80,6 @@ const KakaoMap = () => {
         map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
         //
-        //
-        //
         const searchPlaces = async (coordinate: any) => {
           const ps = new window.kakao.maps.services.Places();
 
@@ -234,7 +232,8 @@ const KakaoMap = () => {
         };
       });
     }
-  }, [currentCategory]);
+  }, []);
+  // [currentCategory]
 
   return (
     <div>
