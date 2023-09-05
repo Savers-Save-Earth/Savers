@@ -5,10 +5,11 @@ import MarkerLists from "@/components/restaurant/MarkerLists";
 import dynamic from "next/dynamic";
 
 //3.dynamic추가
-const DynamicComponent = dynamic(
-  () => import("../components/restaurant/MarkerLists"),
-  { loading: () => <p>Loading ...</p> },
-);
+//주석처리
+// const DynamicComponent = dynamic(
+//   () => import("../components/restaurant/MarkerLists"),
+//   { loading: () => <p>Loading ...</p> },
+// );
 
 const getCurrentCoordinate = async () => {
   return new Promise((res, rej) => {
@@ -277,7 +278,12 @@ const KakaoMap = () => {
                 카페
               </button>
             </div>
-            <DynamicComponent
+            {/* //주석처리 */}
+            {/* <DynamicComponent
+              markerList={markerList}
+              currentCategory={currentCategory}
+            /> */}
+            <MarkerLists
               markerList={markerList}
               currentCategory={currentCategory}
             />
