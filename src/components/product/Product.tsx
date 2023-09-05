@@ -8,7 +8,6 @@ import { useAuth } from "@/hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import { getProductLikeStatus } from "@/api/product/like";
 import { ProductLikesType } from "@/types/types";
-import { currentUserType } from "@/hooks/useAuth";
 import { getProducts } from "@/api/product/product";
 
 const productCategory = [
@@ -28,6 +27,7 @@ const selectOptions = [
 ];
 
 const ProductComponent = () => {
+  const [product, setProduct] = useState<Product[]>([]);
   const [category, setCategory] = useState("");
   const [search, setSearch] = useState("");
   const [select, setSelect] = useState("sales");
@@ -36,42 +36,33 @@ const ProductComponent = () => {
 
   const router = useRouter();
 
+  // 물품 리스트 fetch
+  const fetchProduct = async () => {
+    try {
+      const { data } = await supabase.from("product").select();
+      setProduct(data || []);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  };
+
   // 현재 제품 가져오기
-  const {
-    data: products,
-    isLoading,
-    isError,
-  } = useQuery<Product[]>(["product"], getProducts);
+  // const {
+  //   data: products,
+  //   isLoading,
+  //   isError,
+  // } = useQuery<Product[]>(["product"], getProducts);
 
-  if (isLoading) {
-  }
-
-  if (isError) {
-  }
-
-  // 현재 유저정보 가져오기
-  const currentUser = useAuth();
-
-  // 현재 유저의 좋아요 리스트 가져오기
-  // let productLike: ProductLikesType[] = []; // 변수를 블록 외부에서 선언
-
-  // if (currentUser) {
-  //   const {
-  //     data: productLikeData,
-  //     isLoading: productLikeLoading,
-  //     isError: productLikeError,
-  //   } = useQuery<ProductLikesType[]>(["like_product"], () =>
-  //     getProductLikeStatus(currentUser),
-  //   );
-
-  //   // productLikeData가 정의되어 있을 때만 할당
-  //   if (productLikeData) {
-  //     productLike = productLikeData;
-  //   }
+  // if (isLoading) {
   // }
 
-  // 현재 유저정보 fetch
+  // if (isError) {
+  // }
 
+  // 현재 유저정보 가져오기
+  // const currentUser = useAuth();
+
+  // 현재 유저정보 fetch
   const fetchUser = async () => {
     try {
       const {
@@ -105,19 +96,34 @@ const ProductComponent = () => {
   }, []);
 
   // 셀렉트 내용으로 정렬
-  let sortedData: Product[] = products?.slice() || [];
+
+  let sortedData = product.slice(); // 초기화
 
   if (select === "expensive") {
-    sortedData = sortedData.slice().sort((a, b) => b.price - a.price);
+    sortedData = product.slice().sort((a, b) => b.price - a.price);
   } else if (select === "cheap") {
-    sortedData = sortedData.slice().sort((a, b) => a.price - b.price);
+    sortedData = product.slice().sort((a, b) => a.price - b.price);
   } else if (select === "sales") {
-    sortedData = sortedData.slice().sort((a, b) => b.sales - a.sales);
+    sortedData = product.slice().sort((a, b) => b.sales - a.sales);
   } else if (select === "newest") {
-    sortedData = sortedData.slice().sort((a, b) => b.createdAt - a.createdAt);
+    sortedData = product.slice().sort((a, b) => b.createdAt - a.createdAt);
   } else if (select === "popular") {
-    sortedData = sortedData.slice().sort((a, b) => b.like_count - a.like_count);
+    sortedData = product.slice().sort((a, b) => b.like_count - a.like_count);
   }
+
+  // let sortedData: Product[] = products?.slice() || [];
+
+  // if (select === "expensive") {
+  //   sortedData = sortedData.slice().sort((a, b) => b.price - a.price);
+  // } else if (select === "cheap") {
+  //   sortedData = sortedData.slice().sort((a, b) => a.price - b.price);
+  // } else if (select === "sales") {
+  //   sortedData = sortedData.slice().sort((a, b) => b.sales - a.sales);
+  // } else if (select === "newest") {
+  //   sortedData = sortedData.slice().sort((a, b) => b.createdAt - a.createdAt);
+  // } else if (select === "popular") {
+  //   sortedData = sortedData.slice().sort((a, b) => b.like_count - a.like_count);
+  // }
 
   // 좋아요 눌렀을 때, 물품 및 유저에 좋아요 데이터 업데이트
 
@@ -184,10 +190,14 @@ const ProductComponent = () => {
           .update({ like_count: currentLikeCount![0].like_count + 1 })
           .eq("id", id);
       }
-      // fetchProduct(); // 데이터 갱신 [숫자]
+      fetchProduct(); // 데이터 갱신 [숫자]
       fetchUser(); // 데이터 갱신 [좋아요]
     }
   };
+
+  useEffect(() => {
+    fetchProduct();
+  });
 
   return (
     <>

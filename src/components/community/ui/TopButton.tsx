@@ -1,9 +1,9 @@
-import { currentUserType } from "@/hooks/useAuth";
+import { UserType } from "@/types/types";
 import { cls } from "@/libs/util";
 import React from "react";
 
 interface TopButtonProps {
-  user?: currentUserType | null;
+  user?: UserType | null;
 }
 
 const TopButton = ({ user }: TopButtonProps) => {

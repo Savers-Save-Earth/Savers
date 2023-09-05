@@ -1,5 +1,7 @@
 import { Database } from "./supabase";
 
+export type UserType = Database["public"]["Tables"]["user"]["Row"]
+
 export interface Product {
   id: string;
   name: string;
@@ -47,25 +49,24 @@ export interface ListMission {
 
 // restaurant type
 
-type ProductLikesType = Database["public"]["Tables"]["like_product"]["Row"];
+export type ProductLikesType = Database["public"]["Tables"]["like_product"]["Row"];
 
-type likeRestaurantType =
-  Database["public"]["Tables"]["like_restaurant"]["Row"];
+export type likeRestaurantType = Database["public"]["Tables"]["like_restaurant"]["Row"];
 
 export type PostType = Database["public"]["Tables"]["community"]["Row"];
 export type NewPostType = Database["public"]["Tables"]["community"]["Insert"];
 export type EditPostType = Database["public"]["Tables"]["community"]["Update"];
-export type CommentType =
-  Database["public"]["Tables"]["community_comment"]["Row"];
-export type NewCommentType =
-  Database["public"]["Tables"]["community_comment"]["Insert"];
-export type EditCommentType =
-  Database["public"]["Tables"]["community_comment"]["Update"];
+
+export type LikesType = Database["public"]["Tables"]["like_post"]["Row"];
+export type newLikePostType = Database["public"]["Tables"]["like_post"]["Insert"];
+
+export type CommentType = Database["public"]["Tables"]["community_comment"]["Row"];
+export type NewCommentType = Database["public"]["Tables"]["community_comment"]["Insert"];
+export type EditCommentType = Database["public"]["Tables"]["community_comment"]["Update"];
+
 export type ReplyType = Database["public"]["Tables"]["community_reply"]["Row"];
-export type NewReplyType =
-  Database["public"]["Tables"]["community_reply"]["Insert"];
-export type EditReplyType =
-  Database["public"]["Tables"]["community_reply"]["Update"];
+export type NewReplyType = Database["public"]["Tables"]["community_reply"]["Insert"];
+export type EditReplyType = Database["public"]["Tables"]["community_reply"]["Update"];
 export interface ToTalDataType {
   posts: PostType[];
   page: number;

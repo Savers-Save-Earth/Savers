@@ -1,9 +1,5 @@
 import supabase from "@/libs/supabase";
-import { Database } from "@/types/supabase";
-
-type ReplyType = Database["public"]["Tables"]["community_reply"]["Row"];
-type NewReplyType = Database["public"]["Tables"]["community_reply"]["Insert"];
-type EditReplyType = Database["public"]["Tables"]["community_reply"]["Update"];
+import { EditReplyType, NewReplyType, ReplyType } from "@/types/types";
 
 // 대댓글 등록
 export const createReply = async (newReply: NewReplyType) => {
