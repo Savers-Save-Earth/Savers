@@ -1,5 +1,7 @@
 import { Database } from "./supabase";
 
+export type UserType = Database["public"]["Tables"]["user"]["Row"]
+
 export interface Product {
   id: string;
   name: string;
