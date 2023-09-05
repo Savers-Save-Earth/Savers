@@ -90,7 +90,7 @@ const MyPosts = ({ params }: { params: { id: string } }) => {
         </svg>
           <input
             type="text"
-            value={search}
+            value={search || ""}
             onChange={(e) => setSearch(e.target.value)}
             className="w-full flex-[1,0,0%] bg-gray-50 text-{14px} font-normal leading-4 text-gray-900 placeholder-gray-300 outline-none"
             placeholder="검색어를 입력하세요."
