@@ -6,39 +6,22 @@ import { useRouter } from "next/navigation";
 import "react-toastify/dist/ReactToastify.css";
 import RandomMission from "@/app/profile/components/RandomMission";
 import { ToastInfo } from "@/libs/toastifyAlert";
+import { useAuth } from "@/hooks/useAuth";
 
 const DailyMission = () => {
-  const [user, setUser] = useState<any>(null);
   const [isHovered, setIsHovered] = useState(false);
   const router = useRouter();
 
-  const fetchUser = async () => {
-    try {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-
-      if (!user) {
-        setUser(false);
-      } else {
-        setUser(user);
-      }
-    } catch (error) {
-      console.error("Error fetching user:", error);
-    }
-  };
+  const currentUser = useAuth();
 
   const missionHandler = () => {
-    if (!user) {
-      ToastInfo("로그인이 필요한 서비스 입니다.")
-      router.push("/login")
+    if (!currentUser) {
+      ToastInfo("로그인이 필요한 서비스 입니다.");
+      router.push("/login");
     } else {
-      router.push(`/profile/${user.id}/mymission/missiondoing`);
+      router.push(`/profile/${currentUser.uid}/mymission/missiondoing`);
     }
   };
-  useEffect(() => {
-    fetchUser();
-  }, []);
 
   return (
     <>

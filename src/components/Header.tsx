@@ -79,9 +79,9 @@ const Header = () => {
       const ok = window.confirm("로그아웃 하시겠습니까?");
       if (ok) {
         await supabase.auth.signOut();
-        router.push("/");
       }
     } else {
+      const currentUrl = window.location.href;
       router.push("/login");
     }
   };

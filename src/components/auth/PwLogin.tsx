@@ -30,15 +30,11 @@ const PwLogin: React.FC = () => {
       password,
     });
 
-    console.log("loginData", loginData);
-
     if (error) {
-      console.error("로그인 에러:", error);
       ToastError("로그인에 실패하였습니다.");
     } else {
-      console.log("로그인 성공");
       ToastSuccess("로그인 되었습니다. 🌱");
-      router.push("/");
+      router.back();
       loginUpdater();
     }
   };

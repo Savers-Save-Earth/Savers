@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import MarkerLists from "@/components/restaurant/MarkerLists";
-import dynamic from "next/dynamic";
+// import dynamic from "next/dynamic";
 
 //3.dynamic추가
 //주석처리
@@ -30,7 +30,7 @@ const getCurrentCoordinate = async () => {
 };
 
 const KakaoMap = () => {
-  const [mapCenter, setMapCenter] = useState({ x: 127.1086228, y: 37.4012191 });
+  // const [mapCenter, setMapCenter] = useState({ x: 127.1086228, y: 37.4012191 });
   const [currentCategory, setCurrentCategory] = useState("비건"); // 기본값으로 "전체" 카테고리 설정
   const [markerList, setMarkerList] = useState([]); // 마커 리스트 상태 추가
 
@@ -50,10 +50,10 @@ const KakaoMap = () => {
         const setInitLocation = async () => {
           let locPosition: any = await getCurrentCoordinate();
 
-          setMapCenter({
-            x: locPosition.La,
-            y: locPosition.Ma,
-          });
+          // setMapCenter({
+          //   x: locPosition.La,
+          //   y: locPosition.Ma,
+          // });
 
           // 지도 중심좌표를 접속위치로 변경합니다
           map.setCenter(locPosition);
@@ -79,8 +79,6 @@ const KakaoMap = () => {
         var zoomControl = new kakao.maps.ZoomControl();
         map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
-        //
-        //
         //
         const searchPlaces = async (coordinate: any) => {
           const ps = new window.kakao.maps.services.Places();
@@ -126,6 +124,7 @@ const KakaoMap = () => {
             if (currentCategory === "비건카페") {
               imgSrc = "/images/cafePin.svg";
             }
+            console.log("카테고리 누름 map");
             let imgSize = new kakao.maps.Size(38, 38),
               imgOption = { offset: new kakao.maps.Point(27, 69) };
             const markerImg = new window.kakao.maps.MarkerImage(
@@ -235,6 +234,7 @@ const KakaoMap = () => {
       });
     }
   }, [currentCategory]);
+  // [currentCategory]
 
   return (
     <div>
@@ -283,10 +283,13 @@ const KakaoMap = () => {
               markerList={markerList}
               currentCategory={currentCategory}
             /> */}
-            <MarkerLists
-              markerList={markerList}
-              currentCategory={currentCategory}
-            />
+            {/* //이부분 수정 */}
+            {markerList && currentCategory && (
+              <MarkerLists
+                markerList={markerList}
+                currentCategory={currentCategory}
+              />
+            )}
           </div>
           <div id="map" className="w-[70%] h-[36vw] float-right"></div>
         </div>
