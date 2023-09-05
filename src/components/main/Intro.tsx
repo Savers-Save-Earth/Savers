@@ -60,7 +60,29 @@ const Intro = () => {
         </div>
 
         <div
-          className="fade-element fixed  left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-5xl font-bold transition-opacity duration-100 ease-in-out"
+          className="fixed bottom-[20px] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-8xl font-bold transition-opacity duration-100 ease-in-out blinking-text"
+          style={{
+            opacity: Math.max(0, 1 - scrollY / 100),
+            display: scrollY > 100 ? "none" : "block",
+          }}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="40"
+            height="40"
+            viewBox="0 0 40 40"
+            fill="none"
+          >
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M32.8449 13.8215C32.194 13.1706 31.1387 13.1706 30.4878 13.8215L19.9997 24.3096L9.51152 13.8215C8.86065 13.1706 7.80537 13.1706 7.1545 13.8215C6.50362 14.4724 6.50362 15.5276 7.15449 16.1785L18.8212 27.8452C19.472 28.496 20.5273 28.496 21.1782 27.8452L32.8449 16.1785C33.4957 15.5276 33.4957 14.4724 32.8449 13.8215Z"
+              fill="#F9FAFB"
+            />
+          </svg>
+        </div>
+        <div
+          className="fade-element fixed  left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-4xl font-bold transition-opacity duration-100 ease-in-out"
           style={{
             textAlign: "center",
             top: "25%",
@@ -78,7 +100,7 @@ const Intro = () => {
           자연과 멀수록 병은 가까워진다. */}
         </div>
         <div
-          className="fade-element fixed left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-5xl font-bold transition-opacity duration-100 ease-in-out"
+          className="fade-element fixed left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-4xl font-bold transition-opacity duration-100 ease-in-out"
           style={{
             textAlign: "center",
             top: "50%",
@@ -96,7 +118,7 @@ const Intro = () => {
           우리 자신을 배신하는 것은 항상 우리들이다. */}
         </div>
         <div
-          className="fade-element fixed left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-5xl font-bold text-white transition-opacity duration-100 ease-in-out"
+          className="fade-element fixed left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl font-bold text-white transition-opacity duration-100 ease-in-out"
           style={{
             textAlign: "center",
             top: "75%",

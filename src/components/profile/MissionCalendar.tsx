@@ -78,8 +78,6 @@ const MissionCalendar = () => {
 
   const marks: string[] = [];
   mission.map((item) => marks.push(`${item.createdAt}`));
-  console.log("user===>",user)
-  console.log("profile===>",profile)
   return (
     <div style={{ background: "rgb(245, 245, 245)", borderRadius: "10px" }}>
       <Calendar
