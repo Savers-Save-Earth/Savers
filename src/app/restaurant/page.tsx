@@ -1,9 +1,8 @@
 "use client";
 
-import React, { Suspense } from "react";
+import React from "react";
 
 import KakaoMap from "../kakaoMap";
-import { useEffect } from "react";
 
 const Restaurant = () => {
   return (
