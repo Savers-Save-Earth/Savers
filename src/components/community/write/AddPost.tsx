@@ -53,8 +53,6 @@ const AddPost: NextComponentType = () => {
     getMissionHandler(currentUser, currentDate, category, setMissionUid, bigCategory)
   },[category])
 
-  console.log("본문 >>> ", content);
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const writtenTime = new Date();
