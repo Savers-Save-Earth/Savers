@@ -46,7 +46,7 @@ const ModifyingProgile = () => {
   };
   return (
     <form className="flex flex-col items-center">
-      {/* <div className="flex justify-between w-3/4 mb-4">
+      <div className="flex justify-between w-3/4 mb-4">
         <h1 className="self-start">회원정보 수정</h1>
         <button
           onClick={(e) => {
@@ -94,7 +94,7 @@ const ModifyingProgile = () => {
           onChange={(e) => setBirthday(e.target.value)}
           placeholder="예) 19991212"
         />
-      </div> */}
+      </div>
     </form>
   );
 };
