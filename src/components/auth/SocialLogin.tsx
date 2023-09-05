@@ -30,7 +30,6 @@ const SocialLogin = () => {
         options: options,
       });
 
-      console.log("소셜로그인 되었을 때 data", data);
       if (error) {
         throw error;
       }
@@ -47,19 +46,15 @@ const SocialLogin = () => {
       data: { user },
     } = await supabase.auth.getUser();
 
-    console.log();
     if (!user) {
       setUser(null);
     } else {
       setUser(user);
-      console.log(user.id);
-      console.log(user.user_metadata);
     }
   };
 
   const getUserInfo = async (user: any) => {
     if (!user) {
-      console.log("getUerInfo User 없음");
       return;
     }
 
@@ -70,18 +65,14 @@ const SocialLogin = () => {
       .single();
 
     if (userInfo?.nickname) {
-      console.log("닉네임등록되어있음", userInfo.nickname);
       return;
     } else {
       updateUserInfo(user);
-      console.log("닉네임 및 유저정보 등록하러감");
     }
   };
 
   const updateUserInfo = async (user: any) => {
     const generatedNickname = generateNickname();
-    console.log("nickname>>", generatedNickname);
-    console.log("user가져왔나?>>>", user);
 
     await supabase.from("user").upsert({
       uid: user?.id,
@@ -90,14 +81,12 @@ const SocialLogin = () => {
       provider: user!.app_metadata.provider,
     });
 
-    console.log("userInfo반영");
     setNickname(generatedNickname);
   };
 
   const generateNickname = () => {
     const nickname = NicknameMaker();
     return nickname;
-    console.log(nickname);
   };
 
   return (

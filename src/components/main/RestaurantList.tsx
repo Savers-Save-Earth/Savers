@@ -1,39 +1,31 @@
 "use client";
 
-import supabase from "@/libs/supabase";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { likeRestaurantType } from "@/types/types";
 import { Navigation, Pagination, Scrollbar, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/autoplay";
 import { useRouter } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import { getRestaurants } from "@/api/restaurant/restaurant";
 
 const RestaurantList = () => {
-  const [restaurantList, setRestaurantList] = useState<any[]>([]);
   const router = useRouter();
 
-  const fetchRestaurant = async () => {
-    const { data } = await supabase.from("like_restaurant").select();
+  const {
+    data: restaurants,
+    isLoading,
+    isError,
+  } = useQuery<likeRestaurantType[]>(["like_restaurant"], getRestaurants);
 
-    if (data) {
-      // 북마크 숫자 세는 로직
-      const updatedData = data.map((item) => ({
-        ...item,
-        bookmarkCount: data.filter(
-          (i) => i.restaurant_name === item.restaurant_name,
-        ).length,
-      }));
+  if (isLoading) {
+  }
 
-      // 북마크 숫자대로 정렬
-      const sortedData = updatedData.sort(
-        (a, b) => b.bookmarkCount - a.bookmarkCount,
-      );
-
-      setRestaurantList(sortedData);
-    }
-  };
+  if (isError) {
+  }
 
   // 공유하기 눌렀을 때
   const shareHandler = async (url: string) => {
@@ -41,10 +33,6 @@ const RestaurantList = () => {
       alert("링크가 복사되었습니다.");
     });
   };
-
-  useEffect(() => {
-    fetchRestaurant();
-  }, []);
 
   return (
     <div className="items-start gap-16 self-stretch mt-16">
@@ -83,7 +71,14 @@ const RestaurantList = () => {
         autoplay={{ delay: 3000 }}
         style={{ width: "100%" }}
       >
-        {restaurantList
+        {restaurants
+          ?.map((item) => ({
+            ...item,
+            bookmarkCount: restaurants.filter(
+              (i) => i.restaurant_name === item.restaurant_name,
+            ).length,
+          }))
+          .sort((a, b) => b.bookmarkCount - a.bookmarkCount)
           .filter(
             (item, index, self) =>
               self.findIndex(
@@ -101,7 +96,7 @@ const RestaurantList = () => {
                   className="p-3 rounded-full mr-4"
                   style={{ background: "#F9FAFB" }}
                 >
-                  {item.restaurant_category.includes("카페") ? (
+                  {item.restaurant_category?.includes("카페") ? (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="32"

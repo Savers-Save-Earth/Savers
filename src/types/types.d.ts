@@ -45,6 +45,14 @@ export interface ListMission {
   address: string;
 }
 
+// export type ProductType = Database["public"]["Tables"]["product"]["Row"];
+
+// restaurant type
+
+export type ProductLikesType = Database["public"]["Tables"]["like_product"]["Row"];
+
+export type likeRestaurantType = Database["public"]["Tables"]["like_restaurant"]["Row"];
+
 export type PostType = Database["public"]["Tables"]["community"]["Row"];
 export type NewPostType = Database["public"]["Tables"]["community"]["Insert"];
 export type EditPostType = Database["public"]["Tables"]["community"]["Update"];

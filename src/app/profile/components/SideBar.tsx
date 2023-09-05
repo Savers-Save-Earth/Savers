@@ -22,24 +22,6 @@ export interface DailyMission {
   smallCategory: string;
 }
 
-const initialProfile: any = {
-  activePoint: null,
-  badges: null,
-  commentPosts: "",
-  email: "",
-  isActiveDone: false,
-  likedPosts: "",
-  likePosts: "",
-  likeProducts: null,
-  likeRestaurants: "",
-  nickname: "",
-  password: "",
-  profileImage: "",
-  provider: "",
-  uid: "",
-  writePosts: "",
-};
-
 const SideBar = () => {
   const searchId = useParams().id as string;
   // const decodedParams = decodeURIComponent(params);
@@ -53,7 +35,7 @@ const SideBar = () => {
     return user![0];
   };
 
-  const [profile, setProfile] = useState<any>(initialProfile);
+  const [profile, setProfile] = useState<Profile>();
 
   const [showModal, setShowModal] = useState(false);
   const [user, setUser] = useState<any>();
@@ -100,7 +82,6 @@ const SideBar = () => {
     };
     fetchProfile();
   }, [searchId]);
-
   return (
     <div className="flex flex-col items-start gap-16 text-gray-900">
       <h1 className="text-[24px] non-italic font-semibold">마이페이지</h1>
