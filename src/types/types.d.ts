@@ -46,9 +46,14 @@ export interface ListMission {
 export type PostType = Database["public"]["Tables"]["community"]["Row"];
 export type NewPostType = Database["public"]["Tables"]["community"]["Insert"];
 export type EditPostType = Database["public"]["Tables"]["community"]["Update"];
+
+export type LikesType = Database["public"]["Tables"]["like_post"]["Row"];
+export type newLikePostType = Database["public"]["Tables"]["like_post"]["Insert"];
+
 export type CommentType = Database["public"]["Tables"]["community_comment"]["Row"];
 export type NewCommentType = Database["public"]["Tables"]["community_comment"]["Insert"];
 export type EditCommentType = Database["public"]["Tables"]["community_comment"]["Update"];
+
 export type ReplyType = Database["public"]["Tables"]["community_reply"]["Row"];
 export type NewReplyType = Database["public"]["Tables"]["community_reply"]["Insert"];
 export type EditReplyType = Database["public"]["Tables"]["community_reply"]["Update"];
