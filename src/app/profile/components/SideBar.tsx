@@ -26,12 +26,12 @@ const SideBar = () => {
     } else {
       setUser(user);
     }
-
     // 우정작업 //
 
-    const { data: userData } = await supabase
+    try {
+      const { data: userData } = await supabase
       .from("user")
-      .select()
+      .select("*")
       .eq("uid", searchId);
 
     if (userData) {
@@ -39,6 +39,11 @@ const SideBar = () => {
     } else {
       return;
     }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+
+    
 
     // 우정작업 //
   };
