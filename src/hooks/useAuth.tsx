@@ -1,15 +1,9 @@
 import supabase from "@/libs/supabase";
+import { UserType } from "@/types/types";
 import { useState, useEffect } from "react";
 
-export interface currentUserType {
-  uid: string;
-  nickname: string;
-  email: string;
-  profileImage: string;
-}
-
-export const useAuth = (): currentUserType | null => {
-  const [currentUser, setCurrentUser] = useState<currentUserType | null>(null);
+export const useAuth = (): UserType | null => {
+  const [currentUser, setCurrentUser] = useState<UserType | null>(null);
 
   useEffect(() => {
     const fetchAuthData = async () => {
@@ -21,7 +15,7 @@ export const useAuth = (): currentUserType | null => {
           const userUid = session.user.id;
           const { data: users, error } = await supabase
             .from("user")
-            .select("uid, nickname, email, profileImage")
+            .select("*")
             .eq("uid", userUid)
             .single();
 

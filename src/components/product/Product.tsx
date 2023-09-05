@@ -8,7 +8,6 @@ import { useAuth } from "@/hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import { getProductLikeStatus } from "@/api/product/like";
 import { ProductLikesType } from "@/types/types";
-import { currentUserType } from "@/hooks/useAuth";
 import { getProducts } from "@/api/product/product";
 
 const productCategory = [
