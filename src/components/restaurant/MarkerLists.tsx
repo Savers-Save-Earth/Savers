@@ -265,11 +265,9 @@ const MarkerLists = ({ markerList, currentCategory }: any) => {
               )}
             </div>
             <div>
-              {/* <p>{place.category_name}</p> */}
               <p className="font-bold">{place.place_name}</p>
               <p>{place.address_name}</p>
-              {/* <p>📌 {bookmarkHandler(place.place_name)}</p> */}
-              <button
+              {/* <button
                 onClick={(e) => {
                   e.preventDefault();
                   addMarkList(
@@ -316,7 +314,7 @@ const MarkerLists = ({ markerList, currentCategory }: any) => {
                 <span style={{ color: "#D0D5DD" }}>
                   {bookmarkHandler(place.place_name)}
                 </span>
-              </button>
+              </button> */}
               <span className="pt-[4px] pr-2 pl-[6px] pb-2 border border-gray-100 rounded-full  cursor-pointer ">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

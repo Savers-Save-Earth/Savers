@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { Suspense } from "react";
 
 import KakaoMap from "../kakaoMap";
 import { useEffect } from "react";
