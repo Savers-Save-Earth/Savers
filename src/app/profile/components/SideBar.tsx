@@ -45,25 +45,12 @@ const fetchProfile = async () => {
     console.error("Error fetching user data:", error);
   }
 }
-    // 우정작업 //
-
 
   useEffect(() => {
     fetchProfile()
   }, [searchId]);
+//커민위한주석
 
-  // 이 주석 임시로 남겨놓았어요! 9/6에 삭제 예정(동준)
-  // useEffect(() => {
-  //   const fetchProfile = async () => {
-  //     const fetchedProfile = await getProfile();
-  //     setProfile(fetchedProfile);
-  //   };
-  //   fetchProfile();
-  // }, [searchId]);
-  console.log("profileData===>",profileData)
-  console.log("searchId===>",searchId)
-  console.log("user===>",user)
-  // if(!profileData) return false
   return (
     <div className="flex flex-col items-start gap-16 text-gray-900">
       <h1 className="text-[24px] non-italic font-semibold">마이페이지</h1>
