@@ -4,6 +4,9 @@ import Header from "@/components/Header";
 import supabase from "@/libs/supabase";
 import { useRouter } from "next/navigation";
 import NicknameMaker from "@/components/auth/NicknameMaker";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastError, ToastSuccess } from "@/libs/toastifyAlert";
 
 const LoginLoading = () => {
   const [user, setUser] = useState<any>(null);
@@ -20,14 +23,13 @@ const LoginLoading = () => {
 
       await setUser(user);
       await getUserInfo(user);
-      back();
+      // ToastSuccess("로그인 되었습니다. 🌱");
+      router.push("/");
     }
     exe();
   });
 
   const back = () => {
-    router.back();
-    router.back();
     router.back();
   };
 
