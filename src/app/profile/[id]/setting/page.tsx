@@ -17,17 +17,13 @@ const ModifyingProgile = () => {
   const [number, setNumber] = useState("");
   const [birthday, setBirthday] = useState("");
 
-  const searchId = useParams().id
-  console.log("searchId==>",searchId)
+  const searchId = useParams().id;
+  console.log("searchId==>", searchId);
 
   const getUser = async () => {
-    const { data } = await supabase
-      .from("user")
-      .select()
-      .eq("uid", searchId);
+    const { data } = await supabase.from("user").select().eq("uid", searchId);
     setUser(data);
     setUserInfo(data);
-
   };
   useEffect(() => {
     getUser();

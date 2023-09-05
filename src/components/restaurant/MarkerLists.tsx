@@ -3,8 +3,8 @@ import supabase from "@/libs/supabase";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { Database } from "@/types/supabase";
-import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { ToastInfo } from "@/libs/toastifyAlert";
 import Loading from "@/app/loading";
 
 interface MarkList {
@@ -21,6 +21,7 @@ const MarkerLists = ({ markerList, currentCategory }: any) => {
   const [markedList, setMarkedList] = useState<MarkList[]>([]);
   const [user, setUser] = useState<any>(null);
   const [markedByUser, setMarkedByUser] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태 추가
 
   //2.useEffect자리 옮김
   useEffect(() => {
@@ -39,6 +40,7 @@ const MarkerLists = ({ markerList, currentCategory }: any) => {
 
     if (markedData) {
       setMarkedList(markedData);
+      setIsLoading(false);
     } else {
       return;
     }
@@ -110,7 +112,7 @@ const MarkerLists = ({ markerList, currentCategory }: any) => {
         // alert("좋아요를 눌렀습니다.");
       }
     } else {
-      toast.info("로그인이 필요한 서비스 입니다.");
+      ToastInfo("로그인이 필요한 서비스 입니다.");
       return;
     }
   };
@@ -166,6 +168,7 @@ const MarkerLists = ({ markerList, currentCategory }: any) => {
       {/* display:flex; justify-content: center; */}
       <ul>
         {/* markerList 정보를 사용하여 리스트를 렌더링합니다 */}
+        {isLoading && <Loading />}
         {markerList.map((place: any, index: number) => (
           <div
             key={index}
@@ -341,18 +344,6 @@ const MarkerLists = ({ markerList, currentCategory }: any) => {
           </div>
         ))}
       </ul>
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
     </div>
   );
 };

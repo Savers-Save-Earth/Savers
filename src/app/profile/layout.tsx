@@ -17,7 +17,7 @@ export const metadata: Metadata = {
       'apple-tough-icon.png'
     ]
   },
-  manifest: 'stie.webmanifest'
+  // manifest: 'stie.webmanifest'
 };
 
 export default async function profileLayout({

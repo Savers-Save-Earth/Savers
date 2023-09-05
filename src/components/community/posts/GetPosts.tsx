@@ -4,15 +4,17 @@ import Link from "next/link";
 import { useMemo } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getPosts } from "@/api/community/post";
-import { InView, useInView } from "react-intersection-observer";
+import { useInView } from "react-intersection-observer";
 
 import { usePathname } from "next/navigation";
 
-import { removeHtmlTags } from "@/libs/util";
+import Image from "next/image";
+import { getFirstImage, getImgUrl, removeHtmlTags } from "@/libs/util";
 import Loading from "@/app/loading";
-import CategoryTag from "./CategoryTag";
+import CategoryTag from "../ui/CategoryTag";
 
 import { PostType, ToTalDataType } from "@/types/types";
+import { PATHNAME_OHJIWAN, PATHNAME_PRODUCT, PATHNAME_RECIPE, PATHNAME_RESTAURANT } from "@/enums/community";
 
 type QueryKeyMap = {
   [key: string]: string[];
@@ -34,13 +36,13 @@ const GetPosts = () => {
   const queryKey = getPathnameQueryKey(pathname);
 
   const getCategoryName = (pathname: string) => {
-    if (pathname === "/community/product") {
+    if (pathname === PATHNAME_PRODUCT) {
       return "제품";
-    } else if (pathname === "/community/restaurant") {
+    } else if (pathname === PATHNAME_RESTAURANT) {
       return "식당";
-    } else if (pathname === "/community/recipe") {
+    } else if (pathname === PATHNAME_RECIPE) {
       return "레시피";
-    } else if (pathname === "/community/ohjiwan") {
+    } else if (pathname === PATHNAME_OHJIWAN) {
       return "오지완";
     } else return "전체"
   };
@@ -101,17 +103,32 @@ const GetPosts = () => {
                     {post.category}
                   </CategoryTag>
                   <div>
-                    <div>
-                      <Link href={`/community/${post.post_uid}`}>
-                        <h2 className="font-medium text-lg flex items-center space-x-2 cursor-pointer hover:underline my-2">
-                          {post.title}
-                        </h2>
-                      </Link>
-                      <Link href={`/community/${post.post_uid}`}>
-                        <p className="text-gray-500 text-sm cursor-pointer hover:underline text-ellipsis line-clamp-2">
-                          {removeHtmlTags(post.content)}
-                        </p>
-                      </Link>
+                    <div className="flex justify-between">
+                      <div className="flex flex-col">
+                        <Link href={`/community/${post.post_uid}`}>
+                          <h2 className="font-medium text-lg flex items-center space-x-2 cursor-pointer hover:underline my-2">
+                            {post.title}
+                          </h2>
+                        </Link>
+                        <Link href={`/community/${post.post_uid}`}>
+                          <p className="text-gray-500 text-sm cursor-pointer hover:underline text-ellipsis line-clamp-2">
+                            {removeHtmlTags(post.content)}
+                          </p>
+                        </Link>
+                      </div>
+                      {
+                        getFirstImage(post.content)
+                        ?
+                        <div className="flex-shrink-0 w-24 h-24 ml-2 bg-gray-50">
+                          <img
+                            className="flex-shrink-0 w-24 h-24 rounded-md"
+                            src={getImgUrl(getFirstImage(post.content))}
+                            alt="thumbnail"
+                          />
+                        </div>
+                          :
+                          null
+                      }
                     </div>
                     <div className="flex justify-between mt-5">
                       <div className="flex space-x-3">

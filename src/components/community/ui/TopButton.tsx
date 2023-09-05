@@ -2,7 +2,11 @@ import { currentUserType } from "@/hooks/useAuth";
 import { cls } from "@/libs/util";
 import React from "react";
 
-const TopButton = ({ user }: { user: currentUserType | null; }) => {
+interface TopButtonProps {
+  user?: currentUserType | null;
+}
+
+const TopButton = ({ user }: TopButtonProps) => {
   const handleScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };

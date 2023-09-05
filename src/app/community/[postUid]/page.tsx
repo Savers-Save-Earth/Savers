@@ -1,8 +1,8 @@
 "use client";
 import { getPostDetail } from "@/api/community/post";
 import Loading from "@/app/loading";
-import DetailPost from "@/components/community/DetailPost";
-import PostComments from "@/components/community/PostComments";
+import DetailPost from "@/components/community/posts/DetailPost";
+import PostComments from "@/components/community/comments/PostComments";
 import { Database } from "@/types/supabase";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";

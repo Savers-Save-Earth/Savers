@@ -38,14 +38,13 @@ const PwLogin: React.FC = () => {
     } else {
       console.log("로그인 성공");
       ToastSuccess("로그인 되었습니다. 🌱");
-      router.push("/")
+      router.push("/");
       loginUpdater();
     }
   };
 
   const loginUpdater = async () => {
     await supabase.from("user").upsert({
-      isLogin: true,
       provider: "email",
     });
   };
@@ -54,7 +53,7 @@ const PwLogin: React.FC = () => {
     <>
       <div className="flex flex-col items-center gap-16 self-stretch">
         <svg
-          pb-16
+          pb-16="true"
           xmlns="http://www.w3.org/2000/svg"
           width="142"
           height="24"

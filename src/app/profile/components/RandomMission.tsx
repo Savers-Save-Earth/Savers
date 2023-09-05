@@ -135,7 +135,7 @@ const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
             className="fixed inset-0 bg-slate-400 bg-opacity-50"
           ></div>
           <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 outline-none focus:outline-none">
-            <div className="border-2 border-slate-600 bg-white relative w-[480px] h-[729px] gap-3 p-8 flex flex-wrap items-center justify-center rounded-2xl">
+            <div className=" bg-white relative w-[480px] h-[729px] gap-3 p-8 flex flex-wrap items-center justify-center rounded-2xl">
               <div className="flex flex-col gap-5 justify-center items-center">
                 <h1 className="text-gray-900 w-full text-2xl font-semibold leading-6">
                   오늘의 세이버 일일미션 랜덤 뽑기
@@ -144,14 +144,25 @@ const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
                   미션을 클리어하고 배지를 받아보세요!
                 </p>
               </div>
-              <FontAwesomeIcon
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
                 className="absolute top-[20px] right-[20px] hover:scale-[120%] cursor-pointer"
-                icon={faCircleXmark}
                 onClick={() => {
                   setModalController(false);
                   setShowModal(false);
                 }}
-              />
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29294C17.6834 4.90242 18.3166 4.90242 18.7071 5.29294C19.0976 5.68347 19.0976 6.31663 18.7071 6.70716L13.4142 12L18.7071 17.2928C19.0976 17.6834 19.0976 18.3165 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289Z"
+                  fill="#98A2B3"
+                />
+              </svg>
               {dailyMission.map((missionItem) => (
                 <div
                   key={missionItem.id}
@@ -209,28 +220,28 @@ const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
                             </div>
 
                             <div className="absolute top-0 left-0 w-full h-full flex flex-col justify-center items-center object-cover gap-4">
-                              
                               <div className="bg-white rounded-full p-4 flex justify-center ">
-                              <svg
-                                width="41"
-                                height="40"
-                                viewBox="0 0 41 40"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <g id="Icon">
-                                  <path
-                                    id="Vector (Stroke)"
-                                    fill-rule="evenodd"
-                                    clip-rule="evenodd"
-                                    d="M35.0118 10.4882C35.6627 11.139 35.6627 12.1943 35.0118 12.8452L18.3452 29.5118C17.6943 30.1627 16.639 30.1627 15.9881 29.5118L7.65481 21.1785C7.00394 20.5276 7.00394 19.4724 7.65481 18.8215C8.30569 18.1706 9.36096 18.1706 10.0118 18.8215L17.1667 25.9763L32.6548 10.4882C33.3057 9.83728 34.361 9.83728 35.0118 10.4882Z"
-                                    fill="#5FD100"
-                                  />
-                                </g>
-                              </svg>
-                              
+                                <svg
+                                  width="41"
+                                  height="40"
+                                  viewBox="0 0 41 40"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <g id="Icon">
+                                    <path
+                                      id="Vector (Stroke)"
+                                      fillRule="evenodd"
+                                      clipRule="evenodd"
+                                      d="M35.0118 10.4882C35.6627 11.139 35.6627 12.1943 35.0118 12.8452L18.3452 29.5118C17.6943 30.1627 16.639 30.1627 15.9881 29.5118L7.65481 21.1785C7.00394 20.5276 7.00394 19.4724 7.65481 18.8215C8.30569 18.1706 9.36096 18.1706 10.0118 18.8215L17.1667 25.9763L32.6548 10.4882C33.3057 9.83728 34.361 9.83728 35.0118 10.4882Z"
+                                      fill="#5FD100"
+                                    />
+                                  </g>
+                                </svg>
                               </div>
-                              <p className="text-[#4DAB00] text-2xl leading-6 font-semibold">미션 완료!</p>
+                              <p className="text-[#4DAB00] text-2xl leading-6 font-semibold">
+                                미션 완료!
+                              </p>
                             </div>
 
                             <button
@@ -275,8 +286,8 @@ const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
                             y2="168"
                             gradientUnits="userSpaceOnUse"
                           >
-                            <stop stop-color="#66AB28" />
-                            <stop offset="1" stop-color="#4F891C" />
+                            <stop stopColor="#66AB28" />
+                            <stop offset="1" stopColor="#4F891C" />
                           </linearGradient>
                           <linearGradient
                             id="paint1_linear_1308_24651"
@@ -286,8 +297,8 @@ const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
                             y2="168"
                             gradientUnits="userSpaceOnUse"
                           >
-                            <stop stop-color="#8AE63F" />
-                            <stop offset="1" stop-color="#77CA33" />
+                            <stop stopColor="#8AE63F" />
+                            <stop offset="1" stopColor="#77CA33" />
                           </linearGradient>
                         </defs>
                       </svg>

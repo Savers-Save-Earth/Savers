@@ -8,11 +8,11 @@ import "swiper/css/pagination";
 import "swiper/css/autoplay";
 
 const bannerList = [
-  { id: 1, img: "/assets/product/banner1.png" },
-  { id: 2, img: "/assets/product/banner2.png" },
-  { id: 3, img: "/assets/product/banner3.png" },
-  { id: 4, img: "/assets/product/banner4.png" },
-  { id: 5, img: "/assets/product/banner5.png" },
+  { id: 1, img: "/assets/product/banner_1.png" },
+  { id: 2, img: "/assets/product/banner_2.png" },
+  { id: 3, img: "/assets/product/banner_3.png" },
+  { id: 4, img: "/assets/product/banner_4.png" },
+  { id: 5, img: "/assets/product/banner_5.png" },
 ];
 
 const Carousel = () => {
@@ -32,11 +32,7 @@ const Carousel = () => {
       >
         {bannerList.map((item) => (
           <SwiperSlide key={item.id}>
-            <img
-              src={item.img}
-              style={{ height: "280px" }}
-              alt="banner image"
-            />
+            <img src={item.img} style={{}} alt="banner image" />
           </SwiperSlide>
         ))}
       </Swiper>

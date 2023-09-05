@@ -30,6 +30,27 @@ const PostList = () => {
     setShowCount(showCount + 10);
   };
 
+  const getThumbnail = (content: string) => {
+    // 이미지 태그를 추출하는 정규식
+    const imgRegex = /<img[^>]+src=["']([^"']+)["'][^>]*>/;
+
+    // 정규식에 맞는 첫 번째 이미지 태그를 추출
+    const firstImgTag = content?.match(imgRegex);
+
+    // 첫 번째 이미지 태그가 존재하면 src 속성의 내용을 추출
+    let srcContent = "";
+    if (firstImgTag) {
+      const srcMatch = firstImgTag[0].match(/src=["']([^"']+)["']/);
+      if (srcMatch && srcMatch[1]) {
+        srcContent = srcMatch[1];
+      }
+    }
+
+    console.log(firstImgTag);
+
+    return srcContent; // 추출한 src 속성의 내용을 반환합니다.
+  };
+
   return (
     <div className="mt-16">
       <div
@@ -63,27 +84,56 @@ const PostList = () => {
           className="rounded-2xl border border-gray-200 bg-white p-4 mb-4 cursor-pointer"
           onClick={() => router.push(`/community/${item.post_uid}`)}
         >
-          <div className="inline-block">
-            <p
-              className="text-[12px] bg-gray-50 rounded-2xl mb-[6px]"
-              style={{
-                padding: "4px 8px",
-                lineHeight: "14px",
-                display: "inline-block",
-              }}
-            >
-              {item.category}
-            </p>
-          </div>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div>
+              <p
+                className="text-[12px] bg-gray-50 rounded-2xl mb-[6px] w-[48px] text-center"
+                style={{
+                  padding: "4px 8px",
+                  lineHeight: "14px",
+                }}
+              >
+                {item.category}
+              </p>
 
-          <p className="font-bold text-base mb-[6px] text-gray-900">
-            {item.title}
-          </p>
-          <p className="text-base text-gray-500">
-            {item.content.length > 190
-              ? `${item.content.replace(/<[^>]*>/g, "").slice(0, 190)}...`
-              : item.content.replace(/<[^>]*>/g, "")}
-          </p>
+              {getThumbnail(item.content) ? (
+                <>
+                  <p className="font-bold text-base mb-[6px] text-gray-900 w-[1000px]">
+                    {item.title}
+                  </p>
+                  <p className="text-base text-gray-500 w-[1000px]">
+                    {item.content.length > 180
+                      ? `${item.content
+                          .replace(/<[^>]*>/g, "")
+                          .slice(0, 180)}...`
+                      : item.content.replace(/<[^>]*>/g, "")}
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p className="font-bold text-base mb-[6px] text-gray-900">
+                    {item.title}
+                  </p>
+                  <p className="text-base text-gray-500">
+                    {item.content.length > 180
+                      ? `${item.content
+                          .replace(/<[^>]*>/g, "")
+                          .slice(0, 180)}...`
+                      : item.content.replace(/<[^>]*>/g, "")}
+                  </p>
+                </>
+              )}
+            </div>
+
+            {getThumbnail(item.content) && (
+              <div className="inline">
+                <img
+                  src={getThumbnail(item.content)}
+                  className="w-[84px] h-[84px] object-cover ml-auto rounded-2xl"
+                />
+              </div>
+            )}
+          </div>
 
           <div className="flex items-center justify-between mt-4">
             <div className="flex items-center">
