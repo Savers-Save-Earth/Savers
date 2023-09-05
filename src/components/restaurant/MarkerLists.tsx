@@ -97,8 +97,6 @@ const MarkerLists = ({ markerList, currentCategory }: any) => {
           .delete()
           .eq("user_id", user.id)
           .eq("restaurant_name", name);
-
-        // alert("좋아요가 해제되었습니다.");
       } else {
         const { error: addMarkListError } = await supabase
           .from("like_restaurant")
@@ -109,7 +107,6 @@ const MarkerLists = ({ markerList, currentCategory }: any) => {
             user_id: user.id,
             restaurant_map: url,
           });
-        // alert("좋아요를 눌렀습니다.");
       }
     } else {
       ToastInfo("로그인이 필요한 서비스 입니다.");
@@ -270,7 +267,7 @@ const MarkerLists = ({ markerList, currentCategory }: any) => {
             <div>
               <p className="font-bold">{place.place_name}</p>
               <p>{place.address_name}</p>
-              {/* <button
+              <button
                 onClick={(e) => {
                   e.preventDefault();
                   addMarkList(
@@ -317,7 +314,7 @@ const MarkerLists = ({ markerList, currentCategory }: any) => {
                 <span style={{ color: "#D0D5DD" }}>
                   {bookmarkHandler(place.place_name)}
                 </span>
-              </button> */}
+              </button>
               <span className="pt-[4px] pr-2 pl-[6px] pb-2 border border-gray-100 rounded-full  cursor-pointer ">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
