@@ -43,7 +43,7 @@ const initialProfile: any = {
 const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
   const currentDate = convertDate(new Date());
   const currentDateModify = currentDate.replaceAll("-", ".") as string;
-  const searchId = user?.id || ("" as string);
+  const searchId = user?.uid || ("" as string);
 
   const [dailyMission, setDailyMission] = useState<DailyMission[]>([]);
   const [modalController, setModalController] = useState(showModal);
