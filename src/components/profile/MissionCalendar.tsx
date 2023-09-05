@@ -100,7 +100,8 @@ const MissionCalendar = () => {
       />
       {user && profile.uid === user.id && (
   <>
-    <p
+  {/* sidebar와 보이는 창 z index 문제 해결될 때까지 봉인 */}
+    {/* <p
       style={{
         background: "rgb(245, 245, 245)",
         textAlign: "center",
@@ -113,7 +114,7 @@ const MissionCalendar = () => {
     >
       일일미션 하러가기
     </p>
-    <RandomMission showModal={showModal} user={user} setShowModal={setShowModal} profile={profile} />
+    <RandomMission showModal={showModal} user={user} setShowModal={setShowModal} profile={profile} /> */}
   </>
 )}
       
