@@ -15,6 +15,7 @@ const MyProfile = async ({ params: { id } }: { params: { id: string } }) => {
   if (error) throw error;
 
   return (
+    
     <div className="flex w-full h-full min-h-[640px] items-start gap-8 self-stretch justify-evenly">
       <div className="flex flex-col items-start gap-6 flex-[1,0,0%] rounded-xl self-stretch bg-white">
         <p className="self-stretch text-gray-900 text-[24px] non-italic font-semibold leading-6">
