@@ -55,7 +55,7 @@ const MissionDone = ({ params }: { params: { id: string } }) => {
           {missionDone?.map((mission) => {
             return (
               <div
-                className="py-6 px-4 flex flex-col justify-between items-center w-[180px] h-[300px] rounded-2xl break-words relative hover:scale-110 hover:duration-500 opacity-70 bg-[#F3FFEA]"
+                className="relative py-6 px-4 flex flex-col justify-between items-center w-[180px] h-[300px] rounded-2xl break-words hover:scale-110 hover:duration-500 opacity-70 bg-[#F3FFEA]"
                 key={mission.id}
               >
                 {/* 내용 및 버튼 */}
