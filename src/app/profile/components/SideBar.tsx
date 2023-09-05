@@ -71,7 +71,7 @@ const SideBar = () => {
 
   useEffect(() => {
     getUser();
-  }, []);
+  }, [searchId]);
 
   // 우정 작업 -> 프로필모달 열기 //
 

@@ -97,8 +97,8 @@ const PwLogin: React.FC = () => {
               y2="24"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="#66AB28" />
-              <stop offset="1" stop-color="#4F891C" />
+              <stop stopColor="#66AB28" />
+              <stop offset="1" stopColor="#4F891C" />
             </linearGradient>
             <linearGradient
               id="paint1_linear_1010_22052"
@@ -108,8 +108,8 @@ const PwLogin: React.FC = () => {
               y2="23.4264"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="#8AE63F" />
-              <stop offset="1" stop-color="#77CA33" />
+              <stop stopColor="#8AE63F" />
+              <stop offset="1" stopColor="#77CA33" />
             </linearGradient>
           </defs>
         </svg>
