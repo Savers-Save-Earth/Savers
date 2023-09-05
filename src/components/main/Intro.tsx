@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import { useState, useEffect } from "react";
-
 const Intro = () => {
   const [scrollY, setScrollY] = useState(0);
 
@@ -40,11 +39,11 @@ const Intro = () => {
               width: "100%",
 
               height: "100vh",
-              position: scrollY < 4600 ? "fixed" : "absolute",
-              display: scrollY > 3400 ? "none" : "block",
-              top: scrollY < 3600 ? 0 : 3600,
+              position: scrollY < 5300 ? "fixed" : "absolute",
+              display: scrollY > 5300 ? "none" : "block",
+              top: scrollY < 5300 ? 0 : 5300,
               opacity:
-                scrollY > 3000 ? Math.max(0, 1 - (scrollY - 3000) / 500) : 1,
+                scrollY > 4800 ? Math.max(0, 1 - (scrollY - 4800) / 500) : 1,
               transition: "opacity 0.3s ease", // Add transition for smooth effect
             }}
             src={require("../../../public/assets/environment6.mp4")}
@@ -54,11 +53,12 @@ const Intro = () => {
           className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-8xl font-bold transition-opacity duration-100 ease-in-out"
           style={{
             opacity: Math.max(0, 1 - scrollY / 100),
-            display: scrollY > 3000 ? "none" : "block",
+            display: scrollY > 4500 ? "none" : "block",
           }}
         >
           SAVERS
         </div>
+
         <div
           className="fixed bottom-[20px] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-8xl font-bold transition-opacity duration-100 ease-in-out blinking-text"
           style={{
@@ -85,55 +85,58 @@ const Intro = () => {
           className="fade-element fixed  left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-4xl font-bold transition-opacity duration-100 ease-in-out"
           style={{
             textAlign: "center",
-            top: "calc(25% - 30px)",
-            opacity: Math.min(1, scrollY / 1000),
+            top: "25%",
+            opacity: Math.min(1, Math.max(0, (scrollY - 100) / 1100)),
             transform: `translate(-50%, calc(-50% - ${Math.min(
               20,
-              (scrollY - 1000) / 15,
+              (scrollY - 1200) / 15,
             )}px))`,
-            display: scrollY > 3600 ? "none" : "block",
+            display: scrollY > 5300 ? "none" : "block",
           }}
         >
-          자연과 가까울수록 병은 멀어지고,
+          기후변화를 막는 것은 공동의 노력이다.
+          {/* 자연과 가까울수록 병은 멀어지고,
           <br />
-          자연과 멀수록 병은 가까워진다.
+          자연과 멀수록 병은 가까워진다. */}
         </div>
         <div
           className="fade-element fixed left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-4xl font-bold transition-opacity duration-100 ease-in-out"
           style={{
             textAlign: "center",
-            top: "calc(50% - 10px)",
-            opacity: Math.min(1, scrollY / 2000),
+            top: "50%",
+            opacity: Math.min(1, Math.max(0, (scrollY - 1600) / 1000)),
             transform: `translate(-50%, calc(-50% - ${Math.min(
               20,
-              (scrollY - 2000) / 15,
+              (scrollY - 2600) / 15,
             )}px))`,
-            display: scrollY > 3400 ? "none" : "block",
+            display: scrollY > 5200 ? "none" : "block",
           }}
         >
-          자연은 결코 배신하지 않는다.
+          그것은 공동의 의무라는 것,
+          {/* 자연은 결코 배신하지 않는다.
           <br />
-          우리 자신을 배신하는 것은 항상 우리들이다.
+          우리 자신을 배신하는 것은 항상 우리들이다. */}
         </div>
         <div
           className="fade-element fixed left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl font-bold text-white transition-opacity duration-100 ease-in-out"
           style={{
             textAlign: "center",
-            top: "calc(77% - 15px)",
-            opacity: Math.min(1, scrollY / 3000),
+            top: "75%",
+            opacity: Math.min(1, Math.max(0, (scrollY - 3000) / 800)),
             transform: `translate(-50%, calc(-50% - ${Math.min(
               20,
-              (scrollY - 2500) / 15,
+              (scrollY - 3800) / 15,
             )}px))`,
-            display: scrollY > 3300 ? "none" : "block",
+            display: scrollY > 5100 ? "none" : "block",
           }}
         >
-          예술에는 오류가 있을지 모르나,
+          그리고 너무 늦지 않았다는 것을 의미한다.
+          {/* 예술에는 오류가 있을지 모르나,
           <br />
-          자연에는 잘못이 없다.
+          자연에는 잘못이 없다. */}
         </div>
       </div>
-      <div style={{ height: "2000px" }}></div>
+      <div style={{ height: "3700px" }}></div>
     </>
   );
 };

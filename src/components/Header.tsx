@@ -100,7 +100,7 @@ const Header = () => {
         <header
           className={cls(
             "fixed top-0 left-1/2 -translate-x-1/2 z-10 text-gray-900 w-screen",
-            scrollY < 3000 ? "bg-transparent" : "bg-white/30 backdrop-blur-md",
+            scrollY < 4900 ? "bg-transparent" : "bg-white/30 backdrop-blur-md",
           )}
         >
           <div className="w-[1280px] container mx-auto flex flex-wrap p-5 justify-between items-center">
@@ -110,7 +110,7 @@ const Header = () => {
                   "ml-3 text-xl flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0",
                 )}
               >
-                {scrollY < 3000 ? (
+                {scrollY < 4900 ? (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="106"
@@ -216,7 +216,7 @@ const Header = () => {
                 href={`/product`}
                 className={cls(
                   "mr-5",
-                  scrollY < 3000
+                  scrollY < 4900
                     ? "text-white border-gray-100"
                     : "text-gray-900 border-gray-500",
                 )}
@@ -227,7 +227,7 @@ const Header = () => {
                 href={`/restaurant`}
                 className={cls(
                   "mr-5",
-                  scrollY < 3000 ? "text-white" : "text-gray-900",
+                  scrollY < 4900 ? "text-white" : "text-gray-900",
                 )}
               >
                 비건식당 찾기
@@ -236,7 +236,7 @@ const Header = () => {
                 href={`/community`}
                 className={cls(
                   "mr-5",
-                  scrollY < 3000 ? "text-white" : "text-gray-900",
+                  scrollY < 4900 ? "text-white" : "text-gray-900",
                 )}
               >
                 커뮤니티
@@ -247,7 +247,7 @@ const Header = () => {
                 onClick={loginLogoutSwitcher}
                 className={cls(
                   "border-0 py-1 px-3 focus:outline-none rounded text-base",
-                  scrollY < 3000 ? "text-white" : "text-gray-900",
+                  scrollY < 4900 ? "text-white" : "text-gray-900",
                 )}
               >
                 {" "}
@@ -258,7 +258,7 @@ const Header = () => {
                   onClick={signupProfileSwitcher}
                   className={cls(
                     "border-0 py-1 px-3 focus:outline-none rounded text-base",
-                    scrollY < 3000 ? "text-white" : "text-gray-900",
+                    scrollY < 4900 ? "text-white" : "text-gray-900",
                   )}
                 >
                   마이페이지
@@ -268,7 +268,7 @@ const Header = () => {
                   onClick={signupProfileSwitcher}
                   className={cls(
                     "border-0 py-1 px-3 focus:outline-none rounded text-base",
-                    scrollY < 3000 ? "text-white" : "text-gray-900",
+                    scrollY < 4900 ? "text-white" : "text-gray-900",
                   )}
                 >
                   회원가입
