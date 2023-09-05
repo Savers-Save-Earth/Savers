@@ -50,7 +50,7 @@ const ProductComponent = () => {
   }
 
   // 현재 유저정보 가져오기
-  const currentUser = useAuth()?.uid;
+  const currentUser = useAuth();
 
   // 현재 유저의 좋아요 리스트 가져오기
   // let productLike: ProductLikesType[] = []; // 변수를 블록 외부에서 선언
