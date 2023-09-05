@@ -3,96 +3,65 @@ import supabase from "@/libs/supabase";
 import { useParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { convertDate } from "@/libs/util";
 import Image from "next/image";
 import RandomMission from "./RandomMission";
 import EditProfile from "@/components/profile/EditProfile";
 import { Database } from "@/types/supabase";
-
-type Profile = Database["public"]["Tables"]["user"]["Row"];
-export interface DailyMission {
-  id: string;
-  uid: number;
-  point: number;
-  title: string;
-  content: string;
-  doingYn: boolean;
-  address: string;
-  bigCategory: string;
-  smallCategory: string;
-}
+import Loading from "@/app/loading";
+import { useAuth } from "@/hooks/useAuth";
 
 const SideBar = () => {
   const searchId = useParams().id as string;
-  // const decodedParams = decodeURIComponent(params);
   const router = useRouter();
-  // const searchId = decodedParams as string;
-  const getProfile = async () => {
-    let { data: user, error } = await supabase
-      .from("user")
-      .select("*")
-      .eq("uid", searchId);
-    return user![0];
-  };
-
-  const [profile, setProfile] = useState<Profile>();
-
   const [showModal, setShowModal] = useState(false);
-  const [user, setUser] = useState<any>();
-  // const [searchId, setSearchId] = useState<string | undefined>(undefined);
-  // 우정작업 //
-  const [profileImg, setProfileImg] = useState<string>("");
-  const getUser = async () => {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+  const [profileData, setProfileData] = useState<any>();
 
-    if (!user) {
-      setUser(false);
-    } else {
-      setUser(user);
-    }
+  const user = useAuth();
+  // const getUser = async () => {
+  //   const {
+  //     data: { user },
+  //   } = await supabase.auth.getUser();
 
+  //   if (!user) {
+  //     setUser(false);
+  //   } else {
+  //     setUser(user);
+  //   }
     // 우정작업 //
-
+const fetchProfile = async () => {
+  if(!searchId) return;
+  try {
     const { data: userData } = await supabase
-      .from("user")
-      .select()
-      .eq("uid", searchId);
+    .from("user")
+    .select("*")
+    .eq("uid", searchId);
 
-    if (userData) {
-      setProfileImg(userData[0]?.profileImage);
-    } else {
-      return;
-    }
-
-    // 우정작업 //
-  };
-
-  useEffect(() => {
-    getUser();
-  }, []);
-
-  // 우정 작업 -> 프로필모달 열기 //
+  if (userData) {
+    setProfileData(userData[0]);
+  } else {
+    return;
+  }
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+  }
+}
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      const fetchedProfile = await getProfile();
-      setProfile(fetchedProfile);
-    };
-    fetchProfile();
+    fetchProfile()
   }, [searchId]);
+//커민위한주석
+
   return (
     <div className="flex flex-col items-start gap-16 text-gray-900">
       <h1 className="text-[24px] non-italic font-semibold">마이페이지</h1>
-      {profile ? (
+      {profileData ? (
         <>
           <div className="flex flex-col justify-center items-center gap-6 self-stretch leading-none">
             <div className="relative w-[140px] h-[140px] object-contain">
-              {profileImg ? (
+              {profileData.profileImage ? (
                 <img
                   className="w-[140px] h-[140px] rounded-full object-cover mx-auto"
-                  src={profileImg}
+                  src={profileData.profileImage}
                   alt="프로필 이미지"
                 />
               ) : (
@@ -105,9 +74,9 @@ const SideBar = () => {
             </div>
             <div className="flex flex-col items-center gap-4">
               <p className="text-gray-900 text-[24px] non-italic font-semibold leading-7">
-                {profile.nickname}
+                {profileData.nickname}
               </p>
-              {searchId == user?.id ? <EditProfile /> : ""}
+              {searchId == user?.uid ? <EditProfile /> : ""}
             </div>
           </div>
 
@@ -144,7 +113,7 @@ const SideBar = () => {
             >
               좋아요
             </button>
-            {user && user.id == profile.uid ? (
+            {user && user.uid == profileData.uid ? (
               <button
                 className="btn-sidebar"
                 onClick={() => {
@@ -161,12 +130,12 @@ const SideBar = () => {
             showModal={showModal}
             user={user}
             setShowModal={setShowModal}
-            profile={profile}
+            profile={profileData}
           />
         </>
-      ) : (
-        <>{/* <Loading /> */}</>
-      )}
+         ) : (
+         <Loading />
+       )}
     </div>
   );
 };

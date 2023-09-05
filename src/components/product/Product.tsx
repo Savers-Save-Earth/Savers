@@ -27,6 +27,7 @@ const selectOptions = [
 ];
 
 const ProductComponent = () => {
+  const [product, setProduct] = useState<Product[]>([]);
   const [category, setCategory] = useState("");
   const [search, setSearch] = useState("");
   const [select, setSelect] = useState("sales");
@@ -35,42 +36,33 @@ const ProductComponent = () => {
 
   const router = useRouter();
 
+  // 물품 리스트 fetch
+  const fetchProduct = async () => {
+    try {
+      const { data } = await supabase.from("product").select();
+      setProduct(data || []);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  };
+
   // 현재 제품 가져오기
-  const {
-    data: products,
-    isLoading,
-    isError,
-  } = useQuery<Product[]>(["product"], getProducts);
+  // const {
+  //   data: products,
+  //   isLoading,
+  //   isError,
+  // } = useQuery<Product[]>(["product"], getProducts);
 
-  if (isLoading) {
-  }
-
-  if (isError) {
-  }
-
-  // 현재 유저정보 가져오기
-  const currentUser = useAuth();
-
-  // 현재 유저의 좋아요 리스트 가져오기
-  // let productLike: ProductLikesType[] = []; // 변수를 블록 외부에서 선언
-
-  // if (currentUser) {
-  //   const {
-  //     data: productLikeData,
-  //     isLoading: productLikeLoading,
-  //     isError: productLikeError,
-  //   } = useQuery<ProductLikesType[]>(["like_product"], () =>
-  //     getProductLikeStatus(currentUser),
-  //   );
-
-  //   // productLikeData가 정의되어 있을 때만 할당
-  //   if (productLikeData) {
-  //     productLike = productLikeData;
-  //   }
+  // if (isLoading) {
   // }
 
-  // 현재 유저정보 fetch
+  // if (isError) {
+  // }
 
+  // 현재 유저정보 가져오기
+  // const currentUser = useAuth();
+
+  // 현재 유저정보 fetch
   const fetchUser = async () => {
     try {
       const {
@@ -81,7 +73,6 @@ const ProductComponent = () => {
         setUser(false);
       } else {
         setUser(user);
-        console.log(user);
         fetchUserLike(user); // 유저 정보를 가져온 후에 fetchUserLike 함수 호출
       }
     } catch (error) {
@@ -96,7 +87,6 @@ const ProductComponent = () => {
       .select()
       .eq("user_id", user.id);
     setLikedByUser(existingLikeData!);
-    console.log(existingLikeData);
   };
 
   useEffect(() => {
@@ -104,19 +94,34 @@ const ProductComponent = () => {
   }, []);
 
   // 셀렉트 내용으로 정렬
-  let sortedData: Product[] = products?.slice() || [];
+
+  let sortedData = product.slice(); // 초기화
 
   if (select === "expensive") {
-    sortedData = sortedData.slice().sort((a, b) => b.price - a.price);
+    sortedData = product.slice().sort((a, b) => b.price - a.price);
   } else if (select === "cheap") {
-    sortedData = sortedData.slice().sort((a, b) => a.price - b.price);
+    sortedData = product.slice().sort((a, b) => a.price - b.price);
   } else if (select === "sales") {
-    sortedData = sortedData.slice().sort((a, b) => b.sales - a.sales);
+    sortedData = product.slice().sort((a, b) => b.sales - a.sales);
   } else if (select === "newest") {
-    sortedData = sortedData.slice().sort((a, b) => b.createdAt - a.createdAt);
+    sortedData = product.slice().sort((a, b) => b.createdAt - a.createdAt);
   } else if (select === "popular") {
-    sortedData = sortedData.slice().sort((a, b) => b.like_count - a.like_count);
+    sortedData = product.slice().sort((a, b) => b.like_count - a.like_count);
   }
+
+  // let sortedData: Product[] = products?.slice() || [];
+
+  // if (select === "expensive") {
+  //   sortedData = sortedData.slice().sort((a, b) => b.price - a.price);
+  // } else if (select === "cheap") {
+  //   sortedData = sortedData.slice().sort((a, b) => a.price - b.price);
+  // } else if (select === "sales") {
+  //   sortedData = sortedData.slice().sort((a, b) => b.sales - a.sales);
+  // } else if (select === "newest") {
+  //   sortedData = sortedData.slice().sort((a, b) => b.createdAt - a.createdAt);
+  // } else if (select === "popular") {
+  //   sortedData = sortedData.slice().sort((a, b) => b.like_count - a.like_count);
+  // }
 
   // 좋아요 눌렀을 때, 물품 및 유저에 좋아요 데이터 업데이트
 
@@ -142,15 +147,11 @@ const ProductComponent = () => {
           .eq("product_uid", id)
           .eq("user_id", userId);
 
-      console.log(existingLikeData);
-
       // 현재 아이템의 좋아요 수 객체를 가져오는 로직
       const { data: currentLikeCount } = await supabase
         .from("product")
         .select()
         .eq("id", id);
-
-      console.log(currentLikeCount);
 
       // 좋아요 이미 눌렀으면 삭제하는 로직
       if (!existingLikeError && existingLikeData.length > 0) {
@@ -183,10 +184,14 @@ const ProductComponent = () => {
           .update({ like_count: currentLikeCount![0].like_count + 1 })
           .eq("id", id);
       }
-      // fetchProduct(); // 데이터 갱신 [숫자]
+      fetchProduct(); // 데이터 갱신 [숫자]
       fetchUser(); // 데이터 갱신 [좋아요]
     }
   };
+
+  useEffect(() => {
+    fetchProduct();
+  });
 
   return (
     <>
@@ -224,8 +229,8 @@ const ProductComponent = () => {
           fill="none"
         >
           <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M8 4C6.93913 4 5.92172 4.42143 5.17157 5.17158C4.42143 5.92172 4 6.93914 4 8C4 9.06087 4.42143 10.0783 5.17157 10.8284C5.92172 11.5786 6.93913 12 8 12C9.06087 12 10.0783 11.5786 10.8284 10.8284C11.5786 10.0783 12 9.06087 12 8C12 6.93914 11.5786 5.92172 10.8284 5.17158C10.0783 4.42143 9.06087 4 8 4ZM2 8C1.99988 7.05571 2.22264 6.12472 2.65017 5.28274C3.0777 4.44077 3.69792 3.7116 4.4604 3.15453C5.22287 2.59746 6.10606 2.22822 7.03815 2.07684C7.97023 1.92546 8.92488 1.99621 9.82446 2.28335C10.724 2.57049 11.5432 3.06591 12.2152 3.7293C12.8872 4.39269 13.3931 5.20534 13.6919 6.10114C13.9906 6.99693 14.0737 7.9506 13.9343 8.88456C13.795 9.81852 13.4372 10.7064 12.89 11.476L17.707 16.293C17.8892 16.4816 17.99 16.7342 17.9877 16.9964C17.9854 17.2586 17.8802 17.5094 17.6948 17.6948C17.5094 17.8802 17.2586 17.9854 16.9964 17.9877C16.7342 17.99 16.4816 17.8892 16.293 17.707L11.477 12.891C10.5794 13.5293 9.52335 13.9082 8.42468 13.9861C7.326 14.0641 6.22707 13.8381 5.2483 13.333C4.26953 12.8278 3.44869 12.063 2.87572 11.1224C2.30276 10.1817 1.99979 9.10144 2 8Z"
             fill="#D0D5DD"
           />
