@@ -8,8 +8,6 @@ import EditProfile from "@/components/profile/EditProfile";
 
 type Profile = Database["public"]["Tables"]["user"]["Row"];
 const MyProfile = async ({ params: { id } }: { params: { id: string } }) => {
-  // let { data: user, error } = await supabase.from("user").select("*").eq("uid", "bd2125b8-d852-485c-baf3-9c7a8949beee")
-  // let { data: user, error } = await supabase.from("user").select("*").eq("uid", "bd2125b8-d852-485c-baf3-9c7a8949beed")
   let { data: user, error } = await supabase
     .from("user")
     .select("*")

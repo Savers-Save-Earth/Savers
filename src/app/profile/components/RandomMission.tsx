@@ -43,20 +43,12 @@ const initialProfile: any = {
 const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
   const currentDate = convertDate(new Date());
   const currentDateModify = currentDate.replaceAll("-", ".") as string;
-
-  // console.log("미션의 user",user)
   const searchId = user?.id || ("" as string);
 
   const [dailyMission, setDailyMission] = useState<DailyMission[]>([]);
   const [modalController, setModalController] = useState(showModal);
-  // console.log("showModal111,",showModal)
+
   useEffect(() => {
-    // console.log("showModal222,",showModal)
-    // console.log("modalController,",modalController)
-    // if(modalController === false) {
-    //   console.log("모달컨트롤러 false")
-    //   return
-    // }
     setModalController(showModal);
     insertMissionListData();
   }, [showModal]);
