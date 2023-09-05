@@ -4,6 +4,9 @@ import supabase from "@/libs/supabase";
 import { Product } from "@/types/types";
 import { useRouter } from "next/navigation";
 import { ToastInfo } from "@/libs/toastifyAlert";
+import { useQuery } from "@tanstack/react-query";
+
+import { getProducts } from "@/api/product/product";
 
 const productCategory = [
   { value: "", label: "전체", img: "assets/product/all.png" },
@@ -22,25 +25,25 @@ const selectOptions = [
 ];
 
 const ProductComponent = () => {
-  const [product, setProduct] = useState<Product[]>([]);
   const [category, setCategory] = useState("");
   const [search, setSearch] = useState("");
-  const [select, setSelect] = useState("popular");
+  const [select, setSelect] = useState("sales");
   const [user, setUser] = useState<any>(null);
   const [likedByUser, setLikedByUser] = useState<any[]>([]);
 
   const router = useRouter();
 
-  // 물품 리스트 fetch
-  const fetchProduct = async () => {
-    try {
-      const { data } = await supabase.from("product").select();
-      setProduct(data || []);
-    } catch (error) {
-      console.error("Error fetching products:", error);
-    }
-  };
+  const {
+    data: products,
+    isLoading,
+    isError,
+  } = useQuery<Product[]>(["product"], getProducts);
 
+  if (isLoading) {
+  }
+
+  if (isError) {
+  }
   // 현재 유저정보 fetch
   const fetchUser = async () => {
     try {
@@ -71,23 +74,22 @@ const ProductComponent = () => {
   };
 
   useEffect(() => {
-    fetchProduct();
     fetchUser();
   }, []);
 
   // 셀렉트 내용으로 정렬
-  let sortedData = product.slice(); // 초기화
+  let sortedData = products!.slice(); // 초기화
 
   if (select === "expensive") {
-    sortedData = product.slice().sort((a, b) => b.price - a.price);
+    sortedData = products!.slice().sort((a, b) => b.price - a.price);
   } else if (select === "cheap") {
-    sortedData = product.slice().sort((a, b) => a.price - b.price);
+    sortedData = products!.slice().sort((a, b) => a.price - b.price);
   } else if (select === "sales") {
-    sortedData = product.slice().sort((a, b) => b.sales - a.sales);
+    sortedData = products!.slice().sort((a, b) => b.sales - a.sales);
   } else if (select === "newest") {
-    sortedData = product.slice().sort((a, b) => b.createdAt - a.createdAt);
+    sortedData = products!.slice().sort((a, b) => b.createdAt - a.createdAt);
   } else if (select === "popular") {
-    sortedData = product.slice().sort((a, b) => b.like_count - a.like_count);
+    sortedData = products!.slice().sort((a, b) => b.like_count - a.like_count);
   }
 
   // 좋아요 눌렀을 때, 물품 및 유저에 좋아요 데이터 업데이트
@@ -155,7 +157,7 @@ const ProductComponent = () => {
           .update({ like_count: currentLikeCount![0].like_count + 1 })
           .eq("id", id);
       }
-      fetchProduct(); // 데이터 갱신 [숫자]
+      // fetchProduct(); // 데이터 갱신 [숫자]
       fetchUser(); // 데이터 갱신 [좋아요]
     }
   };
