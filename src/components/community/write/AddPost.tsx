@@ -2,7 +2,7 @@
 import type { NextComponentType } from "next";
 
 import { useAuth } from "@/hooks/useAuth";
-import TextEditor from "./quill/TextEditor";
+import TextEditor from "./TextEditor";
 import { useEffect, useState } from "react";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";

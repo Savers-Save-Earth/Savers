@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 
-import TextEditor from "./quill/TextEditor";
+import TextEditor from "./TextEditor";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updatePost } from "@/api/community/post";
 
