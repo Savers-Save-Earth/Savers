@@ -73,7 +73,6 @@ const ProductComponent = () => {
         setUser(false);
       } else {
         setUser(user);
-        console.log(user);
         fetchUserLike(user); // 유저 정보를 가져온 후에 fetchUserLike 함수 호출
       }
     } catch (error) {
@@ -88,7 +87,6 @@ const ProductComponent = () => {
       .select()
       .eq("user_id", user.id);
     setLikedByUser(existingLikeData!);
-    console.log(existingLikeData);
   };
 
   useEffect(() => {
@@ -149,15 +147,11 @@ const ProductComponent = () => {
           .eq("product_uid", id)
           .eq("user_id", userId);
 
-      console.log(existingLikeData);
-
       // 현재 아이템의 좋아요 수 객체를 가져오는 로직
       const { data: currentLikeCount } = await supabase
         .from("product")
         .select()
         .eq("id", id);
-
-      console.log(currentLikeCount);
 
       // 좋아요 이미 눌렀으면 삭제하는 로직
       if (!existingLikeError && existingLikeData.length > 0) {
