@@ -47,6 +47,8 @@ export interface ListMission {
 
 // restaurant type
 
+type ProductLikesType = Database["public"]["Tables"]["like_product"]["Row"];
+
 type likeRestaurantType =
   Database["public"]["Tables"]["like_restaurant"]["Row"];
 
