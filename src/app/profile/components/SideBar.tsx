@@ -11,6 +11,7 @@ import Loading from "@/app/loading";
 import { useAuth } from "@/hooks/useAuth";
 
 const SideBar = () => {
+  
   const searchId = useParams().id as string;
   const router = useRouter();
   const [showModal, setShowModal] = useState(false);
@@ -29,6 +30,7 @@ const SideBar = () => {
   //   }
     // 우정작업 //
 const fetchProfile = async () => {
+
   if(!searchId) return;
   try {
     const { data: userData } = await supabase
@@ -47,9 +49,15 @@ const fetchProfile = async () => {
 }
 
   useEffect(() => {
-    fetchProfile()
+    if(searchId) {
+      fetchProfile()
+    }
   }, [searchId]);
-//커민위한주석
+console.log("무한루프 확인용")
+console.log("searchId==>",searchId)
+console.log("profileData==>",profileData)
+console.log("user==>",user)
+
 
   return (
     <div className="flex flex-col items-start gap-16 text-gray-900">

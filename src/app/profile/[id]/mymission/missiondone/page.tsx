@@ -55,11 +55,11 @@ const MissionDone = ({ params }: { params: { id: string } }) => {
           {missionDone?.map((mission) => {
             return (
               <div
-                className="relative py-6 px-4 flex flex-col justify-between items-center w-[180px] h-[300px] rounded-2xl break-words hover:scale-110 hover:duration-500 opacity-70 bg-[#F3FFEA]"
+                className="relative py-6 px-4 flex flex-col justify-between items-center w-[180px] h-[300px] rounded-2xl break-words hover:scale-110 hover:duration-500 opacity-100 bg-[#F3FFEA]"
                 key={mission.id}
               >
                 {/* 내용 및 버튼 */}
-                <div className="flex flex-col gap-3 items-start self-stretch opacity-100">
+                <div className="flex flex-col gap-3 items-start self-stretch opacity-10">
                   <h1 className="text-[24px] leading-[31px] font-semibold text-[#4DAB00]">
                     {mission.title}
                   </h1>
@@ -103,7 +103,7 @@ const MissionDone = ({ params }: { params: { id: string } }) => {
                 {/* 버튼 */}
                 <button
                   disabled
-                  className="flex py-2 px-[10px] justify-center items-center gap-[10px] bg-[#5FD100] rounded-2xl text-[#FCFCFD] disabled:opacity-50"
+                  className="flex py-2 px-[10px] justify-center items-center gap-[10px] bg-[#5FD100] rounded-2xl text-[#FCFCFD] disabled:opacity-10"
                   onClick={() =>
                     mission.bigCategory === "글쓰기"
                       ? window.open("/community")
