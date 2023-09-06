@@ -1,9 +1,5 @@
 import supabase from "@/libs/supabase";
-import { Database } from "@/types/supabase";
-
-type CommentType = Database["public"]["Tables"]["community_comment"]["Row"];
-type NewCommentType = Database["public"]["Tables"]["community_comment"]["Insert"];
-type EditCommentType = Database["public"]["Tables"]["community_comment"]["Update"];
+import { CommentType, EditCommentType, NewCommentType } from "@/types/types";
 
 // 댓글 등록
 export const createComment = async (newComment: NewCommentType) => {
@@ -19,8 +15,11 @@ export const updateComment = async (editComment: EditCommentType) => {
  };
 
 // 댓글 삭제
-export const deleteComment = async (commentUid: string): Promise<void> => {
-  await supabase.from("community_comment").delete().eq("comment_uid", commentUid);
+export const deleteComment = async (commentUid: string)=> {
+  // await supabase.from("community_comment").delete().eq("comment_uid", commentUid);
+  const { data, error } = await supabase.from("community_comment").update({isDeleted: true}).eq("comment_uid", commentUid);
+  if (error) return error;
+  return data;
 };
  
 // 댓글 조회

@@ -17,18 +17,13 @@ const ModifyingProgile = () => {
   const [number, setNumber] = useState("");
   const [birthday, setBirthday] = useState("");
 
-  const params = useParams();
-  const searchId = decodeURIComponent(`${params.id}`);
+  const searchId = useParams().id;
+  console.log("searchId==>", searchId);
 
   const getUser = async () => {
-    const { data } = await supabase
-      .from("user")
-      .select()
-      .eq("nickname", searchId);
-
+    const { data } = await supabase.from("user").select().eq("uid", searchId);
     setUser(data);
     setUserInfo(data);
-    console.log(data);
   };
   useEffect(() => {
     getUser();
@@ -42,11 +37,10 @@ const ModifyingProgile = () => {
   };
 
   const handleSubmit = async () => {
-    console.log(searchId);
     const { error: updateDataError } = await supabase
       .from("user")
       .update({ nickname: name, email, number, birthday })
-      .eq("nickname", searchId);
+      .eq("uid", searchId);
 
     alert("수정이 완료되었습니다.");
   };

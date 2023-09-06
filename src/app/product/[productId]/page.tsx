@@ -16,6 +16,9 @@ import {
   updateMissionHandler,
 } from "@/api/mission/checkMission";
 import { convertDate } from "@/libs/util";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastInfo, ToastSuccess } from "@/libs/toastifyAlert";
 
 const ProductPost = () => {
   const [product, setProduct] = useState<Product>();
@@ -71,7 +74,7 @@ const ProductPost = () => {
     const userId = user.id;
 
     if (!user) {
-      alert("로그인 후 이용 가능합니다.");
+      ToastInfo("로그인이 필요한 서비스 입니다.");
       return;
     } else {
       // 현재 유저가 해당 게시물에 대해 좋아요를 눌렀는지 안눌렀는지에 대한 데이터
@@ -150,7 +153,7 @@ const ProductPost = () => {
     const userId = user.id;
     const currentURL = window.location.href;
     navigator.clipboard.writeText(currentURL).then(() => {
-      alert("링크가 복사되었습니다.");
+      ToastSuccess("링크가 복사되었습니다.")
     });
     // 제품 공유하기 눌렀을 때 얻는 배지
     if (user) {
@@ -188,8 +191,6 @@ const ProductPost = () => {
             slidesPerView={1}
             navigation
             pagination={{ clickable: true }}
-            // onSwiper={(swiper) => console.log(swiper)}
-            // onSlideChange={() => console.log('slide change')}
             autoplay={{ delay: 2000 }}
             className="rounded-2xl lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center"
           >
@@ -200,62 +201,34 @@ const ProductPost = () => {
               <img src={product?.sub_img} className="w-full lg:h-auto" />
             </SwiperSlide>
           </Swiper>
-          <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+          <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0 ml-auto ">
             <h2 className="text-sm title-font text-gray-500 tracking-widest">
               {product?.company}
             </h2>
-            <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
-              {product?.name}
-            </h1>
-            <div className="flex mb-4">
-              <span className="flex items-center">
-                <span className="text-gray-600 ml-3">
-                  💚 {product?.like_count} 명이 이 제품을 좋아합니다
-                </span>
-              </span>
+
+            <div className="flex mb-4 space-between">
+              <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
+                {product?.name}
+              </h1>
               <span
-                className="flex ml-3 pl-3 py-2 border-l-2 border-gray-200 space-x-2s cursor-pointer"
+                className="flex ml-auto border-gray-200 space-x-2s cursor-pointer"
                 onClick={shareHandler}
               >
-                <a className="text-gray-500">
-                  <svg
-                    fill="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    className="w-5 h-5"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
-                  </svg>
-                </a>
-                <a className="text-gray-500">
-                  <svg
-                    fill="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    className="w-5 h-5"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
-                  </svg>
-                </a>
-                <a className="text-gray-500">
-                  <svg
-                    fill="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    className="w-5 h-5"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"></path>
-                  </svg>
-                </a>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <path
+                    d="M18 22C17.1667 22 16.4583 21.7083 15.875 21.125C15.2917 20.5417 15 19.8333 15 19C15 18.8833 15.0083 18.7623 15.025 18.637C15.0417 18.5117 15.0667 18.3993 15.1 18.3L8.05 14.2C7.76667 14.45 7.45 14.646 7.1 14.788C6.75 14.93 6.38333 15.0007 6 15C5.16667 15 4.45833 14.7083 3.875 14.125C3.29167 13.5417 3 12.8333 3 12C3 11.1667 3.29167 10.4583 3.875 9.875C4.45833 9.29167 5.16667 9 6 9C6.38333 9 6.75 9.071 7.1 9.213C7.45 9.355 7.76667 9.55067 8.05 9.8L15.1 5.7C15.0667 5.6 15.0417 5.48767 15.025 5.363C15.0083 5.23833 15 5.11733 15 5C15 4.16667 15.2917 3.45833 15.875 2.875C16.4583 2.29167 17.1667 2 18 2C18.8333 2 19.5417 2.29167 20.125 2.875C20.7083 3.45833 21 4.16667 21 5C21 5.83333 20.7083 6.54167 20.125 7.125C19.5417 7.70833 18.8333 8 18 8C17.6167 8 17.25 7.92933 16.9 7.788C16.55 7.64667 16.2333 7.45067 15.95 7.2L8.9 11.3C8.93333 11.4 8.95833 11.5127 8.975 11.638C8.99167 11.7633 9 11.884 9 12C9 12.1167 8.99167 12.2377 8.975 12.363C8.95833 12.4883 8.93333 12.6007 8.9 12.7L15.95 16.8C16.2333 16.55 16.55 16.3543 16.9 16.213C17.25 16.0717 17.6167 16.0007 18 16C18.8333 16 19.5417 16.2917 20.125 16.875C20.7083 17.4583 21 18.1667 21 19C21 19.8333 20.7083 20.5417 20.125 21.125C19.5417 21.7083 18.8333 22 18 22ZM18 6C18.2833 6 18.521 5.904 18.713 5.712C18.905 5.52 19.0007 5.28267 19 5C19 4.71667 18.904 4.479 18.712 4.287C18.52 4.095 18.2827 3.99933 18 4C17.7167 4 17.479 4.096 17.287 4.288C17.095 4.48 16.9993 4.71733 17 5C17 5.28333 17.096 5.521 17.288 5.713C17.48 5.905 17.7173 6.00067 18 6ZM6 13C6.28333 13 6.521 12.904 6.713 12.712C6.905 12.52 7.00067 12.2827 7 12C7 11.7167 6.904 11.479 6.712 11.287C6.52 11.095 6.28267 10.9993 6 11C5.71667 11 5.479 11.096 5.287 11.288C5.095 11.48 4.99933 11.7173 5 12C5 12.2833 5.096 12.521 5.288 12.713C5.48 12.905 5.71733 13.0007 6 13ZM18 20C18.2833 20 18.521 19.904 18.713 19.712C18.905 19.52 19.0007 19.2827 19 19C19 18.7167 18.904 18.479 18.712 18.287C18.52 18.095 18.2827 17.9993 18 18C17.7167 18 17.479 18.096 17.287 18.288C17.095 18.48 16.9993 18.7173 17 19C17 19.2833 17.096 19.521 17.288 19.713C17.48 19.905 17.7173 20.0007 18 20Z"
+                    fill="#D0D5DD"
+                  />
+                </svg>
               </span>
             </div>
-            <p className="leading-relaxed">{product?.context}</p>
+            <p className="leading-relaxed inline-block">{product?.context}</p>
             <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
               <div className="flex ml-6 items-center">
                 <div className="relative">
@@ -264,36 +237,67 @@ const ProductPost = () => {
               </div>
             </div>
             <div className="flex">
-              <span className="title-font font-medium text-2xl text-green-500 mr-2">
+              <span
+                className="title-font font-medium text-2xl mr-2"
+                style={{ color: "#5FD100" }}
+              >
                 {product?.sales ? `${product?.sales + "%"}` : null}
               </span>
               <span className="title-font font-medium text-2xl text-gray-900">
-                {product?.price.toLocaleString("ko-KR") + "원"}
+                {product?.price
+                  ? product?.price.toLocaleString("ko-KR") + "원"
+                  : null}
               </span>
-
-              <button className="flex ml-auto text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded">
-                <button onClick={() => window.open(`${product?.website}`)}>
-                  구매하기
+            </div>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+              }}
+              className="mt-28"
+            >
+              {likedByUser?.length ? (
+                <button onClick={likeHandler} className="bottom-2 mr-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 32 32"
+                    fill="none"
+                  >
+                    <path
+                      d="M22.25 3.5C19.7388 3.5 17.51 4.49125 16 6.195C14.49 4.49125 12.2613 3.5 9.75 3.5C7.56278 3.50265 5.46589 4.37269 3.91929 5.91929C2.37269 7.46589 1.50265 9.56278 1.5 11.75C1.5 20.7925 14.7263 28.0175 15.2888 28.3212C15.5073 28.439 15.7517 28.5006 16 28.5006C16.2483 28.5006 16.4927 28.439 16.7113 28.3212C17.2738 28.0175 30.5 20.7925 30.5 11.75C30.4974 9.56278 29.6273 7.46589 28.0807 5.91929C26.5341 4.37269 24.4372 3.50265 22.25 3.5Z"
+                      fill="#5FD100"
+                    />
+                  </svg>
+                  <p className="text-[12px] " style={{ color: "#5FD100" }}>
+                    {product?.like_count}
+                  </p>
                 </button>
-              </button>
+              ) : (
+                <button onClick={likeHandler} className="bottom-2 mr-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 32 32"
+                    fill="none"
+                  >
+                    <path
+                      d="M22.25 3.5C19.7388 3.5 17.51 4.49125 16 6.195C14.49 4.49125 12.2612 3.5 9.75 3.5C7.56278 3.50265 5.46589 4.37269 3.91929 5.91929C2.37269 7.46589 1.50265 9.56278 1.5 11.75C1.5 20.7925 14.7262 28.0175 15.2887 28.3213C15.5073 28.439 15.7517 28.5006 16 28.5006C16.2483 28.5006 16.4927 28.439 16.7113 28.3213C17.2738 28.0175 30.5 20.7925 30.5 11.75C30.4974 9.56278 29.6273 7.46589 28.0807 5.91929C26.5341 4.37269 24.4372 3.50265 22.25 3.5ZM21.5637 21.295C19.8228 22.7723 17.9618 24.1019 16 25.27C14.0382 24.1019 12.1772 22.7723 10.4362 21.295C7.7275 18.9713 4.5 15.4275 4.5 11.75C4.5 10.3576 5.05312 9.02225 6.03769 8.03769C7.02225 7.05312 8.35761 6.5 9.75 6.5C11.975 6.5 13.8375 7.675 14.6112 9.5675C14.7239 9.84338 14.9161 10.0795 15.1634 10.2457C15.4108 10.4118 15.702 10.5006 16 10.5006C16.298 10.5006 16.5892 10.4118 16.8366 10.2457C17.0839 10.0795 17.2761 9.84338 17.3888 9.5675C18.1625 7.675 20.025 6.5 22.25 6.5C23.6424 6.5 24.9777 7.05312 25.9623 8.03769C26.9469 9.02225 27.5 10.3576 27.5 11.75C27.5 15.4275 24.2725 18.9713 21.5637 21.295Z"
+                      fill="#D0D5DD"
+                    />
+                  </svg>
+                  <p className="text-[12px] text-gray-400">
+                    {product?.like_count}
+                  </p>
+                </button>
+              )}
               <button
-                onClick={likeHandler}
-                className={`${
-                  likedByUser?.length
-                    ? "bg-red-500 text-white"
-                    : "bg-gray-200 text-gray-700"
-                } rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4`}
+                className="flex text-white bg-gray-900 border-0 py-4 px-24 focus:outline-none hover:bg-gray-600 rounded-2xl"
+                onClick={() => window.open(`${product?.website}`)}
               >
-                <svg
-                  fill="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  className="w-5 h-5"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
-                </svg>
+                구매하러 가기
               </button>
             </div>
           </div>

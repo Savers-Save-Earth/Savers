@@ -35,6 +35,7 @@ export interface Database {
           content: string
           created_date: string
           number_comments: number
+          number_likes: number
           post_uid: string
           title: string
           updated_date: string
@@ -46,6 +47,7 @@ export interface Database {
           content?: string
           created_date?: string
           number_comments?: number
+          number_likes?: number
           post_uid?: string
           title?: string
           updated_date?: string
@@ -57,6 +59,7 @@ export interface Database {
           content?: string
           created_date?: string
           number_comments?: number
+          number_likes?: number
           post_uid?: string
           title?: string
           updated_date?: string
@@ -167,31 +170,31 @@ export interface Database {
       }
       like_product: {
         Row: {
-          createdAt: string | null
-          img: string | null
+          createdAt: string
+          img: string
           like_id: string
-          product_company: string | null
-          product_name: string | null
+          product_company: string
+          product_name: string
           product_uid: string
-          user_id: string | null
+          user_id: string
         }
         Insert: {
-          createdAt?: string | null
-          img?: string | null
+          createdAt?: string
+          img: string
           like_id?: string
-          product_company?: string | null
-          product_name?: string | null
+          product_company: string
+          product_name: string
           product_uid: string
-          user_id?: string | null
+          user_id: string
         }
         Update: {
-          createdAt?: string | null
-          img?: string | null
+          createdAt?: string
+          img?: string
           like_id?: string
-          product_company?: string | null
-          product_name?: string | null
+          product_company?: string
+          product_name?: string
           product_uid?: string
-          user_id?: string | null
+          user_id?: string
         }
         Relationships: []
       }
@@ -199,26 +202,29 @@ export interface Database {
         Row: {
           created_at: string
           id: number
-          restaurant_address: string | null
-          restaurant_category: string | null
-          restaurant_name: string | null
-          user_id: string | null
+          restaurant_address: string
+          restaurant_category: string
+          restaurant_map: string
+          restaurant_name: string
+          user_id: string
         }
         Insert: {
           created_at?: string
           id?: number
-          restaurant_address?: string | null
-          restaurant_category?: string | null
-          restaurant_name?: string | null
-          user_id?: string | null
+          restaurant_address: string
+          restaurant_category: string
+          restaurant_map: string
+          restaurant_name: string
+          user_id: string
         }
         Update: {
           created_at?: string
           id?: number
-          restaurant_address?: string | null
-          restaurant_category?: string | null
-          restaurant_name?: string | null
-          user_id?: string | null
+          restaurant_address?: string
+          restaurant_category?: string
+          restaurant_map?: string
+          restaurant_name?: string
+          user_id?: string
         }
         Relationships: []
       }
@@ -305,46 +311,46 @@ export interface Database {
       }
       product: {
         Row: {
-          category: string | null
-          company: string | null
-          context: string | null
+          category: string
+          company: string
+          context: string
           createdAt: string | null
           id: string
-          img: string | null
-          like_count: number | null
-          name: string | null
-          price: number | null
+          img: string
+          like_count: number
+          name: string
+          price: number
           sales: number | null
-          sub_img: string | null
-          website: string | null
+          sub_img: string
+          website: string
         }
         Insert: {
-          category?: string | null
-          company?: string | null
-          context?: string | null
+          category: string
+          company: string
+          context: string
           createdAt?: string | null
           id?: string
-          img?: string | null
-          like_count?: number | null
-          name?: string | null
-          price?: number | null
+          img: string
+          like_count?: number
+          name: string
+          price: number
           sales?: number | null
-          sub_img?: string | null
-          website?: string | null
+          sub_img: string
+          website: string
         }
         Update: {
-          category?: string | null
-          company?: string | null
-          context?: string | null
+          category?: string
+          company?: string
+          context?: string
           createdAt?: string | null
           id?: string
-          img?: string | null
-          like_count?: number | null
-          name?: string | null
-          price?: number | null
+          img?: string
+          like_count?: number
+          name?: string
+          price?: number
           sales?: number | null
-          sub_img?: string | null
-          website?: string | null
+          sub_img?: string
+          website?: string
         }
         Relationships: []
       }
@@ -375,60 +381,33 @@ export interface Database {
       user: {
         Row: {
           activePoint: number | null
-          badges: string | null
           birthday: string | null
-          commentPosts: string | null
-          email: string | null
-          isActiveDone: boolean | null
-          isLogin: boolean | null
-          likedPosts: string | null
-          likePosts: string | null
-          likeProducts: Json | null
-          likeRestaurants: string | null
-          nickname: string | null
+          email: string
+          nickname: string
           number: string | null
-          profileImage: string | null
-          provider: string | null
+          profileImage: string
+          provider: string
           uid: string
-          writePosts: string | null
         }
         Insert: {
           activePoint?: number | null
-          badges?: string | null
           birthday?: string | null
-          commentPosts?: string | null
-          email?: string | null
-          isActiveDone?: boolean | null
-          isLogin?: boolean | null
-          likedPosts?: string | null
-          likePosts?: string | null
-          likeProducts?: Json | null
-          likeRestaurants?: string | null
-          nickname?: string | null
+          email: string
+          nickname: string
           number?: string | null
-          profileImage?: string | null
-          provider?: string | null
+          profileImage?: string
+          provider?: string
           uid: string
-          writePosts?: string | null
         }
         Update: {
           activePoint?: number | null
-          badges?: string | null
           birthday?: string | null
-          commentPosts?: string | null
-          email?: string | null
-          isActiveDone?: boolean | null
-          isLogin?: boolean | null
-          likedPosts?: string | null
-          likePosts?: string | null
-          likeProducts?: Json | null
-          likeRestaurants?: string | null
-          nickname?: string | null
+          email?: string
+          nickname?: string
           number?: string | null
-          profileImage?: string | null
-          provider?: string | null
+          profileImage?: string
+          provider?: string
           uid?: string
-          writePosts?: string | null
         }
         Relationships: []
       }

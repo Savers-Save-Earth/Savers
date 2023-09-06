@@ -3,6 +3,9 @@ import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import supabase from "@/libs/supabase";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastError, ToastSuccess } from "@/libs/toastifyAlert";
 
 interface FormValue {
   email: string;
@@ -27,30 +30,26 @@ const PwLogin: React.FC = () => {
       password,
     });
 
-    console.log("loginData", loginData);
-
     if (error) {
-      console.error("로그인 에러:", error);
-      alert("로그인 실패");
+      ToastError("로그인에 실패하였습니다.");
     } else {
-      console.log("로그인 성공");
-      alert("로그인⚡️");
-      router.push("/");
+      ToastSuccess("로그인 되었습니다. 🌱");
+      router.back();
       loginUpdater();
     }
   };
 
   const loginUpdater = async () => {
     await supabase.from("user").upsert({
-      isLogin: true,
       provider: "email",
     });
   };
 
   return (
     <>
-      <svg>
+      <div className="flex flex-col items-center gap-16 self-stretch">
         <svg
+          pb-16="true"
           xmlns="http://www.w3.org/2000/svg"
           width="142"
           height="24"
@@ -94,8 +93,8 @@ const PwLogin: React.FC = () => {
               y2="24"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="#66AB28" />
-              <stop offset="1" stop-color="#4F891C" />
+              <stop stopColor="#66AB28" />
+              <stop offset="1" stopColor="#4F891C" />
             </linearGradient>
             <linearGradient
               id="paint1_linear_1010_22052"
@@ -105,50 +104,71 @@ const PwLogin: React.FC = () => {
               y2="23.4264"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="#8AE63F" />
-              <stop offset="1" stop-color="#77CA33" />
+              <stop stopColor="#8AE63F" />
+              <stop offset="1" stopColor="#77CA33" />
             </linearGradient>
           </defs>
         </svg>
-      </svg>
-      <div className="pt-20">
-        <form onSubmit={handleSubmit(loginButtonHandler)}>
-          <div className="pt-20 flex flex-col items-center gap-16 self-stretch">
-            <input
-              type="email"
-              placeholder="메일주소를 입력하세요"
-              {...register("email", {
-                required: "메일을 입력하세요",
-                pattern: {
-                  value: /^\S+@\S+$/i,
-                  message: "올바른 메일 형식이 아닙니다",
-                },
-              })}
-              className="flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50"
-            />
-            {errors.email && <p>{errors.email.message}</p>}
+      </div>
 
-            <input
-              type="password"
-              placeholder="패스워드를 입력하세요"
-              {...register("password", {
-                required: "비밀번호를 입력하세요",
-                minLength: {
-                  value: 6,
-                  message: "비밀번호는 최소 6자리 이상이어야 합니다",
-                },
-              })}
-              className="flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50"
-            />
-            {errors.password && (
-              <p className="text-red-500">{errors.password.message}</p>
-            )}
+      <div>
+        <form onSubmit={handleSubmit(loginButtonHandler)}>
+          <div className="pt-16 flex flex-col items-center gap-4 self-stretch">
+            <div className="flex flex-grow flex-col">
+              <input
+                type="email"
+                placeholder="메일주소를 입력하세요"
+                {...register("email", {
+                  required: "메일을 입력하세요",
+                  pattern: {
+                    value: /^\S+@\S+$/i,
+                    message: "올바른 메일 형식이 아닙니다",
+                  },
+                })}
+                className="flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50 mb-4 outline-none"
+              />
+              {errors.email && (
+                <p className="text-red-500">{errors.email.message}</p>
+              )}
+            </div>
+
+            <div className="flex flex-grow flex-col">
+              <input
+                type="password"
+                placeholder="패스워드를 입력하세요"
+                {...register("password", {
+                  required: "비밀번호를 입력하세요",
+                  minLength: {
+                    value: 6,
+                    message: "비밀번호는 최소 6자리 이상이어야 합니다",
+                  },
+                })}
+                className="flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50 mb-4 outline-none"
+              />
+              {errors.password && (
+                <p className="text-red-500">{errors.password.message}</p>
+              )}
+            </div>
 
             <button
               type="submit"
               className="flex w-80 h-12 p-4 justify-center items-center border rounded-xl bg-gray-900 text-white hover:bg-gray-700"
             >
               로그인
+            </button>
+
+            <button
+              onClick={() => {
+                router.push("/signup");
+              }}
+              className="color: var(--gray-500, #667085);
+              font-family: Pretendard;
+              font-size: 14px;
+              font-style: normal;
+              font-weight: 400;
+              line-height: 100%; /* 14px */"
+            >
+              이메일로 가입
             </button>
           </div>
         </form>

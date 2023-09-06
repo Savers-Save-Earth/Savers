@@ -11,22 +11,12 @@ export default function MymissionLayout ({
 {
 
   return (
-    <div className="h-full w-full">
-        <h1>마이미션 레이아웃</h1>
-        <div className="flex gap-10">
-        {/* <Link
-          href={`/profile/${searchId}/mymission/missiondoing`}
-        >
-          진행중인 미션
-        </Link>
-        <Link
-          href={`/profile/${searchId}/mymission/missiondone`}
-        >
-          완료한 미션
-        </Link> */}
+    <div className="w-[789px] flex flex-col items-start gap-6 shrink-0 self-stretch rounded-2xl">
+        <h1 className="self-stretch text-gray-900 text-[24px] non-italic font-semibold leading-6">나의 미션</h1>
+        <div className="flex gap-10 ">
         <MyMissionTopBar/>
       </div>
-      <section className="border-dashed border-2 border-indigo-600">{children}</section>
+      <section className="w-full h-full">{children}</section>
     </div>
   );
 }

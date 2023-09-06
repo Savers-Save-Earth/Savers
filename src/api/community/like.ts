@@ -1,8 +1,6 @@
 import supabase from "@/libs/supabase";
-import { Database } from "@/types/supabase";
 
-type LikesType = Database["public"]["Tables"]["like_post"]["Row"];
-type newLikePostType = Database["public"]["Tables"]["like_post"]["Insert"];
+import { LikesType, newLikePostType } from "@/types/types";
 
 // 해당 게시글과 현재 유저 좋아요 상태 조회
 export const getLikeStatus = async (postUid: string, userUid: string): Promise<LikesType> => {
@@ -22,6 +20,7 @@ export const cancelLikePost = async (cancleLike: newLikePostType) => {
   if (error) return error;
 };
 
+// 좋아요 개수
 export const getLikesNum = async (postUid: string) => {
   const { count } = await supabase
     .from("like_post")

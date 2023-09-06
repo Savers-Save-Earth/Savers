@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Pretendard-Regular";
+  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
 .app-container {
   position: relative;
   height: 2000px;
@@ -11,6 +19,9 @@ body {
   max-width: 1200px; /* 1280px - 2 * 40px */
   margin: 0 auto;
   padding: 0 40px; /* 추가된 부분 */
+  font-family: "Pretendard-Regular", system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell,
+    "Open Sans", "Helvetica Neue", sans-serif;
 }
 
 /* .background-video {
@@ -32,7 +43,7 @@ body {
 } */
 
 .background-video {
-  position: absolute;
+  position: relative;
   top: 0;
   left: 0;
   width: 100%;
@@ -122,21 +133,17 @@ body {
   opacity: 1; /* 활성화된 불릿의 투명도 */
 }
 
-.highlight {
-  color: rgb(255, 255, 255);
-
-  background-color: #10c800 !important;
-  border-radius: 30px;
-}
-
 .react-calendar {
-  width: 350px;
+  width: 280px !important;
+  height: 300px !important;
   max-width: 100%;
+  padding: 10px;
   background: rgb(245, 245, 245) !important;
   border: none !important;
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.125em;
   border-radius: 10px;
+  font-size: 15px;
 }
 
 .react-calendar__month-view__days__day--neighboringMonth {
@@ -144,18 +151,53 @@ body {
 }
 
 .react-calendar__month-view__weekdays {
-  color: rgb(75, 75, 75);
+  color: rgb(94, 94, 94);
+}
+
+/* 주말 색깔 */
+.react-calendar__month-view__days__day--weekend {
+  color: #d80000 !important;
 }
 
 .react-calendar__navigation__label {
   background-color: rgb(245, 245, 245);
 }
 
+@layer components {
+  .btn-sidebar {
+    @apply text-gray-400 font-normal leading-6 hover:text-[#10C800] focus:text-[#10C800];
+  }
+}
+
+@layer components {
+  .btn-profile-topbar {
+    @apply overflow-hidden text-gray-300 text-ellipsis text-[14px] font-bold leading-[14px] hover:underline focus:text-gray-900;
+  }
+}
+
+@layer components {
+  .badge-ctn-profile {
+    @apply border-2 border-solid border-black flex flex-col items-center gap-2;
+  }
+}
+
+@layer components {
+  .badge-image {
+    @apply w-[88px] h-[88px] rounded-full;
+  }
+}
+
+@layer components {
+  .badge-text {
+    @apply text-gray-500 text-[14px] font-normal leading-[14px];
+  }
+}
+
 .categoryBtn {
   border-radius: 16px;
   border: 1px solid gray;
   width: auto;
-  padding: 6px 12px;
+  padding: 6px 12px 5px 12px;
   font-size: small;
   margin-right: 5px;
   line-height: 1;
@@ -164,4 +206,102 @@ body {
 .categoryBtn.active {
   color: #5fd100;
   border-color: #5fd100;
+}
+
+/* intro 깜빡거리는 arrow */
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.blinking-text {
+  animation: blink 1.5s infinite;
+}
+
+@layer utilities {
+  @variants responsive {
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      /* IE and Edge */
+      scrollbar-width: none;
+      /* Firefox */
+    }
+  }
+}
+/*width*/
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: none;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: none !important;
+}
+
+.react-calendar__tile--hasActive {
+  background: #76baff;
+}
+
+.react-calendar__tile--hasActive:enabled:hover,
+.react-calendar__tile--hasActive:enabled:focus {
+  background: #a9d4ff;
+}
+
+.react-calendar__tile--active {
+  background: none !important;
+  color: black !important;
+  pointer-events: none !important;
+  cursor: not-allowed !important;
+}
+
+.react-calendar__tile--active:hover,
+.react-calendar__tile--active:focus {
+  background: none !important;
+  pointer-events: none !important;
+  cursor: not-allowed !important;
+}
+
+.react-calendar__tile--now {
+  background: none !important;
+  pointer-events: none !important;
+  cursor: not-allowed !important;
+}
+
+.react-calendar__tile--now:enabled:hover,
+.react-calendar__tile--now:enabled:focus {
+  pointer-events: none !important;
+  color: black !important;
+  cursor: not-allowed !important;
+}
+
+.highlight {
+  color: rgb(255, 255, 255) !important;
+  cursor: not-allowed !important;
+  background-color: #5fd100 !important;
+  pointer-events: none !important;
+
+  border-radius: 100px;
 }
