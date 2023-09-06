@@ -31,8 +31,9 @@ const DetailPost = ({ postDetail, postUid }: DetailPostProps) => {
   const [isLiked, setIsLiked] = useState<LikesType | null>(null);
   const [isToggled, setIsToggled] = useState(false);
 
-  const { data: likesNumber } = useQuery(["likesNumber"], () =>
-    getLikesNum(postUid),
+  const { data: likesNumber } = useQuery(
+    ["likesNumber"],
+    () => getLikesNum(postUid),
   );
 
   const setEditPostState = useSetRecoilState(editPostAtom);

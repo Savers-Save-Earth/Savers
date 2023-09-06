@@ -7,13 +7,17 @@ interface PostBoxProps {
   post: PostType;
   width?: string;
   border?: string;
+  margin?: string;
 }
 
-const PostBox = ({ post, width, border }: PostBoxProps) => {
+const PostBox = ({ post, width, border, margin }: PostBoxProps) => {
   return (
     <div
       key={post.post_uid}
-      className={cls("flex flex-col justify-between px-4 py-4", border ? border: "")}
+      className={cls("flex flex-col justify-between px-4 py-4",
+        border ? border : "",
+        margin ? margin : "",
+      )}
     >
       <div className="flex flex-col space-y-2">
         <CategoryTag>{post.category}</CategoryTag>
