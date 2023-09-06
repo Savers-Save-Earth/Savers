@@ -14,7 +14,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Database } from "@/types/supabase";
 import { useAuth } from "@/hooks/useAuth";
 import CategoryTag from "../ui/CategoryTag";
-import ButtonContainer from "../ui/ButtonContainer";
+import DropButtons from "../ui/DropButtons";
 import copy from "clipboard-copy";
 import { useSetRecoilState } from "recoil";
 import { editPostAtom } from "@/libs/atoms";
@@ -187,7 +187,7 @@ const DetailPost = ({ postDetail, postUid }: DetailPostProps) => {
             </div>
             {currentUser?.uid === postDetail?.author_uid ? (
               <div onClick={handleToggle}>
-                <ButtonContainer
+                <DropButtons
                   toggleState={isToggled}
                   onEditClick={handleEditClick}
                   onDeleteClick={handleDeleteClick}
