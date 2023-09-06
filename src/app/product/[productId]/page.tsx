@@ -52,7 +52,7 @@ const ProductPost = () => {
         fetchUserLike(user); // 유저 정보를 가져온 후에 fetchUserLike 함수 호출
       }
     } catch (error) {
-      console.error("Error fetching user:", error);
+      // console.error("Error fetching user:", error);
     }
   };
 
@@ -65,7 +65,7 @@ const ProductPost = () => {
       .eq("user_id", user.id);
 
     setLikedByUser(existingLikeData!);
-    console.log(existingLikeData);
+    // console.log(existingLikeData);
   };
 
   // 좋아요 눌렀을 때, 물품 및 유저에 좋아요 데이터 업데이트
@@ -86,7 +86,7 @@ const ProductPost = () => {
           .eq("product_uid", params.productId)
           .eq("user_id", userId);
 
-      console.log(existingLikeData);
+      // console.log(existingLikeData);
 
       // 현재 아이템의 좋아요 수 객체를 가져오는 로직
       const { data: currentLikeCount } = await supabase
@@ -94,7 +94,7 @@ const ProductPost = () => {
         .select()
         .eq("id", params.productId);
 
-      console.log(currentLikeCount);
+      // console.log(currentLikeCount);
 
       // 좋아요 이미 눌렀으면 삭제하는 로직
       if (!existingLikeError && existingLikeData.length > 0) {
@@ -153,7 +153,7 @@ const ProductPost = () => {
     const userId = user.id;
     const currentURL = window.location.href;
     navigator.clipboard.writeText(currentURL).then(() => {
-      ToastSuccess("링크가 복사되었습니다.")
+      ToastSuccess("링크가 복사되었습니다.");
     });
     // 제품 공유하기 눌렀을 때 얻는 배지
     if (user) {

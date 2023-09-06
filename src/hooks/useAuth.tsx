@@ -8,7 +8,9 @@ export const useAuth = (): UserType | null => {
   useEffect(() => {
     const fetchAuthData = async () => {
       try {
-        const { data: { session } } = await supabase.auth.getSession();
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
         if (session === null) {
           setCurrentUser(null);
         } else {
@@ -20,14 +22,14 @@ export const useAuth = (): UserType | null => {
             .single();
 
           if (error) {
-            console.error("사용자 정보 로딩 에러 >> ", error);
+            // console.error("사용자 정보 로딩 에러 >> ", error);
             setCurrentUser(null);
           } else {
             setCurrentUser(users);
           }
         }
       } catch (error) {
-        console.error("세션 로딩 에러 >> ", error);
+        // console.error("세션 로딩 에러 >> ", error);
         setCurrentUser(null);
       }
     };

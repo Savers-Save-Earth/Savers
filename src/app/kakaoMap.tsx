@@ -124,7 +124,7 @@ const KakaoMap = () => {
             if (currentCategory === "비건카페") {
               imgSrc = "/images/cafePin.svg";
             }
-            console.log("카테고리 누름 map");
+            // console.log("카테고리 누름 map");
             let imgSize = new kakao.maps.Size(38, 38),
               imgOption = { offset: new kakao.maps.Point(27, 69) };
             const markerImg = new window.kakao.maps.MarkerImage(

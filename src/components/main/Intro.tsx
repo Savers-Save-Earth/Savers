@@ -104,7 +104,7 @@ const Intro = () => {
           style={{
             textAlign: "center",
             top: "50%",
-            opacity: Math.min(1, Math.max(0, (scrollY - 1600) / 1000)),
+            opacity: Math.min(1, Math.max(0, (scrollY - 1600) / 600)),
             transform: `translate(-50%, calc(-50% - ${Math.min(
               20,
               (scrollY - 2600) / 15,
@@ -122,7 +122,7 @@ const Intro = () => {
           style={{
             textAlign: "center",
             top: "75%",
-            opacity: Math.min(1, Math.max(0, (scrollY - 3000) / 800)),
+            opacity: Math.min(1, Math.max(0, (scrollY - 3000) / 600)),
             transform: `translate(-50%, calc(-50% - ${Math.min(
               20,
               (scrollY - 3800) / 15,
