@@ -1,6 +1,6 @@
-import { useCallback, useState } from "react";
-import { useRouteChangeEvents } from "nextjs-router-events";
-import useBeforeUnload from "./useBeforeUnload"; // read further for an explanation
+import { useCallback, useState } from "react"
+import { useRouteChangeEvents } from "nextjs-router-events"
+import useBeforeUnload from './useBeforeUnload' // read further for an explanation
 import FreezeModal from "@/components/community/ui/FreezeModal";
 import { useRouter } from "next/navigation";
 
@@ -9,16 +9,16 @@ const useLeaveConfirm = (shouldPreventRouteChange: boolean) => {
   const [openModal, setOpenModal] = useState(false);
   const onBeforeRouteChange = useCallback(() => {
     if (shouldPreventRouteChange) {
-      setOpenModal(true);
-      return false;
+      setOpenModal(true)
+      return false
     }
-    return true;
-  }, [shouldPreventRouteChange]);
+    return true
+  }, [shouldPreventRouteChange])
 
-  const { allowRouteChange } = useRouteChangeEvents({ onBeforeRouteChange });
-  useBeforeUnload(shouldPreventRouteChange);
+  const { allowRouteChange } = useRouteChangeEvents({ onBeforeRouteChange })
+  useBeforeUnload(shouldPreventRouteChange)
 
-  // console.log("custom hook openModal >>> ", openModal);
+  console.log("custom hook openModal >>> ", openModal);
 
   return (
     <FreezeModal
@@ -29,7 +29,7 @@ const useLeaveConfirm = (shouldPreventRouteChange: boolean) => {
       }}
       onClose={() => setOpenModal(false)}
     />
-  );
-};
+  )
+}
 
 export default useLeaveConfirm;
