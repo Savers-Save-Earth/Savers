@@ -2,7 +2,7 @@
 import type { NextComponentType } from "next";
 
 import { useAuth } from "@/hooks/useAuth";
-import TextEditor from "./quill/TextEditor";
+import TextEditor from "./TextEditor";
 import { useEffect, useState } from "react";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -52,8 +52,6 @@ const AddPost: NextComponentType = () => {
     if(!currentUser) return
     getMissionHandler(currentUser, currentDate, category, setMissionUid, bigCategory)
   },[category])
-
-  console.log("본문 >>> ", content);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

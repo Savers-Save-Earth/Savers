@@ -2,7 +2,7 @@
 
 # [최종 프로젝트] 지구를 지키는 작은 실천, SAVERS
 
-스파르타코딩클럽 6기_React / 23.08.16 ~ 23.09
+스파르타코딩클럽 6기_React / 23.08.16 ~ 23.09 (진행중)
 
 
 <div align="center">
@@ -38,6 +38,8 @@ Next.js, tailwind css, typescript 를 사용하였으며 환경보호운동, 제
 친환경 제품구매, 비건식당 검색, 커뮤니티활동, 데일리 미션 등 다양한 활동을 할 수 있습니다.
 
 ## 프로젝트 링크
+
+배포 : https://savers-git-dev-team-climbers.vercel.app/restaurant
 
 <div align=“center”>
 	  <img src="https://img.shields.io/badge/vercel-000000?style=for-the-badge&logo=vercel&logoColor=white">
