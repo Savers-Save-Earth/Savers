@@ -7,6 +7,7 @@ import Script from "next/script";
 import Recoil from "./Recoil";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/ReactToastify.css";
+import { RouteChangesProvider } from "nextjs-router-events";
 
 export const metadata: Metadata = {
   title: "Savers | 지구를 위한 작은 실천",
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
     apple: ["apple-touch-icon.png?v=4"],
     shortcut: ["apple-tough-icon.png"],
   },
-  manifest: "stie.webmanifest",
+  manifest: "site.webmanifest",
 };
 
 declare global {
@@ -36,10 +37,12 @@ export default function RootLayout({
       <body>
         <Recoil>
           <QueryProvider>
-            <Header />
-            {children}
-            <ToastContainer />
-            {/* <Footer /> */}
+            <RouteChangesProvider>
+              <Header />
+              {children}
+              <ToastContainer />
+              {/* <Footer /> */}
+            </RouteChangesProvider>
           </QueryProvider>
         </Recoil>
       </body>

@@ -6,39 +6,22 @@ import { useRouter } from "next/navigation";
 import "react-toastify/dist/ReactToastify.css";
 import RandomMission from "@/app/profile/components/RandomMission";
 import { ToastInfo } from "@/libs/toastifyAlert";
+import { useAuth } from "@/hooks/useAuth";
 
 const DailyMission = () => {
-  const [user, setUser] = useState<any>(null);
   const [isHovered, setIsHovered] = useState(false);
   const router = useRouter();
 
-  const fetchUser = async () => {
-    try {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-
-      if (!user) {
-        setUser(false);
-      } else {
-        setUser(user);
-      }
-    } catch (error) {
-      console.error("Error fetching user:", error);
-    }
-  };
+  const currentUser = useAuth();
 
   const missionHandler = () => {
-    if (!user) {
-      ToastInfo("로그인이 필요한 서비스 입니다.")
-      router.push("/login")
+    if (!currentUser) {
+      ToastInfo("로그인이 필요한 서비스 입니다.");
+      router.push("/login");
     } else {
-      router.push(`/profile/${user.id}/mymission/missiondoing`);
+      router.push(`/profile/${currentUser.uid}/mymission/missiondoing`);
     }
   };
-  useEffect(() => {
-    fetchUser();
-  }, []);
 
   return (
     <>
@@ -79,8 +62,8 @@ const DailyMission = () => {
           style={{ verticalAlign: "middle" }}
         >
           <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M8.29289 19.7071C7.90237 19.3166 7.90237 18.6834 8.29289 18.2929L14.5858 12L8.29289 5.70711C7.90237 5.31658 7.90237 4.68342 8.29289 4.29289C8.68342 3.90237 9.31658 3.90237 9.70711 4.29289L16.7071 11.2929C17.0976 11.6834 17.0976 12.3166 16.7071 12.7071L9.70711 19.7071C9.31658 20.0976 8.68342 20.0976 8.29289 19.7071Z"
             fill="white"
           />

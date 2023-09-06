@@ -51,8 +51,8 @@ const NoPost = () => {
                   y2="17.9"
                   gradientUnits="userSpaceOnUse"
                 >
-                  <stop stop-color="#66AB28" />
-                  <stop offset="1" stop-color="#4F891C" />
+                  <stop stopColor="#66AB28" />
+                  <stop offset="1" stopColor="#4F891C" />
                 </linearGradient>
                 <linearGradient
                   id="paint1_linear_957_21004"
@@ -62,8 +62,8 @@ const NoPost = () => {
                   y2="17.4722"
                   gradientUnits="userSpaceOnUse"
                 >
-                  <stop stop-color="#8AE63F" />
-                  <stop offset="1" stop-color="#77CA33" />
+                  <stop stopColor="#8AE63F" />
+                  <stop offset="1" stopColor="#77CA33" />
                 </linearGradient>
               </defs>
             </svg>
