@@ -27,6 +27,20 @@ const RestaurantList = () => {
   if (isError) {
   }
 
+  const sortedRestaurants = restaurants
+    ?.map((item) => ({
+      ...item,
+      bookmarkCount: restaurants.filter(
+        (i) => i.restaurant_name === item.restaurant_name,
+      ).length,
+    }))
+    .sort((a, b) => b.bookmarkCount - a.bookmarkCount)
+    .filter(
+      (item, index, self) =>
+        self.findIndex((i) => i.restaurant_name === item.restaurant_name) ===
+        index,
+    );
+
   // 공유하기 눌렀을 때
   const shareHandler = async (url: string) => {
     navigator.clipboard.writeText(url).then(() => {
