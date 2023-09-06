@@ -15,7 +15,7 @@ const FreezeModal = ({
   onClose,
   onClick,
 }: FreezeModalProps) => {
-  // console.log("Modal Component open >>> ", open);
+  console.log("Modal Component open >>> ", open);
   if (open)
     return (
       <div

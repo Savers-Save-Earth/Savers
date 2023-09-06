@@ -18,7 +18,7 @@ const useLeaveConfirm = (shouldPreventRouteChange: boolean) => {
   const { allowRouteChange } = useRouteChangeEvents({ onBeforeRouteChange });
   useBeforeUnload(shouldPreventRouteChange);
 
-  // console.log("custom hook openModal >>> ", openModal);
+  console.log("custom hook openModal >>> ", openModal);
 
   return (
     <FreezeModal
