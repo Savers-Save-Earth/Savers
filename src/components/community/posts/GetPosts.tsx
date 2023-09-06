@@ -8,10 +8,8 @@ import { useInView } from "react-intersection-observer";
 
 import { usePathname } from "next/navigation";
 
-import Image from "next/image";
-import { getFirstImage, getImgUrl, removeHtmlTags } from "@/libs/util";
+import PostBox from "./ui/PostBox";
 import Loading from "@/app/loading";
-import CategoryTag from "../ui/CategoryTag";
 
 import { PostType, ToTalDataType } from "@/types/types";
 import {
@@ -99,6 +97,7 @@ const GetPosts = () => {
         <div className="flex flex-col mb-5 justify-center">
           <h2 className="text-xl flex mb-8">{getCategoryName(pathname)} 글</h2>
           {accumulatePosts?.map((post: PostType) => (
+<<<<<<< HEAD
             <div
               key={post.post_uid}
               className="border-t last:border-b flex flex-col justify-between px-4 py-4"
@@ -174,6 +173,14 @@ const GetPosts = () => {
               </div>
             </div>
           ))}
+=======
+            <PostBox
+              key={post.post_uid}
+              post={post}
+              border={"last:border-b border-t"}
+            />
+            ))}
+>>>>>>> 69653565f71e310845923e4e327d4e2937c4c05d
         </div>
       }
       <div ref={ref} className="w-full h-3" />

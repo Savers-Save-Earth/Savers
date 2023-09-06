@@ -1,11 +1,11 @@
-interface ButtonBoxesProps {
+interface DropButtonProps {
   toggleState: boolean;
   onEditClick: () => void;
   onDeleteClick: () => void;
   [key: string]: any;
 }
 
-const ButtonContainer = ({ toggleState, onEditClick, onDeleteClick }: ButtonBoxesProps) => {
+const DropButtons = ({ toggleState, onEditClick, onDeleteClick }: DropButtonProps) => {
   const isToggled = toggleState;
   return (
     <div className="relative flex flex-col mr-2">
@@ -43,4 +43,4 @@ const ButtonContainer = ({ toggleState, onEditClick, onDeleteClick }: ButtonBoxe
   );
 };
 
-export default ButtonContainer;
+export default DropButtons;

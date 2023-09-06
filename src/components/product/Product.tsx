@@ -57,17 +57,18 @@ const ProductComponent = () => {
 
   const plusProductLikeMutation = useMutation(plusLikeCount, {
     onSuccess: () => {
-      console.log("성공했습니다!");
       queryClient.invalidateQueries({ queryKey: ["product"] });
     },
   });
 
   const minusProductLikeMutation = useMutation(minusLikeCount, {
     onSuccess: () => {
-      console.log("성공했습니다!");
       queryClient.invalidateQueries({ queryKey: ["product"] });
     },
   });
+
+  // 현재 유저정보 가져오기
+  const currentUser = useAuth();
 
   // 현재 제품 가져오기
   const {
@@ -76,13 +77,11 @@ const ProductComponent = () => {
     isError,
   } = useQuery<Product[]>(["product"], getProducts);
 
+  // 현재 유저의 좋아요상태 가져오기
   const { data: likeStatus } = useQuery<ProductLikesType[]>(
     ["userLikeProduct"],
     () => getProductLikeStatus(currentUser!.uid),
   );
-
-  // 현재 유저정보 가져오기
-  const currentUser = useAuth();
 
   // 유저의 기존 좋아요 목록을 불러오기
   const getProductLikedStatus = async () => {
@@ -135,6 +134,10 @@ const ProductComponent = () => {
           id: productId,
         };
 
+        setLikedByUser((prevLikedByUser) =>
+          prevLikedByUser.filter((item) => item.product_uid !== productId),
+        );
+
         minusProductLikeMutation.mutate(minusLike);
         cancelProductLikeMutation.mutate(cancelLike);
       } else {
@@ -151,6 +154,10 @@ const ProductComponent = () => {
           like_count: currentLikeCount,
           id: productId,
         };
+
+        // 좋아요 상태를 먼저 업데이트하고 UI에 반영
+        setLikedByUser((prevLikedByUser) => [...prevLikedByUser, newLike]);
+
         plusProductLikeMutation.mutate(plusLike);
         likeProductMutation.mutate(newLike);
       }
@@ -245,7 +252,7 @@ const ProductComponent = () => {
                     alt={item.name}
                     onClick={() => router.push(`/product/${item.id}`)}
                   />
-                  {likedByUser.find(
+                  {likedByUser?.find(
                     (likedItem) => likedItem.product_uid === item.id,
                   ) ? (
                     <button
