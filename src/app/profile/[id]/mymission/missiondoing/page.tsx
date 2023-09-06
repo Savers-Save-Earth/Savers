@@ -14,7 +14,7 @@ const MissionDoing = ({ params }: { params: { id: string } }) => {
   const [dailyMission, setDailyMission] = useState<MissionDoingProp[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태 추가
   const currentDate = convertDate(new Date());
-  const searchId = params.id
+  const searchId = params.id;
 
   useEffect(() => {
     fetchMissionData();
@@ -34,7 +34,7 @@ const MissionDoing = ({ params }: { params: { id: string } }) => {
         setDailyMission(dailyMission!);
       }
     } catch (error) {
-      console.log("데이터가져올 때 에러", error);
+      // console.log("데이터가져올 때 에러", error);
       setIsLoading(false);
       return false;
     }
@@ -43,11 +43,10 @@ const MissionDoing = ({ params }: { params: { id: string } }) => {
   return (
     <>
       {isLoading ? ( // isLoading이 true이면 로딩 표시를 표시합니다.
-       <Loading/>
+        <Loading />
       ) : dailyMission.length === 0 ? (
         <NoMissionDoing />
-      ) :
-       (
+      ) : (
         <div className="flex justify-center items-center gap-x-4 text-gray-800 px-2">
           {dailyMission?.map((mission) => {
             return (
@@ -65,7 +64,12 @@ const MissionDoing = ({ params }: { params: { id: string } }) => {
                       <p className="text-[14px] font-medium text-[#5FD100]">
                         {mission.content}
                       </p>
-                      <p>{mission && mission.createdAt && mission.createdAt.replaceAll('-', '.')}까지</p>
+                      <p>
+                        {mission &&
+                          mission.createdAt &&
+                          mission.createdAt.replaceAll("-", ".")}
+                        까지
+                      </p>
                     </div>
                   </div>
                 </div>

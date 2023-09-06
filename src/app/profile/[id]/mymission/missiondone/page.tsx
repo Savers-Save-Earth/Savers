@@ -7,7 +7,6 @@ import React, { useState, useEffect } from "react";
 import Loading from "@/app/loading";
 import NoMissionDone from "@/components/profile/NoMissionDone";
 
-
 type MissionDoneProp = Database["public"]["Tables"]["missionList"]["Row"];
 
 const MissionDone = ({ params }: { params: { id: string } }) => {
@@ -36,7 +35,6 @@ const MissionDone = ({ params }: { params: { id: string } }) => {
         setMissionDone(missionDone!);
       }
     } catch (error) {
-      console.log("데이터가져올 때 에러:", error);
       setIsLoading(false);
       return false;
     }
@@ -45,12 +43,10 @@ const MissionDone = ({ params }: { params: { id: string } }) => {
   return (
     <>
       {isLoading ? ( // isLoading이 true이면 로딩 표시를 표시합니다.
-        <Loading/>
+        <Loading />
       ) : missionDone.length === 0 ? (
         <NoMissionDone />
-      ) :
-      
-      (
+      ) : (
         <div className="flex flex-wrap justify-center items-center gap-x-4 text-gray-800">
           {missionDone?.map((mission) => {
             return (
@@ -69,7 +65,12 @@ const MissionDone = ({ params }: { params: { id: string } }) => {
                       <p className="text-[14px] font-medium text-[#5FD100]">
                         {mission.content}
                       </p>
-                      <p className="text-gray-500">{mission && mission.createdAt && mission.createdAt.replaceAll('-', '.')}까지</p>
+                      <p className="text-gray-500">
+                        {mission &&
+                          mission.createdAt &&
+                          mission.createdAt.replaceAll("-", ".")}
+                        까지
+                      </p>
                     </div>
                   </div>
                 </div>

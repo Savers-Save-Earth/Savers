@@ -28,9 +28,9 @@ interface EditorProps {
   setContent: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const TextEditor = ({content, setContent}: EditorProps) => {
+const TextEditor = ({ content, setContent }: EditorProps) => {
   const quillInstance = useRef<ReactQuill>(null);
-  
+
   const imageHandler = () => {
     const input = document.createElement("input");
     input.setAttribute("type", "file");
@@ -39,17 +39,17 @@ const TextEditor = ({content, setContent}: EditorProps) => {
 
     input.addEventListener("change", async () => {
       if (input.files) {
-        const file = input.files[0]
+        const file = input.files[0];
 
         try {
           const { data: res, error } = await supabase.storage
             .from("community")
             .upload(`image_${Date.now()}.png`, file);
-          
+
           if (error) {
-            ToastError("이미지 업로드 오류")
+            ToastError("이미지 업로드 오류");
           }
-          
+
           if (res) {
             const imageUrl = res.path;
 
@@ -59,13 +59,13 @@ const TextEditor = ({content, setContent}: EditorProps) => {
               editor.insertEmbed(
                 range?.index || 0,
                 "image",
-                `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}/community/${imageUrl}`
+                `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}/community/${imageUrl}`,
               );
               editor.setSelection((range?.index || 0) + 1, 0);
             }
           }
         } catch (error) {
-          console.log(error);
+          // console.log(error);
         }
       }
     });
@@ -79,7 +79,7 @@ const TextEditor = ({content, setContent}: EditorProps) => {
         container: [
           [{ header: [1, 2, false] }],
           ["bold", "italic", "underline", "strike", "blockquote"],
-          [{ 'color': [] }, { 'background': [] }],
+          [{ color: [] }, { background: [] }],
           [
             { list: "ordered" },
             { list: "bullet" },
@@ -94,10 +94,10 @@ const TextEditor = ({content, setContent}: EditorProps) => {
         },
       },
     }),
-  
-    []
+
+    [],
   );
-  
+
   // react-quill formats - toolbar에 있는 기능들 formats 선언
   const formats = [
     "header",
@@ -121,7 +121,7 @@ const TextEditor = ({content, setContent}: EditorProps) => {
     <>
       <QuillWrapper
         className="h-[800px]"
-        forwardedRef={quillInstance}        
+        forwardedRef={quillInstance}
         value={content}
         onChange={setContent}
         modules={modules}
@@ -130,7 +130,7 @@ const TextEditor = ({content, setContent}: EditorProps) => {
         placeholder="내용을 입력해주세요."
       />
     </>
-  )
-}
+  );
+};
 
-export default TextEditor
+export default TextEditor;

@@ -27,29 +27,29 @@ const SideBar = () => {
   //   } else {
   //     setUser(user);
   //   }
-    // 우정작업 //
-const fetchProfile = async () => {
-  if(!searchId) return;
-  try {
-    const { data: userData } = await supabase
-    .from("user")
-    .select("*")
-    .eq("uid", searchId);
+  // 우정작업 //
+  const fetchProfile = async () => {
+    if (!searchId) return;
+    try {
+      const { data: userData } = await supabase
+        .from("user")
+        .select("*")
+        .eq("uid", searchId);
 
-  if (userData) {
-    setProfileData(userData[0]);
-  } else {
-    return;
-  }
-  } catch (error) {
-    console.error("Error fetching user data:", error);
-  }
-}
+      if (userData) {
+        setProfileData(userData[0]);
+      } else {
+        return;
+      }
+    } catch (error) {
+      // console.error("Error fetching user data:", error);
+    }
+  };
 
   useEffect(() => {
-    fetchProfile()
+    fetchProfile();
   }, [searchId]);
-//커민위한주석
+  //커민위한주석
 
   return (
     <div className="flex flex-col items-start gap-16 text-gray-900">
@@ -133,9 +133,9 @@ const fetchProfile = async () => {
             profile={profileData}
           />
         </>
-         ) : (
-         <Loading />
-       )}
+      ) : (
+        <Loading />
+      )}
     </div>
   );
 };

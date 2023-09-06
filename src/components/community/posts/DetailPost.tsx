@@ -47,7 +47,7 @@ const DetailPost = ({ postDetail, postUid }: DetailPostProps) => {
         const likeStatus = await getLikeStatus(postUid, currentUser.uid);
         setIsLiked(likeStatus);
       } catch (error) {
-        console.error("Error fetching like status:", error);
+        // console.error("Error fetching like status:", error);
       }
     }
   };
@@ -70,7 +70,7 @@ const DetailPost = ({ postDetail, postUid }: DetailPostProps) => {
       location.href = "/community";
     },
     onError: (error) => {
-      console.error("게시글 삭제 에러:", error);
+      // console.error("게시글 삭제 에러:", error);
       window.alert(
         "게시글이 정상적으로 삭제되지 않았습니다. 다시 시도해주세요!",
       );
@@ -96,7 +96,7 @@ const DetailPost = ({ postDetail, postUid }: DetailPostProps) => {
       queryClient.invalidateQueries({ queryKey: ["likesNumber"] });
     },
     onError: (error) => {
-      console.log("북마크 등록 에러:", error);
+      // console.log("북마크 등록 에러:", error);
     },
   });
 
@@ -106,7 +106,7 @@ const DetailPost = ({ postDetail, postUid }: DetailPostProps) => {
       queryClient.invalidateQueries({ queryKey: ["likesNumber"] });
     },
     onError: (error) => {
-      console.log("북마크 취소 에러:", error);
+      // console.log("북마크 취소 에러:", error);
     },
   });
 

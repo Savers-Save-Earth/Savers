@@ -42,7 +42,7 @@ const ProductComponent = () => {
       const { data } = await supabase.from("product").select();
       setProduct(data || []);
     } catch (error) {
-      console.error("Error fetching products:", error);
+      // console.error("Error fetching products:", error);
     }
   };
 
@@ -76,7 +76,7 @@ const ProductComponent = () => {
         fetchUserLike(user); // 유저 정보를 가져온 후에 fetchUserLike 함수 호출
       }
     } catch (error) {
-      console.error("Error fetching user:", error);
+      // console.error("Error fetching user:", error);
     }
   };
 

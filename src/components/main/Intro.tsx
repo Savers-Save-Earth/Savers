@@ -94,7 +94,10 @@ const Intro = () => {
             display: scrollY > 5300 ? "none" : "block",
           }}
         >
-          지구를 지키는 것은 우리의 선택입니다
+          지구를 지키는 것은 우리의 선택입니다.
+          {/* 자연과 가까울수록 병은 멀어지고,
+          <br />
+          자연과 멀수록 병은 가까워진다. */}
         </div>
         <div
           className="fade-element fixed left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-4xl font-bold transition-opacity duration-100 ease-in-out"
@@ -139,3 +142,4 @@ const Intro = () => {
 };
 
 export default Intro;
+//intro
