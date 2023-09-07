@@ -241,21 +241,6 @@ body {
   }
 }
 
-.mapList_scrollbar::-webkit-scrollbar,
-.mapList_scrollbar::-webkit-scrollbar-track,
-.mapList_scrollbar::-webkit-scrollbar-thumb {
-  /* width 설정 */
-  width: 8px;
-  /* Track 설정 */
-  background: none;
-}
-
-/* Handle 설정 */
-.mapList_scrollbar::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 5px;
-}
-
 .react-calendar__tile--hasActive {
   background: #76baff;
 }
