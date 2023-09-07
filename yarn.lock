@@ -2487,6 +2487,13 @@ next-images@^1.8.5:
     file-loader "^6.2.0"
     url-loader "^4.1.0"
 
+next-router-events@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/next-router-events/-/next-router-events-2.1.0.tgz#3efa96a8bf0e208e67183836c09d41c4d076f511"
+  integrity sha512-6veZHwk+asLNrBLzsgpGSfbLpRknakk8+zvzoWJq2EuK1b9+IBMqLQ0PaqdhmI/psQl39ydibXLxrqhIDKlRBw==
+  dependencies:
+    tiny-emitter "^2.0.2"
+
 next-tick@^1.1.0:
   version "1.1.0"
   resolved "https://registry.npmjs.org/next-tick/-/next-tick-1.1.0.tgz"
@@ -3432,6 +3439,11 @@ thenify-all@^1.0.0:
   integrity sha512-RVZSIV5IG10Hk3enotrhvz0T9em6cyHBLkH/YAZuKqd8hRkKhSfCGIcP2KUY0EPxndzANBmNllzWPwak+bheSw==
   dependencies:
     any-promise "^1.0.0"
+
+tiny-emitter@^2.0.2:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/tiny-emitter/-/tiny-emitter-2.1.0.tgz#1d1a56edfc51c43e863cbb5382a72330e3555423"
+  integrity sha512-NB6Dk1A9xgQPMoGqC5CVXn123gWyte215ONT5Pp5a0yt4nlEoO1ZWeCwpncaekPHXO60i47ihFnZPiRPjRMq4Q==
 
 tiny-warning@^1.0.0:
   version "1.0.3"
