@@ -1,12 +1,76 @@
 import React from "react";
 
-const NoPost = () => {
-  
+interface NoListToShownProps {
+  listProp: string;
+}
+
+const NoListToShown: React.FC<NoListToShownProps> = ({ listProp }) => {
+  const list = [
+    {
+      title: "noPost",
+      mainText: "작성하신 글이 없습니다!",
+      subText: "커뮤니티에 글을 남겨보세요!!",
+      address: "/community",
+      btnText: "글 쓰러가기",
+      showBtn: true,
+    },
+    {
+      title: "noComments",
+      mainText: "작성한 댓글이 없습니다!",
+      subText: "다른 세이버들의 글을 읽고 댓글을 남겨보세요!!",
+      address: "/community",
+      btnText: "댓글 쓰러가기",
+      showBtn: true,
+    },
+    {
+      title: "noBookmarkedPost",
+      mainText: "북마크 한 글이 없습니다!",
+      subText: "다른 세이버들의 글을 읽고 북마크를 해보세요!!",
+      address: "/community",
+      btnText: "글 보러가기",
+      showBtn: true,
+    },
+    {
+      title: "noMissionDone",
+      mainText: "아직 완료한 미션이 없으신가요?",
+      subText: "일일미션을 차곡차곡 수행해서 배지를 받아보세요!!",
+      address: "/",
+      btnText: "댓글 쓰러가기",
+      showBtn: false,
+    },
+    {
+      title: "noMissionDoing",
+      mainText: "진행중인 일일미션이 없군요!",
+      subText: "일일미션을 통해 배지를 획득할 수 있어요!",
+      address: "/",
+      btnText: "댓글 쓰러가기",
+      showBtn: false,
+    },
+    {
+      title: "noBookmarkedRestaurant",
+      mainText: "좋아요를 누른 식당이 없습니다!",
+      subText: "근처의 맛있는 건강 식당을 찾아볼까요?",
+      address: "/restaurant",
+      btnText: "식당 찾기",
+      showBtn: true,
+    },
+    {
+      title: "noBookmarkedProduct",
+      mainText: "좋아요를 누른 제품이 없습니다!",
+      subText: "Zero Waste를 실천하는 제품을 찾아볼까요?",
+      address: "/product",
+      btnText: "제품 둘러보기",
+      showBtn: true,
+    },
+    
+  ];
+  const matchedProps = list.find((item) => item.title === listProp);
+
   return (
     <div>
       <section className="text-gray-600 body-font">
         <div className="container mx-auto flex px-5 py-12 items-center justify-center flex-col">
-        <div className="lg:w-2/6 md:w-3/6 w-5/6 mb-10 object-cover object-center flex flex-col items-center justify-center">
+          <div className="lg:w-2/6 md:w-3/6 w-5/6 mb-10 object-cover object-center flex flex-col items-center justify-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="216"
@@ -70,19 +134,20 @@ const NoPost = () => {
           </div>
           <div className="text-center lg:w-2/3 w-full">
             <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">
-              북마크 한 글이 없습니다!
+              {matchedProps?.mainText}
             </h1>
-            <p className="mb-8 leading-relaxed">
-              다른 세이버들의 글을 읽고 북마크를 해보세요!!
-            </p>
-            <div className="flex justify-center">
+            <p className="mb-8 leading-relaxed">{matchedProps?.subText}</p>
+            {matchedProps?.showBtn ? (
+              <div className="flex justify-center">
               <button
-                onClick={() => window.open("/community")}
+                onClick={() => window.open(`${matchedProps?.address}`)}
                 className="inline-flex text-white bg-[#5FD100] border-0 py-2 px-6 focus:outline-none hover:bg-[#0ad100] rounded text-lg"
               >
-                글 보러가기
+                {matchedProps?.btnText}
               </button>
             </div>
+            ) : (<></>)
+            }
           </div>
         </div>
       </section>
@@ -90,4 +155,4 @@ const NoPost = () => {
   );
 };
 
-export default NoPost;
+export default NoListToShown;

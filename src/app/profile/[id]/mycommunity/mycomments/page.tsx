@@ -2,15 +2,15 @@
 import React, { useEffect, useState } from "react";
 import { Database } from "@/types/supabase";
 import UserComment from "./UserComment";
-import NoMyComments from "@/components/profile/NoMyComments";
 import Loading from "@/app/loading";
 import { fetchMyComments } from "@/api/profile/fetchCommunityData";
 import { useQuery } from "@tanstack/react-query";
+import NoListToShown from "@/components/profile/NoListShown";
 
 type CommunityComment =
   Database["public"]["Tables"]["community_comment"]["Row"];
 const MyComments = ({ params }: { params: { id: string } }) => {
-  const loadBoundaryValue = 5;
+  const loadBoundaryValue = 10;
   const [userComments, setUserComments] = useState<CommunityComment[]>([]);
   const [loadCount, setLoadCount] = useState<number>(loadBoundaryValue);
   const [loadMoreBtn, setLoadMoreBtn] = useState<string>("");
@@ -49,9 +49,8 @@ const MyComments = ({ params }: { params: { id: string } }) => {
   if (fetchMyCommentsFetching) {
     return <Loading />;
   }
-
-  if (userComments.length < 1) {
-    return <NoMyComments />;
+  if (userComments && userComments.length < 1) {
+    return<NoListToShown listProp={"noComments"}/>
   }
 
   return (

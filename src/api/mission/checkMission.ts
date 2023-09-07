@@ -4,7 +4,6 @@ import { Database } from "@/types/supabase";
 // 게시글 수정
 export const updateMissionHandler = async (missionId: string) => {
   if (!missionId) {
-    // console.log("미션아이디 누락");
     return false;
   }
 
@@ -24,7 +23,6 @@ export const getMissionHandler = async (
   bigCategory: string,
 ) => {
   if (!currentUser) {
-    // console.log("체크미션 커렌트유저 없음");
     return false;
   }
   const { data: missionLists, error } = await supabase
@@ -41,10 +39,8 @@ export const getMissionHandler = async (
     (missionList) => missionList.smallCategory === category,
   );
   if (matchingMission) {
-    // console.log("미션매칭 성공");
     setMissionUid(matchingMission.id);
   } else {
-    // console.log("No matching mission found.");
     setMissionUid("");
   }
 };
@@ -57,7 +53,6 @@ export const likeShareMissionHandler = async (
   bigCategory: string,
 ) => {
   if (!currentUser) {
-    // console.log("체크미션 커렌트유저 없음");
     return false;
   } else {
     const { data: missionLists, error } = await supabase
@@ -75,10 +70,8 @@ export const likeShareMissionHandler = async (
       (missionList) => missionList.smallCategory === category,
     );
     if (matchingMission) {
-      // console.log("미션매칭 성공");
       updateMissionHandler(matchingMission.id);
     } else {
-      // console.log("No matching mission found.");
     }
   }
 };
