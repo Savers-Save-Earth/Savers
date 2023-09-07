@@ -11,10 +11,12 @@ interface PostBoxProps {
 }
 
 const PostBox = ({ post, width, border, margin }: PostBoxProps) => {
+  const includeImage = getFirstImage(post.content);
+  const firstImgUrl = getImgUrl(includeImage)
   return (
     <div
       key={post.post_uid}
-      className={cls("flex flex-col justify-between px-4 py-4",
+      className={cls("flex-wrap flex-col justify-between px-4 py-4 overflow-hidden",
         border ? border : "",
         margin ? margin : "",
       )}
@@ -22,24 +24,24 @@ const PostBox = ({ post, width, border, margin }: PostBoxProps) => {
       <div className="flex flex-col space-y-2">
         <CategoryTag>{post.category}</CategoryTag>
         <div>
-          <div className="flex justify-between">
-            <div className="flex flex-col">
+          <div className="flex justify-between items-center">
+            <div className="flex flex-col shrink">
               <Link href={`/community/${post.post_uid}`}>
                 <h2 className="font-medium text-lg flex items-center space-x-2 cursor-pointer hover:underline my-2">
                   {post.title}
                 </h2>
               </Link>
               <Link href={`/community/${post.post_uid}`}>
-                <p className="text-gray-500 text-sm cursor-pointer hover:underline text-ellipsis line-clamp-2">
+                <p className="text-gray-500 text-sm cursor-pointer hover:underline text-ellipsis line-clamp-2 break-all">
                   {removeHtmlTags(post.content)}
                 </p>
               </Link>
             </div>
-            {getFirstImage(post.content) ? (
+            {includeImage ? (
               <div className="flex-shrink-0 w-24 h-24 ml-2 bg-gray-50">
                 <img
                   className="flex-shrink-0 w-24 h-24 rounded-md"
-                  src={getImgUrl(getFirstImage(post.content))}
+                  src={firstImgUrl}
                   alt="thumbnail"
                 />
               </div>
