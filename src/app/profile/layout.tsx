@@ -27,7 +27,7 @@ export default async function profileLayout({
   return (
     <>
       <div className="flex h-full">
-      <div className="relative mt-20 w-[1200px] h-full flex items-start gap-x-8 bg-lightgreen bg-white">
+      <div className="mt-20 w-[1200px] h-full flex items-start gap-x-8 bg-lightgreen bg-white">
         <div className="sticky top-20 w-[339px] min-h-[690px] h-full flex flex-col shadow-xl shadow-black/20 rounded-2xl p-6 border-t-2 z-10">
           <SideBar />
         </div>

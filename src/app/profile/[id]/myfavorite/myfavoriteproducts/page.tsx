@@ -5,9 +5,9 @@ import supabase from "@/libs/supabase";
 import { Database } from "@/types/supabase";
 import { useRouter } from "next/navigation";
 import Loading from "@/app/loading";
-import NoBookmarkedProduct from "@/components/profile/NoBookmarkedProduct";
 import { useQuery } from "@tanstack/react-query";
 import { fetchFavoriteProducts } from "@/api/profile/fetchFavoriteData";
+import NoListToShown from "@/components/profile/NoListShown";
 
 type UserFavoriteProducts = Database["public"]["Tables"]["like_product"]["Row"];
 
@@ -56,8 +56,13 @@ const MyFavoriteProducts = ({ params }: { params: { id: string } }) => {
     return <Loading />;
   }
 
-  if (favoriteProductsData.length < 1) {
-    return <NoBookmarkedProduct />;
+  if (userLikedProducts && userLikedProducts.length < 1) {
+    return (
+<div className="mx-auto">
+
+  <NoListToShown listProp={"noBookmarkedProduct"} />
+</div>
+    )
   }
   return (
     <div className="space-y-4">

@@ -177,7 +177,7 @@ const EditProfile = ( { profileData } : any ) => {
             <input
               type="text"
               value={nickname}
-              placeholder={editNickname}
+              placeholder={profileData.nickname}
               onChange={(e) => setNickname(e.target.value)}
               className="flex h-[48px] p-4 items-center bg-gray-50 rounded-2xl self-stretch w-[320px] outline-none  justify-center mx-auto mb-8"
             />
