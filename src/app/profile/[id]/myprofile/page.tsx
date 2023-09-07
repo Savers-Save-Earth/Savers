@@ -28,7 +28,6 @@ const MyProfile = ({ params: { id } }: { params: { id: string } }) => {
     () => fetchBadges(searchId),
     { cacheTime: 6000}
   )
-    console.log("missionDone==))))=>,",missionDone)
   if (profileDataLoading || missionDoneLoading || badgeDataLoading) return <Loading />;
   return (
     

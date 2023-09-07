@@ -6,6 +6,8 @@ import NoMyComments from "@/components/profile/NoMyComments";
 import Loading from "@/app/loading";
 import { fetchMyComments } from "@/api/profile/fetchCommunityData";
 import { useQuery } from "@tanstack/react-query";
+import NoListToShown from "@/components/profile/NoListShown";
+import NoBookmarkedProduct from "@/components/profile/NoBookmarkedProduct";
 
 type CommunityComment =
   Database["public"]["Tables"]["community_comment"]["Row"];
@@ -49,9 +51,9 @@ const MyComments = ({ params }: { params: { id: string } }) => {
   if (fetchMyCommentsFetching) {
     return <Loading />;
   }
-
-  if (userComments.length < 1) {
-    return <NoMyComments />;
+  if (userComments && userComments.length < 1) {
+    // return <NoListToShown listProp={"noComments"} />
+    return<NoListToShown listProp={"noComments"}/>
   }
 
   return (

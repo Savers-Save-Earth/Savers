@@ -9,6 +9,7 @@ import NoBookmarkedPost from "@/components/profile/NoBookmarkedPost";
 import Loading from "@/app/loading";
 import { useQuery } from "@tanstack/react-query";
 import { fetchFavoritePosts } from "@/api/profile/fetchCommunityData";
+import NoListToShown from "@/components/profile/NoListShown";
 
 type UserLikedPost = Database["public"]["Tables"]["community"]["Row"];
 
@@ -53,8 +54,8 @@ const MyLikedPosts = ({ params }: { params: { id: string } }) => {
   if (favoritePostDataFetching) {
     return <Loading />;
   }
-  if (userLikedPosts.length < 1) {
-    return <NoBookmarkedPost />;
+  if (userLikedPosts && userLikedPosts.length < 1) {
+    return <NoListToShown listProp={"noBookmarkedPost"} />
   }
 
   return (
