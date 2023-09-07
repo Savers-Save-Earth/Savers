@@ -119,7 +119,9 @@ const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
                 className="absolute top-[20px] right-[20px] hover:scale-[120%] cursor-pointer"
                 onClick={() => {
                   setModalController(false);
+                  setRenderTrigger(!renderTrigger)
                   setShowModal(false);
+                  
                 }}
               >
                 <path
