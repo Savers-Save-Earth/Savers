@@ -17,12 +17,12 @@ const MissionDoing = ({ params }: { params: { id: string } }) => {
   const currentDate = convertDate(new Date());
   const searchId = params.id;
 
-  const { data : missionDoing, isLoading } = useQuery<any>(
-    ["fetchMissionDoing", searchId,],
+  const { data: missionDoing, isLoading } = useQuery<any>(
+    ["fetchMissionDoing", searchId],
     () => fetchMissionDoing(searchId, currentDate),
     { cacheTime: 6000 },
   );
-  if (isLoading) return <Loading/>
+  if (isLoading) return <Loading />;
 
   // useEffect(() => {
   //   fetchMissionData();
@@ -53,11 +53,11 @@ const MissionDoing = ({ params }: { params: { id: string } }) => {
       {missionDoing.length === 0 ? (
         <NoMissionDoing />
       ) : (
-        <div className="flex justify-center items-center gap-x-4 text-gray-800 px-2">
+        <div className="flex justify-center items-center gap-x-4 text-gray-800  w-full">
           {missionDoing?.map((mission: any) => {
             return (
               <div
-                className="py-6 px-4 flex flex-col justify-between items-center w-[180px] h-[300px] rounded-2xl break-words hover:scale-110 hover:duration-500 bg-[#F3FFEA]"
+                className="py-6 px-4 flex flex-col justify-between items-center w-[25%] h-[300px] rounded-2xl break-words hover:scale-110 hover:duration-500 bg-[#F3FFEA]"
                 key={mission.id}
               >
                 <div className="flex flex-col gap-3 items-start self-stretch">
@@ -65,8 +65,8 @@ const MissionDoing = ({ params }: { params: { id: string } }) => {
                     {mission.title}
                   </h1>
 
-                  <div className="flex flex-col items-start gap-2 self-stretch ">
-                    <div className="min-h-[127px] min-w-[121px] flex py-4 px-2 flex-col justify-between items-start gap-2 self-stretch bg-[#E8FFD4] rounded-2xl">
+                  <div className="flex flex-col items-start gap-2 self-stretch">
+                    <div className="min-h-[127px]  flex py-4 px-2 flex-col justify-between items-start gap-2 self-stretch bg-[#E8FFD4] rounded-2xl">
                       <p className="text-[14px] font-medium text-[#5FD100]">
                         {mission.content}
                       </p>

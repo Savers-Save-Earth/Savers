@@ -46,7 +46,7 @@ const SideBar = () => {
           <div className="relative w-[140px] h-[140px] object-contain">
             {profileData?.profileImage ? (
               <img
-                className="w-[140px] h-[140px] rounded-full object-cover mx-auto"
+                className="w-36 h-36 rounded-full object-cover mx-auto"
                 src={profileData.profileImage}
                 alt="프로필 이미지"
               />
@@ -62,7 +62,11 @@ const SideBar = () => {
             <p className="text-gray-900 text-[24px] non-italic font-semibold leading-7">
               {profileData?.nickname}
             </p>
-            {searchId == currentUser?.uid ? <EditProfile profileData={profileData} /> : ""}
+            {searchId == currentUser?.uid ? (
+              <EditProfile profileData={profileData} />
+            ) : (
+              ""
+            )}
           </div>
         </div>
 
