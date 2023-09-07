@@ -35,7 +35,9 @@ const ProductList = () => {
           justifyContent: "space-between",
         }}
       >
-        <h1 className="text-2xl mb-6 font-semibold">인기있는 친환경제품</h1>
+        <h1 className="sm:text-2xl sm:mb-6 mb-4 font-semibold inline-block text-lg">
+          인기있는 친환경제품
+        </h1>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="10"

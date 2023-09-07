@@ -16,6 +16,7 @@ import { ProductLikesType } from "@/types/types";
 import { getProducts } from "@/api/product/product";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getThisProductLikeStatus } from "@/api/product/like";
+import { useIsMobileSm } from "@/hooks/useIsMobileSm";
 
 const productCategory = [
   { value: "", label: "전체", img: "assets/product/all.png" },
@@ -217,10 +218,7 @@ const ProductComponent = () => {
         ))}
       </select>
 
-      <form
-        className="rounded-lg flex p-2 items-center gap-2 bg-gray-100"
-        style={{ width: "350px", float: "right" }}
-      >
+      <form className="sm:w-[350px] w-[220px] float-right rounded-lg flex p-2 items-center gap-2 bg-gray-100">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="20"
@@ -235,14 +233,23 @@ const ProductComponent = () => {
             fill="#D0D5DD"
           />
         </svg>
-        <input
-          type="text"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className=" bg-gray-100"
-          style={{ width: "300px", outline: "none", display: "flex" }}
-          placeholder="제품명 또는 회사명을 입력해주세요."
-        />
+        {!useIsMobileSm ? (
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className=" bg-gray-100 w-[300px] outline-none flex"
+            placeholder="제품명 또는 회사명을 입력해주세요."
+          />
+        ) : (
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className=" bg-gray-100 w-[200px] outline-none flex"
+            placeholder="제품명 또는 회사명 입력"
+          />
+        )}
       </form>
       <div className="mt-8 grid xl:grid-cols-4  xl:gap-4 md:grid-cols-3 md:gap-3 grid-cols-2 gap-2">
         {sortedData.filter(
