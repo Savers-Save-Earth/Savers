@@ -57,7 +57,9 @@ const RestaurantList = () => {
           justifyContent: "space-between",
         }}
       >
-        <h1 className="text-2xl mb-6 font-semibold">인기있는 비건식당</h1>
+        <h1 className="sm:text-2xl sm:mb-6 mb-4 font-semibold inline-block text-lg">
+          인기있는 비건식당
+        </h1>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="10"
@@ -88,6 +90,9 @@ const RestaurantList = () => {
           // 768px 미만인 경우
           0: {
             slidesPerView: 1,
+          },
+          768: {
+            slidesPerView: 2,
           },
           // 그 외 화면 너비인 경우
           1024: {
@@ -189,8 +194,8 @@ const RestaurantList = () => {
                 </div>
                 <div style={{ display: "inline-block" }}>
                   <p className="font-bold text-[16px]">
-                    {item.restaurant_name.length > 18
-                      ? `${item.restaurant_name.slice(0, 18) + `...`}`
+                    {item.restaurant_name.length > 14
+                      ? `${item.restaurant_name.slice(0, 14) + `...`}`
                       : item.restaurant_name}
                   </p>
                   <span className="text-sm text-gray-400">
