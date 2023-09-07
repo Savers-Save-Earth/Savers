@@ -15,13 +15,16 @@ const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
   const searchId = user?.uid || ("" as string);
   const [dailyMission, setDailyMission] = useState<DailyMission[]>([]);
   const [modalController, setModalController] = useState(showModal);
-  
+  const [renderTrigger, setRenderTrigger] = useState(false)
   const queryClient = useQueryClient();
-  const { data: missionListByDateAndUser } = useQuery(["fetchMissionListDateAndUid"], () =>
+  // renderTrigger은 미션뽑기 할 때마다 강제로 useQuery 렌더링 시킴. 
+  // 목적 : 한 번 렌더링 하지 않고 계속 뽑기를 하면 미션이 계속해서 뽑아짐.
+  // useQuery는 렌더링이 발생할 때에 실행되기 때문에, 새로 데이터를 불러오려면 강제로 렌더링이 필요하다고 추측.
+  const { data: missionListByDateAndUser } = useQuery(["fetchMissionListDateAndUid", renderTrigger], () =>
   fetchMissionListDateAndUid(searchId, currentDate),
 );
 
-  const createMissionMutaition = useMutation(createMission, {
+  const createMissionMutation = useMutation(createMission, {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["missionList"] });
     },
@@ -77,13 +80,14 @@ const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
           user_uid: searchId as string,
           address: mission.address as string,
         }));
-        createMissionMutaition.mutate(newMissions);
+        createMissionMutation.mutate(newMissions);
 
         setDailyMission(randomMissions);
       } catch (error) {
         // console.error("An error occurred:", error);
       }
     }
+    setRenderTrigger(!renderTrigger)
   };
   return (
     <>
