@@ -15,8 +15,8 @@ export const createLikePost = async (newLike: newLikePostType) => {
 };
 
 // 좋아요 데이터가 있으면 삭제하도록
-export const cancelLikePost = async (cancleLike: newLikePostType) => {
-  const { error } = await supabase.from("like_post").delete().eq("post_uid", cancleLike.post_uid).eq("like_user", cancleLike.like_user);
+export const cancelLikePost = async (cancelLike: newLikePostType) => {
+  const { error } = await supabase.from("like_post").delete().eq("post_uid", cancelLike.post_uid).eq("like_user", cancelLike.like_user);
   if (error) return error;
 };
 
