@@ -7,6 +7,8 @@ import { useRouter } from "next/navigation";
 import UserLikedPost from "./UserLikedPost";
 import NoBookmarkedPost from "@/components/profile/NoBookmarkedPost";
 import Loading from "@/app/loading";
+import { useQuery } from "@tanstack/react-query";
+import { fetchFavoritePosts } from "@/api/profile/fetchCommunityData";
 
 type UserLikedPost = Database["public"]["Tables"]["community"]["Row"];
 
@@ -15,65 +17,51 @@ const MyLikedPosts = ({ params }: { params: { id: string } }) => {
   const [userLikedPosts, setUserLikedPosts] = useState<UserLikedPost[]>([]);
   const [loadCount, setLoadCount] = useState<number>(loadBoundaryValue);
   const [loadMoreBtn, setLoadMoreBtn] = useState<string>("");
-  const searchId = params.id
-  const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태 추가
+  const searchId = params.id;
+
+  const { data: favoritePostData, isFetching: favoritePostDataFetching } =
+    useQuery<any>(["fetchFavoritePosts", searchId, loadCount], () =>
+      fetchFavoritePosts(searchId, loadCount),
+    );
 
   useEffect(() => {
-    fetchCommunity();
-  }, [loadCount]);
-
-  const fetchCommunity = async () => {
-    try {
-      let { data: posts, count } = await supabase
-        .from("like_post")
-        .select("*", { count: "exact" })
-        .eq("like_user", searchId)
-        .range(0, loadCount - 1);
-      // console.log("posts=======++>", posts);
-      setIsLoading(false);
-      setUserLikedPosts(posts || []);
-      if (posts!.length === 0) {
-        setUserLikedPosts([]);
-      }
-
-      if (posts!.length > 0) {
-        
-      }
-      if (count && count <= loadBoundaryValue) {
-        setLoadMoreBtn("");
-        return;
-      } else if (count! > loadCount) {
+    if (!favoritePostData) return;
+    const count = favoritePostData.count;
+    const userLikedPosts = favoritePostData.favoritePosts;
+    setUserLikedPosts(userLikedPosts);
+    if (count && count <= loadBoundaryValue) {
+      setLoadMoreBtn("");
+      return;
+    } else if (count! > loadCount) {
+      setLoadMoreBtn("더보기");
+      return;
+    } else if (count! <= loadCount) {
+      if (count! + loadBoundaryValue > loadCount) {
+        setLoadMoreBtn("접기");
+      } else {
+        setLoadCount(loadBoundaryValue);
         setLoadMoreBtn("더보기");
-        return;
-      } else if (count! <= loadCount) {
-        if (count! + loadBoundaryValue > loadCount) {
-          setLoadMoreBtn("접기");
-        } else {
-          setLoadCount(loadBoundaryValue);
-          setLoadMoreBtn("더보기");
-        }
-        return;
       }
-    } catch (error) {
-      console.error("An error occurred:", error); // 예상치 못한 에러 처리
-      return false; // 에러 처리 후 함수 종료
+      return;
     }
+  }, [favoritePostData, loadCount]);
+
+  const handleLoadMore = async () => {
+    setLoadCount((prevLoadCount) => prevLoadCount + loadBoundaryValue);
   };
-  const handleLoadMore = () => {
-    setLoadCount((prev) => prev + loadBoundaryValue);
-  };
+
+  if (favoritePostDataFetching) {
+    return <Loading />;
+  }
+  if (userLikedPosts.length < 1) {
+    return <NoBookmarkedPost />;
+  }
 
   return (
     <div className="space-y-4">
-      {isLoading ? (
-        <Loading/>
-      ) : userLikedPosts.length === 0 ? (
-        <NoBookmarkedPost />
-      ) : (
-        userLikedPosts.map((post) => (
-          <UserLikedPost key={post.post_uid} post={post} />
-        ))
-      )}
+      {userLikedPosts.map((post) => (
+        <UserLikedPost key={post.post_uid} post={post} />
+      ))}
       {userLikedPosts.length > 0 && (
         <div className="flex justify-center">
           <button
@@ -85,20 +73,6 @@ const MyLikedPosts = ({ params }: { params: { id: string } }) => {
         </div>
       )}
     </div>
-
-    //   <div className="flex justify-center">
-    //     {loadMoreBtn ? (
-    //       <button
-    //         className="py-4 px-5 justify-center items-center gap-[10px] rounded-2xl bg-gray-50"
-    //         onClick={handleLoadMore}
-    //       >
-    //         {loadMoreBtn}
-    //       </button>
-    //     ) : (
-    //       ""
-    //     )}
-    //   </div>
-    // </div>
   );
 };
 
