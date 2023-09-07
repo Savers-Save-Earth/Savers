@@ -20,7 +20,7 @@ const PostList = () => {
 
       setPost(sortedData!);
     } catch (error) {
-      console.error("Error fetching products:", error);
+      // console.error("Error fetching products:", error);
     }
   };
   useEffect(() => {
@@ -47,7 +47,7 @@ const PostList = () => {
       }
     }
 
-    console.log(firstImgTag);
+    // console.log(firstImgTag);
 
     return srcContent; // 추출한 src 속성의 내용을 반환합니다.
   };
@@ -80,7 +80,12 @@ const PostList = () => {
         </svg>
       </div>
       {post.slice(0, showCount).map((item) => (
-        <PostBox key={item.post_uid} post={item} border="border rounded-xl" margin="mb-4" />
+        <PostBox
+          key={item.post_uid}
+          post={item}
+          border="border rounded-xl"
+          margin="mb-4"
+        />
       ))}
       <div className="flex justify-center">
         {showCount <= post.length && (

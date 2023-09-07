@@ -27,6 +27,20 @@ const RestaurantList = () => {
   if (isError) {
   }
 
+  const sortedRestaurants = restaurants
+    ?.map((item) => ({
+      ...item,
+      bookmarkCount: restaurants.filter(
+        (i) => i.restaurant_name === item.restaurant_name,
+      ).length,
+    }))
+    .sort((a, b) => b.bookmarkCount - a.bookmarkCount)
+    .filter(
+      (item, index, self) =>
+        self.findIndex((i) => i.restaurant_name === item.restaurant_name) ===
+        index,
+    );
+
   // 공유하기 눌렀을 때
   const shareHandler = async (url: string) => {
     navigator.clipboard.writeText(url).then(() => {
@@ -65,11 +79,21 @@ const RestaurantList = () => {
         // install Swiper modules
         modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={10}
-        slidesPerView={3}
+        slidesPerView={1}
         navigation
         // navigation={{ prevEl: ".swiper-prev-1", nextEl: ".swiper-next-1" }}
         autoplay={{ delay: 3000 }}
         style={{ width: "100%" }}
+        breakpoints={{
+          // 768px 미만인 경우
+          0: {
+            slidesPerView: 1,
+          },
+          // 그 외 화면 너비인 경우
+          1024: {
+            slidesPerView: 3, // 원래 설정 값
+          },
+        }}
       >
         {restaurants
           ?.map((item) => ({

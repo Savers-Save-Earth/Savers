@@ -10,7 +10,14 @@ import PostBox from "./ui/PostBox";
 import Loading from "@/app/loading";
 
 import { PostType, ToTalDataType } from "@/types/types";
-import { PATHNAME_OHJIWAN, PATHNAME_PRODUCT, PATHNAME_RECIPE, PATHNAME_RESTAURANT } from "@/enums/community";
+import {
+  PATHNAME_OHJIWAN,
+  PATHNAME_PRODUCT,
+  PATHNAME_RECIPE,
+  PATHNAME_RESTAURANT,
+} from "@/enums/community";
+import CategoryTag from "../ui/CategoryTag";
+import { getFirstImage, getImgUrl, removeHtmlTags } from "@/libs/util";
 
 type QueryKeyMap = {
   [key: string]: string[];
@@ -26,8 +33,8 @@ const GetPosts = () => {
       "/community/recipe": ["recipePosts"],
       "/community/ohjiwan": ["ohjiwanPosts"],
     };
-  
-    return queryKeyMap[pathname]
+
+    return queryKeyMap[pathname];
   };
   const queryKey = getPathnameQueryKey(pathname);
 
@@ -40,7 +47,7 @@ const GetPosts = () => {
       return "레시피";
     } else if (pathname === PATHNAME_OHJIWAN) {
       return "오지완";
-    } else return "전체"
+    } else return "전체";
   };
 
   const {
@@ -49,7 +56,7 @@ const GetPosts = () => {
     isError,
     hasNextPage,
     fetchNextPage,
-    isFetchingNextPage
+    isFetchingNextPage,
   } = useInfiniteQuery<ToTalDataType>({
     queryKey: queryKey,
     queryFn: ({ pageParam }) => getPosts(pathname, pageParam),
@@ -61,14 +68,14 @@ const GetPosts = () => {
     },
     cacheTime: 300000,
   });
-  
+
   const accumulatePosts = useMemo(() => {
     return posts?.pages
       .map((page) => {
         return page.posts;
       })
       .flat();
-      // flat() : 모든 하위 배열 요소를 지정한 깊이까지 재귀적으로 이어붙인 새로운 배열 생성
+    // flat() : 모든 하위 배열 요소를 지정한 깊이까지 재귀적으로 이어붙인 새로운 배열 생성
   }, [posts]);
 
   const { ref } = useInView({
@@ -76,12 +83,12 @@ const GetPosts = () => {
     onChange: (InView) => {
       if (!InView || !hasNextPage || isFetchingNextPage) return;
       fetchNextPage();
-    }
-  })
+    },
+  });
 
   if (isLoading) return <Loading />;
   if (isError) {
-    console.error("데이터를 불러오는 중에 오류가 발생했습니다:", isError);
+    // console.error("데이터를 불러오는 중에 오류가 발생했습니다:", isError);
     return "데이터를 불러오는 중에 오류가 발생했습니다.";
   }
   return (
@@ -95,10 +102,10 @@ const GetPosts = () => {
               post={post}
               border={"last:border-b border-t"}
             />
-            ))}
+          ))}
         </div>
       }
-        <div ref={ref} className="w-full h-3" />
+      <div ref={ref} className="w-full h-3" />
     </section>
   );
 };
