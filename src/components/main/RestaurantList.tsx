@@ -79,11 +79,21 @@ const RestaurantList = () => {
         // install Swiper modules
         modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={10}
-        slidesPerView={3}
+        slidesPerView={1}
         navigation
         // navigation={{ prevEl: ".swiper-prev-1", nextEl: ".swiper-next-1" }}
         autoplay={{ delay: 3000 }}
         style={{ width: "100%" }}
+        breakpoints={{
+          // 768px 미만인 경우
+          0: {
+            slidesPerView: 1,
+          },
+          // 그 외 화면 너비인 경우
+          1024: {
+            slidesPerView: 3, // 원래 설정 값
+          },
+        }}
       >
         {restaurants
           ?.map((item) => ({

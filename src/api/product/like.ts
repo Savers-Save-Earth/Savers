@@ -40,9 +40,16 @@ export const createLikeProduct = async (newLike: newProductLikePostType) => {
 
 // 좋아요 숫자 추가
 export const plusLikeCount = async (plusLike: ProductType) => {
+  const { data: currentLikeCount } = await supabase
+    .from("product")
+    .select()
+    .eq("id", plusLike.id);
+
   const { error } = await supabase
     .from("product")
-    .update({ like_count: plusLike.like_count! + 1 })
+    .update({
+      like_count: (plusLike.like_count as number) + 1,
+    })
     .eq("id", plusLike.id);
   if (error) return error;
 };
@@ -63,17 +70,17 @@ export const minusLikeCount = async (minusLike: ProductType) => {
   const { error } = await supabase
     .from("product")
     .update({
-      like_count: minusLike.like_count! - 1,
+      like_count: (minusLike.like_count as number) - 1,
     })
     .eq("id", minusLike.id);
   if (error) return error;
 };
 
 // 좋아요 개수
-// export const getProductLikesNum = async (productId: string) => {
-//   const { count } = await supabase
-//     .from("like_product")
-//     .select("*", { count: "exact" })
-//     .eq("product_uid", productId);
-//   return count;
-// };
+export const getProductLikesNum = async (productId: string) => {
+  const { count } = await supabase
+    .from("like_product")
+    .select("*", { count: "exact" })
+    .eq("product_uid", productId);
+  return count;
+};
