@@ -34,6 +34,7 @@ const selectOptions = [
 ];
 
 const ProductComponent = () => {
+  const [buttonStates, setButtonStates] = useState({});
   const [category, setCategory] = useState("");
   const [search, setSearch] = useState("");
   const [select, setSelect] = useState("sales");
@@ -112,6 +113,19 @@ const ProductComponent = () => {
       }, 1000);
       return false;
     } else {
+      const currentTime = Date.now();
+
+      // if (
+      //   !buttonStates[productId] ||
+      //   currentTime - buttonStates[productId] >= 1000
+      // ) {
+      //   // 버튼 상태가 없거나 마지막 클릭이 1초 이상 지난 경우
+      //   setButtonStates({
+      //     ...buttonStates,
+      //     [productId]: currentTime, // 버튼의 마지막 클릭 시간 업데이트
+      //   });
+      // }
+
       const likeStatus = await getThisProductLikeStatus(
         productId,
         currentUser.uid,
@@ -265,6 +279,10 @@ const ProductComponent = () => {
                           item.like_count,
                         )
                       }
+                      // disabled={
+                      //   // buttonStates[item.id] &&
+                      //   // Date.now() - buttonStates[item.id] < 1000
+                      // }
                       className="absolute bottom-2 right-2"
                     >
                       <svg
@@ -294,6 +312,10 @@ const ProductComponent = () => {
                           item.like_count,
                         )
                       }
+                      // disabled={
+                      //   // buttonStates[item.id] &&
+                      //   // Date.now() - buttonStates[item.id] < 1000
+                      // }
                       className="absolute bottom-2 right-2"
                     >
                       <svg

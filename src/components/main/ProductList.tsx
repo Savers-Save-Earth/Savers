@@ -59,7 +59,8 @@ const ProductList = () => {
           modules={[Navigation, Pagination, Autoplay]}
           spaceBetween={10}
           // slidesPerView={2}
-          navigation
+          // navigation={{ prevEl: ".swiper-prev-1", nextEl: ".swiper-next-1" }}
+          // navigation
           autoplay={{ delay: 3000 }}
           breakpoints={{
             // 768px 미만인 경우

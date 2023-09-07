@@ -25,7 +25,9 @@ const DailyMission = () => {
 
   return (
     <>
-      <h1 className="text-2xl mb-6 font-semibold inline-block">일일미션</h1>
+      <h1 className="sm:text-2xl mb-6 font-semibold inline-block text-lg">
+        일일미션
+      </h1>
 
       <span
         className={`text-gray-700 ml-2 text-[14px] relative cursor-pointer${
@@ -44,12 +46,12 @@ const DailyMission = () => {
 
       <div
         onClick={missionHandler}
-        className="h-[120px] bg-[#5FD100] flex relative items-center justify-between w-full xl:h-[158px] rounded-2xl p-8 mb-16 cursor-pointer"
+        className="h-[120px] xl:h-[158px] bg-[#5FD100] flex relative items-center justify-between w-full  rounded-2xl p-8 mb-16 cursor-pointer"
       >
         <img
           src="assets/mission/card.png"
           alt="카드 이미지"
-          className="absolute right-20 xl:h-full h-[120px]"
+          className="absolute right-20 xl:h-full h-[120px] "
         />
 
         <div>
