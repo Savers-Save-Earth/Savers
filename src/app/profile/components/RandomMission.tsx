@@ -42,7 +42,7 @@ const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
 
   const insertMissionListData = async () => {
     if (!searchId) {
-      console.error("searchId is undefined");
+      // console.error("searchId is undefined");
       return;
     }
 
@@ -57,7 +57,7 @@ const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
           .select("*");
 
         if (error) {
-          console.error("Error fetching mission data:", error);
+          // console.error("Error fetching mission data:", error);
           return;
         }
 
@@ -82,7 +82,7 @@ const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
 
         setDailyMission(randomMissions);
       } catch (error) {
-        console.error("An error occurred:", error);
+        // console.error("An error occurred:", error);
       }
     }
   };

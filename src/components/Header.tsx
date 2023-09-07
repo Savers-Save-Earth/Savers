@@ -48,7 +48,7 @@ const Header = () => {
     const {
       data: { user },
     } = await supabase.auth.getUser();
-    console.log({ getUser: user });
+    // console.log({ getUser: user });
     if (!user) {
       setUser(null);
     } else {

@@ -18,7 +18,6 @@ const ModifyingProgile = () => {
   const [birthday, setBirthday] = useState("");
 
   const searchId = useParams().id;
-  console.log("searchId==>", searchId);
 
   const getUser = async () => {
     const { data } = await supabase.from("user").select().eq("uid", searchId);

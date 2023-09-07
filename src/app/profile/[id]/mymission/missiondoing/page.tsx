@@ -15,7 +15,7 @@ const MissionDoing = ({ params }: { params: { id: string } }) => {
   // const [dailyMission, setDailyMission] = useState<MissionDoingProp[]>([]);
   // const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태 추가
   const currentDate = convertDate(new Date());
-  const searchId = params.id
+  const searchId = params.id;
 
   const { data : missionDoing, isLoading } = useQuery<any>(
     ["fetchMissionDoing", searchId,],
@@ -52,8 +52,7 @@ const MissionDoing = ({ params }: { params: { id: string } }) => {
     <>
       {missionDoing.length === 0 ? (
         <NoMissionDoing />
-      ) :
-       (
+      ) : (
         <div className="flex justify-center items-center gap-x-4 text-gray-800 px-2">
           {missionDoing?.map((mission: any) => {
             return (
@@ -71,7 +70,12 @@ const MissionDoing = ({ params }: { params: { id: string } }) => {
                       <p className="text-[14px] font-medium text-[#5FD100]">
                         {mission.content}
                       </p>
-                      <p>{mission && mission.createdAt && mission.createdAt.replaceAll('-', '.')}까지</p>
+                      <p>
+                        {mission &&
+                          mission.createdAt &&
+                          mission.createdAt.replaceAll("-", ".")}
+                        까지
+                      </p>
                     </div>
                   </div>
                 </div>

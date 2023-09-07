@@ -49,9 +49,7 @@ const MissionDone = ({ params }: { params: { id: string } }) => {
     <>
       {missionDone.length === 0 ? (
         <NoMissionDone />
-      ) :
-      
-      (
+      ) : (
         <div className="flex flex-wrap justify-center items-center gap-x-4 text-gray-800">
           {missionDone?.map((mission: any) => {
             return (
@@ -70,7 +68,12 @@ const MissionDone = ({ params }: { params: { id: string } }) => {
                       <p className="text-[14px] font-medium text-[#5FD100]">
                         {mission.content}
                       </p>
-                      <p className="text-gray-500">{mission && mission.createdAt && mission.createdAt.replaceAll('-', '.')}까지</p>
+                      <p className="text-gray-500">
+                        {mission &&
+                          mission.createdAt &&
+                          mission.createdAt.replaceAll("-", ".")}
+                        까지
+                      </p>
                     </div>
                   </div>
                 </div>
