@@ -2,10 +2,10 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { Database } from "@/types/supabase";
 import UserPost from "./UserPost";
-import NoMyPosts from "@/components/profile/NoMyPosts";
 import Loading from "@/app/loading";
 import { useQuery } from "@tanstack/react-query";
 import { fetchMyPosts } from "@/api/profile/fetchCommunityData";
+import NoListToShown from "@/components/profile/NoListShown";
 
 type CommunityPost = Database["public"]["Tables"]["community"]["Row"];
 const MyPosts = ({ params }: { params: { id: string } }) => {
@@ -52,9 +52,8 @@ const MyPosts = ({ params }: { params: { id: string } }) => {
   if (fetchMyPostFetching) {
     return <Loading />;
   }
-
-  if (myPostData.length < 1) {
-    return <NoMyPosts />;
+  if (userPosts && userPosts.length < 1) {
+    return <NoListToShown listProp={"noPost"} />
   }
   return (
     <div className="space-y-4">

@@ -11,7 +11,7 @@ const CommunityLayout = ({ children }: { children: React.ReactNode }) => {
   const user = useAuth();
   const pathname = usePathname();
   return (
-    <div className="flex items-start self-stretch mt-28">
+    <div className="flex xl:flex-row flex-col items-start self-stretch mt-28">
       {
         pathname === PATHNAME_MAIN
           || pathname === PATHNAME_PRODUCT
@@ -25,7 +25,7 @@ const CommunityLayout = ({ children }: { children: React.ReactNode }) => {
         :
         null
       }
-      <main className="w-full">
+      <main className="w-full mt-10 xl:mt-0">
         {
           pathname === PATHNAME_MAIN
             || pathname === PATHNAME_PRODUCT

@@ -4,9 +4,9 @@ import React, { useEffect, useState } from "react";
 import supabase from "@/libs/supabase";
 import { Database } from "@/types/supabase";
 import Loading from "@/app/loading";
-import NoBookmarkedRestaurant from "@/components/profile/NoBookmarkedRestaurant";
 import { useQuery } from "@tanstack/react-query";
 import { fetchFavoriteRestaurants } from "@/api/profile/fetchFavoriteData";
+import NoListToShown from "@/components/profile/NoListShown";
 
 type UserFavoriteRestaurant =
   Database["public"]["Tables"]["like_restaurant"]["Row"];
@@ -84,9 +84,8 @@ const MyFavoriteRestaurants = ({ params }: { params: { id: string } }) => {
   if (favoriteRestaurantsFetching) {
     return <Loading />;
   }
-
-  if (favoriteRestaurantsData.length < 1) {
-    return <NoBookmarkedRestaurant />;
+  if (userLikedRestaurants && userLikedRestaurants.length < 1) {
+    return <NoListToShown listProp={"noBookmarkedRestaurant"} />
   }
 
   const shareHandler = async (url: string) => {

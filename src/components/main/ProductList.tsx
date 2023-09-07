@@ -35,7 +35,9 @@ const ProductList = () => {
           justifyContent: "space-between",
         }}
       >
-        <h1 className="text-2xl mb-6 font-semibold">인기있는 친환경제품</h1>
+        <h1 className="sm:text-2xl sm:mb-6 mb-4 font-semibold inline-block text-lg">
+          인기있는 친환경제품
+        </h1>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="10"
@@ -59,15 +61,19 @@ const ProductList = () => {
           modules={[Navigation, Pagination, Autoplay]}
           spaceBetween={10}
           // slidesPerView={2}
-          navigation
+          // navigation={{ prevEl: ".swiper-prev-1", nextEl: ".swiper-next-1" }}
+          // navigation
           autoplay={{ delay: 3000 }}
           breakpoints={{
             // 768px 미만인 경우
             0: {
               slidesPerView: 2,
             },
+            768: {
+              slidesPerView: 3,
+            },
             // 그 외 화면 너비인 경우
-            1024: {
+            1280: {
               slidesPerView: 4, // 원래 설정 값
             },
           }}

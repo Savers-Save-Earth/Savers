@@ -192,7 +192,7 @@ const ProductPost = () => {
             navigation
             pagination={{ clickable: true }}
             autoplay={{ delay: 2000 }}
-            className="rounded-2xl lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center"
+            className="rounded-2xl lg:w-1/2 w-full xl:h-auto object-cover object-center"
           >
             <SwiperSlide>
               <img src={product?.img} className="w-full lg:h-auto" />
@@ -254,7 +254,7 @@ const ProductPost = () => {
                 display: "flex",
                 alignItems: "center",
               }}
-              className="mt-28"
+              className="xl:mt-28 mt-20"
             >
               {likedByUser?.length ? (
                 <button onClick={likeHandler} className="bottom-2 mr-2">

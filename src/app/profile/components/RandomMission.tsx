@@ -24,7 +24,6 @@ const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
   const createMissionMutaition = useMutation(createMission, {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["missionList"] });
-      console.log("뮤테이션 성공함");
     },
     onError: (error) => {
       console.error("게시글 등록 에러:", error);

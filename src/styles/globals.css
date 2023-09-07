@@ -24,6 +24,12 @@ body {
     "Open Sans", "Helvetica Neue", sans-serif;
 }
 
+@media (max-width: 1280px) {
+  body {
+    padding: 0 20px;
+  }
+}
+
 /* .background-video {
   position: absolute;
   top: 0;
@@ -239,21 +245,6 @@ body {
       /* Firefox */
     }
   }
-}
-
-.mapList_scrollbar::-webkit-scrollbar,
-.mapList_scrollbar::-webkit-scrollbar-track,
-.mapList_scrollbar::-webkit-scrollbar-thumb {
-  /* width 설정 */
-  width: 8px;
-  /* Track 설정 */
-  background: none;
-}
-
-/* Handle 설정 */
-.mapList_scrollbar::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 5px;
 }
 
 .react-calendar__tile--hasActive {
