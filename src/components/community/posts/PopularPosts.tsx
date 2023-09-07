@@ -43,10 +43,10 @@ const PopularPosts = () => {
         <div className="flex xl:grid xl:grid-cols-4 gap-2.5 overflow-x-auto xl:overflow-hidden no-scrollbar">
           {isMobile
             ? popularPosts?.map((post: PostType) => (
-                <PopularPostBox post={post} />
+              <PopularPostBox key={post.post_uid} post={post} />
               ))
             : currentPagePosts.map((post: PostType) => (
-                <PopularPostBox post={post} />
+                <PopularPostBox key={post.post_uid} post={post} />
               ))}
         </div>
       </div>
