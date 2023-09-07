@@ -187,9 +187,9 @@ const ProductComponent = () => {
           <button
             key={category.value}
             onClick={() => setCategory(category.value)}
-            className="flex flex-col items-center space-y-2 m-4"
+            className="flex flex-col items-center space-y-2 xl:m-4 m-2"
           >
-            <img src={category.img} style={{ width: "96px" }} />
+            <img src={category.img} className="xl:w-[96px] w-[76px] " />
             <p>{category.label}</p>
           </button>
         ))}
@@ -230,7 +230,7 @@ const ProductComponent = () => {
           placeholder="제품명 또는 회사명을 입력해주세요."
         />
       </form>
-      <div className="mt-8 grid grid-cols-4 gap-4">
+      <div className="mt-8 grid xl:grid-cols-4  xl:gap-4 md:grid-cols-3 md:gap-3 grid-cols-2 gap-2">
         {sortedData.filter(
           (item) =>
             item.name.includes(search.trim()) ||

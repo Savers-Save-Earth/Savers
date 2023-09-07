@@ -44,13 +44,14 @@ const DailyMission = () => {
 
       <div
         onClick={missionHandler}
-        className="bg-[#5FD100] flex relative items-center justify-between w-full h-[158px] rounded-2xl p-8 mb-16 cursor-pointer"
+        className="h-[120px] bg-[#5FD100] flex relative items-center justify-between w-full xl:h-[158px] rounded-2xl p-8 mb-16 cursor-pointer"
       >
         <img
           src="assets/mission/card.png"
           alt="카드 이미지"
-          className="absolute right-20"
+          className="absolute right-20 xl:h-full h-[120px]"
         />
+
         <div>
           <span className="text-white text-[20px]">지구를 지키는</span>
           <br />

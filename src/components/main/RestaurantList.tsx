@@ -89,6 +89,9 @@ const RestaurantList = () => {
           0: {
             slidesPerView: 1,
           },
+          768: {
+            slidesPerView: 2,
+          },
           // 그 외 화면 너비인 경우
           1024: {
             slidesPerView: 3, // 원래 설정 값
@@ -189,8 +192,8 @@ const RestaurantList = () => {
                 </div>
                 <div style={{ display: "inline-block" }}>
                   <p className="font-bold text-[16px]">
-                    {item.restaurant_name.length > 18
-                      ? `${item.restaurant_name.slice(0, 18) + `...`}`
+                    {item.restaurant_name.length > 14
+                      ? `${item.restaurant_name.slice(0, 14) + `...`}`
                       : item.restaurant_name}
                   </p>
                   <span className="text-sm text-gray-400">

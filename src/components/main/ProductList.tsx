@@ -66,8 +66,11 @@ const ProductList = () => {
             0: {
               slidesPerView: 2,
             },
+            768: {
+              slidesPerView: 3,
+            },
             // 그 외 화면 너비인 경우
-            1024: {
+            1280: {
               slidesPerView: 4, // 원래 설정 값
             },
           }}
