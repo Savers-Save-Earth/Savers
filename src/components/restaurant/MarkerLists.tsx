@@ -161,7 +161,7 @@ const MarkerLists = ({ markerList, currentCategory }: any) => {
   }, []);
 
   return (
-    <div className="overflow-auto h-[33vw]">
+    <div className="overflow-auto h-[60vw] md:h-[33vw]">
       {/* display:flex; justify-content: center; */}
       <ul>
         {/* markerList 정보를 사용하여 리스트를 렌더링합니다 */}

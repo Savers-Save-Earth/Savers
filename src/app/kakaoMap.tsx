@@ -2,14 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import MarkerLists from "@/components/restaurant/MarkerLists";
-// import dynamic from "next/dynamic";
-
-//3.dynamic추가
-//주석처리
-// const DynamicComponent = dynamic(
-//   () => import("../components/restaurant/MarkerLists"),
-//   { loading: () => <p>Loading ...</p> },
-// );
 
 const getCurrentCoordinate = async () => {
   return new Promise((res, rej) => {
@@ -55,11 +47,6 @@ const KakaoMap = () => {
           const setInitLocation = async () => {
             let locPosition: any = await getCurrentCoordinate();
 
-            // setMapCenter({
-            //   x: locPosition.La,
-            //   y: locPosition.Ma,
-            // });
-
             // 지도 중심좌표를 접속위치로 변경합니다
             map.setCenter(locPosition);
 
@@ -74,14 +61,14 @@ const KakaoMap = () => {
           setInitLocation();
 
           // 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
-          var mapTypeControl = new kakao.maps.MapTypeControl();
+          let mapTypeControl = new kakao.maps.MapTypeControl();
 
           // 지도에 컨트롤을 추가해야 지도위에 표시됩니다
           // kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
           map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
 
           // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
-          var zoomControl = new kakao.maps.ZoomControl();
+          let zoomControl = new kakao.maps.ZoomControl();
           map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
           //
@@ -169,11 +156,10 @@ const KakaoMap = () => {
               //       // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
               //       infowindow.close();
               //     });
-              var content = document.createElement("div");
+              let content = document.createElement("div");
 
               // 커스텀 오버레이 엘리먼트를 만들고, 컨텐츠를 추가합니다
-              var info = document.createElement("div");
-              // info.appendChild(document.createTextNode(pos.title));
+              let info = document.createElement("div");
               info.className = "overlay";
               info.innerHTML = `<div style= "background-color:white; padding: 10px; padding-left:15px; width: 250px; border-radius: 20px; cursor:text;">
             <h1 class="infoWindow-name" style="font-weight: bold">${place.place_name}</h1>
@@ -184,7 +170,7 @@ const KakaoMap = () => {
              </div>`;
               content.appendChild(info);
 
-              var closeBtn = document.createElement("button");
+              let closeBtn = document.createElement("button");
               closeBtn.innerHTML = `
             <svg width="27" height="27" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-left:110px; background-color: white; padding:8px; border-radius: 50px;">
             <path fillRule="evenodd" clipRule="evenodd" d="M0.292892 0.292895C0.683415 -0.0976304 1.31658 -0.0976317 1.70711 0.292892L7.00002 5.58579L12.2929 0.292942C12.6834 -0.0975817 13.3166 -0.0975803 13.7071 0.292945C14.0976 0.68347 14.0976 1.31663 13.7071 1.70716L8.41424 7L13.7071 12.2928C14.0976 12.6834 14.0976 13.3165 13.7071 13.7071C13.3166 14.0976 12.6834 14.0976 12.2929 13.7071L7.00002 8.41421L1.70711 13.7071C1.31658 14.0976 0.683415 14.0976 0.292892 13.7071C-0.0976317 13.3166 -0.0976304 12.6834 0.292895 12.2929L5.58581 7L0.292895 1.70711C-0.0976304 1.31658 -0.0976317 0.68342 0.292892 0.292895Z" fill="#98A2B3"/>
@@ -197,7 +183,7 @@ const KakaoMap = () => {
 
               content.appendChild(closeBtn);
 
-              var overlay = new window.kakao.maps.CustomOverlay({
+              let overlay = new window.kakao.maps.CustomOverlay({
                 content: content,
                 position: marker.getPosition(),
               });
@@ -242,12 +228,16 @@ const KakaoMap = () => {
 
   return (
     <div>
-      <div className="pt-28">
-        <h1 className=" mb-12 text-2xl text-gray-900  font-semibold">
+      <div className="pt-16 md:pt-28">
+        <h1 className="hidden md:flex mb-12 text-2xl text-gray-900  font-semibold ">
           비건식당 찾기
         </h1>
         <div id="pageBody">
-          <div id="pageLeft" className="  w-[29%] float-left">
+          <div
+            id="map"
+            className="w-full h-56 mb-2 md:h-[35vw] md:w-[70%] md:float-right"
+          ></div>
+          <div id="pageLeft" className="w-full md:w-[29%] md:float-left">
             <div id="buttons" className="mb-3">
               <button
                 onClick={() => setCurrentCategory("비건")}
@@ -282,20 +272,11 @@ const KakaoMap = () => {
                 카페
               </button>
             </div>
-            {/* //주석처리 */}
-            {/* <DynamicComponent
-              markerList={markerList}
-              currentCategory={currentCategory}
-            /> */}
-            {/* //이부분 수정 */}
-            {/* {markerList && currentCategory && ( */}
             <MarkerLists
               markerList={markerList}
               currentCategory={currentCategory}
             />
-            {/* )} */}
           </div>
-          <div id="map" className="w-[70%] h-[36vw] float-right"></div>
         </div>
       </div>
     </div>
