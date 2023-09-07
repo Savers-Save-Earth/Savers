@@ -80,7 +80,12 @@ const PostList = () => {
         </svg>
       </div>
       {post.slice(0, showCount).map((item) => (
-        <PostBox key={item.post_uid} post={item} border="border rounded-xl" margin="mb-4" />
+        <PostBox
+          key={item.post_uid}
+          post={item}
+          border="border rounded-xl"
+          margin="mb-4"
+        />
       ))}
       <div className="flex justify-center">
         {showCount <= post.length && (

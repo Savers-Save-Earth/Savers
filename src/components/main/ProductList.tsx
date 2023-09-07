@@ -58,9 +58,20 @@ const ProductList = () => {
           // install Swiper modules
           modules={[Navigation, Pagination, Autoplay]}
           spaceBetween={10}
-          slidesPerView={4}
+          // slidesPerView={2}
           navigation
           autoplay={{ delay: 3000 }}
+          breakpoints={{
+            // 768px 미만인 경우
+            0: {
+              slidesPerView: 2,
+            },
+            // 그 외 화면 너비인 경우
+            1024: {
+              slidesPerView: 4, // 원래 설정 값
+            },
+          }}
+          className="w-full"
         >
           {products
             ?.sort((a, b) => b.like_count - a.like_count)
@@ -80,7 +91,7 @@ const ProductList = () => {
                 </p>
                 {item.sales ? (
                   <span
-                    className="font-bold mr-2 text-[16px]"
+                    className="font-bold mr-2 text-sm"
                     style={{ color: "#5FD100" }}
                   >
                     {item.sales}%

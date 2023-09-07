@@ -9,10 +9,15 @@ interface FreezeModalProps {
   onClick?: () => void;
 }
 
-const FreezeModal = ({ open, onOpenChange, onClose, onClick }: FreezeModalProps) => {
+const FreezeModal = ({
+  open,
+  onOpenChange,
+  onClose,
+  onClick,
+}: FreezeModalProps) => {
   console.log("Modal Component open >>> ", open);
   if (open)
-  return (
+    return (
       <div
         id="modal-container"
         className="fixed top-0 left-0 w-screen h-screen bg-black/30 flex justify-center items-center z-10"
@@ -52,7 +57,7 @@ const FreezeModal = ({ open, onOpenChange, onClose, onClick }: FreezeModalProps)
           </div>
         </div>
       </div>
-  );
+    );
 };
 
 export default FreezeModal;

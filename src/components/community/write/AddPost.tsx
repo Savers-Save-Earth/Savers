@@ -51,9 +51,15 @@ const AddPost: NextComponentType = () => {
   // 미션 관련 부분(동준님)
   useEffect(() => {
     // 사용함수는 api폴더의 checkMission.ts에 있음
-    if(!currentUser) return
-    getMissionHandler(currentUser, currentDate, category, setMissionUid, bigCategory)
-  },[category])
+    if (!currentUser) return;
+    getMissionHandler(
+      currentUser,
+      currentDate,
+      category,
+      setMissionUid,
+      bigCategory,
+    );
+  }, [category]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
