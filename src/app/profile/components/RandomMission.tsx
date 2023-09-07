@@ -2,55 +2,42 @@
 
 import { Database } from "@/types/supabase";
 import React, { useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
-import { useParams } from "next/navigation";
-import { useRouter } from "next/navigation";
 import { convertDate } from "@/libs/util";
 import supabase from "@/libs/supabase";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { MissionList, DailyMission, createMission, fetchMissionListDateAndUid } from "@/api/mission/getMission";
 
-type Profile = Database["public"]["Tables"]["user"]["Row"];
-interface DailyMission {
-  id: string;
-  uid: number;
-  point: number;
-  title: string;
-  content: string;
-  doingYn: boolean;
-  address: string;
-  bigCategory: string;
-  smallCategory: string;
-}
-
-const initialProfile: any = {
-  activePoint: null,
-  badges: null,
-  commentPosts: "",
-  email: "",
-  isActiveDone: false,
-  likedPosts: "",
-  likePosts: "",
-  likeProducts: null,
-  likeRestaurants: "",
-  nickname: "",
-  password: "",
-  profileImage: "",
-  provider: "",
-  uid: "",
-  writePosts: "",
-};
+type MissionInsert = Omit<MissionList, "id">;
 
 const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
   const currentDate = convertDate(new Date());
   const currentDateModify = currentDate.replaceAll("-", ".") as string;
   const searchId = user?.uid || ("" as string);
-
   const [dailyMission, setDailyMission] = useState<DailyMission[]>([]);
   const [modalController, setModalController] = useState(showModal);
+  
+  const queryClient = useQueryClient();
+  const { data: missionListByDateAndUser } = useQuery(["fetchMissionListDateAndUid"], () =>
+  fetchMissionListDateAndUid(searchId, currentDate),
+);
+
+  const createMissionMutaition = useMutation(createMission, {
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["missionList"] });
+      console.log("뮤테이션 성공함");
+    },
+    onError: (error) => {
+      console.error("게시글 등록 에러:", error);
+    },
+  });
 
   useEffect(() => {
-    setModalController(showModal);
-    insertMissionListData();
+    if (showModal === false) {
+      return;
+    } else {
+      setModalController(showModal);
+      insertMissionListData();
+    }
   }, [showModal]);
 
   const insertMissionListData = async () => {
@@ -58,15 +45,10 @@ const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
       // console.error("searchId is undefined");
       return;
     }
-    let { data: missionListData, error } = await supabase
-      .from("missionList")
-      .select("*")
-      .eq("createdAt", currentDate)
-      .eq("user_uid", searchId);
+
     // supabase가 데이터 return할 때 빈 값은 "무조건" 빈 배열[]로 반환하기 때문에, missionListData === null 인 경우가 없다고 타입선언.
-    const myMissions = missionListData!.length == 0 ? [] : missionListData;
-    if (myMissions!.length > 0) {
-      setDailyMission(myMissions || []);
+    if (missionListByDateAndUser!.length > 0) {
+      setDailyMission(missionListByDateAndUser || []);
       return false;
     } else {
       try {
@@ -83,29 +65,20 @@ const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
           .sort(() => Math.random() - 0.5)
           .slice(0, 4);
 
-        const newMissions = randomMissions.map((mission) => ({
-          missionUid: mission.uid,
-          userId: profile.nickname,
+        const newMissions: MissionInsert[] = randomMissions.map((mission) => ({
+          missionUid: mission.uid as string,
+          userId: profile.nickname as string,
           createdAt: convertDate(new Date()),
-          title: mission.title,
-          content: mission.content,
-          bigCategory: mission.bigCategory,
-          smallCategory: mission.smallCategory,
-          doingYn: mission.doingYn,
-          point: 1,
-          user_uid: searchId,
-          address: mission.address,
+          title: mission.title as string,
+          content: mission.content as string,
+          bigCategory: mission.bigCategory as string,
+          smallCategory: mission.smallCategory as string,
+          doingYn: mission.doingYn as boolean,
+          point: 1 as number,
+          user_uid: searchId as string,
+          address: mission.address as string,
         }));
-
-        for (const newMission of newMissions) {
-          const { data, error: insertError } = await supabase
-            .from("missionList")
-            .insert([newMission]);
-
-          if (insertError) {
-          } else {
-          }
-        }
+        createMissionMutaition.mutate(newMissions);
 
         setDailyMission(randomMissions);
       } catch (error) {

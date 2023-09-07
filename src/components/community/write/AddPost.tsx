@@ -1,6 +1,5 @@
 "use client";
 import type { NextComponentType } from "next";
-
 import { useAuth } from "@/hooks/useAuth";
 import TextEditor from "./TextEditor";
 import { useEffect, useState } from "react";

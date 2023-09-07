@@ -1,54 +1,60 @@
 "use client";
 
-import supabase from "@/libs/supabase";
 import { convertDate } from "@/libs/util";
 import { Database } from "@/types/supabase";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import Loading from "@/app/loading";
 import NoMissionDoing from "@/components/profile/NoMissionDoing";
+import { useQuery } from "@tanstack/react-query";
+import { fetchMissionDoing } from "@/api/profile/fetchProfileData";
 
 type MissionDoingProp = Database["public"]["Tables"]["missionList"]["Row"];
 
 const MissionDoing = ({ params }: { params: { id: string } }) => {
-  const [dailyMission, setDailyMission] = useState<MissionDoingProp[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태 추가
+  // const [dailyMission, setDailyMission] = useState<MissionDoingProp[]>([]);
+  // const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태 추가
   const currentDate = convertDate(new Date());
   const searchId = params.id;
 
-  useEffect(() => {
-    fetchMissionData();
-  }, []);
+  const { data : missionDoing, isLoading } = useQuery<any>(
+    ["fetchMissionDoing", searchId,],
+    () => fetchMissionDoing(searchId, currentDate),
+    { cacheTime: 6000 },
+  );
+  if (isLoading) return <Loading/>
 
-  const fetchMissionData = async () => {
-    try {
-      let { data: dailyMission } = await supabase
-        .from("missionList")
-        .select("*")
-        .eq("createdAt", currentDate)
-        .eq("user_uid", searchId)
-        .eq("doingYn", true);
-      setIsLoading(false);
-      if (dailyMission?.length === 0) return <div>일일미션을 받아주세요!</div>;
-      else {
-        setDailyMission(dailyMission!);
-      }
-    } catch (error) {
-      // console.log("데이터가져올 때 에러", error);
-      setIsLoading(false);
-      return false;
-    }
-  };
+  // useEffect(() => {
+  //   fetchMissionData();
+  // }, []);
+
+  // const fetchMissionData = async () => {
+  //   try {
+  //     let { data: dailyMission } = await supabase
+  //       .from("missionList")
+  //       .select("*")
+  //       .eq("createdAt", currentDate)
+  //       .eq("user_uid", searchId)
+  //       .eq("doingYn", true);
+  //     setIsLoading(false);
+  //     if (dailyMission?.length === 0) return <div>일일미션을 받아주세요!</div>;
+  //     else {
+  //       setDailyMission(dailyMission!);
+  //     }
+  //   } catch (error) {
+  //     console.log("데이터가져올 때 에러", error);
+  //     setIsLoading(false);
+  //     return false;
+  //   }
+  // };
 
   return (
     <>
-      {isLoading ? ( // isLoading이 true이면 로딩 표시를 표시합니다.
-        <Loading />
-      ) : dailyMission.length === 0 ? (
+      {missionDoing.length === 0 ? (
         <NoMissionDoing />
       ) : (
         <div className="flex justify-center items-center gap-x-4 text-gray-800 px-2">
-          {dailyMission?.map((mission) => {
+          {missionDoing?.map((mission: any) => {
             return (
               <div
                 className="py-6 px-4 flex flex-col justify-between items-center w-[180px] h-[300px] rounded-2xl break-words hover:scale-110 hover:duration-500 bg-[#F3FFEA]"

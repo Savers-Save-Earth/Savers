@@ -1,61 +1,64 @@
 "use client";
 
-import supabase from "@/libs/supabase";
-import { Database } from "@/types/supabase";
-import React, { useState, useEffect } from "react";
-
+import React from "react";
 import Loading from "@/app/loading";
 import NoMissionDone from "@/components/profile/NoMissionDone";
-
-type MissionDoneProp = Database["public"]["Tables"]["missionList"]["Row"];
+import { useQuery } from "@tanstack/react-query";
+import { fetchMissionDone } from "@/api/profile/fetchProfileData";
 
 const MissionDone = ({ params }: { params: { id: string } }) => {
-  const [missionDone, setMissionDone] = useState<MissionDoneProp[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태 추가
+  // const [missionDone, setMissionDone] = useState<MissionDoneProp[]>([]);
+  // const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태 추가
   const searchId = params.id;
 
-  useEffect(() => {
-    fetchMissionData();
-  }, []);
+  const { data : missionDone, isLoading } = useQuery<any>(
+    ["fetchMissionDone", searchId,],
+    () => fetchMissionDone(searchId),
+    { cacheTime: 6000 },
+  );
+  if (isLoading) return <Loading/>
 
-  const fetchMissionData = async () => {
-    try {
-      let { data: missionDone } = await supabase
-        .from("missionList")
-        .select("*")
-        .eq("user_uid", searchId)
-        .eq("doingYn", false);
+  // useEffect(() => {
+  //   fetchMissionData();
+  // }, []);
 
-      setIsLoading(false); // 데이터 가져오기 후 로딩 상태를 false로 설정
+  // const fetchMissionData = async () => {
+  //   try {
+  //     // let { data: missionDone } = await supabase
+  //     //   .from("missionList")
+  //     //   .select("*")
+  //     //   .eq("user_uid", searchId)
+  //     //   .eq("doingYn", false);
 
-      if (missionDone?.length === 0) {
-        setMissionDone([]);
-        return <div>지금까지 완료한 미션이 없네요!!</div>;
-      } else {
-        setMissionDone(missionDone!);
-      }
-    } catch (error) {
-      setIsLoading(false);
-      return false;
-    }
-  };
+  //     // setIsLoading(false); // 데이터 가져오기 후 로딩 상태를 false로 설정
+
+  //     if (missionDone?.length === 0) {
+  //       setMissionDone([]);
+  //       return <div>지금까지 완료한 미션이 없네요!!</div>;
+  //     } else {
+  //       setMissionDone(missionDone!);
+  //     }
+  //   } catch (error) {
+  //     console.log("데이터가져올 때 에러:", error);
+  //     setIsLoading(false);
+  //     return false;
+  //   }
+  // };
 
   return (
     <>
-      {isLoading ? ( // isLoading이 true이면 로딩 표시를 표시합니다.
-        <Loading />
-      ) : missionDone.length === 0 ? (
+      {missionDone.length === 0 ? (
         <NoMissionDone />
       ) : (
         <div className="flex flex-wrap justify-center items-center gap-x-4 text-gray-800">
-          {missionDone?.map((mission) => {
+          {missionDone?.map((mission: any) => {
             return (
               <div
-                className="relative py-6 px-4 flex flex-col justify-between items-center w-[180px] h-[300px] rounded-2xl break-words hover:scale-110 hover:duration-500 opacity-70 bg-[#F3FFEA]"
+                className="relative py-6 px-4 flex flex-col justify-between items-center w-[180px] h-[300px] rounded-2xl break-words hover:scale-110 hover:duration-500 opacity-100 bg-[#F3FFEA]"
                 key={mission.id}
               >
                 {/* 내용 및 버튼 */}
-                <div className="flex flex-col gap-3 items-start self-stretch opacity-100">
+                <div className="flex flex-col gap-3 items-start self-stretch opacity-10">
                   <h1 className="text-[24px] leading-[31px] font-semibold text-[#4DAB00]">
                     {mission.title}
                   </h1>
@@ -104,7 +107,7 @@ const MissionDone = ({ params }: { params: { id: string } }) => {
                 {/* 버튼 */}
                 <button
                   disabled
-                  className="flex py-2 px-[10px] justify-center items-center gap-[10px] bg-[#5FD100] rounded-2xl text-[#FCFCFD] disabled:opacity-50"
+                  className="flex py-2 px-[10px] justify-center items-center gap-[10px] bg-[#5FD100] rounded-2xl text-[#FCFCFD] disabled:opacity-10"
                   onClick={() =>
                     mission.bigCategory === "글쓰기"
                       ? window.open("/community")

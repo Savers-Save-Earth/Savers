@@ -18,6 +18,8 @@ import {
   PATHNAME_RECIPE,
   PATHNAME_RESTAURANT,
 } from "@/enums/community";
+import CategoryTag from "../ui/CategoryTag";
+import { getFirstImage, getImgUrl, removeHtmlTags } from "@/libs/util";
 
 type QueryKeyMap = {
   [key: string]: string[];
