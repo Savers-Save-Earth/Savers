@@ -50,7 +50,7 @@ const Intro = () => {
           />
         </div>
         <div
-          className="xl:text-8xl fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-6xl font-bold transition-opacity duration-100 ease-in-out"
+          className="xl:text-8xl fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white sm:text-6xl text-5xl  font-bold transition-opacity duration-100 ease-in-out"
           style={{
             opacity: Math.max(0, 1 - scrollY / 100),
             display: scrollY > 4500 ? "none" : "block",
@@ -60,12 +60,21 @@ const Intro = () => {
         </div>
 
         <div
-          className="fixed bottom-[20px] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-8xl font-bold transition-opacity duration-100 ease-in-out blinking-text"
+          className="fixed bottom-[20px] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-8xl font-bold transition-opacity duration-100 ease-in-out blinking-text cursor-pointer"
           style={{
             opacity: Math.max(0, 1 - scrollY / 100),
             display: scrollY > 100 ? "none" : "block",
           }}
+          onClick={() => {
+            if (scrollY < 5600) {
+              window.scroll({
+                top: 5600,
+                // behavior: 'smooth', // 부드럽게 스크롤 이동
+              });
+            }
+          }}
         >
+          <p className="xl:text-[17px] text-[15px] text-center">SKIP</p>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="40"
@@ -82,7 +91,7 @@ const Intro = () => {
           </svg>
         </div>
         <div
-          className="text-3xl fade-element fixed  left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white xl:text-4xl font-bold transition-opacity duration-100 ease-in-out"
+          className="sm:text-3xl text-lg fade-element fixed  left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white xl:text-4xl font-bold transition-opacity duration-100 ease-in-out"
           style={{
             textAlign: "center",
             top: "25%",
@@ -99,7 +108,7 @@ const Intro = () => {
           지구를 지키는 것은 우리의 선택입니다.
         </div>
         <div
-          className="text-3xl fade-element fixed left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white xl:text-4xl font-bold transition-opacity duration-100 ease-in-out"
+          className="sm:text-3xl text-lg fade-element fixed left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white xl:text-4xl font-bold transition-opacity duration-100 ease-in-out"
           style={{
             textAlign: "center",
             top: "50%",
@@ -116,7 +125,7 @@ const Intro = () => {
           지구는 하나밖에 없는 우리의 공간입니다.
         </div>
         <div
-          className="text-3xl fade-element fixed left-1/2 transform -translate-x-1/2 -translate-y-1/2 xl:text-4xl font-bold text-white transition-opacity duration-100 ease-in-out"
+          className="sm:text-3xl text-lg  fade-element fixed left-1/2 transform -translate-x-1/2 -translate-y-1/2 xl:text-4xl font-bold text-white transition-opacity duration-100 ease-in-out"
           style={{
             textAlign: "center",
             top: "75%",

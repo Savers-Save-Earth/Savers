@@ -1,18 +1,18 @@
 "use client";
 import React, { useEffect } from "react";
 import { useState } from "react";
-import supabase from "@/libs/supabase";
 import { useRouter } from "next/navigation";
 import "react-toastify/dist/ReactToastify.css";
-import RandomMission from "@/app/profile/components/RandomMission";
 import { ToastInfo } from "@/libs/toastifyAlert";
 import { useAuth } from "@/hooks/useAuth";
+import { useIsMobileSm } from "@/hooks/useIsMobileSm";
 
 const DailyMission = () => {
   const [isHovered, setIsHovered] = useState(false);
   const router = useRouter();
 
   const currentUser = useAuth();
+  const isMobileSm = useIsMobileSm();
 
   const missionHandler = () => {
     if (!currentUser) {
@@ -25,7 +25,9 @@ const DailyMission = () => {
 
   return (
     <>
-      <h1 className="text-2xl mb-6 font-semibold inline-block">일일미션</h1>
+      <h1 className="sm:text-2xl sm:mb-6 mb-4  font-semibold inline-block text-lg">
+        일일미션
+      </h1>
 
       <span
         className={`text-gray-700 ml-2 text-[14px] relative cursor-pointer${
@@ -36,7 +38,7 @@ const DailyMission = () => {
       >
         ?
         {isHovered && (
-          <div className="absolute left-1 bottom-3 bg-[#eaf0e5] w-[220px] rounded-md p-1.5">
+          <div className="absolute left-1 bottom-3 bg-[#eaf0e5] w-[220px] z-10 rounded-md p-1.5">
             하루마다 주어지는 일일미션을 완료해 나만의 미션 캘린더를 채워보세요!
           </div>
         )}
@@ -44,19 +46,38 @@ const DailyMission = () => {
 
       <div
         onClick={missionHandler}
-        className="bg-[#5FD100] flex relative items-center justify-between w-full h-[158px] rounded-2xl p-8 mb-16 cursor-pointer"
+        className="h-[120px] xl:h-[158px] bg-[#5FD100] flex relative items-center justify-between w-full  rounded-2xl sm:p-8 p-4 mb-16 cursor-pointer"
       >
-        <img
-          src="assets/mission/card.png"
-          alt="카드 이미지"
-          className="absolute right-20"
-        />
+        {!isMobileSm ? (
+          <img
+            src="assets/mission/card.png"
+            alt="카드 이미지"
+            className="absolute right-20 xl:h-full h-[120px] "
+          />
+        ) : (
+          <img
+            src="assets/mission/card2.png"
+            alt="카드 이미지"
+            className="absolute bottom-0 right-5 xl:h-full h-[120px]"
+          />
+        )}
+
         <div>
-          <span className="text-white text-[20px]">지구를 지키는</span>
-          <br />
-          <span className="font-semibold text-white text-[20px]">
-            일일미션 랜덤 뽑기
+          <span className="text-white sm:text-[20px] text-sm">
+            지구를 지키는
           </span>
+          <br />
+          {!isMobileSm ? (
+            <span className="font-semibold text-white text-[20px]">
+              일일미션 랜덤 뽑기
+            </span>
+          ) : (
+            <span className="font-semibold text-white text-[17px]">
+              일일미션
+              <br />
+              랜덤 뽑기
+            </span>
+          )}
         </div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
