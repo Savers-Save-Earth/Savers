@@ -277,7 +277,7 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
                 <div className="flex flex-col w-full">
                   <div className="flex flex-col">
                     <div className="flex justify-between">
-                      <div className="flex xl:flex-row flex-col space-x-1 items-center">
+                      <div className="flex xl:flex-row xl:space-y-0 flex-col space-y-1 space-x-1 justify-center">
                         <span className="mr-1">{comment.writer_name}</span>
                         {postDetail?.author_uid === comment.writer_uid ? (
                           <CommentTag>작성자</CommentTag>
@@ -416,8 +416,8 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
                       <div className="flex flex-col w-full">
                         <div className="flex flex-col">
                           <div className="flex justify-between">
-                            <div className="flex sm:flex-row flex-col space-x-1 items-center">
-                              <span className="mr-1">{reply.writer_name}</span>
+                            <div className="flex sm:flex-row flex-col space-x-1">
+                              <span className="sm:mr-0 mr-1">{reply.writer_name}</span>
                               <div className="flex space-x-1">
                                 {postDetail?.author_uid === reply.writer_uid ? (
                                   <CommentTag>작성자</CommentTag>
