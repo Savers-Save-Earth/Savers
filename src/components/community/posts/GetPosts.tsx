@@ -1,6 +1,4 @@
 "use client";
-import Link from "next/link";
-
 import { useMemo } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getPosts } from "@/api/community/post";
@@ -87,7 +85,7 @@ const GetPosts = () => {
     return "데이터를 불러오는 중에 오류가 발생했습니다.";
   }
   return (
-    <section className="flex flex-col mt-10 mb-20 w-[725px]">
+    <section className="flex flex-col mt-10 mb-20 xl:w-[725px]">
       {
         <div className="flex flex-col mb-5 justify-center">
           <h2 className="text-xl flex mb-8">{getCategoryName(pathname)} 글</h2>
