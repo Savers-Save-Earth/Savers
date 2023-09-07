@@ -2,14 +2,11 @@
 
 import React from "react";
 import Loading from "@/app/loading";
-import NoMissionDone from "@/components/profile/NoMissionDone";
 import { useQuery } from "@tanstack/react-query";
 import { fetchMissionDone } from "@/api/profile/fetchProfileData";
 import NoListToShown from "@/components/profile/NoListShown";
 
 const MissionDone = ({ params }: { params: { id: string } }) => {
-  // const [missionDone, setMissionDone] = useState<MissionDoneProp[]>([]);
-  // const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태 추가
   const searchId = params.id;
 
   const { data: missionDone, isLoading } = useQuery<any>(
@@ -22,33 +19,6 @@ const MissionDone = ({ params }: { params: { id: string } }) => {
   if (missionDone && missionDone.length < 1) {
     return <NoListToShown listProp={"noMissionDone"} />;
   }
-
-  // useEffect(() => {
-  //   fetchMissionData();
-  // }, []);
-
-  // const fetchMissionData = async () => {
-  //   try {
-  //     // let { data: missionDone } = await supabase
-  //     //   .from("missionList")
-  //     //   .select("*")
-  //     //   .eq("user_uid", searchId)
-  //     //   .eq("doingYn", false);
-
-  //     // setIsLoading(false); // 데이터 가져오기 후 로딩 상태를 false로 설정
-
-  //     if (missionDone?.length === 0) {
-  //       setMissionDone([]);
-  //       return <div>지금까지 완료한 미션이 없네요!!</div>;
-  //     } else {
-  //       setMissionDone(missionDone!);
-  //     }
-  //   } catch (error) {
-  //     console.log("데이터가져올 때 에러:", error);
-  //     setIsLoading(false);
-  //     return false;
-  //   }
-  // };
 
   return (
     <div className="flex flex-wrap justify-center items-center gap-x-4 text-gray-800">

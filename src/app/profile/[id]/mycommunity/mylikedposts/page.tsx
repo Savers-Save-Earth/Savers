@@ -5,7 +5,6 @@ import supabase from "@/libs/supabase";
 import { Database } from "@/types/supabase";
 import { useRouter } from "next/navigation";
 import UserLikedPost from "./UserLikedPost";
-import NoBookmarkedPost from "@/components/profile/NoBookmarkedPost";
 import Loading from "@/app/loading";
 import { useQuery } from "@tanstack/react-query";
 import { fetchFavoritePosts } from "@/api/profile/fetchCommunityData";
@@ -14,7 +13,7 @@ import NoListToShown from "@/components/profile/NoListShown";
 type UserLikedPost = Database["public"]["Tables"]["community"]["Row"];
 
 const MyLikedPosts = ({ params }: { params: { id: string } }) => {
-  const loadBoundaryValue = 5;
+  const loadBoundaryValue = 10;
   const [userLikedPosts, setUserLikedPosts] = useState<UserLikedPost[]>([]);
   const [loadCount, setLoadCount] = useState<number>(loadBoundaryValue);
   const [loadMoreBtn, setLoadMoreBtn] = useState<string>("");

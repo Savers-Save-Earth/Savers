@@ -5,7 +5,6 @@ import supabase from "@/libs/supabase";
 import { Database } from "@/types/supabase";
 import { useRouter } from "next/navigation";
 import Loading from "@/app/loading";
-import NoBookmarkedProduct from "@/components/profile/NoBookmarkedProduct";
 import { useQuery } from "@tanstack/react-query";
 import { fetchFavoriteProducts } from "@/api/profile/fetchFavoriteData";
 import NoListToShown from "@/components/profile/NoListShown";

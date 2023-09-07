@@ -5,7 +5,6 @@ import { Database } from "@/types/supabase";
 import React from "react";
 
 import Loading from "@/app/loading";
-import NoMissionDoing from "@/components/profile/NoMissionDoing";
 import { useQuery } from "@tanstack/react-query";
 import { fetchMissionDoing } from "@/api/profile/fetchProfileData";
 import NoListToShown from "@/components/profile/NoListShown";
@@ -13,8 +12,6 @@ import NoListToShown from "@/components/profile/NoListShown";
 type MissionDoingProp = Database["public"]["Tables"]["missionList"]["Row"];
 
 const MissionDoing = ({ params }: { params: { id: string } }) => {
-  // const [dailyMission, setDailyMission] = useState<MissionDoingProp[]>([]);
-  // const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태 추가
   const currentDate = convertDate(new Date());
   const searchId = params.id;
 
@@ -28,29 +25,6 @@ const MissionDoing = ({ params }: { params: { id: string } }) => {
   if (missionDoing && missionDoing.length < 1) {
     return <NoListToShown listProp={"noMissionDoing"} />;
   }
-  // useEffect(() => {
-  //   fetchMissionData();
-  // }, []);
-
-  // const fetchMissionData = async () => {
-  //   try {
-  //     let { data: dailyMission } = await supabase
-  //       .from("missionList")
-  //       .select("*")
-  //       .eq("createdAt", currentDate)
-  //       .eq("user_uid", searchId)
-  //       .eq("doingYn", true);
-  //     setIsLoading(false);
-  //     if (dailyMission?.length === 0) return <div>일일미션을 받아주세요!</div>;
-  //     else {
-  //       setDailyMission(dailyMission!);
-  //     }
-  //   } catch (error) {
-  //     console.log("데이터가져올 때 에러", error);
-  //     setIsLoading(false);
-  //     return false;
-  //   }
-  // };
 
   return (
       <div className="flex justify-center items-center gap-x-4 text-gray-800 px-2">

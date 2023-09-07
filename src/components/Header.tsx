@@ -99,7 +99,7 @@ const Header = () => {
       {pathname === "/" ? (
         <header
           className={cls(
-            "fixed z-10 top-0 left-1/2 -translate-x-1/2  text-gray-900 w-screen",
+            "fixed z-20 top-0 left-1/2 -translate-x-1/2  text-gray-900 w-screen",
             scrollY < 4900 ? "bg-transparent" : "bg-white/30 backdrop-blur-md",
           )}
         >
@@ -278,7 +278,7 @@ const Header = () => {
           </div>
         </header>
       ) : (
-        <header className="fixed top-0 left-1/2 -translate-x-1/2 z-100 text-gray-900 w-screen bg-white/30 backdrop-blur-md">
+        <header className="fixed z-20 top-0 left-1/2 -translate-x-1/2 text-gray-900 w-screen bg-white/30 backdrop-blur-md">
           <div className="w-[1280px] container mx-auto flex flex-wrap p-5 justify-between items-center">
             <Link href={`/`}>
               <span className="flex font-medium items-center text-gray-900 mb-4 md:mb-0 ml-3 text-xl">
