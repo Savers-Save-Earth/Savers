@@ -1,8 +1,6 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
 import MarkerLists from "@/components/restaurant/MarkerLists";
-
 const getCurrentCoordinate = async () => {
   return new Promise((res, rej) => {
     // HTML5의 geolocaiton으로 사용할 수 있는지 확인합니다.
@@ -11,7 +9,6 @@ const getCurrentCoordinate = async () => {
       navigator.geolocation.getCurrentPosition(function (position) {
         const lat = position.coords.latitude; // 위도
         const lon = position.coords.longitude; // 경도
-
         const coordinate = new kakao.maps.LatLng(lat, lon);
         res(coordinate);
       });
@@ -20,17 +17,14 @@ const getCurrentCoordinate = async () => {
     }
   });
 };
-
 const KakaoMap = () => {
   // const [mapCenter, setMapCenter] = useState({ x: 127.1086228, y: 37.4012191 });
   const [currentCategory, setCurrentCategory] = useState("비건"); // 기본값으로 "전체" 카테고리 설정
   const [markerList, setMarkerList] = useState([]); // 마커 리스트 상태 추가
-
   useEffect(() => {
     const script = document.createElement("script");
     script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAOMAP_KEY}&autoload=false`;
     document.head.appendChild(script);
-
     script.onload = () => {
       if (window.kakao) {
         window.kakao.maps.load(() => {
@@ -43,44 +37,34 @@ const KakaoMap = () => {
             level: 5,
           };
           const map = new window.kakao.maps.Map(Container, Option);
-
           const setInitLocation = async () => {
             let locPosition: any = await getCurrentCoordinate();
-
             // 지도 중심좌표를 접속위치로 변경합니다
             map.setCenter(locPosition);
-
             //현재 위치에 마커 표시
             new kakao.maps.Marker({
               position: locPosition,
               map: map,
             });
-
             //   CoordPlaces.refetch();
           };
           setInitLocation();
-
           // 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
           let mapTypeControl = new kakao.maps.MapTypeControl();
-
           // 지도에 컨트롤을 추가해야 지도위에 표시됩니다
           // kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
           map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
-
           // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
           let zoomControl = new kakao.maps.ZoomControl();
           map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
-
           //
           const searchPlaces = async (coordinate: any) => {
             const ps = new window.kakao.maps.services.Places();
-
             const options = {
               location: coordinate,
               radius: 10000,
               sort: window.kakao.maps.services.SortBy.DISTANCE,
             };
-
             ps.keywordSearch(
               currentCategory,
               (data: any, status: any) => {
@@ -91,14 +75,10 @@ const KakaoMap = () => {
               options,
             );
           };
-
           const displayPlaces = (places: any) => {
             removeMarker();
-
             const newMarkerList: any = [];
-
             let imgSrc = "";
-
             places.forEach((place: any) => {
               const markerPosition = new window.kakao.maps.LatLng(
                 place.y,
@@ -123,41 +103,34 @@ const KakaoMap = () => {
                 imgSize,
                 imgOption,
               );
-
               const marker = new window.kakao.maps.Marker({
                 position: markerPosition,
                 image: markerImg,
                 map: map,
               });
-
               //     var iwContent = `<div style= "padding: 8px; width: 250px; border: 1px solid black; border-radius: 25px;">
               // <h1 class="infoWindow-name" style="font-weight: bold">${place.place_name}</h1>
-              // <p class="infoWindow-address" style="font-size: 13px; color: #1f1f1f">${place.address_name}</p>
-              // <p class="infoWindow-road-address" style="font-size: 13px; color: #1f1f1f">(지번)${place.road_address_name}</p>
-              // <p class="infoWindow-phone"style="font-size: 13px; color: #1f1f1f" >${place.phone}</p>
+              // <p class="infoWindow-address" style="font-size: 13px; color: #1F1F1F">${place.address_name}</p>
+              // <p class="infoWindow-road-address" style="font-size: 13px; color: #1F1F1F">(지번)${place.road_address_name}</p>
+              // <p class="infoWindow-phone"style="font-size: 13px; color: #1F1F1F" >${place.phone}</p>
               // <a href=${place.place_url} " target="_blank"><button style="border-radius: 15px; border: 1px solid black;  background-color:rgb(249 250 251); color:rgb(107 114 128); font-size: 13px; padding:3px; width: 90px;">상세보기</button></a>
               // </div>`;
-
               //     var iwRemoveable = true;
-
               //     // 인포윈도우를 생성합니다
               //     var infowindow = new kakao.maps.InfoWindow({
               //       content: iwContent,
               //       removable: iwRemoveable,
               //     });
-
               //     window.kakao.maps.event.addListener(marker, "click", function () {
               //       // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
               //       infowindow.open(map, marker);
               //     });
-
               //     // 마커에 마우스아웃 이벤트: map을 누르면 실행
               //     window.kakao.maps.event.addListener(map, "click", function () {
               //       // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
               //       infowindow.close();
               //     });
               let content = document.createElement("div");
-
               // 커스텀 오버레이 엘리먼트를 만들고, 컨텐츠를 추가합니다
               let info = document.createElement("div");
               info.className = "overlay";
@@ -169,7 +142,6 @@ const KakaoMap = () => {
              <a href=${place.place_url} " target="_blank"><button style="margin-left: 60px; auto; border-radius: 15px;  background-color:rgb(249 250 251); color:rgb(100 116 139); font-size: 13px; padding:3px; width: 90px;">상세보기</button></a>
              </div>`;
               content.appendChild(info);
-
               let closeBtn = document.createElement("button");
               closeBtn.innerHTML = `
             <svg width="27" height="27" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-left:110px; background-color: white; padding:8px; border-radius: 50px;">
@@ -180,34 +152,27 @@ const KakaoMap = () => {
               closeBtn.onclick = function () {
                 overlay.setMap(null);
               };
-
               content.appendChild(closeBtn);
-
               let overlay = new window.kakao.maps.CustomOverlay({
                 content: content,
                 position: marker.getPosition(),
               });
-
               // 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
               window.kakao.maps.event.addListener(marker, "click", function () {
                 overlay.setMap(map);
               });
-
               markers.push(marker);
               newMarkerList.push(place);
             });
             setMarkerList(newMarkerList);
           };
-
           const removeMarker = () => {
             markers.forEach((marker: any) => {
               marker.setMap(null);
             });
             markers = [];
           };
-
           let markers: any = [];
-
           const mapIdleHandler = () => {
             const latlng = map.getCenter();
             const coordinate = new window.kakao.maps.LatLng(
@@ -216,7 +181,6 @@ const KakaoMap = () => {
             );
             searchPlaces(coordinate);
           };
-
           window.kakao.maps.event.addListener(map, "idle", mapIdleHandler);
           return () => {
             window.kakao.maps.event.removeListener(map, "idle", mapIdleHandler);
@@ -225,10 +189,9 @@ const KakaoMap = () => {
       }
     };
   }, [currentCategory]);
-
   return (
     <div>
-      <div className="pt-16 md:pt-28">
+      <div className="pt-17 md:pt-28">
         <h1 className="hidden md:flex mb-12 text-2xl text-gray-900  font-semibold ">
           비건식당 찾기
         </h1>
@@ -282,5 +245,4 @@ const KakaoMap = () => {
     </div>
   );
 };
-
 export default KakaoMap;

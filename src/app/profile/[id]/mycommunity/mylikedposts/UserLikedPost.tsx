@@ -24,7 +24,7 @@ export default function UserLikedPost({ post }: any) {
 
         setIsLoading(false); // 데이터 로딩 완료 후 상태 업데이트
       } catch (error) {
-        console.log("데이터 가져오기 에러:", error);
+        // console.log("데이터 가져오기 에러:", error);
         setIsLoading(false);
       }
     };

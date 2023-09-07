@@ -73,14 +73,14 @@ const SignUp: React.FC = () => {
         });
 
       if (loginError) {
-        console.error("로그인에러:", loginError);
+        // console.error("로그인에러:", loginError);
       } else {
         setUserData(loginData);
         userInfoUpdater(loginData, nickname);
         router.push("/");
       }
     } catch (error) {
-      console.error("가입 및 로그인 에러:", error);
+      // console.error("가입 및 로그인 에러:", error);
     }
   };
 

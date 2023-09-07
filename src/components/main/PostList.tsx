@@ -20,7 +20,7 @@ const PostList = () => {
 
       setPost(sortedData!);
     } catch (error) {
-      console.error("Error fetching products:", error);
+      // console.error("Error fetching products:", error);
     }
   };
   useEffect(() => {
@@ -47,7 +47,7 @@ const PostList = () => {
       }
     }
 
-    console.log(firstImgTag);
+    // console.log(firstImgTag);
 
     return srcContent; // 추출한 src 속성의 내용을 반환합니다.
   };

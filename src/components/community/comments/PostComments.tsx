@@ -10,11 +10,24 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { useAuth } from "@/hooks/useAuth";
-import { createReply, deleteReply, getReplies, updateReply } from "@/api/community/reply";
+import {
+  createReply,
+  deleteReply,
+  getReplies,
+  updateReply,
+} from "@/api/community/reply";
 import { updatePost } from "@/api/community/post";
 
 import CommentTag from "../ui/CommentTag";
-import { CommentType, DetailPostProps, EditCommentType, EditReplyType, NewCommentType, NewReplyType, ReplyType } from "@/types/types";
+import {
+  CommentType,
+  DetailPostProps,
+  EditCommentType,
+  EditReplyType,
+  NewCommentType,
+  NewReplyType,
+  ReplyType,
+} from "@/types/types";
 import Image from "next/image";
 
 import { cls, convertTimestamp } from "@/libs/util";
@@ -43,24 +56,23 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
     getReplies(postUid),
   );
 
-  const totalCommentsNumber = (comments?.length || 0) + (replies?.length || 0)
+  const totalCommentsNumber = (comments?.length || 0) + (replies?.length || 0);
 
   // 댓글 개수 변동 있을 때 Post-number_comments에 숫자 업데이트
   useEffect(() => {
     updatePost({ post_uid: postUid, number_comments: totalCommentsNumber });
   }, [totalCommentsNumber]);
 
-
   // 댓글 등록 mutation
   const queryClient = useQueryClient();
   const createCommentMutation = useMutation(createComment, {
     onSuccess: () => {
-      ToastSuccess("댓글이 등록되었습니다")
+      ToastSuccess("댓글이 등록되었습니다");
       queryClient.invalidateQueries({ queryKey: ["comments", postUid] });
       setNewComment("");
     },
     onError: (error) => {
-      console.error("댓글 등록 에러:", error);
+      // console.error("댓글 등록 에러:", error);
       ToastError("댓글이 정상적으로 등록되지 않았습니다. 다시 시도해주세요!");
     },
   });
@@ -93,10 +105,8 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
       ToastSuccess("댓글이 정상적으로 삭제되었습니다");
     },
     onError: (error) => {
-      console.error("댓글 삭제 에러:", error);
-      Error(
-        "댓글이 정상적으로 삭제되지 않았습니다. 다시 시도해주세요!",
-      );
+      // console.error("댓글 삭제 에러:", error);
+      Error("댓글이 정상적으로 삭제되지 않았습니다. 다시 시도해주세요!");
     },
   });
 
@@ -113,7 +123,7 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
       queryClient.invalidateQueries({ queryKey: ["comments", postUid] });
     },
     onError: (error) => {
-      console.error("댓글 수정 에러:", error);
+      // console.error("댓글 수정 에러:", error);
       ToastError("댓글이 정상적으로 수정되지 않았습니다. 다시 시도해주세요!");
     },
   });
@@ -156,10 +166,8 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
       setNewComment("");
     },
     onError: (error) => {
-      console.error("대댓글 등록 에러:", error);
-      ToastError(
-        "대댓글이 정상적으로 등록되지 않았습니다. 다시 시도해주세요!",
-      );
+      // console.error("대댓글 등록 에러:", error);
+      ToastError("대댓글이 정상적으로 등록되지 않았습니다. 다시 시도해주세요!");
     },
   });
 
@@ -169,10 +177,8 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
       queryClient.invalidateQueries({ queryKey: ["replies", postUid] });
     },
     onError: (error) => {
-      console.error("대댓글 수정 에러:", error);
-      ToastError(
-        "대댓글이 정상적으로 수정되지 않았습니다. 다시 시도해주세요!",
-      );
+      // console.error("대댓글 수정 에러:", error);
+      ToastError("대댓글이 정상적으로 수정되지 않았습니다. 다시 시도해주세요!");
     },
   });
 
@@ -182,10 +188,8 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
       queryClient.invalidateQueries({ queryKey: ["replies", postUid] });
     },
     onError: (error) => {
-      console.error("대댓글 수정 에러:", error);
-      Error(
-        "대댓글이 정상적으로 수정되지 않았습니다. 다시 시도해주세요!",
-      );
+      // console.error("대댓글 수정 에러:", error);
+      Error("대댓글이 정상적으로 수정되지 않았습니다. 다시 시도해주세요!");
     },
   });
 
@@ -260,9 +264,7 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
       >
         <div className="flex py-5 border-b">
           <p>댓글</p>
-            <span className="text-gray-400 ml-1">
-              {totalCommentsNumber}
-            </span>
+          <span className="text-gray-400 ml-1">{totalCommentsNumber}</span>
         </div>
         <div className="flex flex-col w-full">
           {comments?.map((comment) => (
@@ -284,24 +286,26 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
                           <CommentTag>내댓글</CommentTag>
                         ) : null}
                       </div>
-                      {
-                        editingCommentId === comment.comment_uid
-                          ?
-                          null
-                          :
-                          (currentUser?.uid === comment.writer_uid
-                            && comment.isDeleted === false
-                            ? (
-                          <div className="space-x-2 text-sm text-gray-700">
-                            <button
-                              onClick={() => handleEditCommentState(comment.comment_uid)}
-                            >
-                              수정
-                            </button>
-                            <button onClick={() => handleDeleteComment(comment.comment_uid)}>삭제</button>
-                          </div>
-                        ) : null)
-                      }
+                      {editingCommentId ===
+                      comment.comment_uid ? null : currentUser?.uid ===
+                          comment.writer_uid && comment.isDeleted === false ? (
+                        <div className="space-x-2 text-sm text-gray-700">
+                          <button
+                            onClick={() =>
+                              handleEditCommentState(comment.comment_uid)
+                            }
+                          >
+                            수정
+                          </button>
+                          <button
+                            onClick={() =>
+                              handleDeleteComment(comment.comment_uid)
+                            }
+                          >
+                            삭제
+                          </button>
+                        </div>
+                      ) : null}
                     </div>
                     <span className="mt-1 text-sm text-gray-400">
                       {comment.updated_date}
@@ -326,13 +330,22 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
                           취소
                         </button>
                         <button
-                          onClick={() => handleSaveEditComment(comment.comment_uid)}
-                          className="text-mainGreen">수정</button>
+                          onClick={() =>
+                            handleSaveEditComment(comment.comment_uid)
+                          }
+                          className="text-mainGreen"
+                        >
+                          수정
+                        </button>
                       </div>
                     </div>
                   ) : (
                     <div className="py-2 pr-6 text-gray-700 mt-2">
-                      {comment.isDeleted === false ? <p>{comment.content}</p> : <p className="text-gray-300">삭제된 댓글입니다.</p>}
+                      {comment.isDeleted === false ? (
+                        <p>{comment.content}</p>
+                      ) : (
+                        <p className="text-gray-300">삭제된 댓글입니다.</p>
+                      )}
                       {currentUser && comment.isDeleted === false ? (
                         <button
                           onClick={() => {
@@ -395,7 +408,7 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
                     key={reply.reply_uid}
                   >
                     <div className="flex items-start space-x-4 pl-14">
-                    <ProfileImage userUid={reply.writer_uid} />
+                      <ProfileImage userUid={reply.writer_uid} />
                       <div className="flex flex-col w-full">
                         <div className="flex flex-col">
                           <div className="flex justify-between">
@@ -408,34 +421,42 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
                                 <CommentTag>내댓글</CommentTag>
                               ) : null}
                             </div>
-                            {
-                              editingReplyId === reply.reply_uid
-                                ?
-                                null
-                                :
-                                (currentUser?.uid === reply.writer_uid ? (
-                                  <div className="space-x-2 text-sm text-gray-700">
-                                    <button onClick={() => handleEditReply(reply.reply_uid)}>수정</button>
-                                    <button onClick={() => handleDeleteReply(reply.reply_uid)}>삭제</button>
-                                  </div>
-                                ) : null)
-                            }
+                            {editingReplyId ===
+                            reply.reply_uid ? null : currentUser?.uid ===
+                              reply.writer_uid ? (
+                              <div className="space-x-2 text-sm text-gray-700">
+                                <button
+                                  onClick={() =>
+                                    handleEditReply(reply.reply_uid)
+                                  }
+                                >
+                                  수정
+                                </button>
+                                <button
+                                  onClick={() =>
+                                    handleDeleteReply(reply.reply_uid)
+                                  }
+                                >
+                                  삭제
+                                </button>
+                              </div>
+                            ) : null}
                           </div>
                           <span className="mt-1 text-sm text-gray-400">
                             {reply.update_date}
                           </span>
                         </div>
-                        {
-                          editingReplyId === reply.reply_uid
-                            ?
-                            <div className="flex relative">
-                              <textarea
-                                value={editingReply}
-                                onChange={(e) => setEditingReply(e.currentTarget.value)}
-                                rows={2}
-                                maxLength={200}
-                                className="w-full no-scrollbar mt-2 px-4 pt-3 pb-16 border focus:outline-none resize-none rounded-2xl"
-                                />
+                        {editingReplyId === reply.reply_uid ? (
+                          <div className="flex relative">
+                            <textarea
+                              value={editingReply}
+                              onChange={(e) =>
+                                setEditingReply(e.currentTarget.value)
+                              }
+                              rows={2}
+                              maxLength={200}
+                              className="w-full no-scrollbar mt-2 px-4 pt-3 pb-16 border focus:outline-none resize-none rounded-2xl"
+                            />
                             <div className="text-sm absolute space-x-2 bottom-4 right-6">
                               <button
                                 onClick={handleCancelEditReply}
@@ -444,15 +465,20 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
                                 취소
                               </button>
                               <button
-                                onClick={() => handleSaveEditReply(reply.reply_uid)}
-                                className="text-mainGreen">수정</button>
+                                onClick={() =>
+                                  handleSaveEditReply(reply.reply_uid)
+                                }
+                                className="text-mainGreen"
+                              >
+                                수정
+                              </button>
                             </div>
-                    </div>
-                          :
+                          </div>
+                        ) : (
                           <div className="py-2 pr-6 text-gray-700 mt-2">
                             <p>{reply.content}</p>
                           </div>
-                        }
+                        )}
                       </div>
                     </div>
                   </div>
