@@ -32,17 +32,10 @@ const MyProfile = ({ params: { id } }: { params: { id: string } }) => {
   const { data: badgeData, isLoading: badgeDataLoading } = useQuery<any>(
     ["fetchBadges", searchId],
     () => fetchBadges(searchId),
-<<<<<<< HEAD
     { cacheTime: 6000 },
   );
-  console.log("missionDone==))))=>,", missionDone);
   if (profileDataLoading || missionDoneLoading || badgeDataLoading)
     return <Loading />;
-=======
-    { cacheTime: 6000}
-  )
-  if (profileDataLoading || missionDoneLoading || badgeDataLoading) return <Loading />;
->>>>>>> ce5a1e2717dd36a3b6cb9e13cdafeac9ac142c34
   return (
     <div className="flex w-full h-[70%] items-start gap-5 self-stretch justify-evenly">
       <div className="flex flex-col items-start gap-6 flex-[1,0,0%] rounded-xl self-stretch w-[40%] bg-white">
