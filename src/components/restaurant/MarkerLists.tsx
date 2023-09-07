@@ -58,16 +58,13 @@ const MarkerLists = ({ markerList, currentCategory }: any) => {
         setUser(user);
         fetchUserBookmark(user);
       }
-    } catch (error) {
-      console.error("Error fetching user:", error);
-    }
+    } catch (error) {}
   };
 
   const fetchUserBookmark = async (user: any) => {
     const { data: existingMarkedData, error: existingLikeError } =
       await supabase.from("like_restaurant").select().eq("user_id", user.id);
     setMarkedByUser(existingMarkedData!);
-    console.log("북마크된애들", existingMarkedData);
   };
 
   const bookmarkHandler = (place: string) => {
@@ -89,7 +86,6 @@ const MarkerLists = ({ markerList, currentCategory }: any) => {
         .select()
         .eq("user_id", user.id)
         .eq("restaurant_name", name);
-      console.log(userMarkList);
 
       if (userMarkList?.length !== 0) {
         const { error: addMarkListError } = await supabase
@@ -161,8 +157,7 @@ const MarkerLists = ({ markerList, currentCategory }: any) => {
   }, []);
 
   return (
-    <div className="overflow-auto h-[33vw]">
-      {/* display:flex; justify-content: center; */}
+    <div className="overflow-auto mapList_scrollbar h-[65vw] md:h-[33vw] mapList_scrollbar">
       <ul>
         {/* markerList 정보를 사용하여 리스트를 렌더링합니다 */}
         {isLoading && <Loading />}

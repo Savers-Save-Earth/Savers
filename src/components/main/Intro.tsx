@@ -50,7 +50,7 @@ const Intro = () => {
           />
         </div>
         <div
-          className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-8xl font-bold transition-opacity duration-100 ease-in-out"
+          className="xl:text-8xl fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-6xl font-bold transition-opacity duration-100 ease-in-out"
           style={{
             opacity: Math.max(0, 1 - scrollY / 100),
             display: scrollY > 4500 ? "none" : "block",
@@ -82,7 +82,7 @@ const Intro = () => {
           </svg>
         </div>
         <div
-          className="fade-element fixed  left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-4xl font-bold transition-opacity duration-100 ease-in-out"
+          className="text-3xl fade-element fixed  left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white xl:text-4xl font-bold transition-opacity duration-100 ease-in-out"
           style={{
             textAlign: "center",
             top: "25%",
@@ -92,48 +92,45 @@ const Intro = () => {
               (scrollY - 1200) / 15,
             )}px))`,
             display: scrollY > 5300 ? "none" : "block",
+            whiteSpace: "nowrap", // 텍스트 줄 바꿈 비활성화
+            maxWidth: "100%", // 텍스트의 최대 너비를 100%로 설정
           }}
         >
-          기후변화를 막는 것은 공동의 노력이다.
-          {/* 자연과 가까울수록 병은 멀어지고,
-          <br />
-          자연과 멀수록 병은 가까워진다. */}
+          지구를 지키는 것은 우리의 선택입니다.
         </div>
         <div
-          className="fade-element fixed left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-4xl font-bold transition-opacity duration-100 ease-in-out"
+          className="text-3xl fade-element fixed left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white xl:text-4xl font-bold transition-opacity duration-100 ease-in-out"
           style={{
             textAlign: "center",
             top: "50%",
-            opacity: Math.min(1, Math.max(0, (scrollY - 1600) / 1000)),
+            opacity: Math.min(1, Math.max(0, (scrollY - 1600) / 600)),
             transform: `translate(-50%, calc(-50% - ${Math.min(
               20,
               (scrollY - 2600) / 15,
             )}px))`,
             display: scrollY > 5200 ? "none" : "block",
+            whiteSpace: "nowrap", // 텍스트 줄 바꿈 비활성화
+            maxWidth: "100%", // 텍스트의 최대 너비를 100%로 설정
           }}
         >
-          그것은 공동의 의무라는 것,
-          {/* 자연은 결코 배신하지 않는다.
-          <br />
-          우리 자신을 배신하는 것은 항상 우리들이다. */}
+          지구는 하나밖에 없는 우리의 공간입니다.
         </div>
         <div
-          className="fade-element fixed left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl font-bold text-white transition-opacity duration-100 ease-in-out"
+          className="text-3xl fade-element fixed left-1/2 transform -translate-x-1/2 -translate-y-1/2 xl:text-4xl font-bold text-white transition-opacity duration-100 ease-in-out"
           style={{
             textAlign: "center",
             top: "75%",
-            opacity: Math.min(1, Math.max(0, (scrollY - 3000) / 800)),
+            opacity: Math.min(1, Math.max(0, (scrollY - 3000) / 600)),
             transform: `translate(-50%, calc(-50% - ${Math.min(
               20,
               (scrollY - 3800) / 15,
             )}px))`,
             display: scrollY > 5100 ? "none" : "block",
+            whiteSpace: "nowrap", // 텍스트 줄 바꿈 비활성화
+            maxWidth: "100%", // 텍스트의 최대 너비를 100%로 설정
           }}
         >
-          그리고 너무 늦지 않았다는 것을 의미한다.
-          {/* 예술에는 오류가 있을지 모르나,
-          <br />
-          자연에는 잘못이 없다. */}
+          작은 일에서 큰 변화가 시작됩니다.
         </div>
       </div>
       <div style={{ height: "3700px" }}></div>
@@ -142,3 +139,4 @@ const Intro = () => {
 };
 
 export default Intro;
+//intro

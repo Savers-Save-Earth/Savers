@@ -16,49 +16,59 @@ interface BadgeByMission {
   smallCategory: string;
 }
 
-const Badges = () => {
+const Badges = ( {badgeData, missionDone} : any ) => {
+
   const [badges, setBadges] = useState<Badge[]>([]);
-  const searchId = useParams().id
   // const searchId = decodeURIComponent(`${params.id}`);
 
-  const [badgeByMission, setBadgeByMission] = useState<BadgeByMission[]>([]);
   const [badgesByMissionCount, setBadgesByMissionCount] = useState<number>(0);
 
-  const fetchBadges = async (user: any) => {
+  // const fetchBadges = async (user: any) => {
 
-    const { data: badgeData } = await supabase
-      .from("badge")
-      .select()
-      .eq("user_id", user[0]?.uid);
+  //   const { data: badgeData } = await supabase
+  //     .from("badge")
+  //     .select()
+  //     .eq("user_id", user[0]?.uid);
 
-    if (badgeData !== null) {
-      setBadges(badgeData);
+  //   if (badgeData !== null) {
+  //     setBadges(badgeData);
+  //   }
+  // };
+
+  useEffect(() => {
+    // fetchMissionList();
+    if(badgeData !== null && missionDone !== null) {
+      setBadges(badgeData)
+      setBadgesByMissionCount(missionDone.length)
+    } else {
+      setBadges([])
+      setBadgesByMissionCount(0)
     }
-  };
+  }, []);
   ///===================👇동준작업👇=========================================================
-  const fetchBadgesByMission = async (user: any) => {
+  // const fetchBadgesByMission = async (user: any) => {
 
-    const { data: badgeData2, count } = await supabase
-      .from("missionList")
-      .select("*", { count: "exact" })
-      .eq("user_uid", user[0]?.uid)
-      .eq("doingYn", false);
+  //   const { data: badgeData2, count } = await supabase
+  //     .from("missionList")
+  //     .select("*", { count: "exact" })
+  //     .eq("user_uid", user[0]?.uid)
+  //     .eq("doingYn", false);
 
-    if (badgeData2 !== null && count !== null) {
-      setBadgeByMission(badgeData2);
-      setBadgesByMissionCount(count);
-    }
-  };
+  //   if (badgeData2 !== null && count !== null) {
+  //     setBadges(badgeData2);
+  //     setBadgesByMissionCount(count);
+  //   }
+  // };
   ///===================👆동준작업👆=========================================================
-  const fetchUser = async () => {
-    const { data } = await supabase
-      .from("user")
-      .select()
-      .eq("uid", searchId);
+  // const fetchUser = async () => {
+  //   const { data } = await supabase
+  //     .from("user")
+  //     .select()
+  //     .eq("uid", searchId);
 
-    fetchBadges(data);
-    fetchBadgesByMission(data);
-  };
+  //   // fetchBadges(data);
+  //   fetchBadgesByMission(data);
+  // };
 
   const shareBadge = badges.find((item) => item.badge_title === "share");
   const threeShareBadge =
@@ -82,9 +92,9 @@ const Badges = () => {
   const silverTrophy = badgesByMissionCount >= 20;
   const goldTrophy = badgesByMissionCount >= 30;
   ///===================👆동준작업👆=========================================================
-  useEffect(() => {
-    fetchUser();
-  }, []);
+  // useEffect(() => {
+  //   fetchUser();
+  // }, []);
 
   return (
     // <div className="grid grid-cols-3 gap-4 w-full h-full">

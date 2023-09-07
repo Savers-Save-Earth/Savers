@@ -19,8 +19,6 @@ const LoginLoading = () => {
         data: { user },
       } = await supabase.auth.getUser();
 
-      console.log("getUser>>>", user);
-
       await setUser(user);
       await getUserInfo(user);
       // ToastSuccess("로그인 되었습니다. 🌱");
@@ -35,7 +33,6 @@ const LoginLoading = () => {
 
   const getUserInfo = async (user: any) => {
     if (!user) {
-      console.log("getUerInfo User 없음");
       return;
     }
 
@@ -46,18 +43,16 @@ const LoginLoading = () => {
       .single();
 
     if (userInfo?.nickname) {
-      console.log("닉네임등록되어있음", userInfo.nickname);
       return;
     } else {
       updateUserInfo(user);
-      console.log("닉네임 및 유저정보 등록하러감");
     }
   };
 
   const updateUserInfo = async (user: any) => {
     const generatedNickname = generateNickname();
-    console.log("nickname>>", generatedNickname);
-    console.log("user가져왔나?>>>", user);
+    // console.log("nickname>>", generatedNickname);
+    // console.log("user가져왔나?>>>", user);
 
     await supabase.from("user").upsert({
       uid: user?.id,
@@ -66,14 +61,14 @@ const LoginLoading = () => {
       provider: user!.app_metadata.provider,
     });
 
-    console.log("userInfo반영");
+    // console.log("userInfo반영");
     setNickname(generatedNickname);
   };
 
   const generateNickname = () => {
     const nickname = NicknameMaker();
     return nickname;
-    console.log(nickname);
+    // console.log(nickname);
   };
 
   return (

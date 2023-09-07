@@ -61,7 +61,7 @@ const NicknameMaker = () => {
 
   const nickname = `${randomFirstAdjective} ${randomSecondAdjective} ${randomNoun}`;
 
-  console.log(nickname);
+  // console.log(nickname);
   return nickname;
 };
 

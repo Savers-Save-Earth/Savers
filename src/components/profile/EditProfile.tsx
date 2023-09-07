@@ -2,39 +2,40 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import supabase from "@/libs/supabase";
+import { ProfileType } from "@/api/profile/fetchProfileData";
 
-const EditProfile = () => {
+const EditProfile = ( { profileData } : any ) => {
   const [user, setUser] = useState<any>(null);
-  const [nickname, setNickname] = useState<string>();
+  const [nickname, setNickname] = useState<string>(profileData.nickname || "");
   const [selectedFile, setSelectedFile] = useState();
   const [open, setOpen] = useState(false);
-  const [editImage, setEditImage] = useState<string>("");
+  const [editImage, setEditImage] = useState<string>(profileData.profileImage || "");
   const [editNickname, setEditNickname] = useState("");
 
-  const fetchUser = async () => {
-    try {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      // console.log(user);
-      setUser(user);
+  // const fetchUser = async () => {
+  //   try {
+  //     const {
+  //       data: { user },
+  //     } = await supabase.auth.getUser();
+  //     // console.log(user);
+  //     setUser(user);
 
-      const { data: userData } = await supabase
-        .from("user")
-        .select()
-        .eq("uid", user?.id);
+  //     const { data: userData } = await supabase
+  //       .from("user")
+  //       .select()
+  //       .eq("uid", user?.id);
 
-      const userDataTable = userData ? userData[0] : null; // 배열의 첫 번째 요소 또는 null로 설정
+  //     const userDataTable = userData ? userData[0] : null; // 배열의 첫 번째 요소 또는 null로 설정
 
-      if (userDataTable) {
-        setNickname(userDataTable.nickname);
-        setEditImage(userDataTable.profileImage);
-        setEditNickname(userDataTable.nickname);
-      }
-    } catch (error) {
-      console.error("Error fetching user:", error);
-    }
-  };
+  //     if (userDataTable) {
+  //       setNickname(userDataTable.nickname);
+  //       setEditImage(userDataTable.profileImage);
+  //       setEditNickname(userDataTable.nickname);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching user:", error);
+  //   }
+  // };
 
   const fileSelectHandler = (e: any) => {
     const avatarFile = e.target.files && e.target.files[0];
@@ -43,7 +44,7 @@ const EditProfile = () => {
 
   const submitHandler = async (e: any) => {
     e.preventDefault();
-    if (!nickname) {
+    if (!profileData.nickname) {
       alert("변경할 닉네임을 입력해주세요.");
       return;
     }
@@ -59,7 +60,7 @@ const EditProfile = () => {
           nickname,
           profileImage: `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}/profileImage/${data?.path}`,
         })
-        .eq("uid", user?.id);
+        .eq("uid", profileData?.uid);
 
       alert("수정이 완료되었습니다.");
       setOpen(!open);
@@ -69,7 +70,7 @@ const EditProfile = () => {
         .update({
           nickname,
         })
-        .eq("uid", user?.id);
+        .eq("uid", profileData?.uid);
 
       alert("수정이 완료되었습니다.");
       setOpen(!open);
@@ -83,9 +84,6 @@ const EditProfile = () => {
     setOpen(!open);
   };
 
-  useEffect(() => {
-    fetchUser();
-  }, []);
   return (
     <div>
       <button
