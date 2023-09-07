@@ -380,11 +380,11 @@ export interface Database {
       }
       user: {
         Row: {
-          activePoint: number | null
-          birthday: string | null
+          activePoint: number
+          birthday: string
           email: string
           nickname: string
-          number: string | null
+          number: string
           profileImage: string
           provider: string
           uid: string
