@@ -191,8 +191,8 @@ const KakaoMap = () => {
   }, [currentCategory]);
   return (
     <div>
-      <div className="pt-17 md:pt-28">
-        <h1 className="hidden md:flex mb-12 text-2xl text-gray-900  font-semibold ">
+      <div className="pt-16 md:pt-28">
+        <h1 className="hidden md:flex mb-3 text-2xl text-gray-900  font-semibold ">
           비건식당 찾기
         </h1>
         <div id="pageBody">

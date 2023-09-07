@@ -240,25 +240,20 @@ body {
     }
   }
 }
-/*width*/
-::-webkit-scrollbar {
-  width: 10px;
-}
 
-/* Track */
-::-webkit-scrollbar-track {
+.mapList_scrollbar::-webkit-scrollbar,
+.mapList_scrollbar::-webkit-scrollbar-track,
+.mapList_scrollbar::-webkit-scrollbar-thumb {
+  /* width 설정 */
+  width: 8px;
+  /* Track 설정 */
   background: none;
 }
 
-/* Handle */
-::-webkit-scrollbar-thumb {
+/* Handle 설정 */
+.mapList_scrollbar::-webkit-scrollbar-thumb {
   background: #888;
   border-radius: 5px;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: none !important;
 }
 
 .react-calendar__tile--hasActive {
