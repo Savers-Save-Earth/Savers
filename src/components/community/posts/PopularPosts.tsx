@@ -9,7 +9,7 @@ import { PostType } from "@/types/types";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import PopularPostBox from "./ui/PopularPostBox";
 import PageButton from "./ui/PageButton";
-import LoadingPopularPosts from "../ui/LoadingPopularPosts";
+import Loading from "@/app/community/loading";
 
 const PopularPosts = () => {
   const isMobile = useIsMobile();
@@ -20,7 +20,7 @@ const PopularPosts = () => {
     { cacheTime: 300000 },
   );
 
-  if (isLoading) return <LoadingPopularPosts />;
+  if (isLoading) return <Loading />;
 
   const ITEMS_PER_PAGE = 4;
 

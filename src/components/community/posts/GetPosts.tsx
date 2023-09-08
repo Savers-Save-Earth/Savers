@@ -7,7 +7,6 @@ import { useInView } from "react-intersection-observer";
 import { usePathname } from "next/navigation";
 
 import PostBox from "./ui/PostBox";
-import LoadingPosts from "../ui/LoadingPosts";
 import { ToastWarn } from "@/libs/toastifyAlert";
 
 import { PostType, ToTalDataType } from "@/types/types";
@@ -17,6 +16,7 @@ import {
   PATHNAME_RECIPE,
   PATHNAME_RESTAURANT,
 } from "@/enums/community";
+import Loading from "@/app/community/loading";
 
 type QueryKeyMap = {
   [key: string]: string[];
@@ -52,7 +52,6 @@ const GetPosts = () => {
   const {
     data: posts,
     isLoading,
-    isError,
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
@@ -85,11 +84,8 @@ const GetPosts = () => {
     },
   });
 
-  if (isLoading) return <LoadingPosts />;
-  if (isError) {
-    console.error("데이터를 불러오는 중에 오류가 발생했습니다:", isError);
-    return ToastWarn("데이터를 불러오는 중에 오류가 발생했습니다.");
-  }
+  if (isLoading) return <Loading />;
+  
   return (
     <section className="flex flex-col mt-10 mb-20 xl:w-[725px]">
       {

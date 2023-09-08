@@ -1,7 +1,7 @@
 const LoadingPopularPosts = () => {
   return (
-    <div className="animate-pulse w-full min-w-[780px] mt-10 xl:mt-0 flex flex-col relative bg-gray-50 p-6 rounded-md">
-      <div className="w-full mb-2 bg-gray-600" />
+    <div className="animate-pulse w-full mt-10 xl:mt-0 flex flex-col relative bg-gray-50 p-6 rounded-md">
+      <div className="rounded-md max-w-[120px] w-1/6 py-3 mb-2 bg-gray-200" />
       <div className="flex items-center justify-center">
         <div className="flex xl:grid xl:grid-cols-4 gap-2.5 overflow-x-auto xl:overflow-hidden no-scrollbar">
           {[1, 1, 1, 1].map((_, i) => (

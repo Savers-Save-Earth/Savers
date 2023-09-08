@@ -19,13 +19,13 @@ const CommunityLayout = ({ children }: { children: React.ReactNode }) => {
           || pathname === PATHNAME_RECIPE
           || pathname === PATHNAME_OHJIWAN
         ?
-        <div className="w-full h-full">
+        <div className="w-full h-full xl:max-w-sm">
           <SideBar />
         </div>
         :
         null
       }
-      <main className="w-full">
+      <main className="w-full xl:min-w-[725px]">
         {
           pathname === PATHNAME_MAIN
             || pathname === PATHNAME_PRODUCT
