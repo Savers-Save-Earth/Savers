@@ -7,7 +7,6 @@ import Script from "next/script";
 import Recoil from "./Recoil";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/ReactToastify.css";
-import { RouteChangesProvider } from "nextjs-router-events";
 
 export const metadata: Metadata = {
   title: "Savers | 지구를 위한 작은 실천",
@@ -37,12 +36,10 @@ export default function RootLayout({
       <body>
         <Recoil>
           <QueryProvider>
-            <RouteChangesProvider>
               <Header />
               {children}
               <ToastContainer />
               {/* <Footer /> */}
-            </RouteChangesProvider>
           </QueryProvider>
         </Recoil>
       </body>
