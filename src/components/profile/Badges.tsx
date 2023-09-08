@@ -98,7 +98,7 @@ const Badges = ({ badgeData, missionDone }: any) => {
   return (
     // <div className="grid grid-cols-3 gap-4 w-full h-full">
     <div className="flex flex-col w-[100%] items-start gap-[30px] ">
-      <div className="flex justify-between items-start self-stretch">
+      <div className="flex justify-evenly items-start self-stretch">
         <div className="flex flex-col items-center gap-2">
           {badges ? (
             <>
@@ -157,7 +157,7 @@ const Badges = ({ badgeData, missionDone }: any) => {
           )}
         </div>
       </div>
-      <div className="flex justify-between items-start self-stretch">
+      <div className="flex justify-evenly items-start self-stretch">
         <div className="flex flex-col items-center gap-2">
           {likeBadge ? (
             <>
@@ -216,7 +216,7 @@ const Badges = ({ badgeData, missionDone }: any) => {
           )}
         </div>
       </div>
-      <div className="flex justify-between items-start self-stretch">
+      <div className="flex justify-evenly items-start self-stretch">
         <div className="flex flex-col items-center gap-2">
           {bronzeTrophy ? (
             <>

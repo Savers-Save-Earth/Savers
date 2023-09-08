@@ -2938,10 +2938,10 @@ react-dom@18.2.0, react-dom@^18.2.0:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
 
-react-hook-form@^7.45.4:
-  version "7.45.4"
-  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.45.4.tgz#73d228b704026ae95d7e5f7b207a681b173ec62a"
-  integrity sha512-HGDV1JOOBPZj10LB3+OZgfDBTn+IeEsNOKiq/cxbQAIbKaiJUe/KV8DBUzsx0Gx/7IG/orWqRRm736JwOfUSWQ==
+react-hook-form@^7.46.1:
+  version "7.46.1"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.46.1.tgz#39347dbff19d980cb41087ac32a57abdc6045bb3"
+  integrity sha512-0GfI31LRTBd5tqbXMGXT1Rdsv3rnvy0FjEk8Gn9/4tp6+s77T7DPZuGEpBRXOauL+NhyGT5iaXzdIM2R6F/E+w==
 
 react-intersection-observer@^9.5.2:
   version "9.5.2"
@@ -2953,10 +2953,10 @@ react-is@^16.13.1:
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
-react-kakao-maps-sdk@^1.1.14:
-  version "1.1.14"
-  resolved "https://registry.yarnpkg.com/react-kakao-maps-sdk/-/react-kakao-maps-sdk-1.1.14.tgz#c815e08598514250f0e6a559565badb98b9be526"
-  integrity sha512-tAXT1Mt8dPwBHYJpYPedjj07EfLldNmlvwBcy2gJZYZI65esjpsa/gcU+tgben4mowRjJ64+B6MueDZpgmM5vg==
+react-kakao-maps-sdk@^1.1.18:
+  version "1.1.18"
+  resolved "https://registry.yarnpkg.com/react-kakao-maps-sdk/-/react-kakao-maps-sdk-1.1.18.tgz#cd74b9281f1f56421422be1f2e8a39a5d5fa0bfd"
+  integrity sha512-fLXsxQmDhYVVnG0KUQMj6k2GZS1ukt3tE7Dz9LKmBrA+V8bibaQh5DEtKOjhU2C6apMQF6pADlC9P67agekLrw==
   dependencies:
     "@babel/runtime" "^7.22.11"
     kakao.maps.d.ts "^0.1.38"
