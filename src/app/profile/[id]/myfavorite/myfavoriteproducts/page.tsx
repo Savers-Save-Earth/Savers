@@ -19,7 +19,7 @@ const MyFavoriteProducts = ({ params }: { params: { id: string } }) => {
   // const [userId, setUserId] = useState<string | null>(null);
   const [loadCount, setLoadCount] = useState<number>(loadBoundaryValue);
   const [loadMoreBtn, setLoadMoreBtn] = useState<string>("");
-  const searchId = params.id
+  const searchId = params.id;
 
   const { data: favoriteProductsData, isFetching: favoriteProductsFetching } =
     useQuery<any>(["fetchFavoriteProducts", searchId, loadCount], () =>
