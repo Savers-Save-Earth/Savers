@@ -2,6 +2,7 @@ import supabase from "@/libs/supabase";
 import Link from "next/link";
 import SideBar from "./components/SideBar";
 import { Metadata } from "next";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "마이 페이지 | Savers",

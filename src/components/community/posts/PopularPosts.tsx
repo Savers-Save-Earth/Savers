@@ -9,7 +9,7 @@ import { PostType } from "@/types/types";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import PopularPostBox from "./ui/PopularPostBox";
 import PageButton from "./ui/PageButton";
-import Loading from "@/app/community/loading";
+import LoadingPopularPosts from "../ui/LoadingPopularPosts";
 
 const PopularPosts = () => {
   const isMobile = useIsMobile();
@@ -20,13 +20,13 @@ const PopularPosts = () => {
     { cacheTime: 300000 },
   );
 
-  if (isLoading) return <Loading />;
-
   const ITEMS_PER_PAGE = 4;
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
   const currentPagePosts = popularPosts?.slice(startIndex, endIndex) as Array<PostType>;
+
+  if (isLoading) return <LoadingPopularPosts />;
 
   return (
     <section className="mt-10 xl:mt-0 flex flex-col relative w-full bg-gray-50 p-6 rounded-md">

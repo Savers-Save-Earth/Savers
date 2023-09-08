@@ -1,54 +1,74 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import MarkerLists from "@/components/restaurant/MarkerLists";
+import { ToastError } from "@/libs/toastifyAlert";
+import MapLoading from "@/components/restaurant/MapLoading";
+
 const getCurrentCoordinate = async () => {
   return new Promise((res, rej) => {
-    // HTML5의 geolocaiton으로 사용할 수 있는지 확인합니다.
-    if (navigator.geolocation) {
-      // GeoLocation을 이용해서 접속 위치를 얻어옵니다.
-      navigator.geolocation.getCurrentPosition(function (position) {
-        const lat = position.coords.latitude; // 위도
-        const lon = position.coords.longitude; // 경도
-        const coordinate = new kakao.maps.LatLng(lat, lon);
-        res(coordinate);
-      });
+    // HTML5의 geolocation을 이용해서 위치 권한을 확인합니다.
+    if (navigator.permissions) {
+      navigator.permissions
+        .query({ name: "geolocation" })
+        .then((permissionStatus) => {
+          if (permissionStatus.state === "granted") {
+            // GeoLocation을 이용해서 접속 위치를 얻어옵니다.
+            navigator.geolocation.getCurrentPosition(function (position) {
+              const lat = position.coords.latitude; // 위도
+              const lon = position.coords.longitude; // 경도
+              const coordinate = new kakao.maps.LatLng(lat, lon);
+              res(coordinate);
+            });
+          } else {
+            rej(ToastError("위치 권한을 허용해주세요"));
+          }
+        })
+        .catch((error) => {
+          rej(ToastError("위치 권한을 확인하는 동안 오류가 발생했습니다"));
+        });
     } else {
-      rej(new Error("현재 위치를 불러올 수 없습니다."));
+      rej(ToastError("위치 권한을 허용해주세요"));
     }
   });
 };
+
 const KakaoMap = () => {
-  // const [mapCenter, setMapCenter] = useState({ x: 127.1086228, y: 37.4012191 });
   const [currentCategory, setCurrentCategory] = useState("비건"); // 기본값으로 "전체" 카테고리 설정
   const [markerList, setMarkerList] = useState([]); // 마커 리스트 상태 추가
+  const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태 추가
+
   useEffect(() => {
     const script = document.createElement("script");
     script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAOMAP_KEY}&autoload=false`;
     document.head.appendChild(script);
     script.onload = () => {
       if (window.kakao) {
-        window.kakao.maps.load(() => {
-          // id가 'map'인 요소에 지도를 생성
+        window.kakao.maps.load(async () => {
+          let locPosition: any = await getCurrentCoordinate();
+          // id가 'map'인 요소에 지도를 생성s
           const Container = document.getElementById("map");
           const Option = {
-            // 해당 좌표는 서울 시청을 중심으로 함
-            center: new window.kakao.maps.LatLng(37.566826, 126.9786567),
-            // 줌 레벨 3으로 설정
+            center: new window.kakao.maps.LatLng(
+              locPosition.La,
+              locPosition.Ma,
+            ),
             level: 5,
           };
           const map = new window.kakao.maps.Map(Container, Option);
+
+          // 지도 중심좌표를 접속위치로 변경합니다
           const setInitLocation = async () => {
             let locPosition: any = await getCurrentCoordinate();
-            // 지도 중심좌표를 접속위치로 변경합니다
             map.setCenter(locPosition);
+            setIsLoading(false);
             //현재 위치에 마커 표시
             new kakao.maps.Marker({
               position: locPosition,
               map: map,
             });
-            //   CoordPlaces.refetch();
           };
           setInitLocation();
+
           // 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
           let mapTypeControl = new kakao.maps.MapTypeControl();
           // 지도에 컨트롤을 추가해야 지도위에 표시됩니다
@@ -108,28 +128,7 @@ const KakaoMap = () => {
                 image: markerImg,
                 map: map,
               });
-              //     var iwContent = `<div style= "padding: 8px; width: 250px; border: 1px solid black; border-radius: 25px;">
-              // <h1 class="infoWindow-name" style="font-weight: bold">${place.place_name}</h1>
-              // <p class="infoWindow-address" style="font-size: 13px; color: #1F1F1F">${place.address_name}</p>
-              // <p class="infoWindow-road-address" style="font-size: 13px; color: #1F1F1F">(지번)${place.road_address_name}</p>
-              // <p class="infoWindow-phone"style="font-size: 13px; color: #1F1F1F" >${place.phone}</p>
-              // <a href=${place.place_url} " target="_blank"><button style="border-radius: 15px; border: 1px solid black;  background-color:rgb(249 250 251); color:rgb(107 114 128); font-size: 13px; padding:3px; width: 90px;">상세보기</button></a>
-              // </div>`;
-              //     var iwRemoveable = true;
-              //     // 인포윈도우를 생성합니다
-              //     var infowindow = new kakao.maps.InfoWindow({
-              //       content: iwContent,
-              //       removable: iwRemoveable,
-              //     });
-              //     window.kakao.maps.event.addListener(marker, "click", function () {
-              //       // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
-              //       infowindow.open(map, marker);
-              //     });
-              //     // 마커에 마우스아웃 이벤트: map을 누르면 실행
-              //     window.kakao.maps.event.addListener(map, "click", function () {
-              //       // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
-              //       infowindow.close();
-              //     });
+
               let content = document.createElement("div");
               // 커스텀 오버레이 엘리먼트를 만들고, 컨텐츠를 추가합니다
               let info = document.createElement("div");
@@ -166,6 +165,7 @@ const KakaoMap = () => {
             });
             setMarkerList(newMarkerList);
           };
+          // 마커 제거
           const removeMarker = () => {
             markers.forEach((marker: any) => {
               marker.setMap(null);
@@ -173,6 +173,8 @@ const KakaoMap = () => {
             markers = [];
           };
           let markers: any = [];
+
+          //지도 이동 지역설정
           const mapIdleHandler = () => {
             const latlng = map.getCenter();
             const coordinate = new window.kakao.maps.LatLng(
@@ -191,16 +193,18 @@ const KakaoMap = () => {
   }, [currentCategory]);
   return (
     <div>
-      <div className="pt-16 md:pt-28">
-        <h1 className="hidden md:flex mb-3 text-2xl text-gray-900  font-semibold ">
+      <div className="pt-16 lg:pt-28">
+        <h1 className="hidden lg:flex mb-3 text-2xl text-gray-900  font-semibold ">
           비건식당 찾기
         </h1>
         <div id="pageBody">
           <div
             id="map"
-            className="w-full h-56 mb-2 md:h-[35vw] md:w-[70%] md:float-right"
-          ></div>
-          <div id="pageLeft" className="w-full md:w-[29%] md:float-left">
+            className="w-full h-56 mb-2 lg:h-[35vw] lg:w-[70%] lg:float-right"
+          >
+            {isLoading && <MapLoading />}
+          </div>
+          <div id="pageLeft" className="w-full lg:w-[29%] lg:float-left">
             <div id="buttons" className="mb-3">
               <button
                 onClick={() => setCurrentCategory("비건")}

@@ -1,13 +1,20 @@
+import { PostType } from "@/types/types";
 import { atom } from "recoil";
-import { Database } from "@/types/supabase";
-
-type PostType = Database["public"]["Tables"]["community"]["Row"];
-interface AtomType {
+interface EditAtomType {
   postDetail?: PostType | null;
   isEditing: boolean;
 }
 
-export const editPostAtom = atom<AtomType>({
+interface SearchPostAtom {
+  keyword: string | null;
+}
+
+export const editPostAtom = atom<EditAtomType>({
   key: "editPostState",
   default: { postDetail: null, isEditing: false },
+});
+
+export const searchPostAtom = atom<SearchPostAtom>({
+  key: "searchPostState",
+  default: { keyword: null },
 });
