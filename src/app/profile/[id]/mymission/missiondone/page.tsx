@@ -35,7 +35,7 @@ const MissionDone = ({ params }: { params: { id: string } }) => {
               </h1>
 
               <div className="flex flex-col items-start gap-2 self-stretch">
-                <div className="w-[full] h-[full] sm:min-w-[121px] sm:min-h-[127px] flex py-4 px-2 flex-col justify-between items-start gap-2 self-stretch bg-[#E8FFD4] rounded-2xl">
+                <div className="w-full h-full sm:min-w-[121px] sm:min-h-[127px] flex py-4 px-2 flex-col justify-between items-start gap-2 self-stretch bg-[#E8FFD4] rounded-2xl">
                   <p className="text-[0.5rem] sm:text-[14px] font-medium text-[#5FD100]">
                     {mission.content}
                   </p>
@@ -78,7 +78,7 @@ const MissionDone = ({ params }: { params: { id: string } }) => {
             {/* 버튼 */}
             <button
               disabled
-              className="absolute bottom-3 py-0.5 px-0.5 sm:py-2 sm:px-[10px] justify-center items-center gap-[10px] bg-[#5FD100] rounded-2xl text-[#FCFCFD] disabled:opacity-10"
+              className="absolute bottom-3 text-xs sm:text-base py-1 px-1 sm:py-2 sm:px-[10px] justify-center items-center gap-[10px] bg-[#5FD100] rounded-2xl text-[#FCFCFD] disabled:opacity-10"
               onClick={() =>
                 mission.bigCategory === "글쓰기"
                   ? window.open("/community")

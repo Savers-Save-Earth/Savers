@@ -32,20 +32,20 @@ const MissionDoing = ({ params }: { params: { id: string } }) => {
       {missionDoing?.map((mission: any) => {
         return (
           <div
-            className="py-6 px-4 flex flex-col justify-between items-center w-[11rem] h-[19rem] rounded-2xl break-words hover:scale-110 hover:duration-500 bg-[#F3FFEA]"
+          className="relative py-6 px-4 flex flex-col justify-between items-center w-[8rem] h-[13rem] sm:w-[180px] sm:h-[300px] rounded-2xl break-words hover:scale-110 hover:duration-500 bg-[#F3FFEA]"
             key={mission.id}
           >
             <div className="flex flex-col gap-3 items-start self-stretch">
-              <h1 className="text-[24px] leading-[31px] font-semibold text-[#4DAB00]">
+            <h1 className="text-[1rem] sm:text-[24px] sm:leading-[31px] font-semibold text-[#4DAB00]">
                 {mission.title}
               </h1>
 
               <div className="flex flex-col items-start gap-2 self-stretch ">
-                <div className="min-h-[127px] flex py-4 px-2 flex-col justify-between items-start gap-2 self-stretch bg-[#E8FFD4] rounded-2xl">
-                  <p className="text-[14px] font-medium text-[#5FD100]">
+              <div className="w-full h-full sm:min-w-[121px] sm:min-h-[127px] flex py-4 px-2 flex-col justify-between items-start gap-2 self-stretch bg-[#E8FFD4] rounded-2xl">
+              <p className="text-[0.5rem] sm:text-[14px] font-medium text-[#5FD100]">
                     {mission.content}
                   </p>
-                  <p>
+                  <p className="text-gray-500 text-[0.5rem] sm:text-[14px]">
                     {mission &&
                       mission.createdAt &&
                       mission.createdAt.replaceAll("-", ".")}
@@ -56,7 +56,7 @@ const MissionDoing = ({ params }: { params: { id: string } }) => {
             </div>
 
             <button
-              className="flex py-2 px-[10px] justify-center items-center gap-[10px] bg-[#5FD100] rounded-2xl text-[#FCFCFD]"
+              className="absolute bottom-3 text-xs sm:text-base py-1 px-1 sm:py-2 sm:px-[10px] justify-center items-center gap-[10px] bg-[#5FD100] rounded-2xl text-[#FCFCFD]"
               onClick={() =>
                 mission.bigCategory === "글쓰기"
                   ? window.open("/community")

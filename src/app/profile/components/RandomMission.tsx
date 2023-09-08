@@ -101,7 +101,7 @@ const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
             className="fixed inset-0 bg-slate-400 bg-opacity-50"
           ></div>
           <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 outline-none focus:outline-none">
-            <div className="relative w-[350px] h-[600px] sm:w-[480px] sm:h-[710px] mt-[0] sm:mt-[50px] bg-white p-8 flex flex-wrap items-center justify-center rounded-2xl">
+            <div className="relative w-[350px] h-[600px] sm:w-[480px] sm:h-[710px] mt-[0] sm:mt-[50px] bg-white p-2 sm:p-8 flex flex-wrap items-center justify-center rounded-2xl">
               <div className="flex flex-col gap-1 sm:gap-5 justify-center items-center">
                 <h1 className="text-gray-900 w-full text-lg sm:text-2xl font-semibold leading-6">
                   오늘의 세이버 일일미션 랜덤 뽑기
@@ -131,7 +131,7 @@ const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
                   fill="#98A2B3"
                 />
               </svg>
-              <div className="w-full h-4/5 grid grid-cols-2 gap-2 place-items-center">
+              <div className="w-full h-[80%] grid grid-cols-2 gap-2 place-items-center">
               {dailyMission.map((missionItem) => (
                 <div
                   key={missionItem.id}

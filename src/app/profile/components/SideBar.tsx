@@ -11,6 +11,7 @@ import Loading from "@/app/loading";
 import { useAuth } from "@/hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import { fetchProfileData } from "@/api/profile/fetchProfileData";
+import MobileMenu from "./MobileMenu";
 
 type ProfileType = {
   activePoint: number;
@@ -32,30 +33,30 @@ const SideBar = () => {
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isHideProfile, setIsHideProfile] = useState(false);
-  const [user, setUser] =useState<any>(null)
-  const path = usePathname()
-  useEffect(() => {
-    supabase.auth.onAuthStateChange((event, session) => {
-      if (!session?.user) {
-        setUser(null);
-      } else {
-        setUser(session.user);
-      }
-    });
-  }, [path]);
 
-  const loginLogoutSwitcher = async () => {
-    if (user) {
-      const ok = window.confirm("로그아웃 하시겠습니까?");
-      if (ok) {
-        await supabase.auth.signOut();
-        router.push("/")
-      }
-    } else {
-      // const currentUrl = window.location.href;
-      router.push("/login");
-    }
-  };
+  // const path = usePathname()
+  // useEffect(() => {
+  //   supabase.auth.onAuthStateChange((event, session) => {
+  //     if (!session?.user) {
+  //       setUser(null);
+  //     } else {
+  //       setUser(session.user);
+  //     }
+  //   });
+  // }, [path]);
+
+  // const loginLogoutSwitcher = async () => {
+  //   if (user) {
+  //     const ok = window.confirm("로그아웃 하시겠습니까?");
+  //     if (ok) {
+  //       await supabase.auth.signOut();
+  //       router.push("/")
+  //     }
+  //   } else {
+  //     // const currentUrl = window.location.href;
+  //     router.push("/login");
+  //   }
+  // };
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -95,79 +96,14 @@ const SideBar = () => {
 
           {/* 모바일 메뉴 */}
           {isMobileMenuOpen && (
-            <div className="xl:hidden absolute top-0 w-full h-screen shadow-md flex flex-col items-end bg-red-200">
-              <button
-                className="btn-sidebar"
-                onClick={toggleMobileMenu}
-              >
-                X
-              </button>
-              <button
-              value={"프로필"}
-                className="btn-sidebar"
-                onClick={(e) => {
-                  toggleMobileMenu();
-                  hideProfile(e.currentTarget.value);
-                  router.push(`/profile/${searchId}/myprofile`)
-                }
-                  }
-              >
-                프로필
-              </button>
-              <button
-              value={"나의 미션"}
-                className="btn-sidebar"
-                onClick={(e) =>{
-                  toggleMobileMenu();
-                  hideProfile(e.currentTarget.value);
-                  router.push(`/profile/${searchId}/mymission/missiondoing`)
-                }}
-              >
-                나의 미션
-              </button>
-              <button
-              value={"커뮤니티 활동"}
-                className="btn-sidebar"
-                onClick={(e) =>{
-                  toggleMobileMenu();
-                  hideProfile(e.currentTarget.value);
-                  router.push(`/profile/${searchId}/mycommunity/myposts`)
-                }}
-              >
-                커뮤니티 활동
-              </button>
-              <button
-              value={"좋아요"}
-                className="btn-sidebar"
-                onClick={(e) =>{
-                  toggleMobileMenu();
-                  hideProfile(e.currentTarget.value);
-                  router.push(`/profile/${searchId}/myfavorite/myfavoriteproducts`)
-                }}
-              >
-                좋아요
-              </button>
-              <button
-                className="btn-sidebar"
-                onClick={() =>{
-                  loginLogoutSwitcher()
-                }}
-              >
-                로그아웃
-              </button>
-              {currentUser && currentUser.uid == profileData?.uid && (
-                <button
-                  className="btn-sidebar"
-                  onClick={() => {
-                    toggleMobileMenu();
-                    setShowModal(true);
-                  }}
-                >
-                  일일미션 뽑기
-                </button>
-                
-              )}
-            </div>
+            <MobileMenu 
+            toggleMobileMenu={toggleMobileMenu} 
+            searchId={searchId} 
+            hideProfile={hideProfile}
+            currentUser={currentUser}
+            profileDataId={profileData?.uid}
+            setShowModal={setShowModal}
+            />
           )}
         </div>
 
