@@ -8,8 +8,8 @@ import { PostType } from "@/types/types";
 
 import { useIsMobile } from "@/hooks/useIsMobile";
 import PopularPostBox from "./ui/PopularPostBox";
-import Loading from "@/app/loading";
 import PageButton from "./ui/PageButton";
+import Loading from "@/app/community/loading";
 
 const PopularPosts = () => {
   const isMobile = useIsMobile();
@@ -29,8 +29,8 @@ const PopularPosts = () => {
   const currentPagePosts = popularPosts?.slice(startIndex, endIndex) as Array<PostType>;
 
   return (
-    <section className="flex flex-col relative w-full bg-gray-50 p-6 rounded-md">
-      <h1 className="text-xl flex mb-2">인기 글</h1>
+    <section className="mt-10 xl:mt-0 flex flex-col relative w-full bg-gray-50 p-6 rounded-md">
+      <h1 className="text-xl flex mb-2">전체 인기 글</h1>
       {isMobile
         ? null
         : currentPage === 2 && (

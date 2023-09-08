@@ -11,7 +11,7 @@ const CommunityLayout = ({ children }: { children: React.ReactNode }) => {
   const user = useAuth();
   const pathname = usePathname();
   return (
-    <div className="flex xl:flex-row flex-col items-start self-stretch mt-28">
+    <div className="flex xl:flex-row flex-col items-start self-stretch xl:mt-28 mt-16">
       {
         pathname === PATHNAME_MAIN
           || pathname === PATHNAME_PRODUCT
@@ -19,13 +19,13 @@ const CommunityLayout = ({ children }: { children: React.ReactNode }) => {
           || pathname === PATHNAME_RECIPE
           || pathname === PATHNAME_OHJIWAN
         ?
-        <div className="w-full h-full">
+        <div className="w-full h-full xl:max-w-sm">
           <SideBar />
         </div>
         :
         null
       }
-      <main className="w-full mt-10 xl:mt-0">
+      <main className="w-full xl:min-w-[725px]">
         {
           pathname === PATHNAME_MAIN
             || pathname === PATHNAME_PRODUCT
