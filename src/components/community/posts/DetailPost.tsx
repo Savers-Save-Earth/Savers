@@ -67,7 +67,7 @@ const DetailPost = ({ postDetail, postUid }: DetailPostProps) => {
   const deleteMutation = useMutation(deletePost, {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["communityAllPosts"] });
-      window.alert("게시글이 정상적으로 삭제되었습니다.");
+      ToastSuccess("게시글이 정상적으로 삭제되었습니다.");
       location.href = "/community";
     },
     onError: (error) => {
