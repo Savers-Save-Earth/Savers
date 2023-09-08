@@ -3,6 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import supabase from "@/libs/supabase";
 import { ToastError, ToastSuccess, ToastWarn } from "@/libs/toastifyAlert";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 interface FormValues {
   email: string;
@@ -13,6 +14,8 @@ interface FormValues {
 
 const SignUp: React.FC = () => {
   const router = useRouter();
+  const isMobile = useIsMobile();
+
   const {
     register,
     handleSubmit,
@@ -73,15 +76,12 @@ const SignUp: React.FC = () => {
         });
 
       if (loginError) {
-        // console.error("로그인에러:", loginError);
       } else {
         setUserData(loginData);
         userInfoUpdater(loginData, nickname);
         router.push("/");
       }
-    } catch (error) {
-      // console.error("가입 및 로그인 에러:", error);
-    }
+    } catch (error) {}
   };
 
   const userInfoUpdater = async (userData: any, nickname: string) => {
@@ -94,8 +94,9 @@ const SignUp: React.FC = () => {
 
   return (
     <div className="flex w-300 flex-col gap-10 pt-28">
-      <h1 className="text-2xl pb-16 text-gray-900  font-semibold">회원가입</h1>
-
+      {!isMobile && (
+        <h1 className="text-2xl pb-16 text-gray-900 font-semibold">회원가입</h1>
+      )}
       <div className="flex flex-col items-center gap-16 self-stretch">
         <svg
           xmlns="http://www.w3.org/2000/svg"
