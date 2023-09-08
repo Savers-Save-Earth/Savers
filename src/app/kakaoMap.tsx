@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import MarkerLists from "@/components/restaurant/MarkerLists";
 import { ToastError } from "@/libs/toastifyAlert";
+import MapLoading from "@/components/restaurant/MapLoading";
 
 const getCurrentCoordinate = async () => {
   return new Promise((res, rej) => {
@@ -34,6 +35,7 @@ const getCurrentCoordinate = async () => {
 const KakaoMap = () => {
   const [currentCategory, setCurrentCategory] = useState("비건"); // 기본값으로 "전체" 카테고리 설정
   const [markerList, setMarkerList] = useState([]); // 마커 리스트 상태 추가
+  const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태 추가
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -41,11 +43,15 @@ const KakaoMap = () => {
     document.head.appendChild(script);
     script.onload = () => {
       if (window.kakao) {
-        window.kakao.maps.load(() => {
-          // id가 'map'인 요소에 지도를 생성
+        window.kakao.maps.load(async () => {
+          let locPosition: any = await getCurrentCoordinate();
+          // id가 'map'인 요소에 지도를 생성s
           const Container = document.getElementById("map");
           const Option = {
-            center: new window.kakao.maps.LatLng(37.566826, 126.9786567),
+            center: new window.kakao.maps.LatLng(
+              locPosition.La,
+              locPosition.Ma,
+            ),
             level: 5,
           };
           const map = new window.kakao.maps.Map(Container, Option);
@@ -54,6 +60,7 @@ const KakaoMap = () => {
           const setInitLocation = async () => {
             let locPosition: any = await getCurrentCoordinate();
             map.setCenter(locPosition);
+            setIsLoading(false);
             //현재 위치에 마커 표시
             new kakao.maps.Marker({
               position: locPosition,
@@ -194,7 +201,9 @@ const KakaoMap = () => {
           <div
             id="map"
             className="w-full h-56 mb-2 lg:h-[35vw] lg:w-[70%] lg:float-right"
-          ></div>
+          >
+            {isLoading && <MapLoading />}
+          </div>
           <div id="pageLeft" className="w-full lg:w-[29%] lg:float-left">
             <div id="buttons" className="mb-3">
               <button

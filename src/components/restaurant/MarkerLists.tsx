@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Database } from "@/types/supabase";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastInfo } from "@/libs/toastifyAlert";
-import Loading from "@/app/loading";
+import MapListLoading from "./MapListLoading";
 
 interface MarkList {
   id: number;
@@ -160,7 +160,7 @@ const MarkerLists = ({ markerList, currentCategory }: any) => {
     <div className="overflow-auto mapList_scrollbar h-[54vh] lg:h-[33vw] mapList_scrollbar">
       <ul>
         {/* markerList 정보를 사용하여 리스트를 렌더링합니다 */}
-        {isLoading && <Loading />}
+        {isLoading && <MapListLoading />}
         {markerList.map((place: any, index: number) => (
           <div
             key={index}
