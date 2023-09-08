@@ -1,11 +1,10 @@
 const LoadingPopularPosts = () => {
-  const testData = [1, 1, 1, 1];
   return (
     <div className="animate-pulse w-full min-w-[780px] mt-10 xl:mt-0 flex flex-col relative bg-gray-50 p-6 rounded-md">
       <div className="w-full mb-2 bg-gray-600" />
       <div className="flex items-center justify-center">
         <div className="flex xl:grid xl:grid-cols-4 gap-2.5 overflow-x-auto xl:overflow-hidden no-scrollbar">
-          {testData.map((_, i) => (
+          {[1, 1, 1, 1].map((_, i) => (
             <div
               className="max-w-[170px] xl:w-[170px] h-[250px] rounded-md p-3 flex flex-col space-y-2 relative"
               key={i}

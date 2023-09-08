@@ -1,10 +1,9 @@
 const LoadingPosts = () => {
-  const testData = [1, 1, 1, 1];
   return (
     <div className="animate-pulse w-full min-w-[780px] flex flex-col mt-10 mb-20">
       {
         <div className="flex flex-col mb-5 justify-center">
-          {testData.map((_, i) => (
+          {[1, 1, 1, 1].map((_, i) => (
             <div
               key={i}
               className="flex flex-col justify-between px-4 py-4 overflow-hidden last:border-b border-t"
