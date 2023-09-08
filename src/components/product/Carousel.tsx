@@ -57,7 +57,7 @@ const Carousel = () => {
         >
           {MbannerList.map((item) => (
             <SwiperSlide key={item.id}>
-              <img src={item.img} style={{}} alt="banner image" />
+              <img src={item.img} alt="banner image" />
             </SwiperSlide>
           ))}
         </Swiper>
