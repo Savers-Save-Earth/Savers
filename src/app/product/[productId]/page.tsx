@@ -294,7 +294,7 @@ const ProductPost = () => {
                 </button>
               )}
               <button
-                className="flex text-white bg-gray-900 border-0 py-4 px-24 focus:outline-none hover:bg-gray-600 rounded-2xl"
+                className="flex text-white bg-gray-900 border-0 py-4 sm:px-24 px-20 focus:outline-none hover:bg-gray-600 rounded-2xl"
                 onClick={() => window.open(`${product?.website}`)}
               >
                 구매하러 가기
