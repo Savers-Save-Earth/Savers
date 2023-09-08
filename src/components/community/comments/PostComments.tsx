@@ -277,7 +277,7 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
                 <div className="flex flex-col w-full">
                   <div className="flex flex-col">
                     <div className="flex justify-between">
-                      <div className="flex space-x-1 items-center">
+                      <div className="flex xl:flex-row xl:space-y-0 flex-col space-y-1 space-x-1 justify-center">
                         <span className="mr-1">{comment.writer_name}</span>
                         {postDetail?.author_uid === comment.writer_uid ? (
                           <CommentTag>작성자</CommentTag>
@@ -286,9 +286,12 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
                           <CommentTag>내댓글</CommentTag>
                         ) : null}
                       </div>
-                      {editingCommentId ===
-                      comment.comment_uid ? null : currentUser?.uid ===
-                          comment.writer_uid && comment.isDeleted === false ? (
+                      {
+                        editingCommentId === comment.comment_uid
+                          ? null
+                          :
+                          currentUser?.uid === comment.writer_uid && comment.isDeleted === false
+                            ? (
                         <div className="space-x-2 text-sm text-gray-700">
                           <button
                             onClick={() =>
@@ -304,8 +307,9 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
                           >
                             삭제
                           </button>
-                        </div>
-                      ) : null}
+                              </div>)
+                            :
+                            null}
                     </div>
                     <span className="mt-1 text-sm text-gray-400">
                       {comment.updated_date}
@@ -342,7 +346,7 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
                   ) : (
                     <div className="py-2 pr-6 text-gray-700 mt-2">
                       {comment.isDeleted === false ? (
-                        <p>{comment.content}</p>
+                        <p className="break-all">{comment.content}</p>
                       ) : (
                         <p className="text-gray-300">삭제된 댓글입니다.</p>
                       )}
@@ -407,19 +411,21 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
                     className="flex flex-col border-y w-full bg-gray-100 p-4"
                     key={reply.reply_uid}
                   >
-                    <div className="flex items-start space-x-4 pl-14">
+                    <div className="flex items-start sm:space-x-4 space-x-2 pl-14">
                       <ProfileImage userUid={reply.writer_uid} />
                       <div className="flex flex-col w-full">
                         <div className="flex flex-col">
                           <div className="flex justify-between">
-                            <div className="flex space-x-1 items-center">
-                              <span className="mr-1">{reply.writer_name}</span>
-                              {postDetail?.author_uid === reply.writer_uid ? (
-                                <CommentTag>작성자</CommentTag>
-                              ) : null}
-                              {currentUser?.uid === reply.writer_uid ? (
-                                <CommentTag>내댓글</CommentTag>
-                              ) : null}
+                            <div className="flex sm:flex-row flex-col space-x-1">
+                              <span className="sm:mr-0 mr-1">{reply.writer_name}</span>
+                              <div className="flex space-x-1">
+                                {postDetail?.author_uid === reply.writer_uid ? (
+                                  <CommentTag>작성자</CommentTag>
+                                ) : null}
+                                {currentUser?.uid === reply.writer_uid ? (
+                                  <CommentTag>내댓글</CommentTag>
+                                ) : null}
+                              </div>
                             </div>
                             {editingReplyId ===
                             reply.reply_uid ? null : currentUser?.uid ===
@@ -476,7 +482,7 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
                           </div>
                         ) : (
                           <div className="py-2 pr-6 text-gray-700 mt-2">
-                            <p>{reply.content}</p>
+                            <p className="break-all">{reply.content}</p>
                           </div>
                         )}
                       </div>
