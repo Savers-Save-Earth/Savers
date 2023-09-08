@@ -40,7 +40,6 @@ export default function RootLayout({
             <Header />
             {children}
             <ToastContainer />
-            {/* <Footer /> */}
           </QueryProvider>
         </Recoil>
       </body>
