@@ -11,9 +11,6 @@ export const metadata: Metadata = {
     icon: ["/favicon.ico?v=4"],
     apple: ["apple-touch-icon.png?v=4"],
     shortcut: ["apple-tough-icon.png"],
-    icon: ["/favicon.ico?v=4"],
-    apple: ["apple-touch-icon.png?v=4"],
-    shortcut: ["apple-tough-icon.png"],
   },
 };
 
