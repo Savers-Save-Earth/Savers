@@ -15,7 +15,7 @@ const HeaderM = () => {
   const router = useRouter();
 
   console.log(user);
-
+  console.log("pathname===>",pathname)
   useEffect(() => {
     const handleScroll = () => {
       setScrollY(window.scrollY);
@@ -342,7 +342,7 @@ const HeaderM = () => {
               {/* pathname 메인아닌애들 */}
               <header
                 className={cls(
-                  "fixed z-20 p-5 top-0 left-1/2 -translate-x-1/2  text-gray-900 w-screen bg-white",
+                  `${pathname.includes("profile") ? "hidden" : "fixed"} z-20 p-5 top-0 left-1/2 -translate-x-1/2  text-gray-900 w-screen bg-white`,
                 )}
               >
                 <div className="justify-between flex">

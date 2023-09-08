@@ -8,13 +8,14 @@ import Loading from "@/app/loading";
 import { useQuery } from "@tanstack/react-query";
 import { fetchMissionDoing } from "@/api/profile/fetchProfileData";
 import NoListToShown from "@/components/profile/NoListShown";
+import { useIsMobileSm } from "@/hooks/useIsMobileSm";
 
 type MissionDoingProp = Database["public"]["Tables"]["missionList"]["Row"];
 
 const MissionDoing = ({ params }: { params: { id: string } }) => {
   const currentDate = convertDate(new Date());
   const searchId = params.id;
-
+  const isSmallSCreen = useIsMobileSm()
   const { data: missionDoing, isLoading } = useQuery<any>(
     ["fetchMissionDoing", searchId],
     () => fetchMissionDoing(searchId, currentDate),
@@ -27,12 +28,11 @@ const MissionDoing = ({ params }: { params: { id: string } }) => {
   }
 
   return (
-    // <div className="flex justify-center items-center gap-x-4 text-gray-800  w-full">
-      <div className="mt-8 grid xl:grid-cols-4  xl:gap-4 md:grid-cols-3 md:gap-3 grid-cols-2 gap-2">
+    <div className="grid md:grid-cols-4 md:gap-4 grid-cols-2 gap-3 place-items-center">
       {missionDoing?.map((mission: any) => {
         return (
           <div
-            className="py-6 px-4 flex flex-col justify-between items-center w-[25%] h-[300px] rounded-2xl break-words hover:scale-110 hover:duration-500 bg-[#F3FFEA]"
+            className="py-6 px-4 flex flex-col justify-between items-center w-[11rem] h-[19rem] rounded-2xl break-words hover:scale-110 hover:duration-500 bg-[#F3FFEA]"
             key={mission.id}
           >
             <div className="flex flex-col gap-3 items-start self-stretch">

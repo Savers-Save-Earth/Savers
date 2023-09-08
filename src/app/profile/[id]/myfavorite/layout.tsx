@@ -1,6 +1,6 @@
 import FavoriteTopBar from "./component/FavoriteTopBar";
 
-export default function MycommunityLayout ({
+export default function MyfavoriteLayout ({
   children,
 }: {
   children: React.ReactNode;

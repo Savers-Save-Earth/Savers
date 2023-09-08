@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Router } from "next/router";
 import CommunityTopBar from "./components/CommunityTopBar";
-CommunityTopBar
 
 export default function MycommunityLayout ({
   children,
