@@ -35,11 +35,11 @@ const Footer = () => {
 
   return (
     <footer>
-      <div className="flex flex-wrap flex-grow ">
-        <div className="flex justify-between w-full">
-          <div className="flex">
+      <div className="flex-col justify-center items-center">
+        <div className="xl:flex xl:justify-between justify-center w-full">
+          <div className="xl:flex justify-center">
             <div
-              className="pb-8 pt-5 text-gray-900 font-semibold text-xl text-left
+              className="pb-8 pt-5 text-gray-900 font-semibold text-xl text-left justify-center
         xl:pr-10 xl:items-start xl:pt-8 "
             >
               Ice climber
@@ -170,8 +170,8 @@ const Footer = () => {
           </div>
 
           <div
-            className="border-2 border-tomato-500text-gray-900 font-normal text-[10px] pt-8
-        xl:text-right xl:items-end xl:flex xl:pt-8 xl:flex-grow xl:justify-between"
+            className="text-gray-900 font-normal text-[10px] pt-8
+        xl:text-right xl:pt-8 xl:justify-between xl:mt-16"
           >
             COPYRIGHT @ 2023 Ice climber ALL RIGHT RESERVED
           </div>
