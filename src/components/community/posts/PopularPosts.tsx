@@ -29,7 +29,7 @@ const PopularPosts = () => {
   const currentPagePosts = popularPosts?.slice(startIndex, endIndex) as Array<PostType>;
 
   return (
-    <section className="flex flex-col relative w-full bg-gray-50 p-6 rounded-md">
+    <section className="mt-10 xl:mt-0 flex flex-col relative w-full bg-gray-50 p-6 rounded-md">
       <h1 className="text-xl flex mb-2">인기 글</h1>
       {isMobile
         ? null
