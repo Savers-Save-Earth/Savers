@@ -46,9 +46,11 @@ const EditProfile = ({ profileData }: any) => {
       .from("profileImage")
       .upload(`avarta_${Date.now()}.png`, avatarFile);
 
-    setEditImage(
-      `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}/profileImage/${data?.path}`,
-    );
+    if (avatarFile) {
+      setEditImage(
+        `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}/profileImage/${data?.path}`,
+      );
+    }
   };
 
   const submitHandler = async (e: any) => {
