@@ -17,12 +17,12 @@ interface Mission {
   createdAt: string;
 }
 
-const MissionCalendar = ( { profileData, missionDone } : any ) => {
+const MissionCalendar = ({ profileData, missionDone }: any) => {
   const [value, onChange] = useState<Value>(new Date());
   const [mission, setMission] = useState<Mission[]>([]);
   const [profile, setProfile] = useState<any>([]);
   const params = useParams();
-  const searchId = params.id
+  const searchId = params.id;
 
   const [showModal, setShowModal] = useState(false);
   const [user, setUser] = useState<any>();
@@ -64,10 +64,10 @@ const MissionCalendar = ( { profileData, missionDone } : any ) => {
   // };
   useEffect(() => {
     // fetchMissionList();
-    if(missionDone !== null) {
-      setMission(missionDone)
+    if (missionDone !== null) {
+      setMission(missionDone);
     } else {
-      setMission([])
+      setMission([]);
     }
   }, []);
 
@@ -81,7 +81,7 @@ const MissionCalendar = ( { profileData, missionDone } : any ) => {
   const marks: string[] = [];
   mission.map((item) => marks.push(`${item.createdAt}`));
   return (
-    <div style={{ background: "rgb(245, 245, 245)", borderRadius: "10px" }}>
+    <div className="bg-neutral-100 rounded-[10px] w-full ">
       <Calendar
         onChange={onChange}
         value={value}
@@ -99,9 +99,9 @@ const MissionCalendar = ( { profileData, missionDone } : any ) => {
         }}
       />
       {/* {user && profile.uid === user.id && ( */}
-  <>
-  {/* sidebar와 보이는 창 z index 문제 해결될 때까지 봉인 */}
-    {/* <p
+      <>
+        {/* sidebar와 보이는 창 z index 문제 해결될 때까지 봉인 */}
+        {/* <p
       style={{
         background: "rgb(245, 245, 245)",
         textAlign: "center",
@@ -115,10 +115,8 @@ const MissionCalendar = ( { profileData, missionDone } : any ) => {
       일일미션 하러가기
     </p>
     <RandomMission showModal={showModal} user={user} setShowModal={setShowModal} profile={profile} /> */}
-  </>
-{/* )} */}
-      
-
+      </>
+      {/* )} */}
     </div>
   );
 };
