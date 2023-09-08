@@ -36,7 +36,7 @@ const DailyMission = () => {
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        ?
+        ⓘ
         {isHovered && (
           <div className="absolute left-1 bottom-3 bg-[#eaf0e5] w-[220px] z-10 rounded-md p-1.5">
             하루마다 주어지는 일일미션을 완료해 나만의 미션 캘린더를 채워보세요!
