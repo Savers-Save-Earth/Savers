@@ -7,7 +7,6 @@ import { useInView } from "react-intersection-observer";
 import { usePathname } from "next/navigation";
 
 import PostBox from "./ui/PostBox";
-import { ToastWarn } from "@/libs/toastifyAlert";
 
 import { PostType, ToTalDataType } from "@/types/types";
 import {
@@ -16,7 +15,7 @@ import {
   PATHNAME_RECIPE,
   PATHNAME_RESTAURANT,
 } from "@/enums/community";
-import Loading from "@/app/community/loading";
+import LoadingPosts from "../ui/LoadingPosts";
 
 type QueryKeyMap = {
   [key: string]: string[];
@@ -84,7 +83,7 @@ const GetPosts = () => {
     },
   });
 
-  if (isLoading) return <Loading />;
+  if (isLoading) return <LoadingPosts />;
   
   return (
     <section className="flex flex-col mt-10 mb-20 xl:w-[725px]">
