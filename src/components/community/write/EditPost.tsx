@@ -41,7 +41,7 @@ const EditPost = () => {
         queryKey: ["postDetail", postDetail?.post_uid],
       });
       ToastSuccess("게시글이 정상적으로 수정되었습니다.");
-      location.href = `/community/${postDetail?.post_uid}`;
+      router.push(`/community/${postDetail?.post_uid}`);
     },
     onError: (error) => {
       // console.error("게시글 수정 에러:", error);
