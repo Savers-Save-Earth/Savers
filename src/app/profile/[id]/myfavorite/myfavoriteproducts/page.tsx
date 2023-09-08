@@ -58,22 +58,20 @@ const MyFavoriteProducts = ({ params }: { params: { id: string } }) => {
 
   if (userLikedProducts && userLikedProducts.length < 1) {
     return (
-<div className="mx-auto">
-
   <NoListToShown listProp={"noBookmarkedProduct"} />
-</div>
     )
   }
   return (
-    <div className="space-y-4">
-      <div className="flex flex-wrap items-center justify-start gap-4 self-stretch bg-white mx-auto">
+    <div className="space-y-4 w-full">
+      {/* <div className="flex flex-wrap justify-start gap-2 sm:gap-x-10 self-stretch bg-white mx-auto"> */}
+      <div className="grid md:grid-cols-4 md:gap-4 sm:grid-cols-3 sm:gap-3 grid-cols-2 gap-2 place-items-center">
         {userLikedProducts?.map((product) => (
           <div
-            className="flex flex-col items-start gap-[6px] cursor-pointer h-[222px]"
+            className="flex flex-col items-start gap-[0.5rem] cursor-pointer h-[222px]"
             key={product.like_id}
           >
             <img
-              className="w-[152px] h-[152px] rounded-2xl shrink-0"
+              className="w-[125px] h-[125px] sm:w-[152px] sm:h-[152px] rounded-2xl shrink-0"
               src={product.img || ""}
               alt="No Image"
             />
@@ -84,8 +82,8 @@ const MyFavoriteProducts = ({ params }: { params: { id: string } }) => {
               className="truncate text-gray-500 text-ellipsis not-italic font-normal leading-[14px]"
               onClick={() => window.open(`/product/${product.product_uid}`)}
             >
-              {product!.product_name!.length > 12
-                ? `${product!.product_name!.substring(0, 12)}...`
+              {product!.product_name!.length > 11
+                ? `${product!.product_name!.substring(0, 11)}...`
                 : product.product_name}
             </p>
           </div>

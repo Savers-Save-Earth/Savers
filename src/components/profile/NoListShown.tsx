@@ -67,8 +67,7 @@ const NoListToShown: React.FC<NoListToShownProps> = ({ listProp }) => {
   const matchedProps = list.find((item) => item.title === listProp);
 
   return (
-    <div>
-      <section className="text-gray-600 body-font">
+      <section className="w-full text-gray-600 body-font">
         <div className="container mx-auto flex px-5 py-12 items-center justify-center flex-col">
           <div className="lg:w-2/6 md:w-3/6 w-5/6 mb-10 object-cover object-center flex flex-col items-center justify-center">
             <svg
@@ -133,10 +132,10 @@ const NoListToShown: React.FC<NoListToShownProps> = ({ listProp }) => {
             </svg>
           </div>
           <div className="text-center lg:w-2/3 w-full">
-            <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">
+            <h1 className="title-font lg:text-4xl text-3xl mb-4 font-medium break-words text-gray-900">
               {matchedProps?.mainText}
             </h1>
-            <p className="mb-8 leading-relaxed">{matchedProps?.subText}</p>
+            <p className="mb-8 leading-relaxed break-words">{matchedProps?.subText}</p>
             {matchedProps?.showBtn ? (
               <div className="flex justify-center">
               <button
@@ -151,7 +150,6 @@ const NoListToShown: React.FC<NoListToShownProps> = ({ listProp }) => {
           </div>
         </div>
       </section>
-    </div>
   );
 };
 
