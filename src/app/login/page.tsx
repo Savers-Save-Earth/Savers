@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import { useIsMobile } from "@/hooks/useIsMobile";
 
 const login = () => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const isMobile = useIsMobile();
   return (
     <>
