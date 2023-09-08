@@ -2,6 +2,7 @@ import React from "react";
 import SocialLogin from "@/components/auth/SocialLogin";
 import NicknameMaker from "@/components/auth/NicknameMaker";
 import PwLogin from "@/components/auth/PwLogin";
+import Footer from "@/components/Footer";
 
 const login = () => {
   return (
@@ -14,6 +15,7 @@ const login = () => {
           <PwLogin />
           <SocialLogin />
         </div>
+        <Footer />
       </div>
     </>
   );
