@@ -15,7 +15,6 @@ const HeaderM = () => {
   const router = useRouter();
 
   console.log(user);
-  console.log("pathname===>",pathname)
   useEffect(() => {
     const handleScroll = () => {
       setScrollY(window.scrollY);

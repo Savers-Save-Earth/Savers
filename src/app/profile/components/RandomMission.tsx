@@ -101,12 +101,12 @@ const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
             className="fixed inset-0 bg-slate-400 bg-opacity-50"
           ></div>
           <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 outline-none focus:outline-none">
-            <div className=" bg-white relative w-[480px] h-[729px] gap-3 p-8 flex flex-wrap items-center justify-center rounded-2xl">
-              <div className="flex flex-col gap-5 justify-center items-center">
-                <h1 className="text-gray-900 w-full text-2xl font-semibold leading-6">
+            <div className="relative w-[350px] h-[600px] sm:w-[480px] sm:h-[710px] mt-[0] sm:mt-[50px] bg-white p-8 flex flex-wrap items-center justify-center rounded-2xl">
+              <div className="flex flex-col gap-1 sm:gap-5 justify-center items-center">
+                <h1 className="text-gray-900 w-full text-lg sm:text-2xl font-semibold leading-6">
                   오늘의 세이버 일일미션 랜덤 뽑기
                 </h1>
-                <p className="text-center text-gray-400 w-full text-lg font-normal leading-4">
+                <p className="text-center text-gray-400 w-full text-md sm:text-lg font-normal leading-4">
                   미션을 클리어하고 배지를 받아보세요!
                 </p>
               </div>
@@ -131,36 +131,37 @@ const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
                   fill="#98A2B3"
                 />
               </svg>
+              <div className="w-full h-4/5 grid grid-cols-2 gap-2 place-items-center">
               {dailyMission.map((missionItem) => (
                 <div
                   key={missionItem.id}
-                  className="min-w-[200px] min-h-[290px] bg-transparent cursor-pointer group perspective rounded-2xl "
+                  className="w-[140px] h-[240px] min-w-[140px] min-h-[240px] sm:min-w-[200px] sm:min-h-[270px] bg-transparent cursor-pointer group perspective rounded-2xl "
                 >
-                  <div className="relative preserve-3d my-rotate-y-180">
-                    <div className="absolute my-rotate-y-180-withoutkey min-w-[200px] min-h-[290px] bg-red-400 rounded-2xl break-words">
+                  <div className="w-full h-full relative preserve-3d my-rotate-y-180">
+                    <div className="absolute my-rotate-y-180-withoutkey w-full h-full rounded-2xl break-words">
                       <div
-                        className="py-6 px-4 flex flex-col justify-between items-center min-w-[200px] min-h-[290px] rounded-2xl break-words bg-[#F3FFEA]"
+                        className="py-6 px-4 flex flex-col justify-between items-center w-full h-full rounded-2xl break-words bg-[#F3FFEA]"
                         key={missionItem.id}
                       >
                         {/* 미션 완료여부에 따라 앞면을 다르게 보여주기 */}
                         {missionItem.doingYn === true ? (
                           <>
                             <div className="flex flex-col gap-3 items-start self-stretch">
-                              <h1 className="text-[24px] leading-[31px] font-semibold text-[#4DAB00]">
+                              <h1 className="text-md sm:text-[24px] leading-[31px] font-semibold text-[#4DAB00]">
                                 {missionItem.title}
                               </h1>
 
                               <div className="flex flex-col items-start gap-2 self-stretch">
-                                <div className="min-h-[127px] min-w-[121px] flex py-4 px-2 flex-col justify-between items-start gap-2 self-stretch bg-[#E8FFD4] rounded-2xl">
-                                  <p className="text-[14px] font-medium text-[#5FD100]">
+                                <div className="min-h-[100px] sm:min-h-[127px] sm:min-w-[121px] flex py-4 px-2 flex-col justify-between items-start gap-2 self-stretch bg-[#E8FFD4] rounded-2xl">
+                                  <p className="text-xs sm:text-[14px] font-medium text-[#5FD100]">
                                     {missionItem.content}
                                   </p>
-                                  <p>{currentDateModify}까지</p>
+                                  <p className="text-xs sm:text-[14px]">{currentDateModify}까지</p>
                                 </div>
                               </div>
                             </div>
                             <button
-                              className="flex py-2 px-[10px] justify-center items-center gap-[10px] bg-[#5FD100] rounded-2xl text-[#FCFCFD]"
+                              className="flex py-1 px-1 sm:py-2 sm:px-[10px] justify-center items-center gap-[10px] bg-[#5FD100] rounded-2xl text-[#FCFCFD]"
                               onClick={() =>
                                 missionItem.bigCategory === "글쓰기"
                                   ? window.open("/community")
@@ -174,15 +175,15 @@ const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
                           <>
                             <div className="flex flex-col gap-3 items-start self-stretch opacity-30">
                               <h1 className="text-[24px] leading-[31px] font-semibold text-[#4DAB00]">
-                                {missionItem.title}완료시에
+                                {missionItem.title}
                               </h1>
 
                               <div className="flex flex-col items-start gap-2 self-stretch">
-                                <div className="min-h-[127px] min-w-[121px] flex py-4 px-2 flex-col justify-between items-start gap-2 self-stretch bg-[#E8FFD4] rounded-2xl">
-                                  <p className="text-[14px] font-medium text-[#5FD100]">
+                                <div className="min-h-[100px] sm:min-h-[127px] sm:min-w-[121px] flex py-4 px-2 flex-col justify-between items-start gap-2 self-stretch bg-[#E8FFD4] rounded-2xl">
+                                  <p className="text-xs sm:text-[14px] font-medium text-[#5FD100]">
                                     {missionItem.content}
                                   </p>
-                                  <p>{currentDateModify}까지</p>
+                                  <p className="text-xs sm:text-[14px]">{currentDateModify}</p>
                                 </div>
                               </div>
                             </div>
@@ -214,7 +215,7 @@ const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
 
                             <button
                               disabled
-                              className="flex py-2 px-[10px] justify-center items-center gap-[10px] bg-[#5FD100] rounded-2xl text-[#FCFCFD] disabled:opacity-50"
+                              className="flex py-1 px-1 sm:py-2 sm:px-[10px] justify-center items-center gap-[10px] bg-[#5FD100] rounded-2xl text-[#FCFCFD] disabled:opacity-50"
                               onClick={() =>
                                 missionItem.bigCategory === "글쓰기"
                                   ? window.open("/community")
@@ -227,16 +228,16 @@ const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
                         )}
                       </div>
                     </div>
-                    <div className="border border-[#56BE00] absolute backface-hidden w-full h-[280px] rounded-2xl">
+                    <div className="border border-[#56BE00] absolute backface-hidden w-[140px] h-[240px] min-w-[140px] min-h-[240px] sm:min-w-[200px] sm:min-h-[270px] rounded-2xl">
                       {/* 카드 뒷면 */}
                       <svg
-                        width="200"
-                        height="280"
-                        viewBox="0 0 200 280"
+                        width="100%"
+                        height="100%"
+                        viewBox="0 0 100% 100%"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
                       >
-                        <rect width="200" height="280" rx="16" fill="#56BE00" />
+                        <rect width="100%" height="100%" rx="16" fill="#56BE00" />
                         <path
                           d="M80.2876 161.888C80.2876 161.888 98.9123 160.641 102.986 147.546C107.061 134.45 108.225 120.107 128.596 112C127.431 119.483 127.781 124.659 128.479 130.895C129.178 137.069 129.469 143.243 127.839 149.292C126.209 155.528 122.426 160.828 116.955 163.759C100.658 172.49 84.3617 165.63 80.2876 161.888Z"
                           fill="url(#paint0_linear_1308_24651)"
@@ -274,6 +275,7 @@ const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
                   </div>
                 </div>
               ))}
+              </div>
             </div>
           </div>
         </>

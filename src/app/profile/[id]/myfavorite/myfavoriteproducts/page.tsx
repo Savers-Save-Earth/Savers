@@ -67,11 +67,12 @@ const MyFavoriteProducts = ({ params }: { params: { id: string } }) => {
       <div className="grid md:grid-cols-4 md:gap-4 sm:grid-cols-3 sm:gap-3 grid-cols-2 gap-2 place-items-center">
         {userLikedProducts?.map((product) => (
           <div
-            className="flex flex-col items-start gap-[0.5rem] cursor-pointer h-[222px]"
+            className="w-full flex flex-col items-center gap-[0.5rem] cursor-pointer h-full"
             key={product.like_id}
           >
             <img
-              className="w-[125px] h-[125px] sm:w-[152px] sm:h-[152px] rounded-2xl shrink-0"
+              // className="w-[125px] h-[125px] sm:w-[152px] sm:h-[152px] rounded-2xl shrink-0"
+              className="w-full h-3/4 rounded-2xl shrink-0"
               src={product.img || ""}
               alt="No Image"
             />

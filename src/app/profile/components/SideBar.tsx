@@ -1,6 +1,6 @@
 "use client";
 import supabase from "@/libs/supabase";
-import { useParams } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Image from "next/image";
@@ -32,6 +32,30 @@ const SideBar = () => {
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isHideProfile, setIsHideProfile] = useState(false);
+  const [user, setUser] =useState<any>(null)
+  const path = usePathname()
+  useEffect(() => {
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (!session?.user) {
+        setUser(null);
+      } else {
+        setUser(session.user);
+      }
+    });
+  }, [path]);
+
+  const loginLogoutSwitcher = async () => {
+    if (user) {
+      const ok = window.confirm("로그아웃 하시겠습니까?");
+      if (ok) {
+        await supabase.auth.signOut();
+        router.push("/")
+      }
+    } else {
+      // const currentUrl = window.location.href;
+      router.push("/login");
+    }
+  };
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -53,7 +77,6 @@ const SideBar = () => {
   );
 
   if (isLoading) return <Loading />;
-    console.log("isHideProfile----==>",isHideProfile)
 
   
   return (
@@ -124,6 +147,14 @@ const SideBar = () => {
               >
                 좋아요
               </button>
+              <button
+                className="btn-sidebar"
+                onClick={() =>{
+                  loginLogoutSwitcher()
+                }}
+              >
+                로그아웃
+              </button>
               {currentUser && currentUser.uid == profileData?.uid && (
                 <button
                   className="btn-sidebar"
@@ -134,6 +165,7 @@ const SideBar = () => {
                 >
                   일일미션 뽑기
                 </button>
+                
               )}
             </div>
           )}

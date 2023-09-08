@@ -44,7 +44,7 @@ const MyProfile = ({ params: { id } }: { params: { id: string } }) => {
         </p>
         <MissionCalendar profileData={profileData} missionDone={missionDone} />
       </div>
-      <div className="flex flex-col items-start gap-6 flex-[1,0,0%] rounded-xl self-stretch bg-white w-[100%]">
+      <div className="flex flex-col items-start gap-6 flex-[1,0,0%] rounded-xl self-stretch bg-white w-[100%] mb-5 sm:py-0">
         <p className="self-stretch text-gray-900 text-[24px] non-italic font-semibold leading-6 ">
           내가 획득한 배지
         </p>
