@@ -2,11 +2,15 @@ import supabase from "@/libs/supabase";
 import Link from "next/link";
 import SideBar from "./components/SideBar";
 import { Metadata } from "next";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "마이 페이지 | Savers",
   description: "Savers 세이버스 - 지구를 위한 작은 실천",
   icons: {
+    icon: ["/favicon.ico?v=4"],
+    apple: ["apple-touch-icon.png?v=4"],
+    shortcut: ["apple-tough-icon.png"],
     icon: ["/favicon.ico?v=4"],
     apple: ["apple-touch-icon.png?v=4"],
     shortcut: ["apple-tough-icon.png"],

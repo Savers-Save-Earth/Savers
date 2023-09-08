@@ -11,12 +11,11 @@ const login = () => {
         <div className="text-2xl pb-16 text-gray-900 font-semibold">
           로그인/회원가입
         </div>
-        {/* <div className="flex flex-col mx-auto items-center justify-center">
+        <div className="flex flex-col mx-auto items-center justify-center">
           <PwLogin />
           <SocialLogin />
-        </div> */}
+        </div>
       </div>
-      <Footer />
     </>
   );
 };
