@@ -16,6 +16,9 @@ import {
   PATHNAME_RESTAURANT,
 } from "@/enums/community";
 import LoadingPosts from "../ui/LoadingPosts";
+import { useRecoilValue } from "recoil";
+import { searchPostAtom } from "@/libs/atoms";
+import supabase from "@/libs/supabase";
 
 type QueryKeyMap = {
   [key: string]: string[];
@@ -36,6 +39,9 @@ const GetPosts = () => {
   };
   const queryKey = getPathnameQueryKey(pathname);
 
+  const { keyword } = useRecoilValue(searchPostAtom);
+  console.log("GetPosts keyword >> ", keyword);
+
   const getCategoryName = (pathname: string) => {
     if (pathname === PATHNAME_PRODUCT) {
       return "제품";
@@ -55,8 +61,16 @@ const GetPosts = () => {
     fetchNextPage,
     isFetchingNextPage,
   } = useInfiniteQuery<ToTalDataType>({
-    queryKey: queryKey,
-    queryFn: ({ pageParam }) => getPosts(pathname, pageParam),
+    queryKey: keyword ? ["searchPosts"] : queryKey,
+  queryFn: ({ pageParam }) => {
+    if (keyword) {
+      // 검색어가 있는 경우 검색 결과만 반환
+      return getPosts("/community", pageParam, keyword);
+    } else {
+      // 검색어가 없는 경우 전체 데이터 반환
+      return getPosts(pathname, pageParam, null);
+    }
+  },
     getNextPageParam: (lastPage) => {
       // 전체 페이지 개수보다 작을 때 다음 페이지로
       if (lastPage.page < lastPage.total_pages) {
@@ -90,13 +104,20 @@ const GetPosts = () => {
       {
         <div className="flex flex-col mb-5 justify-center">
           <h2 className="text-xl flex mb-8">{getCategoryName(pathname)} 글</h2>
-          {accumulatePosts?.map((post: PostType) => (
-            <PostBox
-              key={post.post_uid}
-              post={post}
-              border={"last:border-b border-t"}
-            />
-          ))}
+          {accumulatePosts ?
+            accumulatePosts.length < 1 ?
+            <h3 className="text-gray-500">게시글이 존재하지 않습니다.</h3>
+              :
+              accumulatePosts.map((post: PostType) => (
+                <PostBox
+                  key={post.post_uid}
+                  post={post}
+                  border={"last:border-b border-t"}
+                />
+              ))
+            :
+            <h3 className="text-gray-500">게시글이 존재하지 않습니다.</h3>
+          }
         </div>
       }
       <div ref={ref} className="w-full h-3" />
