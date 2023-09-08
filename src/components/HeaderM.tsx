@@ -232,7 +232,7 @@ const HeaderM = () => {
               </header>
               <nav
                 className={cls(
-                  "h-[64px] fixed z-20 p-5 bottom-0 left-1/2 -translate-x-1/2  w-screen",
+                  "h-[64px] fixed z-20 p-3.5 bottom-0 left-1/2 -translate-x-1/2  w-screen",
                   scrollY < 5300 ? "bg-transparent" : "bg-white",
                 )}
               >
@@ -347,8 +347,9 @@ const HeaderM = () => {
               >
                 <div className="justify-between flex">
                   <>
-                    <div className="text-[18px] text-gray-700">
+                    <div className="text-[18px] text-gray-700 font-bold">
                       {pathname === "/product" && <div>친환경 제품구매</div>}
+                      {pathname.includes("/product/") && <div>제품상세</div>}
                       {pathname === "/restaurant" && <div>비건식당찾기</div>}
                       {pathname === "/community" && <div>커뮤니티</div>}
                       {pathname.includes("/profile") && <div>마이페이지</div>}
@@ -396,7 +397,7 @@ const HeaderM = () => {
               </header>
               <nav
                 className={cls(
-                  "h-[64px] fixed z-20 p-5 bottom-0 left-1/2 -translate-x-1/2  w-screen bg-white",
+                  "h-[64px] fixed z-20 p-3.5 bottom-0 left-1/2 -translate-x-1/2  w-screen bg-white",
                 )}
               >
                 <div className="justify-between flex text-gray-300 text-[10px]">
