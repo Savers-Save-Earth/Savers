@@ -14,7 +14,7 @@ const PostList = () => {
 
   const fetchPost = async () => {
     try {
-      const { data } = await supabase.from("community").select().limit(8);
+      const { data } = await supabase.from("community").select().limit(20);
       // 북마크 숫자대로 정렬
       const sortedData = data?.sort((a, b) => b.number_likes - a.number_likes);
 
