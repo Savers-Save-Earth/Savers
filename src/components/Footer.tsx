@@ -32,7 +32,7 @@ const Footer = () => {
 
     window.open(linkUrl, "_blank");
   };
-
+  //dfa
   return (
     <footer>
       <div className="flex flex-wrap flex-grow ">
