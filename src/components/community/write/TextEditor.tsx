@@ -120,7 +120,7 @@ const TextEditor = ({ content, setContent }: EditorProps) => {
   return (
     <>
       <QuillWrapper
-        className="h-[800px]"
+        className="md:h-[800px] h-[320px]"
         forwardedRef={quillInstance}
         value={content}
         onChange={setContent}

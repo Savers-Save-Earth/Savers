@@ -11,7 +11,7 @@ const SideBar = () => {
   const isMobile = useIsMobile();
   return (
     <>
-      <aside className="flex flex-col">
+      <aside className="flex flex-col xl:max-w-sm">
         <div className="flex flex-col space-y-6 xl:space-y-10">
           {isMobile ? null : <h1 className="text-2xl font-semibold invisible xl:visible">커뮤니티</h1>}
             <ul className="flex xl:flex-col flex-row xl:space-y-3 space-y-0 xl:space-x-0 space-x-6 text-xl">

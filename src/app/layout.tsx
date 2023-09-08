@@ -7,7 +7,6 @@ import Script from "next/script";
 import Recoil from "./Recoil";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/ReactToastify.css";
-import { RouteChangesProvider } from "nextjs-router-events";
 import HeaderM from "@/components/HeaderM";
 
 export const metadata: Metadata = {
@@ -38,13 +37,11 @@ export default function RootLayout({
       <body>
         <Recoil>
           <QueryProvider>
-            <RouteChangesProvider>
-              <HeaderM />
-              <Header />
-              {children}
-              <ToastContainer />
-              {/* <Footer /> */}
-            </RouteChangesProvider>
+            <HeaderM />
+            <Header />
+            {children}
+            <ToastContainer />
+            {/* <Footer /> */}
           </QueryProvider>
         </Recoil>
       </body>

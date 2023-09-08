@@ -33,6 +33,7 @@ import Image from "next/image";
 import { cls, convertTimestamp } from "@/libs/util";
 import { ToastError, ToastSuccess, ToastWarn } from "@/libs/toastifyAlert";
 import ProfileImage from "../ui/ProfileImage";
+import TextArea from "./ui/TextArea";
 
 const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
   const router = useRouter();
@@ -272,19 +273,21 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
               className="flex flex-col w-full border-b"
               key={comment.comment_uid}
             >
-              <div className="flex items-start space-x-4 p-4 w-full">
+              <div className="flex items-start sm:space-x-4 space-x-2 p-4 w-full">
                 <ProfileImage userUid={comment.writer_uid} />
                 <div className="flex flex-col w-full">
                   <div className="flex flex-col">
                     <div className="flex justify-between">
-                      <div className="flex xl:flex-row xl:space-y-0 flex-col space-y-1 space-x-1 justify-center">
-                        <span className="mr-1">{comment.writer_name}</span>
-                        {postDetail?.author_uid === comment.writer_uid ? (
-                          <CommentTag>작성자</CommentTag>
-                        ) : null}
-                        {currentUser?.uid === comment.writer_uid ? (
-                          <CommentTag>내댓글</CommentTag>
-                        ) : null}
+                      <div className="flex sm:flex-row flex-col space-x-1">
+                        <span className="sm:mr-0 mr-1">{comment.writer_name}</span>
+                        <div className="flex space-x-1">
+                          {postDetail?.author_uid === comment.writer_uid ? (
+                            <CommentTag>작성자</CommentTag>
+                          ) : null}
+                          {currentUser?.uid === comment.writer_uid ? (
+                            <CommentTag>내댓글</CommentTag>
+                          ) : null}
+                        </div>
                       </div>
                       {
                         editingCommentId === comment.comment_uid
@@ -454,6 +457,10 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
                         </div>
                         {editingReplyId === reply.reply_uid ? (
                           <div className="flex relative">
+                            <TextArea
+                              value={editingReply}
+                              onChange={(e) => setEditingReply(e.currentTarget.value)}
+                            />
                             <textarea
                               value={editingReply}
                               onChange={(e) =>
@@ -493,34 +500,12 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
           ))}
         </div>
         {/* ------- 새 댓글 등록 textarea -------  */}
-        <div className="relative flex flex-col mt-5">
-          <textarea
-            id="commentInput"
-            placeholder={
-              currentUser
-                ? "댓글을 입력하세요."
-                : "댓글을 등록하려면 로그인 해주세요."
-            }
-            disabled={!currentUser}
-            rows={2}
-            value={newComment}
-            onChange={(e) => setNewComment(e.currentTarget.value)}
-            maxLength={200}
-            className="w-full no-scrollbar mt-2 px-4 pt-3 pb-16 border focus:outline-none resize-none rounded-2xl"
-          />
-          <button
-            onClick={handleCommentSubmit}
-            disabled={newComment.length === 0 || !currentUser}
-            className={cls(
-              "absolute bottom-2 right-1 px-4 py-1 rounded-md",
-              newComment.length === 0 || !currentUser
-                ? "text-gray-200"
-                : "text-mainGreen",
-            )}
-          >
-            등록
-          </button>
-        </div>
+        <TextArea
+          value={newComment}
+          onChange={(e) => setNewComment(e.currentTarget.value)}
+          onClick={handleCommentSubmit}
+          currentUser={currentUser}
+        />
       </div>
     </>
   );
