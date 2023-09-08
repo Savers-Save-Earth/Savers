@@ -7,7 +7,8 @@ import { useInView } from "react-intersection-observer";
 import { usePathname } from "next/navigation";
 
 import PostBox from "./ui/PostBox";
-import Loading from "@/app/loading";
+import LoadingPosts from "../ui/LoadingPosts";
+import { ToastWarn } from "@/libs/toastifyAlert";
 
 import { PostType, ToTalDataType } from "@/types/types";
 import {
@@ -16,8 +17,6 @@ import {
   PATHNAME_RECIPE,
   PATHNAME_RESTAURANT,
 } from "@/enums/community";
-import CategoryTag from "../ui/CategoryTag";
-import { getFirstImage, getImgUrl, removeHtmlTags } from "@/libs/util";
 
 type QueryKeyMap = {
   [key: string]: string[];
@@ -86,10 +85,10 @@ const GetPosts = () => {
     },
   });
 
-  if (isLoading) return <Loading />;
+  if (isLoading) return <LoadingPosts />;
   if (isError) {
-    // console.error("데이터를 불러오는 중에 오류가 발생했습니다:", isError);
-    return "데이터를 불러오는 중에 오류가 발생했습니다.";
+    console.error("데이터를 불러오는 중에 오류가 발생했습니다:", isError);
+    return ToastWarn("데이터를 불러오는 중에 오류가 발생했습니다.");
   }
   return (
     <section className="flex flex-col mt-10 mb-20 xl:w-[725px]">

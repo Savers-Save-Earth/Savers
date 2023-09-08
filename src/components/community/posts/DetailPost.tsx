@@ -68,7 +68,7 @@ const DetailPost = ({ postDetail, postUid }: DetailPostProps) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["communityAllPosts"] });
       ToastSuccess("게시글이 정상적으로 삭제되었습니다.");
-      location.href = "/community";
+      router.push("/community");
     },
     onError: (error) => {
       // console.error("게시글 삭제 에러:", error);

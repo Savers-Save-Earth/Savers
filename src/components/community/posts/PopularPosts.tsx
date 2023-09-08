@@ -8,8 +8,8 @@ import { PostType } from "@/types/types";
 
 import { useIsMobile } from "@/hooks/useIsMobile";
 import PopularPostBox from "./ui/PopularPostBox";
-import Loading from "@/app/loading";
 import PageButton from "./ui/PageButton";
+import LoadingPopularPosts from "../ui/LoadingPopularPosts";
 
 const PopularPosts = () => {
   const isMobile = useIsMobile();
@@ -20,7 +20,7 @@ const PopularPosts = () => {
     { cacheTime: 300000 },
   );
 
-  if (isLoading) return <Loading />;
+  if (isLoading) return <LoadingPopularPosts />;
 
   const ITEMS_PER_PAGE = 4;
 
@@ -30,7 +30,7 @@ const PopularPosts = () => {
 
   return (
     <section className="mt-10 xl:mt-0 flex flex-col relative w-full bg-gray-50 p-6 rounded-md">
-      <h1 className="text-xl flex mb-2">인기 글</h1>
+      <h1 className="text-xl flex mb-2">전체 인기 글</h1>
       {isMobile
         ? null
         : currentPage === 2 && (
