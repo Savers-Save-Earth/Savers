@@ -50,6 +50,11 @@ const EditProfile = ({ profileData }: any) => {
       setEditImage(
         `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}/profileImage/${data?.path}`,
       );
+    } else {
+      setEditImage(
+        profileData.profileImage ||
+          `https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/profileImage/default_profile_image.svg`,
+      );
     }
   };
 
@@ -90,6 +95,10 @@ const EditProfile = ({ profileData }: any) => {
   };
   const profileEditModalHandler = (e: any) => {
     e.preventDefault();
+    setEditImage(
+      profileData.profileImage ||
+        `https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/profileImage/default_profile_image.svg`,
+    );
     setOpen(!open);
   };
 
