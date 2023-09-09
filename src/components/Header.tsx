@@ -363,7 +363,7 @@ const Header = () => {
                     onClick={loginLogoutSwitcher}
                     className="border-0 py-1 px-3 focus:outline-none rounded text-base"
                   >
-                    {user ? "로그아웃" : "로그인/로그아웃"}
+                    {user ? "로그아웃" : "로그인/회원가입"}
                   </button>
                   {user && (
                     <button
