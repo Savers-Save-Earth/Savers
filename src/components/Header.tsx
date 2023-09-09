@@ -257,9 +257,9 @@ const Header = () => {
                     )}
                   >
                     {" "}
-                    {user ? "로그아웃" : "로그인"}
+                    {user ? "로그아웃" : "로그인/회원가입"}
                   </button>
-                  {user ? (
+                  {user && (
                     <button
                       onClick={signupProfileSwitcher}
                       className={cls(
@@ -268,16 +268,6 @@ const Header = () => {
                       )}
                     >
                       마이페이지
-                    </button>
-                  ) : (
-                    <button
-                      onClick={signupProfileSwitcher}
-                      className={cls(
-                        "border-0 py-1 px-3 focus:outline-none rounded text-base",
-                        scrollY < 4900 ? "text-white" : "text-gray-900",
-                      )}
-                    >
-                      회원가입
                     </button>
                   )}
                 </div>
@@ -373,21 +363,14 @@ const Header = () => {
                     onClick={loginLogoutSwitcher}
                     className="border-0 py-1 px-3 focus:outline-none rounded text-base"
                   >
-                    {user ? "로그아웃" : "로그인"}
+                    {user ? "로그아웃" : "로그인/로그아웃"}
                   </button>
-                  {user ? (
+                  {user && (
                     <button
                       onClick={signupProfileSwitcher}
                       className="border-0 py-1 px-3 focus:outline-none rounded text-base"
                     >
                       마이페이지
-                    </button>
-                  ) : (
-                    <button
-                      onClick={signupProfileSwitcher}
-                      className="border-0 py-1 px-3 focus:outline-none rounded text-base"
-                    >
-                      회원가입
                     </button>
                   )}
                 </div>
