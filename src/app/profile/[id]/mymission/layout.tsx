@@ -9,7 +9,7 @@ export default function MymissionLayout({
 }) {
   return (
     <div className="w-full flex flex-col items-start gap-6 shrink-0 self-stretch rounded-2xl">
-      <h1 className="self-stretch text-gray-900 text-[24px] non-italic font-semibold leading-6">
+      <h1 className="self-stretch text-gray-900 text-[1.5rem] non-italic font-semibold leading-6">
         나의 미션
       </h1>
       <div className="flex gap-10 ">

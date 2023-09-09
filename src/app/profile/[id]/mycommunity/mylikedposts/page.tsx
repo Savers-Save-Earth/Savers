@@ -1,14 +1,12 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import supabase from "@/libs/supabase";
 import { Database } from "@/types/supabase";
-import { useRouter } from "next/navigation";
 import UserLikedPost from "./UserLikedPost";
-import Loading from "@/app/loading";
 import { useQuery } from "@tanstack/react-query";
 import { fetchFavoritePosts } from "@/api/profile/fetchCommunityData";
 import NoListToShown from "@/components/profile/NoListShown";
+import LoadingMyBookmarkedPost from "@/components/profile/ui/LoadingMyBookmarkedPost";
 
 type UserLikedPost = Database["public"]["Tables"]["community"]["Row"];
 
@@ -51,7 +49,7 @@ const MyLikedPosts = ({ params }: { params: { id: string } }) => {
   };
 
   if (favoritePostDataFetching) {
-    return <Loading />;
+    return <LoadingMyBookmarkedPost />;
   }
   if (userLikedPosts && userLikedPosts.length < 1) {
     return <NoListToShown listProp={"noBookmarkedPost"} />

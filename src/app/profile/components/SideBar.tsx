@@ -1,16 +1,17 @@
 "use client";
 import supabase from "@/libs/supabase";
-import { useParams } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import RandomMission from "./RandomMission";
 import EditProfile from "@/components/profile/EditProfile";
 import { Database } from "@/types/supabase";
-import Loading from "@/app/loading";
 import { useAuth } from "@/hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import { fetchProfileData } from "@/api/profile/fetchProfileData";
+import MobileMenu from "./MobileMenu";
+import LoadingProfileSideBar from "@/components/profile/ui/LoadingProfileSideBar";
 
 type ProfileType = {
   activePoint: number;
@@ -30,23 +31,89 @@ const SideBar = () => {
   // const [profileData, setProfileData] = useState<any>();
   // const [currentUser, setCurrentUser] = useState<any>()
 
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isHideProfile, setIsHideProfile] = useState(false);
+
+  // const path = usePathname()
+  // useEffect(() => {
+  //   supabase.auth.onAuthStateChange((event, session) => {
+  //     if (!session?.user) {
+  //       setUser(null);
+  //     } else {
+  //       setUser(session.user);
+  //     }
+  //   });
+  // }, [path]);
+
+  // const loginLogoutSwitcher = async () => {
+  //   if (user) {
+  //     const ok = window.confirm("로그아웃 하시겠습니까?");
+  //     if (ok) {
+  //       await supabase.auth.signOut();
+  //       router.push("/")
+  //     }
+  //   } else {
+  //     // const currentUrl = window.location.href;
+  //     router.push("/login");
+  //   }
+  // };
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  //모바일 환경에서 프로필 이외의 다른 버튼들 클릭하면 프로필 이미지 등이 가려지게 하기 위함
+  const hideProfile = (value: string) => {
+    console.log("value:", value);
+    window.innerWidth >= 768 ?  setIsHideProfile(false) : (
+      (value === "프로필") ? setIsHideProfile(false) : setIsHideProfile(true)
+    )
+  };
+  
   const currentUser = useAuth();
   const { data: profileData, isLoading } = useQuery<ProfileType>(
     ["fetchProfileData", searchId],
     () => fetchProfileData(searchId),
-    { cacheTime: 6000 },
+    { cacheTime: 30000 },
   );
-  if (isLoading) return <Loading />;
 
+  if (isLoading) return <LoadingProfileSideBar />;
+
+  
   return (
-    <div className="flex flex-col items-start gap-16 text-gray-900">
-      <h1 className="text-[24px] non-italic font-semibold">마이페이지</h1>
-      <>
-        <div className="flex flex-col justify-center items-center gap-6 self-stretch leading-none">
-          <div className="relative w-[140px] h-[140px] object-contain">
+    <>
+      <div className="w-full flex flex-col items-start">
+        <div className="w-full relative">
+          <div className="flex flex-row justify-between">
+            <h1 className="text-6 non-italic font-semibold">마이페이지</h1>
+            {/* 햄버거 아이콘을 클릭하면 모바일 메뉴가 열리도록 설정 */}
+            <button
+              className="xl:hidden btn-sidebar"
+              onClick={toggleMobileMenu}
+            >
+              ☰
+            </button>
+          </div>
+
+          {/* 모바일 메뉴 */}
+          {isMobileMenuOpen && (
+            <MobileMenu 
+            toggleMobileMenu={toggleMobileMenu} 
+            searchId={searchId} 
+            hideProfile={hideProfile}
+            currentUser={currentUser}
+            profileDataId={profileData?.uid}
+            setShowModal={setShowModal}
+            />
+          )}
+        </div>
+
+        <div className={`md:flex flex-col ${isHideProfile && (window.innerWidth < 768) ? "hidden" : "flex"} justify-center items-center gap-6 self-stretch leading-none`}>
+        {/* <div className="hidden flex-col justify-center items-center gap-6 self-stretch leading-none"> */}
+          <div className="w-[8.75rem] h-[8.75rem] aspect-w-1 aspect-h-1 object-contain rounded-full overflow-hidden mx-auto">
             {profileData?.profileImage ? (
               <img
-                className="w-36 h-36 rounded-full object-cover mx-auto"
+                className="w-full h-full object-cover"
                 src={profileData.profileImage}
                 alt="프로필 이미지"
               />
@@ -70,7 +137,8 @@ const SideBar = () => {
           </div>
         </div>
 
-        <div className="flex flex-col items-start gap-6">
+        {/* 웹 브라우저 환경에서 보여야 하는 버튼들 */}
+        <div className="hidden xl:flex flex-col items-start gap-6">
           <button
             className="btn-sidebar"
             onClick={() => router.push(`/profile/${searchId}/myprofile`)}
@@ -101,7 +169,7 @@ const SideBar = () => {
           >
             좋아요
           </button>
-          {currentUser && currentUser.uid == profileData?.uid ? (
+          {currentUser && currentUser.uid == profileData?.uid && (
             <button
               className="btn-sidebar"
               onClick={() => {
@@ -110,8 +178,6 @@ const SideBar = () => {
             >
               일일미션 뽑기
             </button>
-          ) : (
-            ""
           )}
         </div>
         <RandomMission
@@ -120,8 +186,8 @@ const SideBar = () => {
           setShowModal={setShowModal}
           profile={profileData}
         />
+      </div>
       </>
-    </div>
   );
 };
 export default SideBar;

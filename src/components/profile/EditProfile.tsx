@@ -115,7 +115,7 @@ const EditProfile = ({ profileData }: any) => {
           open ? "block" : "hidden"
         }`}
       >
-        <div className="w-[480px] h-[468px] z-10 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl p-8">
+        <div className="w-[400px] h-[400px] sm:w-[480px] sm:h-[468px] z-10 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl p-8">
           <form className="text-center">
             <h1 className="text-xl font-semibold flex">프로필 수정</h1>
 
