@@ -13,6 +13,7 @@ export const useAuth = (): UserType | null => {
         if (session === null) {
           setCurrentUser(null);
         } else {
+          console.log("session:", session);
           const userUid = session.user.id;
           const { data: users, error } = await supabase
             .from("user")
@@ -24,6 +25,7 @@ export const useAuth = (): UserType | null => {
             // console.error("사용자 정보 로딩 에러 >> ", error);
             setCurrentUser(null);
           } else {
+            console.log("users====,,>",users)
             setCurrentUser(users);
           }
         }
