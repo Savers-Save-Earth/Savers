@@ -5,13 +5,28 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
+import supabase from "@/libs/supabase";
 
 const HeaderM = () => {
   const [scrollY, setScrollY] = useState(0);
   const isMobile = useIsMobile();
-  const user = useAuth();
+  // const user = useAuth();
   const pathname = usePathname();
   const router = useRouter();
+  const [user, setUser] = useState<any>(null)
+//////////////////////////////////////////////////////////////////////////////
+// 100번, 208번, 374번 user.uid => user.id로 변경
+useEffect(() => {
+  supabase.auth.onAuthStateChange((event, session) => {
+    if (!session?.user) {
+      setUser(null);
+    } else {
+      setUser(session.user);
+    }
+  });
+}, []);
+
+//////////////////////////////////////////////////////////////////////////////
 
   useEffect(() => {
     const handleScroll = () => {
@@ -80,7 +95,7 @@ const HeaderM = () => {
                         </Link>
                       </div>
                       {user ? (
-                        <Link href={`/profile/${user.uid}/myprofile`}>
+                        <Link href={`/profile/${user.id}/myprofile`}>
                           <div>
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -188,7 +203,7 @@ const HeaderM = () => {
                       </div>
                       <div>
                         {user ? (
-                          <Link href={`/profile/${user.uid}/myprofile`}>
+                          <Link href={`/profile/${user.id}/myprofile`}>
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="24"
@@ -339,7 +354,7 @@ const HeaderM = () => {
               {/* pathname 메인아닌애들 */}
               <header
                 className={cls(
-                  `${pathname.includes("profile") ? "hidden" : "fixed"} z-20 p-5 top-0 left-1/2 -translate-x-1/2  text-gray-900 w-screen bg-white`,
+                  `${pathname.includes("profile") ? "hidden" : "fixed"} z-20 p-5 top-0 left-1/2 -translate-x-1/2  text-gray-900 w-screen bg-red-400`,
                 )}
               >
                 <div className="justify-between flex">
@@ -354,7 +369,7 @@ const HeaderM = () => {
                     </div>
                     <div>
                       {user ? (
-                        <Link href={`/profile/${user.uid}/myprofile`}>
+                        <Link href={`/profile/${user.id}/myprofile`}>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="24"
