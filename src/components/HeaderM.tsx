@@ -354,7 +354,7 @@ useEffect(() => {
               {/* pathname 메인아닌애들 */}
               <header
                 className={cls(
-                  `${pathname.includes("profile") ? "hidden" : "fixed"} z-20 p-5 top-0 left-1/2 -translate-x-1/2  text-gray-900 w-screen bg-red-400`,
+                  `${pathname.includes("profile") ? "hidden" : "fixed"} z-20 p-5 top-0 left-1/2 -translate-x-1/2  text-gray-900 w-screen bg-white`,
                 )}
               >
                 <div className="justify-between flex">
