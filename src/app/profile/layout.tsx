@@ -21,17 +21,17 @@ export default async function profileLayout({
 }) {
   return (
     <>
-    <div className="flex h-full">
-      {/* 헤더 높이 및 모양 진행 상황에 따라 mt값 다르게 바꿔줘야 함 */}
-      <div className="relative mt-[2rem] xl:mt-[6rem] w-full max-w-[1200px] h-full flex flex-col xl:flex-row xl:items-start gap-y-8 gap-x-8 bg-lightgreen">
-        <div className="xl:sticky xl:top-20 w-full xl:w-[30%] xl:h-[70%] flex flex-col justify-center items-center xl:shadow-xl shadow-black/20 rounded-2xl xl:p-6 xl:border-t-2 z-10">
-          <SideBar />
+      <div className="flex h-full">
+        <div className="relative mt-[2rem] xl:mt-[6rem] w-full max-w-[1200px] h-full flex flex-col xl:flex-row xl:items-start gap-y-8 gap-x-8 bg-lightgreen">
+          <div className="xl:sticky xl:top-20 w-full xl:w-[30%] xl:h-[70%] flex flex-col justify-center items-center xl:shadow-xl shadow-black/20 rounded-2xl xl:p-6 xl:border-t-2 z-10">
+            <SideBar />
+          </div>
+          <section className="w-full xl:w-[70%] flex flex-col shrink-0 self-stretch bg-white xl:shadow-xl shadow-black/20 rounded-2xl p-6 xl:border-t-2 cursor-default">
+            {children}
+          </section>
         </div>
-        <section className="w-full xl:w-[70%] flex flex-col shrink-0 self-stretch bg-white xl:shadow-xl shadow-black/20 rounded-2xl p-6 xl:border-t-2 cursor-default">
-          {children}
-        </section>
       </div>
-    </div>
-  </>
+      <Footer />
+    </>
   );
 }

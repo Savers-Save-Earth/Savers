@@ -125,10 +125,10 @@ const PwLogin: React.FC = () => {
                     message: "올바른 메일 형식이 아닙니다",
                   },
                 })}
-                className="flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50 mb-4 outline-none"
+                className="flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50 mb-1 outline-none text-sm"
               />
               {errors.email && (
-                <p className="text-red-500">{errors.email.message}</p>
+                <p className="text-red-500 text-xs">{errors.email.message}</p>
               )}
             </div>
 
@@ -143,10 +143,12 @@ const PwLogin: React.FC = () => {
                     message: "비밀번호는 최소 6자리 이상이어야 합니다",
                   },
                 })}
-                className="flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50 mb-4 outline-none"
+                className="flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50 mb-1 outline-none text-sm"
               />
               {errors.password && (
-                <p className="text-red-500">{errors.password.message}</p>
+                <p className="text-red-500 text-xs">
+                  {errors.password.message}
+                </p>
               )}
             </div>
 
