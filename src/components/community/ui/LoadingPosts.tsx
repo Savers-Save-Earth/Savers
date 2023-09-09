@@ -1,7 +1,6 @@
 const LoadingPosts = () => {
   return (
     <div className="animate-pulse w-full flex flex-col mt-10 mb-20">
-      <div className="rounded-md w-1/6 max-w-[120px] py-3 mb-2 bg-gray-200" />
       {
         <div className="w-full flex flex-col mb-5 justify-center">
           {[1, 1, 1, 1].map((_, i) => (
