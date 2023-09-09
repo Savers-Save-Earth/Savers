@@ -228,7 +228,7 @@ const SignUp: React.FC = () => {
                       required: "이메일을 입력해주세요",
                       pattern: {
                         value: /^\S+@\S+$/i,
-                        message: "올바른 메일 형식이 아닙니다",
+                        message: "이메일 형식에 맞게 입력해주세요",
                       },
                     })}
                     className="text-sm flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50 outline-none mb-1"
@@ -252,13 +252,10 @@ const SignUp: React.FC = () => {
                     placeholder="8자리 이상 영문, 숫자 포함"
                     {...register("password", {
                       required: "비밀번호를 입력해주세요",
-                      minLength: {
-                        value: 8,
-                        message: "비밀번호 조건에 맞게 입력해주세요(8자리이상)",
-                      },
+
                       pattern: {
-                        value: /^[a-zA-Z0-9]{8,20},
-                        message: '비밀번호 조건에 맞게 입력해주세요',
+                        value: /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,20}$/,
+                        message: "비밀번호 조건에 맞게 입력해주세요",
                       },
                     })}
                     className="text-sm flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50 outline-none mb-1"
@@ -280,7 +277,10 @@ const SignUp: React.FC = () => {
                     placeholder="비밀번호 확인"
                     {...register("passwordConfirmation", {
                       required: "비밀번호를 입력해주세요",
-                      validate: (value) => value === passwordRef.current,
+                      validate: {
+                        value: value === passwordRef.current,
+                        message: "비밀번호가 일치하지 않습니다",
+                      },
                     })}
                     className="text-sm flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50 outline-none mb-1"
                   />
