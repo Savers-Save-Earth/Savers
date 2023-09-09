@@ -84,16 +84,17 @@ const SideBar = () => {
     <>
       <div className="w-full flex flex-col items-start">
         <div className="w-full relative">
-          <div className="flex flex-row justify-between">
-            <h1 className="text-6 non-italic font-semibold">마이페이지</h1>
+            <div className="flex flex-row justify-between text-[18px] font-bold text-gray-700">
+              <div>마이페이지</div>
             {/* 햄버거 아이콘을 클릭하면 모바일 메뉴가 열리도록 설정 */}
             <button
-              className="xl:hidden btn-sidebar"
+              className="xl:hidden font-bold text-gray-700"
               onClick={toggleMobileMenu}
             >
               ☰
             </button>
-          </div>
+              </div>
+
 
           {/* 모바일 메뉴 */}
           {isMobileMenuOpen && (
