@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
-import Loading from "@/app/loading";
 import { useQuery } from "@tanstack/react-query";
 import { fetchMissionDone } from "@/api/profile/fetchProfileData";
 import NoListToShown from "@/components/profile/NoListShown";
+import LoadingMission from "@/components/profile/ui/LoadingMission";
 
 const MissionDone = ({ params }: { params: { id: string } }) => {
   const searchId = params.id;
@@ -14,7 +14,7 @@ const MissionDone = ({ params }: { params: { id: string } }) => {
     () => fetchMissionDone(searchId),
     { cacheTime: 6000 },
   );
-  if (isLoading) return <Loading />;
+  if (isLoading) return <LoadingMission />
 
   if (missionDone && missionDone.length < 1) {
     return <NoListToShown listProp={"noMissionDone"} />;

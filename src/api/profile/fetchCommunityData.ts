@@ -35,7 +35,7 @@ export const fetchMyPosts = async (searchId: string, loadCount: number) => {
       .range(0, loadCount - 1);
 
     if (!myPosts) {
-      console.log("포스트가 없다는데?")
+      console.log("포스트 없음")
       return {
         myPosts: [],
         count: 0,
@@ -61,7 +61,7 @@ export const fetchFavoritePosts = async (searchId: string, loadCount: number) =>
       .range(0, loadCount - 1);
 
     if (!favoritePosts) {
-      console.log("포스트가 없다는데?")
+      console.log("포스트 없음")
       return {
         favoritePosts: [],
         count: 0,
@@ -73,7 +73,24 @@ export const fetchFavoritePosts = async (searchId: string, loadCount: number) =>
       count,
     };
   } catch (error) {
-    console.log("그냥 완전 에러인가????")
+    throw error;
+  }
+};
+
+export const fetchPostsByPostUid = async (searchId: string) => {
+  try {
+    const { data: postsByPostUid  } = await supabase
+      .from("community")
+      .select("*")
+      .eq("post_uid", searchId)
+
+    if (!postsByPostUid) {
+      console.log("포스트 없음")
+      return []
+    }
+
+    return postsByPostUid
+  } catch (error) {
     throw error;
   }
 };

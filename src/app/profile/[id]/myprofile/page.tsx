@@ -12,31 +12,34 @@ import {
   fetchProfileData,
 } from "@/api/profile/fetchProfileData";
 import Loading from "@/app/loading";
+import LoadingProfilePage from "@/components/profile/ui/LoadingProfilePage";
 
 type Profile = Database["public"]["Tables"]["user"]["Row"];
 const MyProfile = ({ params: { id } }: { params: { id: string } }) => {
   const searchId = id;
-  const { data: profileData, isLoading: profileDataLoading } =
+  const { data: profileData, isFetching: profileDataFetching } =
     useQuery<ProfileType>(
       ["fetchProfileData", searchId],
       () => fetchProfileData(searchId),
       { cacheTime: 6000 },
     );
 
-  const { data: missionDone, isLoading: missionDoneLoading } = useQuery<any>(
+  const { data: missionDone, isFetching: missionDoneFetching } = useQuery<any>(
     ["fetchMissionDone", searchId],
     () => fetchMissionDone(searchId),
     { cacheTime: 6000 },
   );
 
-  const { data: badgeData, isLoading: badgeDataLoading } = useQuery<any>(
+  const { data: badgeData, isFetching: badgeDataFetching } = useQuery<any>(
     ["fetchBadges", searchId],
     () => fetchBadges(searchId),
     { cacheTime: 6000 },
   );
-  if (profileDataLoading || missionDoneLoading || badgeDataLoading)
-    return <Loading />;
+  if (profileDataFetching || missionDoneFetching || badgeDataFetching) {
+    return <LoadingProfilePage />
+  }
   return (
+    <>
     <div className="flex flex-col md:flex-row w-full h-[70%] items-start gap-5 gap-y-8 self-stretch justify-evenly">
       <div className="flex flex-col items-start gap-6 flex-[1,0,0%] rounded-xl self-stretch w-[100%] bg-white">
         <p className="self-stretch text-gray-900 text-[24px] non-italic font-semibold leading-6">
@@ -51,6 +54,7 @@ const MyProfile = ({ params: { id } }: { params: { id: string } }) => {
         <Badges badgeData={badgeData} missionDone={missionDone} />
       </div>
     </div>
+    </>
   );
 };
 

@@ -6,6 +6,7 @@ import Loading from "@/app/loading";
 import { fetchMyComments } from "@/api/profile/fetchCommunityData";
 import { useQuery } from "@tanstack/react-query";
 import NoListToShown from "@/components/profile/NoListShown";
+import LoadingMyComment from "@/components/profile/ui/LoadingMyComment";
 
 type CommunityComment =
   Database["public"]["Tables"]["community_comment"]["Row"];
@@ -47,7 +48,7 @@ const MyComments = ({ params }: { params: { id: string } }) => {
     setLoadCount((prevLoadCount) => prevLoadCount + loadBoundaryValue);
   };
   if (fetchMyCommentsFetching) {
-    return <Loading />;
+    return <LoadingMyComment />;
   }
   if (userComments && userComments.length < 1) {
     return<NoListToShown listProp={"noComments"}/>

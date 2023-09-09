@@ -7,6 +7,7 @@ import Loading from "@/app/loading";
 import { useQuery } from "@tanstack/react-query";
 import { fetchFavoriteRestaurants } from "@/api/profile/fetchFavoriteData";
 import NoListToShown from "@/components/profile/NoListShown";
+import LoadingBookmarkedRestaurants from "@/components/profile/ui/LoadingBookmarkedRestaurants";
 
 type UserFavoriteRestaurant =
   Database["public"]["Tables"]["like_restaurant"]["Row"];
@@ -82,7 +83,7 @@ const MyFavoriteRestaurants = ({ params }: { params: { id: string } }) => {
   };
 
   if (favoriteRestaurantsFetching) {
-    return <Loading />;
+    return <LoadingBookmarkedRestaurants />;
   }
   if (userLikedRestaurants && userLikedRestaurants.length < 1) {
     return <NoListToShown listProp={"noBookmarkedRestaurant"} />

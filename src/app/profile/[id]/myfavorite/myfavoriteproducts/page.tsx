@@ -8,6 +8,7 @@ import Loading from "@/app/loading";
 import { useQuery } from "@tanstack/react-query";
 import { fetchFavoriteProducts } from "@/api/profile/fetchFavoriteData";
 import NoListToShown from "@/components/profile/NoListShown";
+import LoadingBookmarkedProducts from "@/components/profile/ui/LoadingBookmarkedProducts";
 
 type UserFavoriteProducts = Database["public"]["Tables"]["like_product"]["Row"];
 
@@ -53,7 +54,7 @@ const MyFavoriteProducts = ({ params }: { params: { id: string } }) => {
   };
 
   if (favoriteProductsFetching) {
-    return <Loading />;
+    return <LoadingBookmarkedProducts />;
   }
 
   if (userLikedProducts && userLikedProducts.length < 1) {

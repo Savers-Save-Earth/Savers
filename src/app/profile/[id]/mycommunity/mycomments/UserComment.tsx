@@ -46,7 +46,7 @@ export default function UserComment({ comment }: any) {
         </div>
       </div>
 
-      <div className="flex flex-col lg:flex-row justify-between lg:items-center self-stretch text-gray-400">
+      <div className="flex flex-col sm:flex-row justify-between sm:items-center self-stretch text-gray-400">
         {commentPost.length > 0 ? (
           <div className="flex items-center gap-2 text-[0.8rem] font-normal">
             {commentPost[0].title} [{commentPost[0].number_comments}]
@@ -54,8 +54,8 @@ export default function UserComment({ comment }: any) {
         ) : (
           ""
         )}
-        <p className="flex items-center gap-2 text-[0.8rem] xl:text-[1rem] font-normal">
-          <span className="hidden lg:inline-block">등록일&nbsp;</span>
+        <p className="flex items-center gap-2 text-[0.8rem] sm:text-[1rem] font-normal">
+          <span className="hidden sm:inline-block">등록일&nbsp;</span>
           {comment.created_date.slice(0, 10)}
         </p>
       </div>

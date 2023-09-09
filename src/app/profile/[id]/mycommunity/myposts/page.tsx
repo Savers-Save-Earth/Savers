@@ -6,6 +6,7 @@ import Loading from "@/app/loading";
 import { useQuery } from "@tanstack/react-query";
 import { fetchMyPosts } from "@/api/profile/fetchCommunityData";
 import NoListToShown from "@/components/profile/NoListShown";
+import LoadingMyPost from "@/components/profile/ui/LoadingMyPost";
 
 type CommunityPost = Database["public"]["Tables"]["community"]["Row"];
 const MyPosts = ({ params }: { params: { id: string } }) => {
@@ -50,9 +51,9 @@ const MyPosts = ({ params }: { params: { id: string } }) => {
     setLoadCount((prevLoadCount) => prevLoadCount + loadBoundaryValue);
   };
   if (fetchMyPostFetching) {
-    return <Loading />;
+    return <LoadingMyPost/>
   }
-  if (userPosts && userPosts.length < 1) {
+  if (userPosts && userPosts.length === 0) {
     return <NoListToShown listProp={"noPost"} />
   }
   return (

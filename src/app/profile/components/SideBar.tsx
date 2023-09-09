@@ -7,11 +7,11 @@ import Image from "next/image";
 import RandomMission from "./RandomMission";
 import EditProfile from "@/components/profile/EditProfile";
 import { Database } from "@/types/supabase";
-import Loading from "@/app/loading";
 import { useAuth } from "@/hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import { fetchProfileData } from "@/api/profile/fetchProfileData";
 import MobileMenu from "./MobileMenu";
+import LoadingProfileSideBar from "@/components/profile/ui/LoadingProfileSideBar";
 
 type ProfileType = {
   activePoint: number;
@@ -77,10 +77,11 @@ const SideBar = () => {
     { cacheTime: 30000 },
   );
 
-  if (isLoading) return <Loading />;
+  if (isLoading) return <LoadingProfileSideBar />;
 
   
   return (
+    <>
       <div className="w-full flex flex-col items-start">
         <div className="w-full relative">
           <div className="flex flex-row justify-between">
@@ -186,6 +187,7 @@ const SideBar = () => {
           profile={profileData}
         />
       </div>
+      </>
   );
 };
 export default SideBar;
