@@ -54,83 +54,15 @@ const ProductComponent = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["userLikeProduct"] });
     },
-    onError: (error) => {},
   });
 
   const plusProductLikeMutation = useMutation(plusLikeCount, {
-    // onMutate: async (newPlusLike) => {
-    //   await queryClient.cancelQueries({
-    //     queryKey: ["product"],
-    //   });
-
-    //   const previousLikeData = queryClient.getQueryData([
-    //     "product",
-    //     newPlusLike.id,
-    //   ]);
-
-    //   console.log(previousLikeData);
-
-    //   if(newPlusLike) {
-
-    //   }
-
-    //   queryClient.setQueryData(["product", newPlusLike.id], {
-    //     ...newPlusLike,
-    //     like_count: newPlusLike.like_count + 1,
-    //   });
-
-    //   return { previousLikeData, newPlusLike };
-    // },
-
-    // onError: (err, newMinusLike, context) => {
-    //   queryClient.setQueryData(
-    //     ["product", context?.newPlusLike.id],
-    //     context?.previousLikeData,
-    //   );
-    // },
-
-    // // 성공하거나 실패시 쿼리를 무효화해 최신 데이터를 받아와준다.
-    // onSettled: (newMinusLike) => {
-    //   console.log("성공혹은실패함.");
-    //   queryClient.invalidateQueries({ queryKey: ["product", newMinusLike] });
-    // },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["product"] });
     },
   });
 
   const minusProductLikeMutation = useMutation(minusLikeCount, {
-    // onMutate: async (newMinusLike) => {
-    //   await queryClient.cancelQueries({
-    //     queryKey: ["product"],
-    //   });
-    //   const previousLikeData = queryClient.getQueryData<number>([
-    //     "product",
-    //     newMinusLike.id,
-    //   ]);
-
-    //   console.log(previousLikeData, "- 데이터");
-    //   console.log(newMinusLike, "뉴마라");
-
-    //   queryClient.setQueryData(["product", newMinusLike.id], {
-    //     ...newMinusLike,
-    //     like_count: newMinusLike.like_count! - 1,
-    //   });
-    //   return { newMinusLike };
-    // },
-
-    // onError: (err, newMinusLike, context) => {
-    //   queryClient.setQueryData(
-    //     ["product", context?.newMinusLike.id],
-    //     context?.previousLikeData,
-    //   );
-    // },
-    // // 성공하거나 실패시 쿼리를 무효화해 최신 데이터를 받아와준다.
-    // onSettled: (newMinusLike) => {
-    //   console.log("성공혹은실패함.");
-    //   queryClient.invalidateQueries({ queryKey: ["product", newMinusLike] });
-    // },
-
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["product"] });
     },
