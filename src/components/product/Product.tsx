@@ -201,7 +201,7 @@ const ProductComponent = () => {
           <button
             key={category.value}
             onClick={() => setCategory(category.value)}
-            className="flex flex-col items-center space-y-2 xl:m-4 m-2"
+            className="flex flex-col items-center space-y-2 xl:m-4 m-2 focus:text-[#5FD100]"
           >
             <img src={category.img} className="xl:w-[96px] w-[76px] " />
             <p>{category.label}</p>
