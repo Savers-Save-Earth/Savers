@@ -2,42 +2,20 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import supabase from "@/libs/supabase";
-import { ProfileType } from "@/api/profile/fetchProfileData";
+import { useQuery } from "@tanstack/react-query";
+import { fetchNicknameData } from "@/api/profile/fetchProfileData";
+import { useParams } from "next/navigation";
 
 const EditProfile = ({ profileData }: any) => {
-  const [user, setUser] = useState<any>(null);
   const [nickname, setNickname] = useState<string>(profileData.nickname || "");
   const [selectedFile, setSelectedFile] = useState();
   const [open, setOpen] = useState(false);
   const [editImage, setEditImage] = useState<string>(
     profileData.profileImage || "",
   );
-  const [editNickname, setEditNickname] = useState("");
 
-  // const fetchUser = async () => {
-  //   try {
-  //     const {
-  //       data: { user },
-  //     } = await supabase.auth.getUser();
-  //     // console.log(user);
-  //     setUser(user);
-
-  //     const { data: userData } = await supabase
-  //       .from("user")
-  //       .select()
-  //       .eq("uid", user?.id);
-
-  //     const userDataTable = userData ? userData[0] : null; // 배열의 첫 번째 요소 또는 null로 설정
-
-  //     if (userDataTable) {
-  //       setNickname(userDataTable.nickname);
-  //       setEditImage(userDataTable.profileImage);
-  //       setEditNickname(userDataTable.nickname);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching user:", error);
-  //   }
-  // };
+  const params = useParams();
+  const userId = params.id;
 
   const fileSelectHandler = async (e: any) => {
     const avatarFile = e.target.files && e.target.files[0];
@@ -62,6 +40,14 @@ const EditProfile = ({ profileData }: any) => {
     e.preventDefault();
     if (!profileData.nickname) {
       alert("변경할 닉네임을 입력해주세요.");
+      return;
+    }
+
+    const isNicknameValid = await fetchNicknameData(nickname, userId as string);
+
+    if (isNicknameValid) {
+      console.log(nickname);
+      alert("중복된 닉네임 입니다. 다른 닉네임을 입력해주세요.");
       return;
     }
 
