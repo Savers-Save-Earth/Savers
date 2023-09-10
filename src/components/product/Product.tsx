@@ -89,7 +89,6 @@ const ProductComponent = () => {
     if (currentUser) {
       try {
         const likeStatus = await getProductLikeStatus(currentUser.uid);
-        console.log(likeStatus);
         setLikedByUser(likeStatus);
       } catch (error) {}
     }
@@ -100,7 +99,7 @@ const ProductComponent = () => {
   }, [currentUser]);
 
   const handleProductLikeClick = async (
-    productId: any,
+    productId: string,
     name: string,
     img: string,
     company: string,
@@ -130,8 +129,6 @@ const ProductComponent = () => {
         productId,
         currentUser.uid,
       );
-
-      console.log(likeStatus);
 
       if (likeStatus.length > 0) {
         // 이미 좋아요를 누른 경우 북마크 취소
@@ -250,7 +247,7 @@ const ProductComponent = () => {
           />
         )}
       </form>
-      <div className="mt-8 grid xl:grid-cols-4  xl:gap-4 md:grid-cols-3 md:gap-3 grid-cols-2 gap-2">
+      <div className="mt-8 grid xl:grid-cols-4  xl:gap-4 md:grid-cols-3 md:gap-3 grid-cols-2 gap-2 mb-8">
         {sortedData.filter(
           (item) =>
             item.name.includes(search.trim()) ||

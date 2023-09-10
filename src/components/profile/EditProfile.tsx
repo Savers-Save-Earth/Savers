@@ -2,7 +2,9 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import supabase from "@/libs/supabase";
-import { ProfileType } from "@/api/profile/fetchProfileData";
+import { useQuery } from "@tanstack/react-query";
+import { fetchNicknameData } from "@/api/profile/fetchProfileData";
+import { useParams } from "next/navigation";
 
 const EditProfile = ({ profileData }: any) => {
   const [user, setUser] = useState<any>(null);
@@ -13,6 +15,9 @@ const EditProfile = ({ profileData }: any) => {
     profileData.profileImage || "",
   );
   const [editNickname, setEditNickname] = useState("");
+
+  const params = useParams();
+  const userId = params.id;
 
   // const fetchUser = async () => {
   //   try {
@@ -62,6 +67,14 @@ const EditProfile = ({ profileData }: any) => {
     e.preventDefault();
     if (!profileData.nickname) {
       alert("변경할 닉네임을 입력해주세요.");
+      return;
+    }
+
+    const isNicknameValid = await fetchNicknameData(nickname, userId as string);
+
+    if (isNicknameValid) {
+      console.log(nickname);
+      alert("중복된 닉네임 입니다. 다른 닉네임을 입력해주세요.");
       return;
     }
 
