@@ -1,10 +1,11 @@
 import supabase from "@/libs/supabase";
 import React, { useEffect, useState } from "react";
 import { Database } from "@/types/supabase";
+import { CommunityCommentProps } from "@/types/types";
 
 type PostType = Database["public"]["Tables"]["community"]["Row"];
 
-export default function UserComment({ comment }: any) {
+export default function UserComment({ comment }: CommunityCommentProps) {
   const [commentPost, setCommentPost] = useState<PostType[]>([]);
   useEffect(() => {
     const getPostDetail = async (post_uid: string) => {

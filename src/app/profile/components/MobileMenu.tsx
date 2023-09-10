@@ -46,8 +46,6 @@ const MobileMenu = ({
     router.push(`/profile/${searchId}/${name}`);
   };
 
-  console.log("currentUser==>",currentUser)
-  console.log("profileDataId==>",profileDataId)
   return (
     <div className="sidebar fixed top-0 bottom-0 right-0 p-2 w-[300px] overflow-y-auto text-center bg-gray-900">
       <div className="p-2.5 mt-3 flex items-center justify-between rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">

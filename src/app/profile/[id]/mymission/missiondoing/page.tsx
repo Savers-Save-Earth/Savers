@@ -1,7 +1,6 @@
 "use client";
 
 import { convertDate } from "@/libs/util";
-import { Database } from "@/types/supabase";
 import React from "react";
 
 import { useQuery } from "@tanstack/react-query";
@@ -9,14 +8,12 @@ import { fetchMissionDoing } from "@/api/profile/fetchProfileData";
 import NoListToShown from "@/components/profile/NoListShown";
 import { useIsMobileSm } from "@/hooks/useIsMobileSm";
 import LoadingMission from "@/components/profile/ui/LoadingMission";
-
-type MissionDoingProp = Database["public"]["Tables"]["missionList"]["Row"];
+import { MissionListType } from "@/types/types";
 
 const MissionDoing = ({ params }: { params: { id: string } }) => {
   const currentDate = convertDate(new Date());
   const searchId = params.id;
-  const isSmallSCreen = useIsMobileSm();
-  const { data: missionDoing, isLoading } = useQuery<any>(
+  const { data: missionDoing, isLoading } = useQuery(
     ["fetchMissionDoing", searchId],
     () => fetchMissionDoing(searchId, currentDate),
     { cacheTime: 6000 },
@@ -26,13 +23,12 @@ const MissionDoing = ({ params }: { params: { id: string } }) => {
   if (missionDoing && missionDoing.length < 1) {
     return <NoListToShown listProp={"noMissionDoing"} />;
   }
-
   return (
     <div className="grid md:grid-cols-4 md:gap-4 grid-cols-2 gap-3 place-items-center">
-      {missionDoing?.map((mission: any) => {
+      {missionDoing?.map((mission: MissionListType) => {
         return (
           <div
-            className="relative py-6 px-4 flex flex-col justify-between items-center w-[8rem] h-[13rem] sm:w-[180px] sm:h-[300px] rounded-2xl break-words hover:scale-110 hover:duration-500 bg-[#F3FFEA]"
+            className="relative py-6 px-4 flex flex-col min-h-[10rem] sm:min-h-[0] justify-between items-center w-[8rem] h-[13rem] sm:w-[180px] sm:h-[300px] rounded-2xl break-words hover:scale-110 hover:duration-500 bg-[#F3FFEA]"
             key={mission.id}
           >
             <div className="flex flex-col gap-3 items-start self-stretch">

@@ -64,7 +64,6 @@ const SideBar = () => {
 
   //모바일 환경에서 프로필 이외의 다른 버튼들 클릭하면 프로필 이미지 등이 가려지게 하기 위함
   const hideProfile = (value: string) => {
-    console.log("value:", value);
     window.innerWidth >= 768 ?  setIsHideProfile(false) : (
       (value === "프로필") ? setIsHideProfile(false) : setIsHideProfile(true)
     )
@@ -79,7 +78,6 @@ const SideBar = () => {
 
   if (isLoading) return <LoadingProfileSideBar />;
 
-  
   return (
     <>
       <div className="w-full flex flex-col items-start">
@@ -180,6 +178,14 @@ const SideBar = () => {
               일일미션 뽑기
             </button>
           )}
+                    <button
+            className="btn-sidebar"
+            onClick={() =>
+              router.push(`/profile/${searchId}/setting`)
+            }
+          >
+            회원정보 수정
+          </button>
         </div>
         <RandomMission
           showModal={showModal}

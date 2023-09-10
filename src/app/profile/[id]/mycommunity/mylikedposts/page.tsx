@@ -7,25 +7,26 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchFavoritePosts } from "@/api/profile/fetchCommunityData";
 import NoListToShown from "@/components/profile/NoListShown";
 import LoadingMyBookmarkedPost from "@/components/profile/ui/LoadingMyBookmarkedPost";
+import { LikePost, PostType } from "@/types/types";
 
 type UserLikedPost = Database["public"]["Tables"]["community"]["Row"];
 
 const MyLikedPosts = ({ params }: { params: { id: string } }) => {
   const loadBoundaryValue = 10;
-  const [userLikedPosts, setUserLikedPosts] = useState<UserLikedPost[]>([]);
+  const [userLikedPosts, setUserLikedPosts] = useState<LikePost[]>([]);
   const [loadCount, setLoadCount] = useState<number>(loadBoundaryValue);
   const [loadMoreBtn, setLoadMoreBtn] = useState<string>("");
   const searchId = params.id;
 
   const { data: favoritePostData, isFetching: favoritePostDataFetching } =
-    useQuery<any>(["fetchFavoritePosts", searchId, loadCount], () =>
+    useQuery(["fetchFavoritePosts", searchId, loadCount], () =>
       fetchFavoritePosts(searchId, loadCount),
     );
 
   useEffect(() => {
     if (!favoritePostData) return;
     const count = favoritePostData.count;
-    const userLikedPosts = favoritePostData.favoritePosts;
+    const userLikedPosts = favoritePostData.favoritePosts
     setUserLikedPosts(userLikedPosts);
     if (count && count <= loadBoundaryValue) {
       setLoadMoreBtn("");

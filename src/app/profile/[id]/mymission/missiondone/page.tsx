@@ -5,11 +5,12 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchMissionDone } from "@/api/profile/fetchProfileData";
 import NoListToShown from "@/components/profile/NoListShown";
 import LoadingMission from "@/components/profile/ui/LoadingMission";
+import { MissionListType } from "@/types/types";
 
 const MissionDone = ({ params }: { params: { id: string } }) => {
   const searchId = params.id;
 
-  const { data: missionDone, isLoading } = useQuery<any>(
+  const { data: missionDone, isLoading } = useQuery(
     ["fetchMissionDone", searchId],
     () => fetchMissionDone(searchId),
     { cacheTime: 6000 },
@@ -22,7 +23,7 @@ const MissionDone = ({ params }: { params: { id: string } }) => {
 
   return (
     <div className="grid md:grid-cols-4 md:gap-4 grid-cols-2 gap-3 place-items-center">
-      {missionDone?.map((mission: any) => {
+      {missionDone?.map((mission: MissionListType) => {
         return (
           <div
             className="relative py-6 px-4 flex flex-col justify-between items-center w-[8rem] h-[13rem] sm:w-[180px] sm:h-[300px] rounded-2xl break-words hover:scale-110 hover:duration-500 opacity-100 bg-[#F3FFEA]"

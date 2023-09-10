@@ -8,43 +8,11 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchFavoriteRestaurants } from "@/api/profile/fetchFavoriteData";
 import NoListToShown from "@/components/profile/NoListShown";
 import LoadingBookmarkedRestaurants from "@/components/profile/ui/LoadingBookmarkedRestaurants";
-
-type UserFavoriteRestaurant =
-  Database["public"]["Tables"]["like_restaurant"]["Row"];
-// type a = {
-//     created_at: string
-//     id: number
-//     restaurant_address: string
-//     restaurant_category: string
-//     restaurant_map: string
-//     restaurant_name: string
-//     user_id: string
-// }
-// type data = {
-//   favoriteRestaurants: a[],
-//   count: number,
-// }
-
-type FavoriteRestaurant = {
-  created_at: string;
-  id: number;
-  restaurant_address: string;
-  restaurant_category: string;
-  restaurant_map: string;
-  restaurant_name: string;
-  user_id: string;
-};
-
-type FavoriteRestaurantsData = {
-  favoriteRestaurants: FavoriteRestaurant[];
-  count: number;
-};
+import { likeRestaurantType } from "@/types/types";
 
 const MyFavoriteRestaurants = ({ params }: { params: { id: string } }) => {
   const loadBoundaryValue = 12;
-  const [userLikedRestaurants, setUserLikedRestaurants] = useState<
-    UserFavoriteRestaurant[]
-  >([]);
+  const [userLikedRestaurants, setUserLikedRestaurants] = useState<likeRestaurantType[]>([]);
   const [loadCount, setLoadCount] = useState<number>(loadBoundaryValue);
   const [loadMoreBtn, setLoadMoreBtn] = useState<string>("");
   const searchId = params.id;
@@ -52,12 +20,13 @@ const MyFavoriteRestaurants = ({ params }: { params: { id: string } }) => {
   const {
     data: favoriteRestaurantsData,
     isFetching: favoriteRestaurantsFetching,
-  } = useQuery<any>(["fetchFavoriteProducts", searchId, loadCount], () =>
+  } = useQuery(["fetchFavoriteProducts", searchId, loadCount], () =>
     fetchFavoriteRestaurants(searchId, loadCount),
   );
 
   useEffect(() => {
     if (!favoriteRestaurantsData) return;
+    console.log("favoriteRestaurantsData,,,,,,,,,,,,,",favoriteRestaurantsData)
     const count = favoriteRestaurantsData.count;
     const userLikedRestaurants = favoriteRestaurantsData.favoriteRestaurants;
     setUserLikedRestaurants(userLikedRestaurants);

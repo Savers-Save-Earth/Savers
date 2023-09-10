@@ -87,3 +87,27 @@ export interface DetailPostProps {
   postDetail?: PostType;
   postUid: string;
 }
+export type MissionListType = Database["public"]["Tables"]["missionList"]["Row"];
+export type BadgeType = Database["public"]["Tables"]["badge"]["Row"];
+export type CommunityComment = Database["public"]["Tables"]["community_comment"]["Row"];
+
+export interface CommunityCommentProps {
+  comment: CommunityComment
+}
+
+export type LikePost = Database["public"]["Tables"]["like_post"]["Row"];
+
+export interface LikePostProps {
+  post: LikePost
+}
+
+export interface MyPostProps {
+  post: PostType
+}
+
+export interface MyBadgeProps {
+  badgeData: BadgeType[],
+  missionDone: MissionListType[]
+}
+
+
