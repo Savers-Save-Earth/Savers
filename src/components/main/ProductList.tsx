@@ -20,12 +20,6 @@ const ProductList = () => {
     isError,
   } = useQuery<Product[]>(["product"], getProducts);
 
-  if (isLoading) {
-  }
-
-  if (isError) {
-  }
-
   return (
     <div className="items-start gap-16 self-stretch">
       <div

@@ -7,42 +7,15 @@ import { fetchNicknameData } from "@/api/profile/fetchProfileData";
 import { useParams } from "next/navigation";
 
 const EditProfile = ({ profileData }: any) => {
-  const [user, setUser] = useState<any>(null);
   const [nickname, setNickname] = useState<string>(profileData.nickname || "");
   const [selectedFile, setSelectedFile] = useState();
   const [open, setOpen] = useState(false);
   const [editImage, setEditImage] = useState<string>(
     profileData.profileImage || "",
   );
-  const [editNickname, setEditNickname] = useState("");
 
   const params = useParams();
   const userId = params.id;
-
-  // const fetchUser = async () => {
-  //   try {
-  //     const {
-  //       data: { user },
-  //     } = await supabase.auth.getUser();
-  //     // console.log(user);
-  //     setUser(user);
-
-  //     const { data: userData } = await supabase
-  //       .from("user")
-  //       .select()
-  //       .eq("uid", user?.id);
-
-  //     const userDataTable = userData ? userData[0] : null; // 배열의 첫 번째 요소 또는 null로 설정
-
-  //     if (userDataTable) {
-  //       setNickname(userDataTable.nickname);
-  //       setEditImage(userDataTable.profileImage);
-  //       setEditNickname(userDataTable.nickname);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching user:", error);
-  //   }
-  // };
 
   const fileSelectHandler = async (e: any) => {
     const avatarFile = e.target.files && e.target.files[0];
