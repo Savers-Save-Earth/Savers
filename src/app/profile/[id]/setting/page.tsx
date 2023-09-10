@@ -3,15 +3,10 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import supabase from "@/libs/supabase";
 import { useParams } from "next/navigation";
-
-interface UserData {
-  uid: string;
-  nickname: string;
-  email: string;
-}
+import { UserType } from "@/types/types";
 
 const ModifyingProfile = () => {
-  const [user, setUser] = useState<any>([]);
+  const [user, setUser] = useState<UserType[]>([]);
   const [name, setName] = useState<string>();
   const [email, setEmail] = useState("");
   const [number, setNumber] = useState("");
@@ -22,21 +17,20 @@ const ModifyingProfile = () => {
   const [emailMessage, setEmailMessage] = useState(" ");
   const [numberMessage, setNumberMessage] = useState(" ");
   const [birthdayMessage, setBirthdayMessage] = useState(" ");
-  const [emailValid, setEmailValid] = useState(false);
-  const [numberValid, setNumberValid] = useState(false);
-  const [birthdayValid, setBirthdayValid] = useState(false);
-
+  const [emailValid, setEmailValid] = useState(true);
+  const [numberValid, setNumberValid] = useState(true);
+  const [birthdayValid, setBirthdayValid] = useState(true);
 
   const getUser = async () => {
     const { data } = await supabase.from("user").select().eq("uid", searchId);
-    setUser(data);
-    setUserInfo(data);
+    setUser(data!);
+    setUserInfo(data!);
+    console.log("data====>", data);
   };
   useEffect(() => {
     getUser();
   }, []);
-
-  const setUserInfo = (data: any) => {
+  const setUserInfo = (data: UserType[]) => {
     setName(data[0].nickname);
     setEmail(data[0].email);
     setNumber(data[0].number);
@@ -44,13 +38,25 @@ const ModifyingProfile = () => {
   };
 
   const handleSubmit = async () => {
+    console.log("email---->", email);
+    console.log("emailValid---->", emailValid);
+    console.log("number---->", number);
+    console.log("numberValid---->", numberValid);
+    console.log("birthday---->", birthday);
+    console.log("birthdayValid---->", birthdayValid);
     if (!email) {
       alert("이메일은 필수정보입니다! 입력 부탁드려요 :)");
       return;
     }
-    // if ((emailValid === false) || (numberValid === false) || (birthdayValid === false)) {
-    if (!emailValid || !numberValid || !birthdayValid) {
-      alert("입력정보 형식이 잘못되었네요. \n전화번호와 생년월일은 필수기입사항이 아닙니다 :)")
+    if (
+      emailValid === false ||
+      numberValid === false ||
+      birthdayValid === false
+    ) {
+      // if (emailValid || !numberValid || !birthdayValid) {
+      alert(
+        "입력정보 형식이 잘못되었네요. \n전화번호와 생년월일은 필수기입사항이 아닙니다 :)",
+      );
       return;
     }
     const { error: updateDataError } = await supabase
@@ -83,25 +89,26 @@ const ModifyingProfile = () => {
           setEmailMessage(" ");
         } else if (!emailRegExp.test(currentValue)) {
           setEmailMessage("*올바른 이메일 형식이 아닙니다.");
-          setEmailValid(false)
+          setEmailValid(false);
         } else {
           setEmailMessage("*사용가능한 이메일입니다.");
-          setEmailValid(true)
+          setEmailValid(true);
         }
         break;
       case "number":
         const numberRegExp = /^[0-9]{3}-[0-9]{4}-[0-9]{4}$/;
         if (currentValue === "") {
           setNumberMessage(" ");
+          setNumberValid(true);
         } else if (!numberRegExp.test(currentValue)) {
           setNumberMessage(
             "*휴대폰 번호 형식이 올바르지 않습니다! (예: 010-1234-5678)",
           );
-          setNumberValid(false)
+          setNumberValid(false);
         } else {
           setNumberMessage("*사용가능한 휴대폰 번호입니다.");
+          setNumberValid(true);
         }
-        setNumberValid(true)
         break;
 
       case "birthday":
@@ -109,15 +116,17 @@ const ModifyingProfile = () => {
           /^(19[0-9]{2}|20[0-2][0-9]|2023)-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
         if (currentValue === "") {
           setBirthdayMessage(" ");
+          setBirthdayValid(true);
         } else if (!birthdayRegExp.test(currentValue)) {
           setBirthdayMessage(
             "*생년월일 형식이 올바르지 않습니다! (예 : 1992-03-12)",
-          )
-          setBirthdayValid(false)
+          );
+          setBirthdayValid(false);
         } else {
           setBirthdayMessage(" ");
+          setBirthdayValid(true);
         }
-        setBirthdayValid(true)
+
         break;
 
       default:
