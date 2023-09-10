@@ -13,20 +13,20 @@ const HeaderM = () => {
   // const user = useAuth();
   const pathname = usePathname();
   const router = useRouter();
-  const [user, setUser] = useState<any>(null)
-//////////////////////////////////////////////////////////////////////////////
-// 100번, 208번, 374번 user.uid => user.id로 변경
-useEffect(() => {
-  supabase.auth.onAuthStateChange((event, session) => {
-    if (!session?.user) {
-      setUser(null);
-    } else {
-      setUser(session.user);
-    }
-  });
-}, []);
+  const [user, setUser] = useState<any>(null);
+  //////////////////////////////////////////////////////////////////////////////
+  // 100번, 208번, 374번 user.uid => user.id로 변경
+  useEffect(() => {
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (!session?.user) {
+        setUser(null);
+      } else {
+        setUser(session.user);
+      }
+    });
+  }, []);
 
-//////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////
 
   useEffect(() => {
     const handleScroll = () => {
@@ -354,7 +354,9 @@ useEffect(() => {
               {/* pathname 메인아닌애들 */}
               <header
                 className={cls(
-                  `${pathname.includes("profile") ? "hidden" : "fixed"} z-20 p-5 top-0 left-1/2 -translate-x-1/2  text-gray-900 w-screen bg-white`,
+                  `${
+                    pathname.includes("profile") ? "hidden" : "fixed"
+                  } z-20 p-5 top-0 left-1/2 -translate-x-1/2  text-gray-900 w-screen bg-white`,
                 )}
               >
                 <div className="justify-between flex">
@@ -364,6 +366,7 @@ useEffect(() => {
                       {pathname.includes("/product/") && <div>제품상세</div>}
                       {pathname === "/restaurant" && <div>비건식당찾기</div>}
                       {pathname === "/community" && <div>커뮤니티</div>}
+                      {pathname.includes("/community/") && <div>커뮤니티</div>}
                       {pathname.includes("/profile") && <div>마이페이지</div>}
                       {pathname === "/login" && <div>로그인/회원가입</div>}
                     </div>
