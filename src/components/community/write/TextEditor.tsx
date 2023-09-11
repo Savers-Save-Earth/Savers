@@ -6,6 +6,7 @@ import ReactQuill, { ReactQuillProps } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import supabase from "@/libs/supabase";
 import { ToastError } from "@/libs/toastifyAlert";
+import { COMMUNITY_TOAST_TEXT } from "@/enums/messages";
 
 interface ForwardedQuillComponent extends ReactQuillProps {
   forwardedRef: React.Ref<ReactQuill>;
@@ -47,7 +48,7 @@ const TextEditor = ({ content, setContent }: EditorProps) => {
             .upload(`image_${Date.now()}.png`, file);
 
           if (error) {
-            ToastError("이미지 업로드 오류");
+            ToastError(COMMUNITY_TOAST_TEXT.IMAGE_UPLOAD_ERROR);
           }
 
           if (res) {
