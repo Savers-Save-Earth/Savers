@@ -4,7 +4,7 @@ import { usePathname, useRouter } from "next/navigation";
 import supabase from "@/libs/supabase";
 import Link from "next/link";
 import { cls } from "@/libs/util";
-import { useIsMobile } from "@/hooks/useIsMobile";
+import { useIsLaptop } from "@/hooks/useIsLaptop";
 import "react-toastify/dist/ReactToastify.css";
 
 const Header = () => {
@@ -14,7 +14,7 @@ const Header = () => {
   const [user, setUser] = useState<any>(null);
   const [toastId, setToastId] = useState(null);
 
-  const isMobile = useIsMobile();
+  const isLabtop = useIsLaptop();
 
   //toastify yes,no selector
   // const Msg = ({ closeToast }) => (
@@ -98,7 +98,7 @@ const Header = () => {
 
   return (
     <>
-      {!isMobile && (
+      {!isLabtop && (
         <div>
           {pathname === "/" ? (
             <header

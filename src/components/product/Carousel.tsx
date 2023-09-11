@@ -6,7 +6,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/autoplay";
-import { useIsMobileMd } from "@/hooks/useIsMobileMd";
+import { useIsTablet } from "@/hooks/useIsTablet";
 import Link from "next/link";
 import LoadingCarousel from "./ui/LoadingCarousel";
 
@@ -67,36 +67,28 @@ const MbannerList = [
 ];
 
 const Carousel = () => {
-  const isMobileMd = useIsMobileMd();
-  const isLoading = bannerList.length !== 5;
-
+  const isTablet = useIsTablet();
   return (
     <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
-      {!isMobileMd ? (
-        <div>
-          {isLoading ? (
-            <LoadingCarousel />
-          ) : (
-            <Swiper
-              // install Swiper modules
-              modules={[Navigation, Pagination, Autoplay]}
-              spaceBetween={0}
-              slidesPerView={1}
-              navigation
-              pagination={{ clickable: true }}
-              autoplay={{ delay: 2000 }}
-              className="rounded-2xl"
-            >
-              {bannerList.map((item) => (
-                <SwiperSlide key={item.id}>
-                  <Link href={item.link}>
-                    <img src={item.img} alt="banner image" />
-                  </Link>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          )}
-        </div>
+      {!isTablet ? (
+        <Swiper
+          // install Swiper modules
+          modules={[Navigation, Pagination, Autoplay]}
+          spaceBetween={0}
+          slidesPerView={1}
+          navigation
+          pagination={{ clickable: true }}
+          autoplay={{ delay: 2000 }}
+          className="rounded-2xl"
+        >
+          {bannerList.map((item) => (
+            <SwiperSlide key={item.id}>
+              <Link href={item.link}>
+                <img src={item.img} alt="banner image" />
+              </Link>
+            </SwiperSlide>
+          ))}
+        </Swiper>
       ) : (
         <Swiper
           // install Swiper modules

@@ -1,5 +1,5 @@
 "use client";
-import { useIsMobile } from "@/hooks/useIsMobile";
+import { useIsLaptop } from "@/hooks/useIsLaptop";
 import { cls } from "@/libs/util";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
@@ -9,8 +9,7 @@ import supabase from "@/libs/supabase";
 
 const HeaderM = () => {
   const [scrollY, setScrollY] = useState(0);
-  const isMobile = useIsMobile();
-  // const user = useAuth();
+  const isLaptop = useIsLaptop();
   const pathname = usePathname();
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
@@ -40,7 +39,7 @@ const HeaderM = () => {
   }, []);
   return (
     <>
-      {isMobile && (
+      {isLaptop && (
         <div>
           {pathname === "/" ? (
             <div>
