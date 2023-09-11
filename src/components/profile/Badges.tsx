@@ -22,7 +22,7 @@ const Badges = ({ badgeData, missionDone }: MyBadgeProps) => {
   //     setBadges(badgeData);
   //   }
   // };
-
+  // badgeData
   useEffect(() => {
     // fetchMissionList();
     if (badgeData && missionDone) {
