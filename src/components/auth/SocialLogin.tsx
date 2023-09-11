@@ -22,7 +22,9 @@ const SocialLogin = () => {
         redirectTo:
           currentUrl === "http://localhost:3000/login"
             ? `${currentUrl}/loginloading`
-            : "https://savers-git-dev-team-climbers.vercel.app/login/loginloading",
+            : currentUrl === "savers-git-dev-team-climbers.vercel.app/login"
+            ? "https://savers-git-dev-team-climbers.vercel.app/login/loginloading"
+            : "https://savers-zeta.vercel.app/login/loginloading",
       };
 
       const { data, error } = await supabase.auth.signInWithOAuth({
@@ -34,60 +36,60 @@ const SocialLogin = () => {
         throw error;
       }
 
-      await getUser();
-      ToastSuccess("로그인 되었습니다. 🌱");
+      // await getUser();
+      // ToastSuccess("로그인 되었습니다. 🌱");
     } catch (error: any) {
       ToastError(`${provider} 로그인 에러: ${error.message}`);
     }
   };
 
-  const getUser = async () => {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+  // const getUser = async () => {
+  //   const {
+  //     data: { user },
+  //   } = await supabase.auth.getUser();
 
-    if (!user) {
-      setUser(null);
-    } else {
-      setUser(user);
-    }
-  };
+  //   if (!user) {
+  //     setUser(null);
+  //   } else {
+  //     setUser(user);
+  //   }
+  // };
 
-  const getUserInfo = async (user: any) => {
-    if (!user) {
-      return;
-    }
+  // const getUserInfo = async (user: any) => {
+  //   if (!user) {
+  //     return;
+  //   }
 
-    const { data: userInfo } = await supabase
-      .from("user")
-      .select("*")
-      .eq("uid", user!.id)
-      .single();
+  //   const { data: userInfo } = await supabase
+  //     .from("user")
+  //     .select("*")
+  //     .eq("uid", user!.id)
+  //     .single();
 
-    if (userInfo?.nickname) {
-      return;
-    } else {
-      updateUserInfo(user);
-    }
-  };
+  //   if (userInfo?.nickname) {
+  //     return;
+  //   } else {
+  //     updateUserInfo(user);
+  //   }
+  // };
 
-  const updateUserInfo = async (user: any) => {
-    const generatedNickname = generateNickname();
+  // const updateUserInfo = async (user: any) => {
+  //   const generatedNickname = generateNickname();
 
-    await supabase.from("user").upsert({
-      uid: user?.id,
-      email: user!.user_metadata["email"],
-      nickname: generatedNickname,
-      provider: user!.app_metadata.provider,
-    });
+  //   await supabase.from("user").upsert({
+  //     uid: user?.id,
+  //     email: user!.user_metadata["email"],
+  //     nickname: generatedNickname,
+  //     provider: user!.app_metadata.provider,
+  //   });
 
-    setNickname(generatedNickname);
-  };
+  //   setNickname(generatedNickname);
+  // };
 
-  const generateNickname = () => {
-    const nickname = NicknameMaker();
-    return nickname;
-  };
+  // const generateNickname = () => {
+  //   const nickname = NicknameMaker();
+  //   return nickname;
+  // };
 
   return (
     <>
