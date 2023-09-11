@@ -13,6 +13,7 @@ const PageButton = ({ reverse, onClick }: PageButtonProps) => {
         reverse ? "-right-[32px]" : "-left-[32px]",
       )}
       onClick={onClick}
+      aria-label="커뮤니티 인기글 좌우 버튼"
     >
       {reverse ? (
         <svg

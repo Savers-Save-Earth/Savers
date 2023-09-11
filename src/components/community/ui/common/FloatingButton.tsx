@@ -21,7 +21,7 @@ const FloatingButton = () => {
               className={cls("fixed bg-mainGreen text-white rounded-full p-4 shadow-lg hover:bg-melon-400 transition ease-in-out duration-200",
                 isLaptop ? "right-4 bottom-20" : "right-10 bottom-10"
               )}
-              aria-label="Create a new post button"
+              aria-label="커뮤니티 새 게시글 작성 페이지 이동 버튼"
             >
             <svg
               xmlns="http://www.w3.org/2000/svg"
