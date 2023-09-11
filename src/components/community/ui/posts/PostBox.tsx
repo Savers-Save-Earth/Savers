@@ -1,7 +1,8 @@
 import Link from "next/link";
-import CategoryTag from "@/components/community/ui/CategoryTag";
+import CategoryTag from "@/components/community/ui/common/CategoryTag";
 import { PostType } from "@/types/types";
 import { cls, getFirstImage, getImgUrl, removeHtmlTags } from "@/libs/util";
+import Image from "next/image";
 
 interface PostBoxProps {
   post: PostType;
@@ -13,6 +14,9 @@ interface PostBoxProps {
 const PostBox = ({ post, width, border, margin }: PostBoxProps) => {
   const includeImage = getFirstImage(post.content);
   const firstImgUrl = getImgUrl(includeImage)
+  const myLoader = () => {
+    return 
+  }
   return (
     <div
       key={post.post_uid}
@@ -25,9 +29,9 @@ const PostBox = ({ post, width, border, margin }: PostBoxProps) => {
         <CategoryTag>{post.category}</CategoryTag>
         <div>
           <div className="flex justify-between items-center">
-            <div className="flex flex-col shrink">
+            <div className="flex flex-col">
               <Link href={`/community/${post.post_uid}`}>
-                <h2 className="font-medium text-lg flex items-center space-x-2 cursor-pointer hover:underline my-2">
+                <h2 className="font-medium text-lg flex items-center space-x-2 cursor-pointer hover:underline mb-2">
                   {post.title}
                 </h2>
               </Link>
@@ -38,11 +42,13 @@ const PostBox = ({ post, width, border, margin }: PostBoxProps) => {
               </Link>
             </div>
             {includeImage ? (
-              <div className="flex-shrink-0 w-24 h-24 ml-2 bg-gray-50">
-                <img
-                  className="flex-shrink-0 w-24 h-24 rounded-md"
+              <div className="relative object-contain flex-shrink-0 w-24 h-24 ml-2 bg-gray-50 rounded-md">
+                <Image
                   src={firstImgUrl}
-                  alt="thumbnail"
+                  alt="Thumbnail of Post"
+                  fill={true}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="rounded-md"
                 />
               </div>
             ) : null}

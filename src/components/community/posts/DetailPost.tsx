@@ -13,15 +13,15 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { Database } from "@/types/supabase";
 import { useAuth } from "@/hooks/useAuth";
-import CategoryTag from "../ui/CategoryTag";
-import DropButtons from "../ui/DropButtons";
+import CategoryTag from "../ui/common/CategoryTag";
+import DropButtons from "../ui/common/DropButtons";
 import copy from "clipboard-copy";
 import { useSetRecoilState } from "recoil";
 import { editPostAtom } from "@/libs/atoms";
 import { DetailPostProps } from "@/types/types";
 import Image from "next/image";
 import { ToastError, ToastInfo, ToastSuccess } from "@/libs/toastifyAlert";
-import ProfileImage from "../ui/ProfileImage";
+import ProfileImage from "../ui/common/ProfileImage";
 
 type LikesType = Database["public"]["Tables"]["like_post"]["Insert"];
 
@@ -180,7 +180,11 @@ const DetailPost = ({ postDetail, postUid }: DetailPostProps) => {
             <div className="flex items-center justify-center space-x-3">
               <ProfileImage userUid={postDetail?.author_uid} />
               <div className="flex flex-col items-start justify-center">
-                <span className="text-gray-600">{postDetail?.author_name}</span>
+                <span
+                  className="text-gray-600 cursor-pointer"
+                  onClick={() => router.push(`/profile/${postDetail?.author_uid}/myprofile`)}>
+                  {postDetail?.author_name}
+                </span>
                 <span className="text-sm text-gray-400">
                   {postDetail?.updated_date}
                 </span>
