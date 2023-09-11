@@ -17,8 +17,8 @@ const FloatingButton = () => {
       pathname === PATHNAME_WRITE ||
       pathname === PATHNAME_EDIT ? null : (
         <Link href={PATHNAME_WRITE}>
-            <button className={cls("fixed right-10 bg-mainGreen text-white rounded-full p-4 shadow-lg hover:bg-melon-400 transition ease-in-out duration-200",
-              isLaptop ? "bottom-20" : "bottom-10"
+            <button className={cls("fixed bg-mainGreen text-white rounded-full p-4 shadow-lg hover:bg-melon-400 transition ease-in-out duration-200",
+              isLaptop ? "right-4 bottom-20" : "right-10 bottom-10"
             )}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
