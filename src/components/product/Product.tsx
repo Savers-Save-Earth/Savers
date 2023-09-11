@@ -18,6 +18,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getThisProductLikeStatus } from "@/api/product/like";
 import LoadingProduct from "./ui/LoadingProduct";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import TopButton from "../community/ui/TopButton";
 
 const productCategory = [
   { value: "", label: "전체", img: "assets/product/all.png" },
@@ -210,7 +211,11 @@ const ProductComponent = () => {
         ))}
       </div>
       {/* 셀렉트바 선택 로직  */}
-      <select value={select} onChange={(e) => setSelect(e.target.value)}>
+      <select
+        className="outline-none bg-gray-100 py-2 md:px-3 px-1 rounded-lg  text-gray-500"
+        value={select}
+        onChange={(e) => setSelect(e.target.value)}
+      >
         {selectOptions.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
@@ -374,6 +379,7 @@ const ProductComponent = () => {
           </div>
         )}
       </div>
+      <TopButton />
     </>
   );
 };
