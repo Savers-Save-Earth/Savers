@@ -23,7 +23,6 @@ const FavoriteRestaurantsComp = ({ id }: { id : string }) => {
 
   useEffect(() => {
     if (!favoriteRestaurantsData) return;
-    console.log("favoriteRestaurantsData,,,,,,,,,,,,,",favoriteRestaurantsData)
     const count = favoriteRestaurantsData.count;
     const userLikedRestaurants = favoriteRestaurantsData.favoriteRestaurants;
     setUserLikedRestaurants(userLikedRestaurants);
