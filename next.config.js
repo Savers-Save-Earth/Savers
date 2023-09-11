@@ -52,10 +52,46 @@ module.exports = withImages(
         },
         {
           protocol: "https",
+          hostname: "egojin.com",
+          port: "",
+          pathname: "/**",
+        },
+        {
+          protocol: "https",
           hostname: "cdn.imweb.me",
           port: "",
-          pathname: "/**"
-        }
+          pathname: "/**",
+        },
+        {
+          protocol: "https",
+          hostname: "nuldam.com",
+          port: "",
+          pathname: "/**",
+        },
+        {
+          protocol: "https",
+          hostname: "mastina.co.kr",
+          port: "",
+          pathname: "/**",
+        },
+        {
+          protocol: "https",
+          hostname: "pulstory.pulmuone.com",
+          port: "",
+          pathname: "/**",
+        },
+        {
+          protocol: "https",
+          hostname: "convenii.com",
+          port: "",
+          pathname: "/**",
+        },
+        {
+          protocol: "https",
+          hostname: "image.oliveyoung.co.kr",
+          port: "",
+          pathname: "/**",
+        },
       ],
       formats: ["image/webp"]["image/png"],
     },
