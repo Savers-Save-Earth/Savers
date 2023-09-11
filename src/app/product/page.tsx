@@ -1,5 +1,4 @@
 "use client";
-
 import React from "react";
 import Product from "@/components/product/Product";
 import Carousel from "@/components/product/Carousel";
