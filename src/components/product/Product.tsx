@@ -16,6 +16,7 @@ import { ProductLikesType } from "@/types/types";
 import { getProducts } from "@/api/product/product";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getThisProductLikeStatus } from "@/api/product/like";
+import LoadingProduct from "./ui/LoadingProduct";
 import { useIsMobile } from "@/hooks/useIsMobile";
 
 const productCategory = [
@@ -79,10 +80,9 @@ const ProductComponent = () => {
   } = useQuery<Product[]>(["product"], getProducts);
 
   // 현재 유저의 좋아요상태 가져오기
-  const { data: likeStatus } = useQuery<ProductLikesType[]>(
-    ["userLikeProduct"],
-    () => getProductLikeStatus(currentUser!.uid),
-  );
+  const { data: likeStatus, isLoading: likeStatusLoading } = useQuery<
+    ProductLikesType[]
+  >(["userLikeProduct"], () => getProductLikeStatus(currentUser!.uid));
 
   // 유저의 기존 좋아요 목록을 불러오기
   const getProductLikedStatus = async () => {
@@ -188,6 +188,10 @@ const ProductComponent = () => {
     sortedData = sortedData.slice().sort((a, b) => b.createdAt - a.createdAt);
   } else if (select === "popular") {
     sortedData = sortedData.slice().sort((a, b) => b.like_count - a.like_count);
+  }
+
+  if (isLoading) {
+    return <LoadingProduct />;
   }
 
   return (
