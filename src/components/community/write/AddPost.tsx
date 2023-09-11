@@ -14,7 +14,7 @@ import {
 } from "@/api/mission/checkMission";
 import { NewPostType } from "@/types/types";
 import { ToastError, ToastSuccess, ToastWarn } from "@/libs/toastifyAlert";
-import { useIsMobile } from "@/hooks/useIsMobile";
+import { useIsLaptop } from "@/hooks/useIsLaptop";
 import { useRouter } from "next/navigation";
 
 const currentDate = convertDate(new Date());
@@ -23,7 +23,7 @@ const AddPost: NextComponentType = () => {
   const [category, setCategory] = useState("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const isMobile = useIsMobile();
+  const isLaptop = useIsLaptop();
   const router = useRouter();
 
   // 미션 관련 부분(동준님)
@@ -95,7 +95,7 @@ const AddPost: NextComponentType = () => {
 
   return (
     <div className="w-full flex flex-col items-start self-stretch space-y-10 mb-10">
-      {isMobile ? null : <h1 className="text-2xl font-semibold">글쓰기</h1>}
+      {isLaptop ? null : <h1 className="text-2xl font-semibold">글쓰기</h1>}
       <form
         onSubmit={(e) => {
           handleSubmit(e);
@@ -125,7 +125,7 @@ const AddPost: NextComponentType = () => {
             placeholder="제목을 입력해주세요."
             className="w-full p-4 outline-none text-sm bg-gray-50 rounded-xl"
           />
-          {isMobile ? null : (
+          {isLaptop ? null : (
             <button
               type="submit"
               className="xl:w-1/12 px-3 py-2 rounded-xl bg-gray-950 text-white"
@@ -138,7 +138,7 @@ const AddPost: NextComponentType = () => {
           <TextEditor content={content} setContent={setContent} />
         </div>
       </form>
-      {isMobile ? (
+      {isLaptop ? (
         <button
           onClick={handleSubmit}
           type="submit"

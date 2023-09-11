@@ -4,17 +4,17 @@ import Link from "next/link";
 
 import { cls } from "@/libs/util";
 import { PATHNAME_MAIN, PATHNAME_OHJIWAN, PATHNAME_PRODUCT, PATHNAME_RECIPE, PATHNAME_RESTAURANT } from "@/enums/community";
-import { useIsMobile } from "@/hooks/useIsMobile";
+import { useIsLaptop } from "@/hooks/useIsLaptop";
 import SearchInput from "./SearchInput";
 
 const SideBar = () => {
   const pathname = usePathname();
-  const isMobile = useIsMobile();
+  const isLaptop = useIsLaptop();
   return (
     <>
       <aside className="flex flex-col xl:max-w-sm">
         <div className="flex flex-col space-y-6 xl:space-y-10">
-          {isMobile ? null : (
+          {isLaptop ? null : (
             <h1 className="text-2xl font-semibold invisible xl:visible">
               커뮤니티
             </h1>

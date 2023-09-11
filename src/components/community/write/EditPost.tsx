@@ -15,12 +15,12 @@ import { convertTimestamp, removeHtmlTags } from "@/libs/util";
 
 import { EditPostType } from "@/types/types";
 import { ToastError, ToastSuccess, ToastWarn } from "@/libs/toastifyAlert";
-import { useIsMobile } from "@/hooks/useIsMobile";
+import { useIsLaptop } from "@/hooks/useIsLaptop";
 
 const EditPost = () => {
   const currentUser = useAuth();
   const router = useRouter();
-  const isMobile = useIsMobile();
+  const isLaptop = useIsLaptop();
   const { postDetail } = useRecoilValue(editPostAtom);
 
   const [category, setCategory] = useState(postDetail?.category ?? "");
@@ -83,7 +83,7 @@ const EditPost = () => {
 
   return (
     <div className="w-full flex flex-col items-start self-stretch space-y-10 mb-10">
-      {isMobile ? null : (
+      {isLaptop ? null : (
         <h1 className="text-2xl font-semibold">작성 글 수정</h1>
       )}
       <form
@@ -111,7 +111,7 @@ const EditPost = () => {
             placeholder="제목을 입력해주세요."
             className="w-full p-4 outline-none text-sm bg-gray-50 rounded-xl"
           />
-          {isMobile ? null : (
+          {isLaptop ? null : (
             <button
               type="submit"
               className="xl:w-1/12 px-3 py-2 rounded-xl bg-gray-950 text-white"
@@ -124,7 +124,7 @@ const EditPost = () => {
           <TextEditor content={content ?? ""} setContent={setContent} />
         </div>
       </form>
-      {isMobile ? (
+      {isLaptop ? (
         <button
           onClick={handleSubmit}
           type="submit"

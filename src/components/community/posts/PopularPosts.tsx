@@ -6,13 +6,13 @@ import { useQuery } from "@tanstack/react-query";
 
 import { PostType } from "@/types/types";
 
-import { useIsMobile } from "@/hooks/useIsMobile";
+import { useIsLaptop } from "@/hooks/useIsLaptop";
 import PopularPostBox from "./ui/PopularPostBox";
 import PageButton from "./ui/PageButton";
 import LoadingPopularPosts from "../ui/LoadingPopularPosts";
 
 const PopularPosts = () => {
-  const isMobile = useIsMobile();
+  const isLaptop = useIsLaptop();
   const [currentPage, setCurrentPage] = useState(1);
   const { data: popularPosts, isLoading } = useQuery<PostType[]>(
     ["popularPosts"],
@@ -31,7 +31,7 @@ const PopularPosts = () => {
   return (
     <section className="mt-10 xl:mt-0 flex flex-col relative w-full bg-gray-50 p-6 rounded-md">
       <h1 className="text-xl flex mb-2">전체 인기 글</h1>
-      {isMobile
+      {isLaptop
         ? null
         : currentPage === 2 && (
             <PageButton
@@ -41,7 +41,7 @@ const PopularPosts = () => {
           )}
       <div className="flex items-center justify-center">
         <div className="flex xl:grid xl:grid-cols-4 gap-2.5 overflow-x-auto xl:overflow-hidden no-scrollbar">
-          {isMobile
+          {isLaptop
             ? popularPosts?.map((post: PostType) => (
               <PopularPostBox key={post.post_uid} post={post} />
               ))
@@ -50,7 +50,7 @@ const PopularPosts = () => {
               ))}
         </div>
       </div>
-      {isMobile
+      {isLaptop
         ? null
         : popularPosts &&
           popularPosts?.length > 4 &&

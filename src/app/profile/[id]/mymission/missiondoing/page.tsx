@@ -7,7 +7,7 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchMissionDoing } from "@/api/profile/fetchProfileData";
 import NoListToShown from "@/components/profile/NoListShown";
-import { useIsMobileSm } from "@/hooks/useIsMobileSm";
+import { useIsMobile } from "@/hooks/useIsMobile";
 import LoadingMission from "@/components/profile/ui/LoadingMission";
 
 type MissionDoingProp = Database["public"]["Tables"]["missionList"]["Row"];
@@ -15,7 +15,7 @@ type MissionDoingProp = Database["public"]["Tables"]["missionList"]["Row"];
 const MissionDoing = ({ params }: { params: { id: string } }) => {
   const currentDate = convertDate(new Date());
   const searchId = params.id;
-  const isSmallSCreen = useIsMobileSm();
+  const isMobile = useIsMobile();
   const { data: missionDoing, isLoading } = useQuery<any>(
     ["fetchMissionDoing", searchId],
     () => fetchMissionDoing(searchId, currentDate),
