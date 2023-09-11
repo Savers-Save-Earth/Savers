@@ -1,10 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import supabase from "@/libs/supabase";
 import { Database } from "@/types/supabase";
-import { useRouter } from "next/navigation";
-import Loading from "@/app/loading";
 import { useQuery } from "@tanstack/react-query";
 import { fetchFavoriteProducts } from "@/api/profile/fetchFavoriteData";
 import NoListToShown from "@/components/profile/NoListShown";
@@ -71,6 +68,7 @@ const FavoriteProductsComp = ({ id }: { id : string }) => {
             className="w-full flex flex-col items-center gap-[0.5rem] cursor-pointer h-full"
             key={product.like_id}
           >
+          
             <img
               // className="w-[125px] h-[125px] sm:w-[152px] sm:h-[152px] rounded-2xl shrink-0"
               className="w-full h-3/4 rounded-2xl shrink-0"

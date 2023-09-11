@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import MissionDoingComp from "./MissionDongComp";
+import MissionDoingComp from "./MissionDoingComp";
 
 export const metadata: Metadata = {
   title: "진행중인 미션 | Savers",

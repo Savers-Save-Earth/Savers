@@ -6,6 +6,7 @@ import { fetchMissionDone } from "@/api/profile/fetchProfileData";
 import NoListToShown from "@/components/profile/NoListShown";
 import LoadingMission from "@/components/profile/ui/LoadingMission";
 import { MissionListType } from "@/types/types";
+import Image from "next/image";
 
 const MissionDoneComp = ({ id }: { id: string }) => {
   const searchId = id;
@@ -31,12 +32,20 @@ const MissionDoneComp = ({ id }: { id: string }) => {
           >
             {/* 내용 및 버튼 */}
             <div className="flex flex-col gap-2 items-start self-stretch opacity-10">
-              <div className="min-w-[32px] min-h-[32px] sm:min-w-[64px] sm:min-h-[64px]">
-                <img
+              <div className="relative min-w-[32px] min-h-[32px] sm:min-w-[64px] sm:min-h-[64px]">
+                <Image
+                  src={mission.icon}
+                  alt="완료미션카드 아이콘"
+                  fill
+                  style={{
+                    objectFit: "cover",
+                  }}
+                />
+                {/* <img
                   className="w-[32px] h-[32px] sm:w-[64px] sm:h-[64px]"
                   src={mission.icon}
                   alt="아이콘 이미지 없음"
-                />
+                /> */}
               </div>
               <h1 className="text-[1rem] sm:text-[24px] sm:leading-[29px] font-semibold text-[#4DAB00]">
                 {mission.title}

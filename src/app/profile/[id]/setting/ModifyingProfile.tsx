@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState } from "react";
 import { useEffect } from "react";
 import supabase from "@/libs/supabase";
@@ -13,6 +14,7 @@ const ModifyingProfile = () => {
   const [birthday, setBirthday] = useState("");
 
   const searchId = useParams().id;
+  const [EmailExceptUser, setEmailExceptUser] = useState<string[]>([]);
 
   const [emailMessage, setEmailMessage] = useState(" ");
   const [numberMessage, setNumberMessage] = useState(" ");
@@ -25,6 +27,9 @@ const ModifyingProfile = () => {
     const { data } = await supabase.from("user").select().eq("uid", searchId);
     setUser(data!);
     setUserInfo(data!);
+    const { data : emailData } = await supabase.from("user").select("email").neq("uid", searchId);
+    const emailOverlap = emailData?.map((item) => item.email)
+    setEmailExceptUser(emailOverlap!)
   };
   useEffect(() => {
     getUser();
@@ -75,7 +80,7 @@ const ModifyingProfile = () => {
   ) => {
     event.preventDefault();
     const currentName = event.target.name;
-    const currentValue = event.target.value;
+    const currentValue: string = event.target.value;
     switch (currentName) {
       case "email":
         const emailRegExp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -84,7 +89,11 @@ const ModifyingProfile = () => {
         } else if (!emailRegExp.test(currentValue)) {
           setEmailMessage("*올바른 이메일 형식이 아닙니다.");
           setEmailValid(false);
-        } else {
+        } else if (EmailExceptUser.includes(email)) {
+          setEmailMessage("*이미 사용중인 이메일입니다.")
+          setEmailValid(false);
+        } 
+        else {
           setEmailMessage("*사용가능한 이메일입니다.");
           setEmailValid(true);
         }

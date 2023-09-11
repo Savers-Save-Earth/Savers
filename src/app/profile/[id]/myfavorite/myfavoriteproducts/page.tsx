@@ -2,8 +2,8 @@ import { Metadata } from "next";
 import FavoriteProductsComp from "./FavoriteProductsComp";
 
 export const metadata: Metadata = {
-  title: "완료한 미션 | Savers",
-  description: "완료한 미션을 확인할 수 있습니다.",
+  title: "북마크 제품 | Savers",
+  description: "북마크하신 제품 목록입니다.",
 };
 
 const MyFavoriteProducts = ({ params: { id } }: { params: { id: string } }) => {
