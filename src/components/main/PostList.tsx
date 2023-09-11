@@ -8,7 +8,7 @@ import PostBox from "../community/posts/ui/PostBox";
 
 const PostList = () => {
   const [post, setPost] = useState<PostType[]>([]);
-  const [showCount, setShowCount] = useState(5);
+  const [showCount, setShowCount] = useState(8);
 
   const router = useRouter();
 
@@ -28,7 +28,7 @@ const PostList = () => {
   }, []);
 
   const showMorePost = () => {
-    setShowCount(showCount + 10);
+    setShowCount(showCount + 4);
   };
 
   const getThumbnail = (content: string) => {
@@ -53,7 +53,7 @@ const PostList = () => {
   };
 
   return (
-    <div className="mt-16">
+    <div className="mt-16 ">
       <div
         style={{
           display: "flex",
@@ -81,16 +81,13 @@ const PostList = () => {
           />
         </svg>
       </div>
-      {post.slice(0, showCount).map((item) => (
-        <PostBox
-          key={item.post_uid}
-          post={item}
-          border="border rounded-xl"
-          margin="mb-4"
-        />
-      ))}
+      <div className="grid xl:grid-cols-2 gap-4">
+        {post.slice(0, showCount).map((item) => (
+          <PostBox key={item.post_uid} post={item} border="border rounded-xl" />
+        ))}
+      </div>
       <div className="flex justify-center">
-        {showCount <= post.length && (
+        {showCount < post.length && (
           <button
             onClick={showMorePost}
             className="text-gray-500 text-base bg-gray-50 rounded-2xl mt-4 mb-8 "

@@ -36,11 +36,12 @@ const EditProfile = ({ profileData }: any) => {
     }
   };
 
-  const submitHandler = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const submitHandler = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
     e.preventDefault();
-    if (!profileData.nickname) {
+    if (nickname.length < 1) {
       alert("변경할 닉네임을 입력해주세요.");
-      return;
     }
 
     const isNicknameValid = await fetchNicknameData(nickname, userId as string);
@@ -79,7 +80,9 @@ const EditProfile = ({ profileData }: any) => {
     }
     window.location.reload();
   };
-  const profileEditModalHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const profileEditModalHandler = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
     e.preventDefault();
     setEditImage(
       profileData.profileImage ||
