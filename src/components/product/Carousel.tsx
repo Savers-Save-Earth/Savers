@@ -8,7 +8,6 @@ import "swiper/css/pagination";
 import "swiper/css/autoplay";
 import { useIsTablet } from "@/hooks/useIsTablet";
 import Link from "next/link";
-import LoadingCarousel from "./ui/LoadingCarousel";
 
 const bannerList = [
   {
