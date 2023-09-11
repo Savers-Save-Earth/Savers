@@ -5,6 +5,7 @@ import supabase from "@/libs/supabase";
 import { useQuery } from "@tanstack/react-query";
 import { fetchNicknameData } from "@/api/profile/fetchProfileData";
 import { useParams } from "next/navigation";
+import { ToastSuccess, ToastWarn } from "@/libs/toastifyAlert";
 
 const EditProfile = ({ profileData }: any) => {
   const [nickname, setNickname] = useState<string>(profileData.nickname || "");
@@ -41,14 +42,15 @@ const EditProfile = ({ profileData }: any) => {
   ) => {
     e.preventDefault();
     if (nickname.length < 1) {
-      alert("변경할 닉네임을 입력해주세요.");
+      ToastWarn("변경할 닉네임을 입력해주세요.");
+      return;
     }
 
     const isNicknameValid = await fetchNicknameData(nickname, userId as string);
 
     if (isNicknameValid) {
       console.log(nickname);
-      alert("중복된 닉네임 입니다. 다른 닉네임을 입력해주세요.");
+      ToastWarn("중복된 닉네임 입니다.");
       return;
     }
 
