@@ -38,8 +38,27 @@ module.exports = withImages(
           port: "",
           pathname: "/premium-photo/**",
         },
+        {
+          protocol: "https",
+          hostname: "shopping-phinf.pstatic.net",
+          port: "",
+          pathname: "/**",
+        },
+        {
+          protocol: "https",
+          hostname: "m.nuldam.com",
+          port: "",
+          pathname: "/**",
+        },
+        {
+          protocol: "https",
+          hostname: "cdn.imweb.me",
+          port: "",
+          pathname: "/**"
+        }
       ],
-      domains: ["m.nuldam.com", "cdn.imweb.me"],
+      formats: ["image/webp"]["image/png"],
     },
+    disableStaticImages: false,
   }),
 );

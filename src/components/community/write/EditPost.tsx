@@ -16,6 +16,7 @@ import { convertTimestamp, removeHtmlTags } from "@/libs/util";
 import { EditPostType } from "@/types/types";
 import { ToastError, ToastSuccess, ToastWarn } from "@/libs/toastifyAlert";
 import { useIsLaptop } from "@/hooks/useIsLaptop";
+import { COMMUNITY_TOAST_TEXT } from "@/enums/messages";
 
 const EditPost = () => {
   const currentUser = useAuth();
@@ -40,12 +41,11 @@ const EditPost = () => {
       queryClient.invalidateQueries({
         queryKey: ["postDetail", postDetail?.post_uid],
       });
-      ToastSuccess("게시글이 정상적으로 수정되었습니다.");
+      ToastSuccess(COMMUNITY_TOAST_TEXT.POST_EDIT_SUCCESS);
       router.push(`/community/${postDetail?.post_uid}`);
     },
     onError: (error) => {
-      // console.error("게시글 수정 에러:", error);
-      ToastError("게시글이 정상적으로 수정되지 않았습니다. 다시 시도해주세요!");
+      ToastError(COMMUNITY_TOAST_TEXT.POST_EDIT_ERROR);
     },
   });
 
@@ -65,15 +65,15 @@ const EditPost = () => {
       };
 
       if (category === "") {
-        ToastWarn("카테고리를 선택해주세요!");
+        ToastWarn(COMMUNITY_TOAST_TEXT.CATEGORY_SELECT_ERROR);
         return false;
       }
       if (title === "") {
-        ToastWarn("제목을 입력해주세요!");
+        ToastWarn(COMMUNITY_TOAST_TEXT.TITLE_EMPTY_ERROR);
         return false;
       }
       if (removeHtmlTags(content).length < 1) {
-        ToastWarn("본문을 작성해주세요!");
+        ToastWarn(COMMUNITY_TOAST_TEXT.CONTENT_EMPTY_ERROR);
         return false;
       }
 

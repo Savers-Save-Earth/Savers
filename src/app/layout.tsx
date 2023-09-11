@@ -16,7 +16,38 @@ export const metadata: Metadata = {
     apple: ["apple-touch-icon.png?v=4"],
     shortcut: ["apple-tough-icon.png"],
   },
-  manifest: "site.webmanifest",
+  openGraph: {
+    title: "Savers | 지구를 위한 작은 실천",
+    description: "Savers 세이버스 - 지구를 위한 작은 실천",
+    images: [
+      {
+        url: "/ogImg/chatlink_kakaotalk.png",
+        width: 800,
+        height: 400,
+        alt: "세이버스"
+      },
+      {
+        url: "/ogImg/chatlink_facebook.png",
+        width: 600,
+        height: 315,
+        alt: "세이버스"
+      },
+      {
+        url: "/ogImg/chatlink_twitter.png",
+        width: 1200,
+        height: 630,
+        alt: "세이버스"
+      },
+      {
+        url: "/ogImg/chatlink_instagram.png",
+        width: 320,
+        height: 320,
+        alt: "세이버스"
+      },
+    ],
+    locale: "ko-KR",
+    type: "website",
+  }
 };
 
 declare global {
