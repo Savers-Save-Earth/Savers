@@ -79,6 +79,7 @@ const ProductList = () => {
               <SwiperSlide key={item.id}>
                 <img
                   src={item.img}
+                  alt={item.name}
                   className="rounded-lg cursor-pointer"
                   onClick={() => router.push(`/product/${item.id}`)}
                 />
