@@ -223,8 +223,7 @@ const RestaurantList = () => {
                       </svg>
                     </span>
                     <span
-                      className="bg-gray-50 ml-2 text-[14px] text-gray-500 rounded-2xl cursor-pointer"
-                      style={{ padding: "8px 10px" }}
+                      className="bg-gray-50 ml-2 text-[14px] text-gray-500 rounded-2xl cursor-pointer  hover:bg-gray-100 py-2 px-[12px]"
                       onClick={() => window.open(`${item?.restaurant_map}`)}
                     >
                       상세보기
