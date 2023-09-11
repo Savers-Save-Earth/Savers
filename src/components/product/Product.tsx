@@ -18,7 +18,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getThisProductLikeStatus } from "@/api/product/like";
 import LoadingProduct from "./ui/LoadingProduct";
 import { useIsMobile } from "@/hooks/useIsMobile";
-import TopButton from "../community/ui/TopButton";
+import TopButton from "../community/ui/common/TopButton";
 
 const productCategory = [
   { value: "", label: "전체", img: "assets/product/all.png" },

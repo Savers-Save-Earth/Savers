@@ -1,7 +1,8 @@
 import { getFirstImage, getImgUrl, removeHtmlTags } from "@/libs/util";
 import Link from "next/link";
-import CategoryTag from "../../ui/CategoryTag";
+import CategoryTag from "../common/CategoryTag";
 import { PostType } from "@/types/types";
+import Image from "next/image";
 
 const PopularPostBox = ({ post }: { post: PostType }) => {
   return (
@@ -12,11 +13,13 @@ const PopularPostBox = ({ post }: { post: PostType }) => {
       >
         {getFirstImage(post.content) ? (
           <div id="include-image">
-            <div className="flex-shrink-0 w-36 h-36 mx-auto">
-              <img
-                className="flex-shrink-0 w-36 h-36 rounded-md"
+            <div className="relative flex-shrink-0 w-36 h-36 mx-auto">
+              <Image
                 src={getImgUrl(getFirstImage(post.content))}
-                alt="thumbnail"
+                alt="Thumnail of Popular Post"
+                fill={true}
+                className="rounded-md"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
             </div>
             <h2 className="mt-2 text-md text-gray-800 font-semibold leading-5">
