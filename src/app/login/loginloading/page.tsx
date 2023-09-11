@@ -52,7 +52,6 @@ const LoginLoading = () => {
   const updateUserInfo = async (user: any) => {
     const generatedNickname = generateNickname();
     // console.log("nickname>>", generatedNickname);
-    // console.log("user가져왔나?>>>", user);
 
     await supabase.from("user").upsert({
       uid: user?.id,

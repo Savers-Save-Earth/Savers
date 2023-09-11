@@ -15,6 +15,18 @@ const nextConfig = {
         hostname: process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL,
         port: "",
         pathname: "/community/**"
+      },
+      {
+        protocol: "https",
+        hostname: process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL,
+        port: "",
+        pathname: "/badge/**"
+      },
+      {
+        protocol: 'https',
+        hostname: 'img.freepik.com',
+        port: '',
+        pathname: '/premium-photo/**'
       }
     ]
   },

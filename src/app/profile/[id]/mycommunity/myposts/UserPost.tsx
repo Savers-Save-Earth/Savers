@@ -1,7 +1,8 @@
 import { getFirstImage, getImgUrl, removeHtmlTags } from "@/libs/util";
+import { MyPostProps } from "@/types/types";
 import React from "react";
 
-export default function UserPost({ post }: any) {
+export default function UserPost({ post }: MyPostProps) {
   const includeImage = getFirstImage(post.content);
   const firstImgUrl = getImgUrl(includeImage);
   const postContent = removeHtmlTags(post.content).slice(0, 50) + "..."

@@ -36,7 +36,7 @@ const EditProfile = ({ profileData }: any) => {
     }
   };
 
-  const submitHandler = async (e: any) => {
+  const submitHandler = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     if (!profileData.nickname) {
       alert("변경할 닉네임을 입력해주세요.");
@@ -79,7 +79,7 @@ const EditProfile = ({ profileData }: any) => {
     }
     window.location.reload();
   };
-  const profileEditModalHandler = (e: any) => {
+  const profileEditModalHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     setEditImage(
       profileData.profileImage ||
@@ -92,7 +92,7 @@ const EditProfile = ({ profileData }: any) => {
     <div>
       <button
         className="text-gray-400 text-[16px] non-italic font-normal leading-4"
-        onClick={profileEditModalHandler}
+        onClick={(e) => profileEditModalHandler(e)}
       >
         프로필 수정
       </button>
@@ -114,7 +114,7 @@ const EditProfile = ({ profileData }: any) => {
                 />
                 <label
                   htmlFor="input-file"
-                  onClick={fileSelectHandler}
+                  onClick={(e) => fileSelectHandler(e)}
                   className="absolute bottom-1 right-32"
                 >
                   <input
@@ -198,7 +198,7 @@ const EditProfile = ({ profileData }: any) => {
               취소
             </button>
             <button
-              onClick={submitHandler}
+              onClick={(e) => submitHandler(e)}
               className="w-[156px] m-1 h-[48px] bg-black rounded-2xl text-white  hover:bg-gray-600"
             >
               제출

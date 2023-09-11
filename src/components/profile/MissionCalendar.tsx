@@ -5,27 +5,22 @@ import { format } from "date-fns";
 import supabase from "@/libs/supabase";
 import { useParams } from "next/navigation";
 import RandomMission from "@/app/profile/components/RandomMission";
+import { MissionListType } from "@/types/types";
 
 type ValuePiece = Date | null;
 
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
-interface Mission {
-  id: number;
-  userId: string;
-  doingYn: boolean;
-  createdAt: string;
-}
-
 const MissionCalendar = ({ profileData, missionDone }: any) => {
   const [value, onChange] = useState<Value>(new Date());
-  const [mission, setMission] = useState<Mission[]>([]);
-  const [profile, setProfile] = useState<any>([]);
+  const [mission, setMission] = useState<MissionListType[]>([]);
   const params = useParams();
-  const searchId = params.id;
+  
 
-  const [showModal, setShowModal] = useState(false);
-  const [user, setUser] = useState<any>();
+  // const [showModal, setShowModal] = useState(false);
+  // const [profile, setProfile] = useState<any>([]);
+  // const [user, setUser] = useState<any>();
+  // const searchId = params.id;
 
   //추후에 useAuth hoo으로 바꿔줘야 함.
   // const getUser = async () => {
@@ -62,6 +57,7 @@ const MissionCalendar = ({ profileData, missionDone }: any) => {
   //     .eq("uid", searchId);
   //   return user![0];
   // };
+  
   useEffect(() => {
     // fetchMissionList();
     if (missionDone !== null) {
