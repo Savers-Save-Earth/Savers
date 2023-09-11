@@ -26,17 +26,20 @@ const MissionDone = ({ params }: { params: { id: string } }) => {
       {missionDone?.map((mission: MissionListType) => {
         return (
           <div
-            className="relative py-6 px-4 flex flex-col justify-between items-center w-[8rem] h-[13rem] sm:w-[180px] sm:h-[300px] rounded-2xl break-words hover:scale-110 hover:duration-500 opacity-100 bg-[#F3FFEA]"
+            className="relative py-2 sm:py-6 px-4 flex flex-col justify-between items-center w-[8rem] h-[13rem] sm:w-[180px] sm:h-[300px] rounded-2xl break-words hover:scale-110 hover:duration-500 opacity-100 bg-[#F3FFEA]"
             key={mission.id}
           >
             {/* 내용 및 버튼 */}
-            <div className="flex flex-col gap-3 items-start self-stretch opacity-10">
-              <h1 className="text-[1rem] sm:text-[24px] sm:leading-[31px] font-semibold text-[#4DAB00]">
+            <div className="flex flex-col gap-2 items-start self-stretch opacity-10">
+            <div className="min-w-[32px] min-h-[32px] sm:min-w-[64px] sm:min-h-[64px]">
+                <img className="w-[32px] h-[32px] sm:w-[64px] sm:h-[64px]" src={mission.icon} alt="아이콘 이미지 없음"/>
+              </div>
+              <h1 className="text-[1rem] sm:text-[24px] sm:leading-[29px] font-semibold text-[#4DAB00]">
                 {mission.title}
               </h1>
 
-              <div className="flex flex-col items-start gap-2 self-stretch">
-                <div className="w-full h-full sm:min-w-[121px] sm:min-h-[127px] flex py-4 px-2 flex-col justify-between items-start gap-2 self-stretch bg-[#E8FFD4] rounded-2xl">
+              <div className="flex flex-col items-start gap-1 self-stretch">
+                <div className="w-full h-full sm:min-w-[121px] sm:min-h-[110px] flex py-2 px-2 flex-col justify-between items-start self-stretch bg-[#E8FFD4] rounded-2xl">
                   <p className="text-[0.5rem] sm:text-[14px] font-medium text-[#5FD100]">
                     {mission.content}
                   </p>

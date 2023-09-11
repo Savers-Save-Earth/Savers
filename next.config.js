@@ -22,6 +22,12 @@ const nextConfig = {
         port: "",
         pathname: "/badge/**"
       },
+      {
+        protocol: 'https',
+        hostname: 'img.freepik.com',
+        port: '',
+        pathname: '/premium-photo/**'
+      }
     ]
   },
 }

@@ -13,6 +13,7 @@ export type MissionList = {
   title: string;
   user_uid: string;
   userId: string;
+  icon: string;
 }
 
 export type MissionInsert =  Omit<MissionList, "id">
@@ -27,6 +28,7 @@ export type DailyMission = {
   address: string;
   bigCategory: string;
   smallCategory: string;
+  icon: string;
 }
 
 

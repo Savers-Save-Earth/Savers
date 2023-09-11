@@ -98,6 +98,7 @@ const Badges = ({ badgeData, missionDone }: MyBadgeProps) => {
               <Image
                 alt="no image"
                 src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/badge/01sproutsaver.svg"
+                // src="https://img.freepik.com/premium-photo/korean-flag-waving_798986-401.jpg"
                 width={88}
                 height={88}
               />

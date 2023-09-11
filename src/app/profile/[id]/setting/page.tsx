@@ -25,7 +25,6 @@ const ModifyingProfile = () => {
     const { data } = await supabase.from("user").select().eq("uid", searchId);
     setUser(data!);
     setUserInfo(data!);
-    console.log("data====>", data);
   };
   useEffect(() => {
     getUser();
@@ -38,12 +37,7 @@ const ModifyingProfile = () => {
   };
 
   const handleSubmit = async () => {
-    console.log("email---->", email);
-    console.log("emailValid---->", emailValid);
-    console.log("number---->", number);
-    console.log("numberValid---->", numberValid);
-    console.log("birthday---->", birthday);
-    console.log("birthdayValid---->", birthdayValid);
+
     if (!email) {
       alert("이메일은 필수정보입니다! 입력 부탁드려요 :)");
       return;
