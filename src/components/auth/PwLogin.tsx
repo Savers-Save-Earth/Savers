@@ -117,12 +117,12 @@ const PwLogin: React.FC = () => {
             <div className="flex flex-grow flex-col">
               <input
                 type="email"
-                placeholder="메일주소를 입력하세요"
+                placeholder="이메일 입력"
                 {...register("email", {
-                  required: "메일을 입력하세요",
+                  required: "이메일을 입력하세요",
                   pattern: {
                     value: /^\S+@\S+$/i,
-                    message: "올바른 메일 형식이 아닙니다",
+                    message: "올바른 이메일 형식이 아닙니다",
                   },
                 })}
                 className="flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50 mb-1 outline-none text-sm"
@@ -135,12 +135,12 @@ const PwLogin: React.FC = () => {
             <div className="flex flex-grow flex-col">
               <input
                 type="password"
-                placeholder="패스워드를 입력하세요"
+                placeholder="비밀번호 입력"
                 {...register("password", {
                   required: "비밀번호를 입력하세요",
                   minLength: {
-                    value: 6,
-                    message: "비밀번호는 최소 6자리 이상이어야 합니다",
+                    value: 8,
+                    message: "비밀번호는 최소 8자리 이상이어야 합니다",
                   },
                 })}
                 className="flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50 mb-1 outline-none text-sm"
@@ -163,12 +163,7 @@ const PwLogin: React.FC = () => {
               onClick={() => {
                 router.push("/signup");
               }}
-              className="color: var(--gray-500, #667085);
-              font-family: Pretendard;
-              font-size: 14px;
-              font-style: normal;
-              font-weight: 400;
-              line-height: 100%; /* 14px */"
+              className="text-gray-500 text-sm font-normal"
             >
               이메일로 가입
             </button>

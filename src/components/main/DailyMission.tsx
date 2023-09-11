@@ -6,6 +6,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastInfo } from "@/libs/toastifyAlert";
 import { useAuth } from "@/hooks/useAuth";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import Image from "next/image";
+import { useIsLaptop } from "@/hooks/useIsLaptop";
 
 const DailyMission = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -13,6 +15,7 @@ const DailyMission = () => {
 
   const currentUser = useAuth();
   const isMobile = useIsMobile();
+  const isLaptop = useIsLaptop();
 
   const missionHandler = () => {
     if (!currentUser) {
@@ -77,15 +80,21 @@ const DailyMission = () => {
         className="h-[120px] xl:h-[158px] bg-[#5FD100] flex relative items-center justify-between w-full  rounded-2xl sm:p-8 p-4 mb-16 cursor-pointer"
       >
         {!isMobile ? (
-          <img
-            src="assets/mission/card.png"
+          <Image
+            src="/assets/mission/card1.png"
+            width={isLaptop ? 224 : 296}
+            height={isLaptop ? 120 : 158}
             alt="카드 이미지"
+            quality={100}
             className="absolute right-20 xl:h-full h-[120px] "
           />
         ) : (
-          <img
-            src="assets/mission/card2.png"
+          <Image
+            src="/assets/mission/card2.png"
+            width={178}
+            height={103}
             alt="카드 이미지"
+            quality={100}
             className="absolute bottom-0 right-5 xl:h-full h-[120px]"
           />
         )}

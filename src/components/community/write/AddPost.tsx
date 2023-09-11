@@ -16,6 +16,7 @@ import { NewPostType } from "@/types/types";
 import { ToastError, ToastSuccess, ToastWarn } from "@/libs/toastifyAlert";
 import { useIsLaptop } from "@/hooks/useIsLaptop";
 import { useRouter } from "next/navigation";
+import { COMMUNITY_TOAST_TEXT } from "@/enums/messages";
 
 const currentDate = convertDate(new Date());
 
@@ -43,12 +44,11 @@ const AddPost: NextComponentType = () => {
   const createMutation = useMutation(createPost, {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["communityAllPosts"] });
-      ToastSuccess("게시글이 정상적으로 등록되었습니다.");
+      ToastSuccess(COMMUNITY_TOAST_TEXT.POST_ADD_SUCCESS);
       router.push("/community")
     },
     onError: (error) => {
-      // console.error("게시글 등록 에러:", error);
-      ToastError("게시글이 정상적으로 등록되지 않았습니다. 다시 시도해주세요!");
+      ToastError(COMMUNITY_TOAST_TEXT.POST_ADD_ERROR);
     },
   });
 
@@ -79,15 +79,15 @@ const AddPost: NextComponentType = () => {
     };
 
     if (category === "") {
-      ToastWarn("카테고리를 선택해주세요!");
+      ToastWarn(COMMUNITY_TOAST_TEXT.CATEGORY_SELECT_ERROR);
       return false;
     }
     if (title.length < 1) {
-      ToastWarn("제목을 입력해주세요!");
+      ToastWarn(COMMUNITY_TOAST_TEXT.TITLE_EMPTY_ERROR);
       return false;
     }
     if (removeHtmlTags(content).length < 1) {
-      ToastWarn("본문을 작성해주세요!");
+      ToastWarn(COMMUNITY_TOAST_TEXT.CONTENT_EMPTY_ERROR);
       return false;
     }
     createMutation.mutate(newPost);

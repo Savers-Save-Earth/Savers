@@ -27,7 +27,7 @@ const EditProfile = ({ profileData }: any) => {
 
     if (avatarFile) {
       setEditImage(
-        `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}/profileImage/${data?.path}`,
+        `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_FOR_PROFILE_IMAGE_URL}/profileImage/${data?.path}`,
       );
     } else {
       setEditImage(
@@ -63,7 +63,7 @@ const EditProfile = ({ profileData }: any) => {
         .from("user")
         .update({
           nickname,
-          profileImage: `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}/profileImage/${data?.path}`,
+          profileImage: `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_FOR_PROFILE_IMAGE_URL}/profileImage/${data?.path}`,
         })
         .eq("uid", profileData?.uid);
 
@@ -80,7 +80,6 @@ const EditProfile = ({ profileData }: any) => {
       alert("수정이 완료되었습니다.");
       setOpen(!open);
     }
-    window.location.reload();
   };
   const profileEditModalHandler = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
