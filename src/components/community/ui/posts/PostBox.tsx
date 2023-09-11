@@ -42,13 +42,13 @@ const PostBox = ({ post, width, border, margin }: PostBoxProps) => {
               </Link>
             </div>
             {includeImage ? (
-              <div className="relative object-contain flex-shrink-0 w-24 h-24 ml-2 bg-gray-50 rounded-md">
+              <div className="relative object-cover flex-shrink-0 w-24 h-24 ml-2 bg-gray-50 rounded-md">
                 <Image
                   src={firstImgUrl}
                   alt="Thumbnail of Post"
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className="rounded-md object-contain"
+                  className="rounded-md object-cover"
                   placeholder="empty"
                 />
               </div>
