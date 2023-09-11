@@ -19,13 +19,14 @@ import { getThisProductLikeStatus } from "@/api/product/like";
 import LoadingProduct from "./ui/LoadingProduct";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import TopButton from "../community/ui/common/TopButton";
+import Image from "next/image";
 
 const productCategory = [
-  { value: "", label: "전체", img: "assets/product/all.png" },
-  { value: "bath", label: "욕실", img: "assets/product/bath.png" },
-  { value: "kitchen", label: "주방", img: "assets/product/kitchen.png" },
-  { value: "food", label: "식품", img: "assets/product/food.png" },
-  { value: "else", label: "기타", img: "assets/product/else.png" },
+  { value: "", label: "전체", img: "/assets/product/all.png" },
+  { value: "bath", label: "욕실", img: "/assets/product/bath.png" },
+  { value: "kitchen", label: "주방", img: "/assets/product/kitchen.png" },
+  { value: "food", label: "식품", img: "/assets/product/food.png" },
+  { value: "else", label: "기타", img: "/assets/product/else.png" },
 ];
 
 const selectOptions = [
@@ -205,7 +206,13 @@ const ProductComponent = () => {
             onClick={() => setCategory(category.value)}
             className="flex flex-col items-center space-y-2 xl:m-4 m-2 focus:text-[#5FD100]"
           >
-            <img src={category.img} className="xl:w-[96px] w-[76px] " />
+            <Image
+              src={category.img}
+              width={96}
+              height={96}
+              className="xl:w-[96px] w-[76px]"
+              alt={category.label}
+            />
             <p>{category.label}</p>
           </button>
         ))}
@@ -272,7 +279,9 @@ const ProductComponent = () => {
             .map((item) => (
               <div key={item.id} className=" flex-1 min-w-0 max-w-md mb-9">
                 <div className="relative">
-                  <img
+                  <Image
+                    height={400}
+                    width={400}
                     src={item.img}
                     className="w-full h-auto rounded-md point cursor-pointer"
                     alt={item.name}

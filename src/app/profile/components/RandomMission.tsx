@@ -1,6 +1,5 @@
 "use client";
 
-import { Database } from "@/types/supabase";
 import React, { useEffect, useState } from "react";
 import { convertDate } from "@/libs/util";
 import supabase from "@/libs/supabase";
@@ -11,13 +10,14 @@ import {
   createMission,
   fetchMissionListDateAndUid,
 } from "@/api/mission/getMission";
+import Image from "next/image";
 
 type MissionInsert = Omit<MissionList, "id">;
 
 const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
   const currentDate = convertDate(new Date());
   const currentDateModify = currentDate.replaceAll("-", ".") as string;
-  const searchId = user?.uid || "" as string;
+  const searchId = user?.uid || ("" as string);
   const [dailyMission, setDailyMission] = useState<DailyMission[]>([]);
   const [modalController, setModalController] = useState(showModal);
   const [renderTrigger, setRenderTrigger] = useState(false);
@@ -50,7 +50,7 @@ const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
 
   const insertMissionListData = async () => {
     if (!searchId) {
-      // console.error("searchId is undefined");
+      console.error("searchId is undefined");
       return;
     }
 
@@ -65,7 +65,7 @@ const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
           .select("*");
 
         if (error) {
-          // console.error("Error fetching mission data:", error);
+          console.error("Error fetching mission data:", error);
           return;
         }
 
@@ -153,12 +153,20 @@ const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
                           {missionItem.doingYn === true ? (
                             <>
                               <div className="flex flex-col gap-2 items-start self-stretch">
-                                <div className="min-w-[32px] min-h-[32px] sm:min-w-[52px] sm:min-h-[52px]">
-                                  <img
+                                <div className="relative min-w-[32px] min-h-[32px] sm:min-w-[52px] sm:min-h-[52px]">
+                                  <Image
+                                    src={missionItem.icon}
+                                    alt="랜덤미션 아이콘"
+                                    fill
+                                    style={{
+                                      objectFit: "cover",
+                                    }}
+                                  />
+                                  {/* <img
                                     className="w-[32px] h-[32px] sm:w-[52px] sm:h-[52px]"
                                     src={missionItem.icon}
                                     alt="아이콘 이미지 없음"
-                                  />
+                                  /> */}
                                 </div>
                                 <h1 className="text-md sm:text-[20px] leading-[25px] font-semibold text-[#4DAB00]">
                                   {missionItem.title}
@@ -189,7 +197,7 @@ const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
                           ) : (
                             <>
                               <div className="flex flex-col gap-2 items-start self-stretch opacity-30">
-                              <div>
+                                <div>
                                   <img
                                     className="max-w-[32px] max-h-[32px] sm:max-w-[52px] sm:max-h-[52px]"
                                     src={missionItem.icon}

@@ -28,6 +28,12 @@ module.exports = withImages(
         },
         {
           protocol: "https",
+          hostname: process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL,
+          port: "",
+          pathname: "/storage/v1/object/public/missionIcon/**",
+        },
+        {
+          protocol: "https",
           hostname: "img.freepik.com",
           port: "",
           pathname: "/premium-photo/**",
@@ -41,6 +47,48 @@ module.exports = withImages(
         {
           protocol: "https",
           hostname: "m.nuldam.com",
+          port: "",
+          pathname: "/**",
+        },
+        {
+          protocol: "https",
+          hostname: "egojin.com",
+          port: "",
+          pathname: "/**",
+        },
+        {
+          protocol: "https",
+          hostname: "cdn.imweb.me",
+          port: "",
+          pathname: "/**",
+        },
+        {
+          protocol: "https",
+          hostname: "nuldam.com",
+          port: "",
+          pathname: "/**",
+        },
+        {
+          protocol: "https",
+          hostname: "mastina.co.kr",
+          port: "",
+          pathname: "/**",
+        },
+        {
+          protocol: "https",
+          hostname: "pulstory.pulmuone.com",
+          port: "",
+          pathname: "/**",
+        },
+        {
+          protocol: "https",
+          hostname: "convenii.com",
+          port: "",
+          pathname: "/**",
+        },
+        {
+          protocol: "https",
+          hostname: "image.oliveyoung.co.kr",
           port: "",
           pathname: "/**",
         },

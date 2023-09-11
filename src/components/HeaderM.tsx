@@ -248,7 +248,7 @@ const HeaderM = () => {
                 )}
               >
                 {scrollY < 5300 ? (
-                  <div className="justify-between flex text-white text-[10px]">
+                  <div className="justify-between flex text-white text-[10px] px-10">
                     <Link href={`/`}>
                       <div>홈</div>
                     </Link>
@@ -263,7 +263,7 @@ const HeaderM = () => {
                     </Link>
                   </div>
                 ) : (
-                  <div className="justify-between flex text-gray-300 text-[10px]">
+                  <div className="justify-between flex text-gray-300 text-[10px] px-10">
                     <Link href={`/`}>
                       <div className="flex flex-col items-center">
                         <svg
@@ -414,7 +414,7 @@ const HeaderM = () => {
                   "h-[64px] fixed z-20 p-3.5 bottom-0 left-1/2 -translate-x-1/2  w-screen bg-white",
                 )}
               >
-                <div className="justify-between flex text-gray-300 text-[10px]">
+                <div className="justify-between flex text-gray-300 text-[10px] px-10">
                   <Link href={`/`}>
                     <div className="flex flex-col items-center">
                       <svg
