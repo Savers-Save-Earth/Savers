@@ -5,28 +5,24 @@ import LoadingMyBookmarkedPost from "@/components/profile/ui/LoadingMyBookmarked
 import { getFirstImage, getImgUrl } from "@/libs/util";
 import { useQuery } from "@tanstack/react-query";
 import { fetchFavoritePosts, fetchPostsByPostUid } from "@/api/profile/fetchCommunityData";
+import { LikePostProps } from "@/types/types";
 
-type PostType = Database["public"]["Tables"]["community"]["Row"];
-
-export default function UserLikedPost({ post }: any) {
+export default function UserLikedPost({ post }: LikePostProps) {
   const searchId = post.post_uid
-
   const { data: favoritePostData, isFetching: favoritePostDataFetching } =
-    useQuery<any>(["fetchFavoritePostContent", searchId], () =>
+    useQuery(["fetchFavoritePostContent", searchId], () =>
     fetchPostsByPostUid(searchId),
     );
-  console.log("favoritePostData===>",favoritePostData)
 
- 
   if (favoritePostDataFetching) {
     return;
   }
-  const includeImage = getFirstImage(favoritePostData[0].content);
+  const includeImage = getFirstImage(favoritePostData![0].content);
   const firstImgUrl = getImgUrl(includeImage);
 
   return (
     <div className="flex flex-col items-start p-6 gap-4 self-stretch rounded-2xl bg-white border border-gray-200">
-      {favoritePostData.length > 0 ? (
+      {favoritePostData!.length > 0 ? (
         <>
           <div className="w-full flex flex-row justify-between items-center gap-2">
             <div>
@@ -35,19 +31,19 @@ export default function UserLikedPost({ post }: any) {
                   <p
                     className={`overflow-hidden text-gray-900 text-ellipsis text-[16px] font-semibold leading-4 cursor-pointer`}
                     onClick={() =>
-                      window.open(`/community/${favoritePostData[0]!.post_uid}`)
+                      window.open(`/community/${favoritePostData![0].post_uid}`)
                     }
                   >
                     {/* md 이하의 크기에서만 글자수를 8자로 제한하고 '...'을 표시 : lg는 css용어이기 때문에 템플릿 리터럴로 조건을 주려면 */}
                     {/* 직접 브라우저 너비를 지칭하는 window.innerWidth를 조건분기로 사용해야 한다. */}
                     {window.innerWidth < 768
-                      ? favoritePostData[0].title.length > 15
-                        ? favoritePostData[0].title.slice(0, 15) +
+                      ? favoritePostData![0].title.length > 15
+                        ? favoritePostData![0].title.slice(0, 15) +
                           "..." +
-                          `[${favoritePostData[0].number_comments}]`
-                        : favoritePostData[0].title
-                      : favoritePostData[0].title +
-                        `[${favoritePostData[0].number_comments}]`}
+                          `[${favoritePostData![0].number_comments}]`
+                        : favoritePostData![0].title
+                      : favoritePostData![0].title +
+                        `[${favoritePostData![0].number_comments}]`}
                   </p>
                 </div>
               </div>
@@ -56,7 +52,7 @@ export default function UserLikedPost({ post }: any) {
                 {/* <div className="flex items-center gap-2 text-[14px] leading-[14px] font-normal">
         {userLikedPost[0].title} [{userLikedPost[0].number_comments}]
       </div> */}
-                <p>등록일&nbsp;{favoritePostData[0].created_date.slice(0, 10)}</p>
+                <p>등록일&nbsp;{favoritePostData![0].created_date.slice(0, 10)}</p>
               </div>
             </div>
             

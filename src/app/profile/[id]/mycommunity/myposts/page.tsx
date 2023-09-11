@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchMyPosts } from "@/api/profile/fetchCommunityData";
 import NoListToShown from "@/components/profile/NoListShown";
 import LoadingMyPost from "@/components/profile/ui/LoadingMyPost";
+import Image from "next/image";
 
 type CommunityPost = Database["public"]["Tables"]["community"]["Row"];
 const MyPosts = ({ params }: { params: { id: string } }) => {
@@ -20,7 +21,7 @@ const MyPosts = ({ params }: { params: { id: string } }) => {
   // const decodedParams = decodeURIComponent(params.id);
   // const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태 추가
 
-  const { data: myPostData, isFetching: fetchMyPostFetching } = useQuery<any>(
+  const { data: myPostData, isFetching: fetchMyPostFetching } = useQuery(
     ["fetchMyPosts", searchId, loadCount],
     () => fetchMyPosts(searchId, loadCount),
   );

@@ -23,7 +23,7 @@ const MyFavoriteProducts = ({ params }: { params: { id: string } }) => {
   const searchId = params.id;
 
   const { data: favoriteProductsData, isFetching: favoriteProductsFetching } =
-    useQuery<any>(["fetchFavoriteProducts", searchId, loadCount], () =>
+    useQuery(["fetchFavoriteProducts", searchId, loadCount], () =>
       fetchFavoriteProducts(searchId, loadCount),
     );
 

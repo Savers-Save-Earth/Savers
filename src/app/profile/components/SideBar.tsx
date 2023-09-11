@@ -34,42 +34,19 @@ const SideBar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isHideProfile, setIsHideProfile] = useState(false);
 
-  // const path = usePathname()
-  // useEffect(() => {
-  //   supabase.auth.onAuthStateChange((event, session) => {
-  //     if (!session?.user) {
-  //       setUser(null);
-  //     } else {
-  //       setUser(session.user);
-  //     }
-  //   });
-  // }, [path]);
-
-  // const loginLogoutSwitcher = async () => {
-  //   if (user) {
-  //     const ok = window.confirm("로그아웃 하시겠습니까?");
-  //     if (ok) {
-  //       await supabase.auth.signOut();
-  //       router.push("/")
-  //     }
-  //   } else {
-  //     // const currentUrl = window.location.href;
-  //     router.push("/login");
-  //   }
-  // };
-
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
   //모바일 환경에서 프로필 이외의 다른 버튼들 클릭하면 프로필 이미지 등이 가려지게 하기 위함
   const hideProfile = (value: string) => {
-    console.log("value:", value);
-    window.innerWidth >= 768 ?  setIsHideProfile(false) : (
-      (value === "프로필") ? setIsHideProfile(false) : setIsHideProfile(true)
-    )
+    window.innerWidth >= 768
+      ? setIsHideProfile(false)
+      : value === "프로필"
+      ? setIsHideProfile(false)
+      : setIsHideProfile(true);
   };
-  
+
   const currentUser = useAuth();
   const { data: profileData, isLoading } = useQuery<ProfileType>(
     ["fetchProfileData", searchId],
@@ -79,13 +56,12 @@ const SideBar = () => {
 
   if (isLoading) return <LoadingProfileSideBar />;
 
-  
   return (
     <>
       <div className="w-full flex flex-col items-start">
         <div className="w-full relative">
-            <div className="flex flex-row justify-between text-[18px] font-bold text-gray-700">
-              <div>마이페이지</div>
+          <div className="flex flex-row justify-between text-[18px] font-bold text-gray-700">
+            <div>마이페이지</div>
             {/* 햄버거 아이콘을 클릭하면 모바일 메뉴가 열리도록 설정 */}
             <button
               className="xl:hidden font-bold text-gray-700"
@@ -93,24 +69,27 @@ const SideBar = () => {
             >
               ☰
             </button>
-              </div>
-
+          </div>
 
           {/* 모바일 메뉴 */}
           {isMobileMenuOpen && (
-            <MobileMenu 
-            toggleMobileMenu={toggleMobileMenu} 
-            searchId={searchId} 
-            hideProfile={hideProfile}
-            currentUser={currentUser}
-            profileDataId={profileData?.uid}
-            setShowModal={setShowModal}
+            <MobileMenu
+              toggleMobileMenu={toggleMobileMenu}
+              searchId={searchId}
+              hideProfile={hideProfile}
+              currentUser={currentUser}
+              profileDataId={profileData?.uid}
+              setShowModal={setShowModal}
             />
           )}
         </div>
 
-        <div className={`md:flex flex-col ${isHideProfile && (window.innerWidth < 768) ? "hidden" : "flex"} justify-center items-center gap-6 self-stretch leading-none`}>
-        {/* <div className="hidden flex-col justify-center items-center gap-6 self-stretch leading-none"> */}
+        <div
+          className={`md:flex flex-col ${
+            isHideProfile && window.innerWidth < 768 ? "hidden" : "flex"
+          } justify-center items-center gap-6 self-stretch leading-none`}
+        >
+          {/* <div className="hidden flex-col justify-center items-center gap-6 self-stretch leading-none"> */}
           <div className="w-[8.75rem] h-[8.75rem] aspect-w-1 aspect-h-1 object-contain rounded-full overflow-hidden mx-auto">
             {profileData?.profileImage ? (
               <img
@@ -180,6 +159,14 @@ const SideBar = () => {
               일일미션 뽑기
             </button>
           )}
+          {currentUser && currentUser.uid == profileData?.uid && (
+            <button
+              className="btn-sidebar"
+              onClick={() => router.push(`/profile/${searchId}/setting`)}
+            >
+              회원정보 수정
+            </button>
+          )}
         </div>
         <RandomMission
           showModal={showModal}
@@ -188,7 +175,7 @@ const SideBar = () => {
           profile={profileData}
         />
       </div>
-      </>
+    </>
   );
 };
 export default SideBar;

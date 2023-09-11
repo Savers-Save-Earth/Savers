@@ -1,15 +1,14 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Database } from "@/types/supabase";
 import UserComment from "./UserComment";
-import Loading from "@/app/loading";
 import { fetchMyComments } from "@/api/profile/fetchCommunityData";
 import { useQuery } from "@tanstack/react-query";
 import NoListToShown from "@/components/profile/NoListShown";
 import LoadingMyComment from "@/components/profile/ui/LoadingMyComment";
+import { CommunityComment } from "@/types/types";
 
-type CommunityComment =
-  Database["public"]["Tables"]["community_comment"]["Row"];
+
+
 const MyComments = ({ params }: { params: { id: string } }) => {
   const loadBoundaryValue = 10;
   const [userComments, setUserComments] = useState<CommunityComment[]>([]);
@@ -18,14 +17,13 @@ const MyComments = ({ params }: { params: { id: string } }) => {
   const searchId = params.id;
 
   const { data: myCommentsData, isFetching: fetchMyCommentsFetching } =
-    useQuery<any>(["fetchMyComments", searchId, loadCount], () =>
+    useQuery(["fetchMyComments", searchId, loadCount], () =>
       fetchMyComments(searchId, loadCount),
     );
-
   useEffect(() => {
     if (!myCommentsData) return;
-    const count = myCommentsData.count;
-    const userComments = myCommentsData.myComments;
+    const count = myCommentsData.count
+    const userComments = myCommentsData.myComments as CommunityComment[]
     setUserComments(userComments);
     if (count && count <= loadBoundaryValue) {
       setLoadMoreBtn("");
@@ -53,10 +51,10 @@ const MyComments = ({ params }: { params: { id: string } }) => {
   if (userComments && userComments.length < 1) {
     return<NoListToShown listProp={"noComments"}/>
   }
-
   return (
     <div className="space-y-4">
-      {userComments.map((comment: any) => (
+      {userComments.map((comment: CommunityComment) => (
+        
         <UserComment key={comment.comment_uid} comment={comment} />
       ))}
       {userComments.length > 0 && (

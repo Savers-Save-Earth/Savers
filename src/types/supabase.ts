@@ -239,6 +239,7 @@ export interface Database {
           smallCategory: string | null;
           title: string | null;
           uid: number;
+          icon: string
         };
         Insert: {
           address?: string | null;
@@ -278,6 +279,7 @@ export interface Database {
           title: string | null;
           user_uid: string | null;
           userId: string | null;
+          icon: string
         };
         Insert: {
           address?: string | null;
