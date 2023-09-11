@@ -14,6 +14,9 @@ interface PostBoxProps {
 const PostBox = ({ post, width, border, margin }: PostBoxProps) => {
   const includeImage = getFirstImage(post.content);
   const firstImgUrl = getImgUrl(includeImage)
+  const myLoader = () => {
+    return 
+  }
   return (
     <div
       key={post.post_uid}

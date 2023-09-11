@@ -457,10 +457,6 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
                         </div>
                         {editingReplyId === reply.reply_uid ? (
                           <div className="flex relative">
-                            <TextArea
-                              value={editingReply}
-                              onChange={(e) => setEditingReply(e.currentTarget.value)}
-                            />
                             <textarea
                               value={editingReply}
                               onChange={(e) =>
