@@ -8,29 +8,41 @@ module.exports = withImages(
     reactStrictMode: true,
     images: {
       remotePatterns: [
-        {
-          protocol: 'https',
-          hostname: process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL,
-          port: '',
-          pathname: '/profileImage/**',
-        },
-        {
-          protocol: 'https',
-          hostname: process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL,
-          port: '',
-          pathname: '/community/**',
-        },
-        {
-          protocol: 'https',
-          hostname: process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL,
-          port: '',
-          pathname: '/badge/**',
-        },
+        // {
+        //   protocol: 'https',
+        //   hostname: process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL,
+        //   port: '',
+        //   pathname: '/profileImage/**',
+        // },
+        // {
+        //   protocol: 'https',
+        //   hostname: process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL,
+        //   port: '',
+        //   pathname: '/community/**',
+        // },
+        // {
+        //   protocol: 'https',
+        //   hostname: process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL,
+        //   port: '',
+        //   pathname: '/badge/**',
+        // },
         {
         protocol: 'https',
         hostname: 'img.freepik.com',
         port: '',
         pathname: '/premium-photo/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'etsquekrypszfrqglupe.supabase.co',
+        port: '',
+        pathname: '/storage/v1/object/public/community/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'etsquekrypszfrqglupe.supabase.co',
+        port: '',
+        pathname: '/storage/v1/object/public/badge/**'
       }
       ],
     },

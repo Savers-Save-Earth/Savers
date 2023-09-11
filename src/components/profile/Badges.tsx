@@ -91,28 +91,28 @@ const Badges = ({ badgeData, missionDone }: MyBadgeProps) => {
         <div className="flex flex-col items-center gap-2">
           {badges ? (
             <>
-              {/* <img
-                className="badge-image"
-                src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/sign/badge/01sproutsaver.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJiYWRnZS8wMXNwcm91dHNhdmVyLnN2ZyIsImlhdCI6MTY5MzQ2NTYzNywiZXhwIjoxNjk2MDU3NjM3fQ.y9emdOUGzuWiaGTUZDAorTZa6-ezqX_VqwXMHbZgspY&t=2023-08-31T07%3A07%3A17.651Z"
-              /> */}
-              <Image
-                alt="no image"
-                src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/badge/01sproutsaver.svg"
-                // src="https://img.freepik.com/premium-photo/korean-flag-waving_798986-401.jpg"
-                width={88}
-                height={88}
-              />
+              <div className="w-[88px] h-[88px] rounded-full overflow-hidden relative">
+                <Image
+                  alt="no image"
+                  src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/badge/true/01sproutsaver.png"
+                  width={88}
+                  height={88}
+                  quality={100}
+                />
+              </div>
               <p className="badge-text">새싹 세이버</p>
             </>
           ) : (
             <>
-              <Image
-                alt="no image"
-                src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/badge/false/01falsesproutsaver.svg"
-                width={88}
-                height={88}
-                
-              />
+              <div className="w-[88px] h-[88px] rounded-full overflow-hidden relative">
+                <Image
+                  alt="no image"
+                  src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/badge/falsetemp/01falsesproutsaver.png"
+                  width={88}
+                  height={88}
+                  quality={100}
+                />
+              </div>
               <p className="badge-text">새싹 세이버</p>
             </>
           )}
@@ -120,22 +120,28 @@ const Badges = ({ badgeData, missionDone }: MyBadgeProps) => {
         <div className="flex flex-col items-center gap-2">
           {shareBadge ? (
             <>
-              <Image
-                alt="no image"
-                src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/badge/02sharer.svg"
-                width={88}
-                height={88}
-              />
+              <div className="w-[88px] h-[88px] rounded-full overflow-hidden relative">
+                <Image
+                  alt="no image"
+                  src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/badge/true/02sharer.png"
+                  width={88}
+                  height={88}
+                  quality={100}
+                />
+              </div>
               <p className="badge-text">나눔꾼</p>
             </>
           ) : (
             <>
-              <Image
-                alt="no image"
-                src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/badge/false/02falsesharer.svg"
-                width={88}
-                height={88}
-              />
+              <div className="w-[88px] h-[88px] rounded-full overflow-hidden relative">
+                <Image
+                  alt="no image"
+                  src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/badge/falsetemp/02falsesharer.png"
+                  width={88}
+                  height={88}
+                  quality={100}
+                />
+              </div>
               <p className="badge-text">나눔꾼</p>
             </>
           )}
@@ -143,22 +149,28 @@ const Badges = ({ badgeData, missionDone }: MyBadgeProps) => {
         <div className="flex flex-col items-center gap-2">
           {threeShareBadge ? (
             <>
-              <Image
-                alt="no image"
-                src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/badge/03gongyou.svg"
-                width={88}
-                height={88}
-              />
+              <div className="w-[88px] h-[88px] rounded-full overflow-hidden relative">
+                <Image
+                  alt="no image"
+                  src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/badge/true/03gongyou.png"
+                  width={88}
+                  height={88}
+                  quality={100}
+                />
+              </div>
               <p className="badge-text">공.유</p>
             </>
           ) : (
             <>
-              <Image
-                alt="no image"
-                src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/badge/false/03falsegongyou.svg"
-                width={88}
-                height={88}
-              />
+              <div className="w-[88px] h-[88px] rounded-full overflow-hidden relative">
+                <Image
+                  alt="no image"
+                  src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/badge/falsetemp/03falsegongyou.png"
+                  width={88}
+                  height={88}
+                  quality={100}
+                />
+              </div>
               <p className="badge-text">공.유</p>
             </>
           )}
@@ -168,12 +180,15 @@ const Badges = ({ badgeData, missionDone }: MyBadgeProps) => {
         <div className="flex flex-col items-center gap-2">
           {likeBadge ? (
             <>
-              <Image
-                alt="no image"
-                src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/badge/04lover.svg"
-                width={88}
-                height={88}
-              />
+              <div className="w-[88px] h-[88px] rounded-full overflow-hidden relative">
+                <Image
+                  alt="no image"
+                  src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/badge/true/04lover.png"
+                  width={88}
+                  height={88}
+                  quality={100}
+                />
+              </div>
               {/* <Image
                 alt="no image"
                 src="https://www.recipetineats.com/wp-content/uploads/2023/05/Garlic-cheese-pizza_9.jpg"
@@ -184,12 +199,15 @@ const Badges = ({ badgeData, missionDone }: MyBadgeProps) => {
             </>
           ) : (
             <>
-              <Image
-                alt="no image"
-                src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/badge/false/04falselover.svg"
-                width={88}
-                height={88}
-              />
+              <div className="w-[88px] h-[88px] rounded-full overflow-hidden relative">
+                <Image
+                  alt="no image"
+                  src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/badge/falsetemp/04falselover.png"
+                  width={88}
+                  height={88}
+                  quality={100}
+                />
+              </div>
               <p className="badge-text ">사랑꾼</p>
             </>
           )}
@@ -197,22 +215,28 @@ const Badges = ({ badgeData, missionDone }: MyBadgeProps) => {
         <div className="flex flex-col items-center gap-2">
           {threeLikeBadge ? (
             <>
-              <Image
-                alt="no image"
-                src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/badge/05reallover.svg"
-                width={88}
-                height={88}
-              />
+              <div className="w-[88px] h-[88px] rounded-full overflow-hidden relative">
+                <Image
+                  alt="no image"
+                  src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/badge/true/05reallover.png"
+                  width={88}
+                  height={88}
+                  quality={100}
+                />
+              </div>
               <p className="badge-text ">찐 사랑꾼</p>
             </>
           ) : (
             <>
-              <Image
-                alt="no image"
-                src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/badge/false/05falsereallover.svg"
-                width={88}
-                height={88}
-              />
+              <div className="w-[88px] h-[88px] rounded-full overflow-hidden relative">
+                <Image
+                  alt="no image"
+                  src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/badge/falsetemp/05falsereallover.png"
+                  width={88}
+                  height={88}
+                  quality={100}
+                />
+              </div>
               <p className="badge-text ">찐 사랑꾼</p>
             </>
           )}
@@ -220,22 +244,28 @@ const Badges = ({ badgeData, missionDone }: MyBadgeProps) => {
         <div className="flex flex-col items-center gap-2">
           {firstMission ? (
             <>
-              <Image
-                alt="no image"
-                src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/badge/06fisrtmission.svg"
-                width={88}
-                height={88}
-              />
+              <div className="w-[88px] h-[88px] rounded-full overflow-hidden relative">
+                <Image
+                  alt="no image"
+                  src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/badge/true/06firstmission.png"
+                  width={88}
+                  height={88}
+                  quality={100}
+                />
+              </div>
               <p className="badge-text">첫 미션</p>
             </>
           ) : (
             <>
-              <Image
-                alt="no image"
-                src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/badge/false/06falsefirstmission.svg"
-                width={88}
-                height={88}
-              />
+              <div className="w-[88px] h-[88px] rounded-full overflow-hidden relative">
+                <Image
+                  alt="no image"
+                  src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/badge/falsetemp/06falsefirstmission.png"
+                  width={88}
+                  height={88}
+                  quality={100}
+                />
+              </div>
               <p className="badge-text">첫 미션</p>
             </>
           )}
@@ -245,22 +275,28 @@ const Badges = ({ badgeData, missionDone }: MyBadgeProps) => {
         <div className="flex flex-col items-center gap-2">
           {bronzeTrophy ? (
             <>
-              <Image
-                alt="no image"
-                src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/badge/07missionhunter.svg"
-                width={88}
-                height={88}
-              />
+              <div className="w-[88px] h-[88px] rounded-full overflow-hidden relative">
+                <Image
+                  alt="no image"
+                  src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/badge/falsetemp/07falsemissionhunter.png"
+                  width={88}
+                  height={88}
+                  quality={100}
+                />
+              </div>
               <p className="badge-text ">미션 헌터</p>
             </>
           ) : (
             <>
-              <Image
-                alt="no image"
-                src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/badge/false/07falsemissionhunter.svg"
-                width={88}
-                height={88}
-              />
+              <div className="w-[88px] h-[88px] rounded-full overflow-hidden relative">
+                <Image
+                  alt="no image"
+                  src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/badge/falsetemp/07falsemissionhunter.png"
+                  width={88}
+                  height={88}
+                  quality={100}
+                />
+              </div>
               <p className="badge-text ">미션 헌터</p>
             </>
           )}
@@ -268,22 +304,28 @@ const Badges = ({ badgeData, missionDone }: MyBadgeProps) => {
         <div className="flex flex-col items-center gap-2">
           {silverTrophy ? (
             <>
-              <Image
-                alt="no image"
-                src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/badge/08missionpro.svg"
-                width={88}
-                height={88}
-              />
+              <div className="w-[88px] h-[88px] rounded-full overflow-hidden relative">
+                <Image
+                  alt="no image"
+                  src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/badge/true/08missionpro.png"
+                  width={88}
+                  height={88}
+                  quality={100}
+                />
+              </div>
               <p className="badge-text ">미션 프로</p>
             </>
           ) : (
             <>
-              <Image
-                alt="no image"
-                src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/badge/false/08falsefalsemissionpro.svg"
-                width={88}
-                height={88}
-              />
+              <div className="w-[88px] h-[88px] rounded-full overflow-hidden relative">
+                <Image
+                  alt="no image"
+                  src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/badge/falsetemp/08falsemissionpro.png"
+                  width={88}
+                  height={88}
+                  quality={100}
+                />
+              </div>
               <p className="badge-text ">미션 프로</p>
             </>
           )}
@@ -291,22 +333,28 @@ const Badges = ({ badgeData, missionDone }: MyBadgeProps) => {
         <div className="flex flex-col items-center gap-2">
           {goldTrophy ? (
             <>
-              <Image
-                alt="no image"
-                src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/badge/09missionmaster.svg"
-                width={88}
-                height={88}
-              />
+              <div className="w-[88px] h-[88px] rounded-full overflow-hidden relative">
+                <Image
+                  alt="no image"
+                  src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/badge/true/09missionmaster.png"
+                  width={88}
+                  height={88}
+                  quality={100}
+                />
+              </div>
               <p className="badge-text ">미션 마스터</p>
             </>
           ) : (
             <>
-              <Image
-                alt="no image"
-                src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/badge/false/09falsefalsemissionmaster.svg"
-                width={88}
-                height={88}
-              />
+              <div className="w-[88px] h-[88px] rounded-full overflow-hidden relative">
+                <Image
+                  alt="no image"
+                  src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/badge/falsetemp/09falsemissionmaster.png"
+                  width={88}
+                  height={88}
+                  quality={100}
+                />
+              </div>
               <p className="badge-text ">미션 마스터</p>
             </>
           )}
