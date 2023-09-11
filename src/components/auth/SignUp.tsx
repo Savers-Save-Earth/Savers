@@ -3,7 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import supabase from "@/libs/supabase";
 import { ToastError, ToastSuccess, ToastWarn } from "@/libs/toastifyAlert";
-import { useIsMobile } from "@/hooks/useIsMobile";
+import { useIsLaptop } from "../../hooks/useIsLaptop";
 
 interface FormValues {
   email: string;
@@ -14,7 +14,7 @@ interface FormValues {
 
 const SignUp: React.FC = () => {
   const router = useRouter();
-  const isMobile = useIsMobile();
+  const isLaptop = useIsLaptop();
 
   const {
     register,
@@ -63,7 +63,7 @@ const SignUp: React.FC = () => {
       if (error) {
         const errorDescription =
           (error as any).error_description || error.message;
-        ToastError(errorDescription);
+        ToastError("가입조건을 확인해주세요");
         return;
       }
 
@@ -94,7 +94,7 @@ const SignUp: React.FC = () => {
 
   return (
     <>
-      {isMobile ? (
+      {isLaptop ? (
         <div className="flex flex-col gap-10 pt-28">
           <form onSubmit={handleSubmit(signupHandler)}>
             <div className="flex flex-col items-center gap-4 self-stretch">
@@ -134,12 +134,18 @@ const SignUp: React.FC = () => {
                     id="password"
                     type="password"
                     placeholder="8자리 이상 영문, 숫자 포함"
-                    {...register("password", { required: true })}
+                    {...register("password", {
+                      required: "비밀번호를 입력해주세요",
+                      pattern: {
+                        value: /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,20}$/,
+                        message: "비밀번호 조건에 맞게 입력해주세요",
+                      },
+                    })}
                     className="text-sm flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50 outline-none mb-1"
                   />
                   {errors.password && (
                     <span className="text-red-500 text-xs">
-                      비밀번호 조건에 맞게 입력해주세요
+                      {errors.password.message}
                     </span>
                   )}
                 </div>
@@ -155,17 +161,17 @@ const SignUp: React.FC = () => {
                     type="password"
                     placeholder="비밀번호 확인"
                     {...register("passwordConfirmation", {
-                      required: true,
+                      required: "비밀번호를 입력해주세요",
                       validate: (value) => value === passwordRef.current,
                     })}
                     className="text-sm flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50 outline-none mb-1"
                   />
-                  {errors.passwordConfirmation &&
-                    errors.passwordConfirmation.type === "required" && (
-                      <span className="text-red-500 text-xs">
-                        비밀번호 확인을 입력하세요
-                      </span>
-                    )}
+
+                  {errors.passwordConfirmation && (
+                    <span className="text-red-500 text-xs">
+                      {errors.passwordConfirmation.message}
+                    </span>
+                  )}
                   {errors.passwordConfirmation &&
                     errors.passwordConfirmation.type === "validate" && (
                       <span className="text-red-500 text-xs">
@@ -184,17 +190,18 @@ const SignUp: React.FC = () => {
                     id="nickname"
                     type="nickname"
                     placeholder="닉네임 입력"
-                    {...register("nickname", { required: true, maxLength: 20 })}
+                    {...register("nickname", {
+                      required: "닉네임을 입력해주세요",
+                      maxLength: {
+                        value: 20,
+                        message: "20글자를 초과할 수 없습니다",
+                      },
+                    })}
                     className="text-sm flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50 outline-none mb-1"
                   />
-                  {errors.nickname && errors.nickname.type === "required" && (
+                  {errors.nickname && (
                     <span className="text-red-500 text-xs">
-                      닉네임을 입력해주세요
-                    </span>
-                  )}
-                  {errors.nickname && errors.nickname.type === "maxLength" && (
-                    <span className="text-red-500 text-xs">
-                      20자 이내로 작성해주세요
+                      {errors.nickname.message}
                     </span>
                   )}
                 </div>
@@ -252,7 +259,6 @@ const SignUp: React.FC = () => {
                     placeholder="8자리 이상 영문, 숫자 포함"
                     {...register("password", {
                       required: "비밀번호를 입력해주세요",
-
                       pattern: {
                         value: /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,20}$/,
                         message: "비밀번호 조건에 맞게 입력해주세요",
@@ -277,10 +283,7 @@ const SignUp: React.FC = () => {
                     placeholder="비밀번호 확인"
                     {...register("passwordConfirmation", {
                       required: "비밀번호를 입력해주세요",
-                      // validate: {
-                      //   value: value === passwordRef.current,
-                      //   message: "비밀번호가 일치하지 않습니다",
-                      // },
+                      validate: (value) => value === passwordRef.current,
                     })}
                     className="text-sm flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50 outline-none mb-1"
                   />
@@ -290,6 +293,12 @@ const SignUp: React.FC = () => {
                       {errors.passwordConfirmation.message}
                     </span>
                   )}
+                  {errors.passwordConfirmation &&
+                    errors.passwordConfirmation.type === "validate" && (
+                      <span className="text-red-500 text-xs">
+                        비밀번호가 일치하지 않습니다
+                      </span>
+                    )}
                 </div>
               </div>
 
