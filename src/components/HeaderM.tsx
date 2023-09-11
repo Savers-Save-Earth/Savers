@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { useIsMobile } from "@/hooks/useIsMobile";
+import { useIsLaptop } from "@/hooks/useIsLaptop";
 import { cls } from "@/libs/util";
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -9,7 +9,7 @@ import { useAuth } from "@/hooks/useAuth";
 
 const HeaderM = () => {
   const [scrollY, setScrollY] = useState(0);
-  const isMobile = useIsMobile();
+  const isLaptop = useIsLaptop();
   const user = useAuth();
   const pathname = usePathname();
   const router = useRouter();
@@ -28,7 +28,7 @@ const HeaderM = () => {
   }, []);
   return (
     <>
-      {isMobile && (
+      {isLaptop && (
         <div>
           {pathname === "/" ? (
             <div>

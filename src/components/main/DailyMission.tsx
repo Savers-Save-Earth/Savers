@@ -5,14 +5,14 @@ import { useRouter } from "next/navigation";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastInfo } from "@/libs/toastifyAlert";
 import { useAuth } from "@/hooks/useAuth";
-import { useIsMobileSm } from "@/hooks/useIsMobileSm";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const DailyMission = () => {
   const [isHovered, setIsHovered] = useState(false);
   const router = useRouter();
 
   const currentUser = useAuth();
-  const isMobileSm = useIsMobileSm();
+  const isMobile = useIsMobile();
 
   const missionHandler = () => {
     if (!currentUser) {
@@ -76,7 +76,7 @@ const DailyMission = () => {
         onClick={missionHandler}
         className="h-[120px] xl:h-[158px] bg-[#5FD100] flex relative items-center justify-between w-full  rounded-2xl sm:p-8 p-4 mb-16 cursor-pointer"
       >
-        {!isMobileSm ? (
+        {!isMobile ? (
           <img
             src="assets/mission/card.png"
             alt="카드 이미지"
@@ -95,7 +95,7 @@ const DailyMission = () => {
             지구를 지키는
           </span>
           <br />
-          {!isMobileSm ? (
+          {!isMobile ? (
             <span className="font-semibold text-white text-[20px]">
               일일미션 랜덤 뽑기
             </span>

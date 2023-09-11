@@ -16,7 +16,7 @@ import { ProductLikesType } from "@/types/types";
 import { getProducts } from "@/api/product/product";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getThisProductLikeStatus } from "@/api/product/like";
-import { useIsMobileSm } from "@/hooks/useIsMobileSm";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const productCategory = [
   { value: "", label: "전체", img: "assets/product/all.png" },
@@ -300,7 +300,7 @@ const ProductComponent = () => {
             fill="#D0D5DD"
           />
         </svg>
-        {!useIsMobileSm ? (
+        {!useIsMobile ? (
           <input
             type="text"
             value={search}

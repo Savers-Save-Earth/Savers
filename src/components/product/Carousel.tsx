@@ -6,7 +6,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/autoplay";
-import { useIsMobileMd } from "@/hooks/useIsMobileMd";
+import { useIsTablet } from "@/hooks/useIsTablet";
 
 const bannerList = [
   { id: 1, img: "/assets/product/banner_5.png" },
@@ -25,10 +25,10 @@ const MbannerList = [
 ];
 
 const Carousel = () => {
-  const isMobileMd = useIsMobileMd();
+  const isTablet = useIsTablet();
   return (
     <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
-      {!isMobileMd ? (
+      {!isTablet ? (
         <Swiper
           // install Swiper modules
           modules={[Navigation, Pagination, Autoplay]}
