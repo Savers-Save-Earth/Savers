@@ -5,6 +5,7 @@ import supabase from "@/libs/supabase";
 import { useQuery } from "@tanstack/react-query";
 import { fetchNicknameData } from "@/api/profile/fetchProfileData";
 import { useParams } from "next/navigation";
+import { ToastSuccess, ToastWarn } from "@/libs/toastifyAlert";
 
 const EditProfile = ({ profileData }: any) => {
   const [nickname, setNickname] = useState<string>(profileData.nickname || "");
@@ -36,10 +37,12 @@ const EditProfile = ({ profileData }: any) => {
     }
   };
 
-  const submitHandler = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const submitHandler = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
     e.preventDefault();
-    if (!profileData.nickname) {
-      alert("변경할 닉네임을 입력해주세요.");
+    if (nickname.length < 1) {
+      ToastWarn("변경할 닉네임을 입력해주세요.");
       return;
     }
 
@@ -47,7 +50,7 @@ const EditProfile = ({ profileData }: any) => {
 
     if (isNicknameValid) {
       console.log(nickname);
-      alert("중복된 닉네임 입니다. 다른 닉네임을 입력해주세요.");
+      ToastWarn("중복된 닉네임 입니다.");
       return;
     }
 
@@ -77,9 +80,10 @@ const EditProfile = ({ profileData }: any) => {
       alert("수정이 완료되었습니다.");
       setOpen(!open);
     }
-    window.location.reload();
   };
-  const profileEditModalHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const profileEditModalHandler = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
     e.preventDefault();
     setEditImage(
       profileData.profileImage ||
