@@ -1,14 +1,13 @@
 import { Metadata } from "next";
 import MissionDoingComp from "./MissionDoingComp";
-
-export const metadata: Metadata = {
-  title: "진행중인 미션 | Savers",
-  description: "진행중인 미션을 확인할 수 있어요.",
-};
+import Seo from "@/components/Seo";
 
 const MissionDoing = ({ params: { id } }: { params: { id: string } }) => {
   return (
+    <>
+    <Seo title="진행중인 미션 | Savers" description= "진행중인 미션을 확인할 수 있어요."/>
       <MissionDoingComp id = {id} />
+    </>
   );
 };
 
