@@ -33,9 +33,10 @@ const ProfileImage = ({ userUid }: ProfileImageProps) => {
     >
       <Image
         src={profileImageUrl}
-        alt="profileImage"
-        className="rounded-full"
+        alt="Profile image of the author"
         fill={true}
+        className="rounded-full"
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
       />
     </div>
   );

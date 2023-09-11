@@ -42,7 +42,7 @@ const PostBox = ({ post, width, border, margin }: PostBoxProps) => {
               <div className="relative object-contain flex-shrink-0 w-24 h-24 ml-2 bg-gray-50 rounded-md">
                 <Image
                   src={firstImgUrl}
-                  alt="thumbnail"
+                  alt="Thumbnail of Post"
                   fill={true}
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className="rounded-md"
