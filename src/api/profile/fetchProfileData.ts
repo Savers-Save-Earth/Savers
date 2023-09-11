@@ -28,10 +28,10 @@ export type MissionList = {
 } | null;
 
 export type Badge = {
-  badge_title: string
-  id: number
-  user_id: string
-} | null
+  badge_title: string;
+  id: number;
+  user_id: string;
+} | null;
 
 // 유저 프로필 데이터 조회
 export const fetchProfileData = async (
@@ -50,6 +50,30 @@ export const fetchProfileData = async (
 
     // 데이터가 있는 경우 해당 데이터를 반환
     return profileData[0];
+  } catch (error) {
+    throw error;
+  }
+};
+
+// 유저 프로필 닉네임 조회
+export const fetchNicknameData = async (
+  nickname: string,
+  userId: string,
+): Promise<ProfileType> => {
+  try {
+    const { data: nicknameData } = await supabase
+      .from("user")
+      .select("*")
+      .neq("uid", userId)
+      .eq("nickname", nickname);
+
+    // 데이터가 없는 경우 null 반환
+    if (!nicknameData) {
+      return null;
+    }
+
+    // 데이터가 있는 경우 해당 데이터를 반환
+    return nicknameData[0];
   } catch (error) {
     throw error;
   }
@@ -84,11 +108,11 @@ export const fetchMissionDone = async (
       .from("missionList")
       .select("*")
       .eq("user_uid", searchId)
-      .eq("doingYn", false)
+      .eq("doingYn", false);
     if (!missionList) {
       return null;
     }
-    return missionList
+    return missionList;
   } catch (error) {
     throw error;
   }
@@ -96,7 +120,8 @@ export const fetchMissionDone = async (
 
 // 진행중인 미션리스트만 조회
 export const fetchMissionDoing = async (
-  searchId: string, currentData: string
+  searchId: string,
+  currentData: string,
 ): Promise<MissionList[] | null> => {
   try {
     const { data: missionList } = await supabase
@@ -104,11 +129,11 @@ export const fetchMissionDoing = async (
       .select("*")
       .eq("createdAt", currentData)
       .eq("user_uid", searchId)
-      .eq("doingYn", true)
+      .eq("doingYn", true);
     if (!missionList) {
       return null;
     }
-    return missionList
+    return missionList;
   } catch (error) {
     throw error;
   }

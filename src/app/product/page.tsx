@@ -4,6 +4,7 @@ import React from "react";
 import Product from "@/components/product/Product";
 import Carousel from "@/components/product/Carousel";
 import { useIsLaptop } from "@/hooks/useIsLaptop";
+import TopButton from "@/components/community/ui/TopButton";
 
 const ProductList = () => {
   const isLaptop = useIsLaptop();
@@ -17,6 +18,7 @@ const ProductList = () => {
         )}
         <Carousel />
         <Product />
+        <TopButton />
       </div>
     </>
   );

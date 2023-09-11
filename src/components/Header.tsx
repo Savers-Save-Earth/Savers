@@ -51,7 +51,6 @@ const Header = () => {
     const {
       data: { user },
     } = await supabase.auth.getUser();
-    // console.log({ getUser: user });
     if (!user) {
       setUser(null);
     } else {
@@ -218,7 +217,7 @@ const Header = () => {
                     )}
                   </span>
                 </Link>
-                <nav className="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l flex flex-wrap items-center text-base justify-center">
+                <nav className="md:mr-auto md:ml-4 md:py-1 md:pl-4 flex flex-wrap items-center text-base justify-center">
                   <Link
                     href={`/product`}
                     className={cls(
@@ -258,9 +257,9 @@ const Header = () => {
                     )}
                   >
                     {" "}
-                    {user ? "로그아웃" : "로그인"}
+                    {user ? "로그아웃" : "로그인/회원가입"}
                   </button>
-                  {user ? (
+                  {user && (
                     <button
                       onClick={signupProfileSwitcher}
                       className={cls(
@@ -269,16 +268,6 @@ const Header = () => {
                       )}
                     >
                       마이페이지
-                    </button>
-                  ) : (
-                    <button
-                      onClick={signupProfileSwitcher}
-                      className={cls(
-                        "border-0 py-1 px-3 focus:outline-none rounded text-base",
-                        scrollY < 4900 ? "text-white" : "text-gray-900",
-                      )}
-                    >
-                      회원가입
                     </button>
                   )}
                 </div>
@@ -351,7 +340,7 @@ const Header = () => {
                     </svg>
                   </span>
                 </Link>
-                <nav className="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center">
+                <nav className="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-gray-400	flex flex-wrap items-center text-base justify-center">
                   <Link href={`/product`} className="mr-5 hover:text-gray-900">
                     친환경 제품 구매
                   </Link>
@@ -374,21 +363,14 @@ const Header = () => {
                     onClick={loginLogoutSwitcher}
                     className="border-0 py-1 px-3 focus:outline-none rounded text-base"
                   >
-                    {user ? "로그아웃" : "로그인"}
+                    {user ? "로그아웃" : "로그인/회원가입"}
                   </button>
-                  {user ? (
+                  {user && (
                     <button
                       onClick={signupProfileSwitcher}
                       className="border-0 py-1 px-3 focus:outline-none rounded text-base"
                     >
                       마이페이지
-                    </button>
-                  ) : (
-                    <button
-                      onClick={signupProfileSwitcher}
-                      className="border-0 py-1 px-3 focus:outline-none rounded text-base"
-                    >
-                      회원가입
                     </button>
                   )}
                 </div>

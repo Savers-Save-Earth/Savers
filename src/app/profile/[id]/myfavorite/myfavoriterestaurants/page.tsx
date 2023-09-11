@@ -7,6 +7,7 @@ import Loading from "@/app/loading";
 import { useQuery } from "@tanstack/react-query";
 import { fetchFavoriteRestaurants } from "@/api/profile/fetchFavoriteData";
 import NoListToShown from "@/components/profile/NoListShown";
+import LoadingBookmarkedRestaurants from "@/components/profile/ui/LoadingBookmarkedRestaurants";
 
 type UserFavoriteRestaurant =
   Database["public"]["Tables"]["like_restaurant"]["Row"];
@@ -82,7 +83,7 @@ const MyFavoriteRestaurants = ({ params }: { params: { id: string } }) => {
   };
 
   if (favoriteRestaurantsFetching) {
-    return <Loading />;
+    return <LoadingBookmarkedRestaurants />;
   }
   if (userLikedRestaurants && userLikedRestaurants.length < 1) {
     return <NoListToShown listProp={"noBookmarkedRestaurant"} />
@@ -95,11 +96,11 @@ const MyFavoriteRestaurants = ({ params }: { params: { id: string } }) => {
   };
   return (
     <div className="space-y-4">
-      <div className="flex flex-wrap justify-between self-stretch bg-white mx-auto min-w-[700px] gap-2">
+      <div className="flex flex-wrap justify-between self-stretch bg-white mx-auto gap-2">
         {userLikedRestaurants?.map((item) => (
           <div
             key={item.id}
-            className="flex items-center justify-center w-[49%] h-1/2"
+            className="flex items-center justify-center w-full lg:w-[49%] h-1/2"
           >
             <div className="w-full p-4 border border-gray-200 rounded-lg bg-white flex items-center">
               <div
@@ -180,7 +181,9 @@ const MyFavoriteRestaurants = ({ params }: { params: { id: string } }) => {
                     : item.restaurant_name}
                 </p>
                 <span className="text-sm text-gray-400">
-                  {item.restaurant_address}
+                  {item.restaurant_address!.length > 15
+                    ? `${item.restaurant_address!.slice(0, 15) + `...`}`
+                    : item.restaurant_address!}
                 </span>
                 <p className="text-sm">
                   <svg

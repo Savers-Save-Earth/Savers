@@ -54,83 +54,15 @@ const ProductComponent = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["userLikeProduct"] });
     },
-    onError: (error) => {},
   });
 
   const plusProductLikeMutation = useMutation(plusLikeCount, {
-    // onMutate: async (newPlusLike) => {
-    //   await queryClient.cancelQueries({
-    //     queryKey: ["product"],
-    //   });
-
-    //   const previousLikeData = queryClient.getQueryData([
-    //     "product",
-    //     newPlusLike.id,
-    //   ]);
-
-    //   console.log(previousLikeData);
-
-    //   if(newPlusLike) {
-
-    //   }
-
-    //   queryClient.setQueryData(["product", newPlusLike.id], {
-    //     ...newPlusLike,
-    //     like_count: newPlusLike.like_count + 1,
-    //   });
-
-    //   return { previousLikeData, newPlusLike };
-    // },
-
-    // onError: (err, newMinusLike, context) => {
-    //   queryClient.setQueryData(
-    //     ["product", context?.newPlusLike.id],
-    //     context?.previousLikeData,
-    //   );
-    // },
-
-    // // 성공하거나 실패시 쿼리를 무효화해 최신 데이터를 받아와준다.
-    // onSettled: (newMinusLike) => {
-    //   console.log("성공혹은실패함.");
-    //   queryClient.invalidateQueries({ queryKey: ["product", newMinusLike] });
-    // },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["product"] });
     },
   });
 
   const minusProductLikeMutation = useMutation(minusLikeCount, {
-    // onMutate: async (newMinusLike) => {
-    //   await queryClient.cancelQueries({
-    //     queryKey: ["product"],
-    //   });
-    //   const previousLikeData = queryClient.getQueryData<number>([
-    //     "product",
-    //     newMinusLike.id,
-    //   ]);
-
-    //   console.log(previousLikeData, "- 데이터");
-    //   console.log(newMinusLike, "뉴마라");
-
-    //   queryClient.setQueryData(["product", newMinusLike.id], {
-    //     ...newMinusLike,
-    //     like_count: newMinusLike.like_count! - 1,
-    //   });
-    //   return { newMinusLike };
-    // },
-
-    // onError: (err, newMinusLike, context) => {
-    //   queryClient.setQueryData(
-    //     ["product", context?.newMinusLike.id],
-    //     context?.previousLikeData,
-    //   );
-    // },
-    // // 성공하거나 실패시 쿼리를 무효화해 최신 데이터를 받아와준다.
-    // onSettled: (newMinusLike) => {
-    //   console.log("성공혹은실패함.");
-    //   queryClient.invalidateQueries({ queryKey: ["product", newMinusLike] });
-    // },
-
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["product"] });
     },
@@ -157,7 +89,6 @@ const ProductComponent = () => {
     if (currentUser) {
       try {
         const likeStatus = await getProductLikeStatus(currentUser.uid);
-        console.log(likeStatus);
         setLikedByUser(likeStatus);
       } catch (error) {}
     }
@@ -168,7 +99,7 @@ const ProductComponent = () => {
   }, [currentUser]);
 
   const handleProductLikeClick = async (
-    productId: any,
+    productId: string,
     name: string,
     img: string,
     company: string,
@@ -198,8 +129,6 @@ const ProductComponent = () => {
         productId,
         currentUser.uid,
       );
-
-      console.log(likeStatus);
 
       if (likeStatus.length > 0) {
         // 이미 좋아요를 누른 경우 북마크 취소
@@ -269,7 +198,7 @@ const ProductComponent = () => {
           <button
             key={category.value}
             onClick={() => setCategory(category.value)}
-            className="flex flex-col items-center space-y-2 xl:m-4 m-2"
+            className="flex flex-col items-center space-y-2 xl:m-4 m-2 focus:text-[#5FD100]"
           >
             <img src={category.img} className="xl:w-[96px] w-[76px] " />
             <p>{category.label}</p>
@@ -318,7 +247,7 @@ const ProductComponent = () => {
           />
         )}
       </form>
-      <div className="mt-8 grid xl:grid-cols-4  xl:gap-4 md:grid-cols-3 md:gap-3 grid-cols-2 gap-2">
+      <div className="mt-8 grid xl:grid-cols-4  xl:gap-4 md:grid-cols-3 md:gap-3 grid-cols-2 gap-2 mb-8">
         {sortedData.filter(
           (item) =>
             item.name.includes(search.trim()) ||
