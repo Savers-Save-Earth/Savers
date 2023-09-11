@@ -17,10 +17,8 @@ const PopularPostBox = ({ post }: { post: PostType }) => {
               <Image
                 src={getImgUrl(getFirstImage(post.content))}
                 alt="Thumnail of Popular Post"
-                layout="fill"
-                objectFit="cover"
-                fill={true}
-                className="rounded-md"
+                fill
+                className="rounded-md object-fill"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
             </div>

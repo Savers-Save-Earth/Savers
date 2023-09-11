@@ -46,11 +46,10 @@ const PostBox = ({ post, width, border, margin }: PostBoxProps) => {
                 <Image
                   src={firstImgUrl}
                   alt="Thumbnail of Post"
-                  layout="fill"
-                  objectFit="cover"
-                  fill={true}
+                  fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className="rounded-md"
+                  className="rounded-md object-fill"
+                  placeholder="empty"
                 />
               </div>
             ) : null}
