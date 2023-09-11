@@ -4,38 +4,15 @@ import MarkerLists from "@/components/restaurant/MarkerLists";
 import { ToastError } from "@/libs/toastifyAlert";
 import MapLoading from "@/components/restaurant/MapLoading";
 
-const getCurrentCoordinate = async () => {
-  return new Promise((res, rej) => {
-    // HTML5의 geolocation을 이용해서 위치 권한을 확인합니다.
-    if (navigator.permissions) {
-      navigator.permissions
-        .query({ name: "geolocation" })
-        .then((permissionStatus) => {
-          if (permissionStatus.state === "granted") {
-            // GeoLocation을 이용해서 접속 위치를 얻어옵니다.
-            navigator.geolocation.getCurrentPosition(function (position) {
-              const lat = position.coords.latitude; // 위도
-              const lon = position.coords.longitude; // 경도
-              const coordinate = new kakao.maps.LatLng(lat, lon);
-              res(coordinate);
-            });
-          } else {
-            rej(ToastError("위치 권한을 허용해주세요"));
-          }
-        })
-        .catch((error) => {
-          rej(ToastError("위치 권한을 확인하는 동안 오류가 발생했습니다"));
-        });
-    } else {
-      rej(ToastError("위치 권한을 허용해주세요"));
-    }
-  });
-};
-
 const KakaoMap = () => {
   const [currentCategory, setCurrentCategory] = useState("비건"); // 기본값으로 "전체" 카테고리 설정
   const [markerList, setMarkerList] = useState([]); // 마커 리스트 상태 추가
   const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태 추가
+  const [userLocation, setUserLocation] = useState({
+    x: 33.450701,
+    y: 126.570667,
+  });
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -44,22 +21,59 @@ const KakaoMap = () => {
     script.onload = () => {
       if (window.kakao) {
         window.kakao.maps.load(async () => {
-          let locPosition: any = await getCurrentCoordinate();
           // id가 'map'인 요소에 지도를 생성s
           const Container = document.getElementById("map");
           const Option = {
-            center: new window.kakao.maps.LatLng(
-              locPosition.La,
-              locPosition.Ma,
-            ),
+            center: new window.kakao.maps.LatLng(33.450701, 126.570667),
             level: 5,
           };
           const map = new window.kakao.maps.Map(Container, Option);
+
+          const getCurrentCoordinate = async () => {
+            return new Promise((res, rej) => {
+              // HTML5의 geolocation을 이용해서 위치 권한을 확인합니다.
+              if (navigator.permissions) {
+                navigator.permissions
+                  .query({ name: "geolocation" })
+                  .then((permissionStatus) => {
+                    if (permissionStatus.state === "granted") {
+                      // GeoLocation을 이용해서 접속 위치를 얻어옵니다.
+                      navigator.geolocation.getCurrentPosition(function (
+                        position,
+                      ) {
+                        const lat = position.coords.latitude; // 위도
+                        const lon = position.coords.longitude; // 경도
+                        const coordinate = new kakao.maps.LatLng(lat, lon);
+                        res(coordinate);
+                      });
+                    } else {
+                      if (!error) {
+                        rej(ToastError("위치 권한을 허용해주세요"));
+                        setError(true);
+                      }
+                    }
+                  })
+                  .catch((error) => {
+                    rej(
+                      ToastError(
+                        "위치 권한을 확인하는 동안 오류가 발생했습니다",
+                      ),
+                    );
+                  });
+              } else {
+                rej(ToastError("위치 권한을 허용해주세요"));
+              }
+            });
+          };
 
           // 지도 중심좌표를 접속위치로 변경합니다
           const setInitLocation = async () => {
             let locPosition: any = await getCurrentCoordinate();
             map.setCenter(locPosition);
+            setUserLocation({
+              x: locPosition.La,
+              y: locPosition.Ma,
+            });
             setIsLoading(false);
             //현재 위치에 마커 표시
             new kakao.maps.Marker({
@@ -77,7 +91,9 @@ const KakaoMap = () => {
           // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
           let zoomControl = new kakao.maps.ZoomControl();
           map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
-          //
+
+          //coordinate대신 userlocation사용
+          //이부분 때문에 다시 내위치로 돌아가는거 확인한듯
           const searchPlaces = async (coordinate: any) => {
             const ps = new window.kakao.maps.services.Places();
             const options = {
@@ -95,6 +111,7 @@ const KakaoMap = () => {
               options,
             );
           };
+
           const displayPlaces = (places: any) => {
             removeMarker();
             const newMarkerList: any = [];

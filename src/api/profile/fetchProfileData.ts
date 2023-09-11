@@ -24,6 +24,30 @@ export const fetchProfileData = async (
   }
 };
 
+// 유저 프로필 닉네임 조회
+export const fetchNicknameData = async (
+  nickname: string,
+  userId: string,
+): Promise<UserType|null> => {
+  try {
+    const { data: nicknameData } = await supabase
+      .from("user")
+      .select("*")
+      .neq("uid", userId)
+      .eq("nickname", nickname);
+
+    // 데이터가 없는 경우 null 반환
+    if (!nicknameData) {
+      return null;
+    }
+
+    // 데이터가 있는 경우 해당 데이터를 반환
+    return nicknameData[0];
+  } catch (error) {
+    throw error;
+  }
+};
+
 //모든 미션리스트 조회
 export const fetchMissionList = async (
   searchId: string,
@@ -53,11 +77,11 @@ export const fetchMissionDone = async (
       .from("missionList")
       .select("*")
       .eq("user_uid", searchId)
-      .eq("doingYn", false)
+      .eq("doingYn", false);
     if (!missionList) {
       return null;
     }
-    return missionList
+    return missionList;
   } catch (error) {
     throw error;
   }
@@ -73,11 +97,11 @@ export const fetchMissionDoing = async (
       .select("*")
       .eq("createdAt", currentData)
       .eq("user_uid", searchId)
-      .eq("doingYn", true)
+      .eq("doingYn", true);
     if (!missionList) {
       return []
     }
-    return missionList
+    return missionList;
   } catch (error) {
     throw error;
   }

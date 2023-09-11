@@ -19,9 +19,9 @@ export const getProductLikeStatus = async (
 
 // 현재유저의 해당 물품의 좋아요 정보 불러오기
 export const getThisProductLikeStatus = async (
-  productId: string,
+  productId: any,
   userId: string,
-): Promise<ProductLikesType[]> => {
+) => {
   const { data: thisProductLikeStatus, error: thisProductLikesStatusError } =
     await supabase
       .from("like_product")
