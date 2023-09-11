@@ -28,6 +28,12 @@ module.exports = withImages(
         },
         {
           protocol: "https",
+          hostname: process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL,
+          port: "",
+          pathname: "/storage/v1/object/public/missionIcon/**",
+        },
+        {
+          protocol: "https",
           hostname: "img.freepik.com",
           port: "",
           pathname: "/premium-photo/**",
