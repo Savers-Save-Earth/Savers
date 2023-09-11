@@ -8,9 +8,9 @@ import { useQuery } from "@tanstack/react-query";
 import { PostType } from "@/types/types";
 
 import { useIsLaptop } from "@/hooks/useIsLaptop";
-import PopularPostBox from "./ui/PopularPostBox";
-import PageButton from "./ui/PageButton";
-import LoadingPopularPosts from "../ui/LoadingPopularPosts";
+import PopularPostBox from "../ui/posts/PopularPostBox";
+import PageButton from "../ui/posts/PageButton";
+import LoadingPopularPosts from "../ui/common/LoadingPopularPosts";
 import { PATHNAME_MAIN, PATHNAME_OHJIWAN, PATHNAME_PRODUCT, PATHNAME_RECIPE, PATHNAME_RESTAURANT } from "@/enums/community";
 
 const PopularPosts = () => {

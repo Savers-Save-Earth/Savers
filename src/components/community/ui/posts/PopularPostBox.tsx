@@ -1,6 +1,6 @@
 import { getFirstImage, getImgUrl, removeHtmlTags } from "@/libs/util";
 import Link from "next/link";
-import CategoryTag from "../../ui/CategoryTag";
+import CategoryTag from "../common/CategoryTag";
 import { PostType } from "@/types/types";
 
 const PopularPostBox = ({ post }: { post: PostType }) => {

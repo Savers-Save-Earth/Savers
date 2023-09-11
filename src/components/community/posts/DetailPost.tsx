@@ -13,15 +13,15 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { Database } from "@/types/supabase";
 import { useAuth } from "@/hooks/useAuth";
-import CategoryTag from "../ui/CategoryTag";
-import DropButtons from "../ui/DropButtons";
+import CategoryTag from "../ui/common/CategoryTag";
+import DropButtons from "../ui/common/DropButtons";
 import copy from "clipboard-copy";
 import { useSetRecoilState } from "recoil";
 import { editPostAtom } from "@/libs/atoms";
 import { DetailPostProps } from "@/types/types";
 import Image from "next/image";
 import { ToastError, ToastInfo, ToastSuccess } from "@/libs/toastifyAlert";
-import ProfileImage from "../ui/ProfileImage";
+import ProfileImage from "../ui/common/ProfileImage";
 
 type LikesType = Database["public"]["Tables"]["like_post"]["Insert"];
 

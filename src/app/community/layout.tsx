@@ -1,7 +1,7 @@
-import FloatingButton from "@/components/community/ui/FloatingButton";
+import FloatingButton from "@/components/community/ui/common/FloatingButton";
 import PopularPosts from "@/components/community/posts/PopularPosts";
-import SideBar from "@/components/community/ui/SideBar";
-import TopButton from "@/components/community/ui/TopButton";
+import SideBar from "@/components/community/ui/common/SideBar";
+import TopButton from "@/components/community/ui/common/TopButton";
 import Seo from "@/components/Seo";
 
 const CommunityLayout = ({ children }: { children: React.ReactNode }) => {

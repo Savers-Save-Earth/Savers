@@ -6,7 +6,7 @@ import { useInView } from "react-intersection-observer";
 
 import { usePathname } from "next/navigation";
 
-import PostBox from "./ui/PostBox";
+import PostBox from "../ui/posts/PostBox";
 
 import { PostType, ToTalDataType } from "@/types/types";
 import {
@@ -15,7 +15,7 @@ import {
   PATHNAME_RECIPE,
   PATHNAME_RESTAURANT,
 } from "@/enums/community";
-import LoadingPosts from "../ui/LoadingPosts";
+import LoadingPosts from "../ui/common/LoadingPosts";
 import { useRecoilValue } from "recoil";
 import { searchPostAtom } from "@/libs/atoms";
 import supabase from "@/libs/supabase";

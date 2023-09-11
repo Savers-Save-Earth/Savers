@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import supabase from "@/libs/supabase";
 import { Post, PostType } from "@/types/types";
 import { useRouter } from "next/navigation";
-import PostBox from "../community/posts/ui/PostBox";
+import PostBox from "../community/ui/posts/PostBox";
 
 const PostList = () => {
   const [post, setPost] = useState<PostType[]>([]);

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import CategoryTag from "@/components/community/ui/CategoryTag";
+import CategoryTag from "@/components/community/ui/common/CategoryTag";
 import { PostType } from "@/types/types";
 import { cls, getFirstImage, getImgUrl, removeHtmlTags } from "@/libs/util";
 
