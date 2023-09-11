@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/hooks/useAuth";
 
 import { deletePost, updatePost } from "@/api/community/post";
 import {
@@ -11,24 +12,23 @@ import {
 } from "@/api/community/like";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-import { Database } from "@/types/supabase";
-import { useAuth } from "@/hooks/useAuth";
 import CategoryTag from "../ui/common/CategoryTag";
 import DropButtons from "../ui/common/DropButtons";
-import copy from "clipboard-copy";
-import { useSetRecoilState } from "recoil";
-import { editPostAtom } from "@/libs/atoms";
-import { DetailPostProps } from "@/types/types";
-import Image from "next/image";
-import { ToastError, ToastInfo, ToastSuccess } from "@/libs/toastifyAlert";
 import ProfileImage from "../ui/common/ProfileImage";
 
-type LikesType = Database["public"]["Tables"]["like_post"]["Insert"];
+import copy from "clipboard-copy";
+
+import { useSetRecoilState } from "recoil";
+import { editPostAtom } from "@/libs/atoms";
+
+import { DetailPostProps, newLikePostType } from "@/types/types";
+import { ToastError, ToastInfo, ToastSuccess } from "@/libs/toastifyAlert";
+import { COMMUNITY_TOAST_TEXT } from "@/enums/messages";
 
 const DetailPost = ({ postDetail, postUid }: DetailPostProps) => {
   const router = useRouter();
   const currentUser = useAuth();
-  const [isLiked, setIsLiked] = useState<LikesType | null>(null);
+  const [isLiked, setIsLiked] = useState<newLikePostType | null>(null);
   const [isToggled, setIsToggled] = useState(false);
 
   const { data: likesNumber } = useQuery(
@@ -67,19 +67,17 @@ const DetailPost = ({ postDetail, postUid }: DetailPostProps) => {
   const deleteMutation = useMutation(deletePost, {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["communityAllPosts"] });
-      ToastSuccess("게시글이 정상적으로 삭제되었습니다.");
+      ToastSuccess(COMMUNITY_TOAST_TEXT.POST_DELETE_SUCCESS);
       router.push("/community");
     },
     onError: (error) => {
       // console.error("게시글 삭제 에러:", error);
-      window.alert(
-        "게시글이 정상적으로 삭제되지 않았습니다. 다시 시도해주세요!",
-      );
+      ToastError(COMMUNITY_TOAST_TEXT.POST_DELETE_ERROR);
     },
   });
 
   const handleDeleteClick = () => {
-    const ok = window.confirm("게시글을 정말 삭제하시겠습니까?");
+    const ok = window.confirm(COMMUNITY_TOAST_TEXT.POST_DELETE_CONFIRM);
     if (!ok) return false;
     if (ok) deleteMutation.mutate(postUid);
   };
@@ -113,7 +111,7 @@ const DetailPost = ({ postDetail, postUid }: DetailPostProps) => {
 
   const handleLikeClick = async () => {
     if (!currentUser) {
-      ToastInfo("로그인이 필요한 서비스 입니다.");
+      ToastInfo(COMMUNITY_TOAST_TEXT.AUTH_ALERT);
       setTimeout(() => {
         router.push("/login");
       }, 1000);
@@ -132,7 +130,7 @@ const DetailPost = ({ postDetail, postUid }: DetailPostProps) => {
       setIsLiked(null);
     } else {
       // 북마크를 누르지 않은 경우 북마크 추가
-      const newLike = {
+      const newLike: newLikePostType = {
         post_uid: postUid,
         like_user: currentUser.uid,
       };
@@ -144,9 +142,9 @@ const DetailPost = ({ postDetail, postUid }: DetailPostProps) => {
   const handleCopyUrl = () => {
     const currentUrl = window.location.href;
     copy(currentUrl)
-      .then(() => ToastSuccess("링크가 복사되었습니다!"))
+      .then(() => ToastSuccess(COMMUNITY_TOAST_TEXT.COPY_LINK_SUCCESS))
       .catch((err) =>
-        ToastError("링크 복사에 실패했습니다. 다시 시도해주세요!"),
+        ToastError(COMMUNITY_TOAST_TEXT.COPY_LINK_FAILURE),
       );
   };
 

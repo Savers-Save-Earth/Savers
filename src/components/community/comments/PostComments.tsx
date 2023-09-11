@@ -28,12 +28,12 @@ import {
   NewReplyType,
   ReplyType,
 } from "@/types/types";
-import Image from "next/image";
 
 import { convertTimestamp } from "@/libs/util";
 import { ToastError, ToastSuccess, ToastWarn } from "@/libs/toastifyAlert";
 import ProfileImage from "../ui/common/ProfileImage";
 import TextArea from "../ui/comments/TextArea";
+import { COMMUNITY_TOAST_TEXT } from "@/enums/messages";
 
 const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
   const router = useRouter();
@@ -68,20 +68,20 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
   const queryClient = useQueryClient();
   const createCommentMutation = useMutation(createComment, {
     onSuccess: () => {
-      ToastSuccess("댓글이 등록되었습니다");
+      ToastSuccess(COMMUNITY_TOAST_TEXT.COMMENT_ADD_SUCCESS);
       queryClient.invalidateQueries({ queryKey: ["comments", postUid] });
       setNewComment("");
     },
     onError: (error) => {
       // console.error("댓글 등록 에러:", error);
-      ToastError("댓글이 정상적으로 등록되지 않았습니다. 다시 시도해주세요!");
+      ToastError(COMMUNITY_TOAST_TEXT.COMMENT_ADD_ERROR);
     },
   });
 
   // 댓글 등록 submit handler
   const handleCommentSubmit = () => {
     if (!currentUser) {
-      ToastWarn("댓글을 등록하려면 로그인 해주세요!");
+      ToastWarn(COMMUNITY_TOAST_TEXT.COMMENT_ADD_AUTH_ERROR);
       router.push("/login");
     }
 
@@ -103,11 +103,11 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
   const deleteCommentMutation = useMutation(deleteComment, {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["comments", postUid] });
-      ToastSuccess("댓글이 정상적으로 삭제되었습니다");
+      ToastSuccess(COMMUNITY_TOAST_TEXT.COMMENT_DELETE_SUCCESS);
     },
     onError: (error) => {
       // console.error("댓글 삭제 에러:", error);
-      Error("댓글이 정상적으로 삭제되지 않았습니다. 다시 시도해주세요!");
+      Error(COMMUNITY_TOAST_TEXT.COMMENT_DELETE_ERROR);
     },
   });
 
@@ -125,7 +125,7 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
     },
     onError: (error) => {
       // console.error("댓글 수정 에러:", error);
-      ToastError("댓글이 정상적으로 수정되지 않았습니다. 다시 시도해주세요!");
+      ToastError(COMMUNITY_TOAST_TEXT.COMMENT_EDIT_ERROR);
     },
   });
 
@@ -168,7 +168,7 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
     },
     onError: (error) => {
       // console.error("대댓글 등록 에러:", error);
-      ToastError("대댓글이 정상적으로 등록되지 않았습니다. 다시 시도해주세요!");
+      ToastError(COMMUNITY_TOAST_TEXT.REPLY_ADD_ERROR);
     },
   });
 
@@ -179,7 +179,7 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
     },
     onError: (error) => {
       // console.error("대댓글 수정 에러:", error);
-      ToastError("대댓글이 정상적으로 수정되지 않았습니다. 다시 시도해주세요!");
+      ToastError(COMMUNITY_TOAST_TEXT.REPLY_EDIT_ERROR);
     },
   });
 
@@ -190,19 +190,19 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
     },
     onError: (error) => {
       // console.error("대댓글 수정 에러:", error);
-      Error("대댓글이 정상적으로 수정되지 않았습니다. 다시 시도해주세요!");
+      ToastError(COMMUNITY_TOAST_TEXT.REPLY_DELETE_ERROR);
     },
   });
 
   // 대댓글 등록 submit handler
   const handleReplySubmit = (commentUid: string) => {
     if (!currentUser) {
-      ToastError("대댓글을 등록하려면 로그인 해주세요!");
+      ToastError(COMMUNITY_TOAST_TEXT.REPLY_ADD_AUTH_ERROR);
       router.push("/login");
     }
 
     if (newReply === "") {
-      ToastWarn("대댓글을 입력해주세요!");
+      ToastWarn(COMMUNITY_TOAST_TEXT.REPLY_EMPTY_ERROR);
       return false;
     }
 
@@ -252,7 +252,7 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
 
   // 대댓글 삭제 submit handler
   const handleDeleteReply = (replyUid: string) => {
-    const ok = window.confirm("댓글을 정말 삭제하시겠어요?");
+    const ok = window.confirm(COMMUNITY_TOAST_TEXT.REPLY_DELETE_CONFIRM);
     if (!ok) return false;
     deleteReplyMutation.mutate(replyUid);
   };

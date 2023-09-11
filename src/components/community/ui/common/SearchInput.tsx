@@ -4,6 +4,7 @@ import { useSetRecoilState } from "recoil";
 import { searchPostAtom } from "@/libs/atoms";
 
 import { ToastWarn } from "@/libs/toastifyAlert";
+import { COMMUNITY_TOAST_TEXT } from "@/enums/messages";
 
 const SearchInput = () => {
   const [searchKeyword, setSearchKeyword] = useState<string>("");
@@ -11,7 +12,7 @@ const SearchInput = () => {
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (searchKeyword.length < 1) ToastWarn("검색어를 입력해주세요!");
+    if (searchKeyword.length < 1) ToastWarn(COMMUNITY_TOAST_TEXT.SEARCH_KEYWORD_EMPTY_ERROR);
     setSearchPostAtomState({ keyword: searchKeyword });
   };
 

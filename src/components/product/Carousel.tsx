@@ -8,6 +8,7 @@ import "swiper/css/pagination";
 import "swiper/css/autoplay";
 import { useIsTablet } from "@/hooks/useIsTablet";
 import Link from "next/link";
+import Image from "next/image";
 import { useIsLaptop } from "@/hooks/useIsLaptop";
 
 const bannerList = [
@@ -101,7 +102,13 @@ const Carousel = () => {
             {bannerList.map((item) => (
               <SwiperSlide key={item.id}>
                 <Link href={item.link}>
-                  <img src={item.img} alt={item.title} />
+                  <Image
+                    src={item.img}
+                    width={1416}
+                    height={354}
+                    quality={100}
+                    alt={item.title}
+                  />
                 </Link>
               </SwiperSlide>
             ))}
@@ -119,7 +126,13 @@ const Carousel = () => {
             {MbannerList.map((item) => (
               <SwiperSlide key={item.id}>
                 <Link href={item.link}>
-                  <img src={item.img} alt={item.title} />
+                  <Image
+                    src={item.img}
+                    width={740}
+                    height={650}
+                    quality={100}
+                    alt={item.title}
+                  />
                 </Link>
               </SwiperSlide>
             ))}
