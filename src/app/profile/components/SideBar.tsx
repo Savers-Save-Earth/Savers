@@ -90,18 +90,24 @@ const SideBar = () => {
           } justify-center items-center gap-6 self-stretch leading-none`}
         >
           {/* <div className="hidden flex-col justify-center items-center gap-6 self-stretch leading-none"> */}
-          <div className="w-[8.75rem] h-[8.75rem] aspect-w-1 aspect-h-1 object-contain rounded-full overflow-hidden mx-auto">
+          <div className="relative w-[8.75rem] h-[8.75rem] aspect-w-1 aspect-h-1 object-contain rounded-full overflow-hidden mx-auto">
             {profileData?.profileImage ? (
-              <img
-                className="w-full h-full object-cover"
+              <Image
                 src={profileData.profileImage}
-                alt="프로필 이미지"
+                alt="마이페이지 프로필 이미지"
+                fill
+                style={{
+                  objectFit: "cover",
+                }}
               />
             ) : (
               <Image
-                fill={true}
                 src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/profileImage/default_profile_image.svg"
-                alt="프로필 이미지"
+                alt="마이페이지 기본 프로필 이미지"
+                fill
+                style={{
+                  objectFit: "cover",
+                }}
               />
             )}
           </div>
