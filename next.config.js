@@ -27,12 +27,13 @@ module.exports = withImages(
           pathname: "/storage/v1/object/public/badge/**",
         },
         {
-        protocol: "https",
-        hostname: "img.freepik.com",
-        port: "",
-        pathname: "/premium-photo/**"
-      }
+          protocol: "https",
+          hostname: "img.freepik.com",
+          port: "",
+          pathname: "/premium-photo/**",
+        },
       ],
+      domains: ["m.nuldam.com"],
     },
-  })
+  }),
 );
