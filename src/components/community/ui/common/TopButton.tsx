@@ -4,16 +4,18 @@ import { usePathname } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 import { cls } from "@/libs/util";
 import { PATHNAME_EDIT, PATHNAME_WRITE } from "@/enums/community";
+import { useIsLaptop } from "@/hooks/useIsLaptop";
 
 const TopButton = () => {
   const user = useAuth();
   const pathname = usePathname();
+  const isLaptop = useIsLaptop();
   const handleScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
   return (
     <>
-      {pathname === PATHNAME_WRITE || pathname === PATHNAME_EDIT ? null : (
+      {isLaptop || pathname === PATHNAME_WRITE || pathname === PATHNAME_EDIT ? null : (
         <button
           onClick={handleScrollToTop}
           className={cls(

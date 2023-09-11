@@ -3,9 +3,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { PATHNAME_EDIT, PATHNAME_WRITE } from "@/enums/community";
 import { useAuth } from "@/hooks/useAuth";
+import { useIsLaptop } from "@/hooks/useIsLaptop";
+import { cls } from "@/libs/util";
+
 
 const FloatingButton = () => {
   const user = useAuth();
+  const isLaptop = useIsLaptop();
   const pathname = usePathname();
   return (
     <>
@@ -13,7 +17,9 @@ const FloatingButton = () => {
       pathname === PATHNAME_WRITE ||
       pathname === PATHNAME_EDIT ? null : (
         <Link href={PATHNAME_WRITE}>
-          <button className="fixed right-10 bottom-10 bg-mainGreen text-white rounded-full p-4 shadow-lg hover:bg-melon-400 transition ease-in-out duration-200">
+            <button className={cls("fixed right-10 bg-mainGreen text-white rounded-full p-4 shadow-lg hover:bg-melon-400 transition ease-in-out duration-200",
+              isLaptop ? "bottom-20" : "bottom-10"
+            )}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

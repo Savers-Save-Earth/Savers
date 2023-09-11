@@ -25,9 +25,9 @@ const PostBox = ({ post, width, border, margin }: PostBoxProps) => {
         <CategoryTag>{post.category}</CategoryTag>
         <div>
           <div className="flex justify-between items-center">
-            <div className="flex flex-col shrink">
+            <div className="flex flex-col">
               <Link href={`/community/${post.post_uid}`}>
-                <h2 className="font-medium text-lg flex items-center space-x-2 cursor-pointer hover:underline my-2">
+                <h2 className="font-medium text-lg flex items-center space-x-2 cursor-pointer hover:underline mb-2">
                   {post.title}
                 </h2>
               </Link>
