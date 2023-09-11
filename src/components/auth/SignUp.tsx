@@ -277,10 +277,10 @@ const SignUp: React.FC = () => {
                     placeholder="비밀번호 확인"
                     {...register("passwordConfirmation", {
                       required: "비밀번호를 입력해주세요",
-                      validate: {
-                        value: value === passwordRef.current,
-                        message: "비밀번호가 일치하지 않습니다",
-                      },
+                      // validate: {
+                      //   value: value === passwordRef.current,
+                      //   message: "비밀번호가 일치하지 않습니다",
+                      // },
                     })}
                     className="text-sm flex w-80 h-12 p-4 items-center border rounded-xl bg-gray-50 outline-none mb-1"
                   />
