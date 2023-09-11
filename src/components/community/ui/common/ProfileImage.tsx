@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getProfileImg } from '@/api/community/post';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 interface ProfileImageProps {
   userUid?: string;
@@ -26,12 +27,17 @@ const ProfileImage = ({ userUid }: ProfileImageProps) => {
   }, [userUid]);
 
   return (
-    <img
-      src={profileImageUrl}
-      alt="profile"
-      className="w-12 h-12 rounded-full cursor-pointer"
+    <div
+      className="relative object-contain w-12 h-12 rounded-full cursor-pointer"
       onClick={() => router.push(`/profile/${userUid}/myprofile`)}
-    />
+    >
+      <Image
+        src={profileImageUrl}
+        alt="profileImage"
+        className="rounded-full"
+        fill={true}
+      />
+    </div>
   );
 };
 

@@ -180,7 +180,11 @@ const DetailPost = ({ postDetail, postUid }: DetailPostProps) => {
             <div className="flex items-center justify-center space-x-3">
               <ProfileImage userUid={postDetail?.author_uid} />
               <div className="flex flex-col items-start justify-center">
-                <span className="text-gray-600">{postDetail?.author_name}</span>
+                <span
+                  className="text-gray-600 cursor-pointer"
+                  onClick={() => router.push(`/profile/${postDetail?.author_uid}/myprofile`)}>
+                  {postDetail?.author_name}
+                </span>
                 <span className="text-sm text-gray-400">
                   {postDetail?.updated_date}
                 </span>

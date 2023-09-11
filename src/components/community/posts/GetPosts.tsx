@@ -18,7 +18,6 @@ import {
 import LoadingPosts from "../ui/common/LoadingPosts";
 import { useRecoilValue } from "recoil";
 import { searchPostAtom } from "@/libs/atoms";
-import supabase from "@/libs/supabase";
 
 type QueryKeyMap = {
   [key: string]: string[];
@@ -40,7 +39,6 @@ const GetPosts = () => {
   const queryKey = getPathnameQueryKey(pathname);
 
   const { keyword } = useRecoilValue(searchPostAtom);
-  console.log("GetPosts keyword >> ", keyword);
 
   const getCategoryName = (pathname: string) => {
     if (pathname === PATHNAME_PRODUCT) {
