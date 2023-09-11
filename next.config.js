@@ -32,8 +32,21 @@ module.exports = withImages(
           port: "",
           pathname: "/premium-photo/**",
         },
+        {
+          protocol: "https",
+          hostname: "shopping-phinf.pstatic.net",
+          port: "",
+          pathname: "/**",
+        },
+        {
+          protocol: "https",
+          hostname: "m.nuldam.com",
+          port: "",
+          pathname: "/**",
+        },
       ],
-      domains: ["m.nuldam.com"],
+      formats: ["image/webp"]["image/png"],
     },
+    disableStaticImages: false,
   }),
 );
