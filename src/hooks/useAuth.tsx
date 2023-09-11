@@ -1,3 +1,4 @@
+"use client";
 import supabase from "@/libs/supabase";
 import { UserType } from "@/types/types";
 import { useState, useEffect } from "react";
