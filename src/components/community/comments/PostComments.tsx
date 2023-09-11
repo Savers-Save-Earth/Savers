@@ -18,7 +18,7 @@ import {
 } from "@/api/community/reply";
 import { updatePost } from "@/api/community/post";
 
-import CommentTag from "../ui/CommentTag";
+import CommentTag from "../ui/common/CommentTag";
 import {
   CommentType,
   DetailPostProps,
@@ -30,10 +30,10 @@ import {
 } from "@/types/types";
 import Image from "next/image";
 
-import { cls, convertTimestamp } from "@/libs/util";
+import { convertTimestamp } from "@/libs/util";
 import { ToastError, ToastSuccess, ToastWarn } from "@/libs/toastifyAlert";
-import ProfileImage from "../ui/ProfileImage";
-import TextArea from "./ui/TextArea";
+import ProfileImage from "../ui/common/ProfileImage";
+import TextArea from "../ui/comments/TextArea";
 
 const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
   const router = useRouter();
