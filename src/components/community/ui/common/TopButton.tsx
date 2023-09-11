@@ -22,6 +22,7 @@ const TopButton = () => {
             "fixed right-10 bg-white text-gray-400 rounded-full p-4 shadow-lg hover:bg-melon-400 transition ease-in-out duration-200",
             user ? "bottom-28" : "bottom-10",
           )}
+          aria-label="페이지 최상단 이동 버튼"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

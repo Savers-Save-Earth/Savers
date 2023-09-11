@@ -47,7 +47,17 @@ export const metadata: Metadata = {
     ],
     locale: "ko-KR",
     type: "website",
-  }
+  },
+  robots: {
+    index: false,
+    follow: true,
+    nocache: true,
+    googleBot: {
+      index: true,
+      follow: false,
+      noimageindex: true,
+    },
+  },
 };
 
 declare global {
