@@ -21,8 +21,8 @@ const LoginLoading = () => {
 
       await setUser(user);
       await getUserInfo(user);
-      // ToastSuccess("로그인 되었습니다. 🌱");
       router.push("/");
+      ToastSuccess("로그인 되었습니다. 🌱");
     }
     exe();
   });

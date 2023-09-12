@@ -77,10 +77,13 @@ const Header = () => {
   }, []);
 
   const loginLogoutSwitcher = async () => {
+    // const currentUrl = window.location.href;
+
     if (user) {
       const ok = window.confirm("로그아웃 하시겠습니까?");
       if (ok) {
         await supabase.auth.signOut();
+        pathname.includes("profile") && router.push("/");
       }
     } else {
       const currentUrl = window.location.href;
