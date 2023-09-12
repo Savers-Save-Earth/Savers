@@ -99,7 +99,7 @@ const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
   return (
     <>
       {modalController && (
-        <>
+        <div className="z-[2]">
           <div
             onClick={() => {
               setModalController(false);
@@ -315,7 +315,7 @@ const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
               </div>
             </div>
           </div>
-        </>
+        </div>
       )}
     </>
   );
