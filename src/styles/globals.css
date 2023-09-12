@@ -24,10 +24,6 @@ body {
     "Open Sans", "Helvetica Neue", sans-serif;
 }
 
-footer {
-  max-width: none;
-}
-
 @media (max-width: 1280px) {
   body {
     padding: 0 20px;

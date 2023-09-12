@@ -195,7 +195,7 @@ const Detail = () => {
             className="rounded-2xl lg:w-1/2 w-full xl:h-auto object-cover object-center"
           >
             <SwiperSlide>
-              <img src={product?.img} className="w-full h-full" />
+              <img src={product?.img} className="w-full h-auto" />
             </SwiperSlide>
             <SwiperSlide>
               <img src={product?.sub_img} className="w-ful h-full" />
