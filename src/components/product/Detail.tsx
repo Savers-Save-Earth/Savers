@@ -198,7 +198,7 @@ const Detail = () => {
               <img src={product?.img} className="w-full h-auto" />
             </SwiperSlide>
             <SwiperSlide>
-              <img src={product?.sub_img} className="w-ful h-full" />
+              <img src={product?.sub_img} className="w-full h-auto" />
             </SwiperSlide>
           </Swiper>
           <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0 ml-auto ">
