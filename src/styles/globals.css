@@ -289,9 +289,14 @@ body {
 }
 
 .highlight {
-  color: rgb(255, 255, 255) !important;
+  /* color: rgb(255, 255, 255) !important; */
+  color: transparent !important;
   cursor: not-allowed !important;
-  background-color: #5fd100 !important;
+  background-image: url("https://i.ibb.co/XWPMfrm/stamp.png") !important;
+  background-size: auto 24px !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  /* background-color: transparent !important; */
   pointer-events: none !important;
 
   border-radius: 100px;
