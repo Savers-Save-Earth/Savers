@@ -7,9 +7,11 @@ import NoListToShown from "@/components/profile/NoListShown";
 import LoadingBookmarkedRestaurants from "@/components/profile/ui/LoadingBookmarkedRestaurants";
 import { likeRestaurantType } from "@/types/types";
 
-const FavoriteRestaurantsComp = ({ id }: { id : string }) => {
+const FavoriteRestaurantsComp = ({ id }: { id: string }) => {
   const loadBoundaryValue = 12;
-  const [userLikedRestaurants, setUserLikedRestaurants] = useState<likeRestaurantType[]>([]);
+  const [userLikedRestaurants, setUserLikedRestaurants] = useState<
+    likeRestaurantType[]
+  >([]);
   const [loadCount, setLoadCount] = useState<number>(loadBoundaryValue);
   const [loadMoreBtn, setLoadMoreBtn] = useState<string>("");
   const searchId = id;
@@ -51,7 +53,7 @@ const FavoriteRestaurantsComp = ({ id }: { id : string }) => {
     return <LoadingBookmarkedRestaurants />;
   }
   if (userLikedRestaurants && userLikedRestaurants.length < 1) {
-    return <NoListToShown listProp={"noBookmarkedRestaurant"} />
+    return <NoListToShown listProp={"noBookmarkedRestaurant"} />;
   }
 
   const shareHandler = async (url: string) => {
@@ -164,9 +166,6 @@ const FavoriteRestaurantsComp = ({ id }: { id : string }) => {
                       fill="#98A2B3"
                     />
                   </svg>
-                  {/* <span style={{ color: "#98A2B3" }}>
-                      {item.bookmarkCount}
-                    </span> */}
                 </p>
                 <p className="mt-[6px]">
                   <span className="pt-[4px] pr-2 pl-[6px] pb-2 border border-gray-300 rounded-full  cursor-pointer ">

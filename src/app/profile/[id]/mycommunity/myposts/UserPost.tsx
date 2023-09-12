@@ -1,12 +1,13 @@
 import { getFirstImage, getImgUrl, removeHtmlTags } from "@/libs/util";
 import { MyPostProps } from "@/types/types";
+import Image from "next/image";
 import React from "react";
 
 export default function UserPost({ post }: MyPostProps) {
   const includeImage = getFirstImage(post.content);
   const firstImgUrl = getImgUrl(includeImage);
-  const postContent = removeHtmlTags(post.content).slice(0, 50) + "..."
-  
+  const postContent = removeHtmlTags(post.content).slice(0, 50) + "...";
+
   return (
     <div
       className="flex flex-col items-start p-6 gap-4 self-stretch rounded-2xl bg-white border border-gray-200"
@@ -36,12 +37,8 @@ export default function UserPost({ post }: MyPostProps) {
         </div>
         <div>
           {includeImage ? (
-            <div className="flex-shrink-0 w-10 h-10 sm:w-24 sm:h-24 ml-2 bg-gray-50">
-              <img
-                className="flex-shrink-0 w-10 h-10 sm:w-24 sm:h-24 rounded-md"
-                src={firstImgUrl}
-                alt="thumbnail"
-              />
+            <div className="relative flex-shrink-0 w-10 h-10 sm:w-24 sm:h-24 ml-2 bg-gray-50 rounded-md overflow-hidden">
+              <Image src={firstImgUrl} alt="thumbnail" fill />
             </div>
           ) : null}
         </div>

@@ -40,7 +40,6 @@ const MissionDoingComp = ({ id }: { id: string }) => {
                     objectFit: "cover",
                   }}
                 />
-                {/* <img className="w-[32px] h-[32px] sm:w-[64px] sm:h-[64px]" src={mission.icon} alt="아이콘 이미지 없음"/> */}
               </div>
               <h1 className="text-[1rem] sm:text-[24px] sm:leading-[29px] font-semibold text-[#4DAB00]">
                 {mission.title}
