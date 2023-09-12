@@ -27,9 +27,12 @@ const ModifyingProfile = () => {
     const { data } = await supabase.from("user").select().eq("uid", searchId);
     setUser(data!);
     setUserInfo(data!);
-    const { data : emailData } = await supabase.from("user").select("email").neq("uid", searchId);
-    const emailOverlap = emailData?.map((item) => item.email)
-    setEmailExceptUser(emailOverlap!)
+    const { data: emailData } = await supabase
+      .from("user")
+      .select("email")
+      .neq("uid", searchId);
+    const emailOverlap = emailData?.map((item) => item.email);
+    setEmailExceptUser(emailOverlap!);
   };
   useEffect(() => {
     getUser();
@@ -42,7 +45,6 @@ const ModifyingProfile = () => {
   };
 
   const handleSubmit = async () => {
-
     if (!email) {
       alert("이메일은 필수정보입니다! 입력 부탁드려요 :)");
       return;
@@ -90,10 +92,9 @@ const ModifyingProfile = () => {
           setEmailMessage("*올바른 이메일 형식이 아닙니다.");
           setEmailValid(false);
         } else if (EmailExceptUser.includes(email)) {
-          setEmailMessage("*이미 사용중인 이메일입니다.")
+          setEmailMessage("*이미 사용중인 이메일입니다.");
           setEmailValid(false);
-        } 
-        else {
+        } else {
           setEmailMessage("*사용가능한 이메일입니다.");
           setEmailValid(true);
         }
@@ -160,23 +161,26 @@ const ModifyingProfile = () => {
         />
       </p> */}
       <div className="w-3/4">
-        <span>*이메일</span>
+        <span>이메일</span>
         <input
           type="text"
-          className="w-full bg-gray-100 p-2 rounded-lg"
+          className="w-full bg-gray-100 p-2 rounded-lg outline-none"
           name="email"
           value={email}
-          onChange={(e) => HandleInputChange(e, setEmail, setEmailMessage)}
-          onBlur={(e) => HandleInputValidation(e)}
+          // onChange={(e) => HandleInputChange(e, setEmail, setEmailMessage)}
+          // onBlur={(e) => HandleInputValidation(e)}
           // onChange={(e) => setEmail(e.target.value)}
         />
-        <p className="modifyProfileValidationMessage"> {emailMessage} </p>
+        <p className="modifyProfileValidationMessage outline-none">
+          {" "}
+          {emailMessage}{" "}
+        </p>
       </div>
       <div className="w-3/4">
         <span>휴대전화</span>
         <input
           type="text"
-          className="w-full bg-gray-100 p-2 rounded-lg"
+          className="w-full bg-gray-100 p-2 rounded-lg outline-none"
           name="number"
           value={number}
           onChange={(e) => HandleInputChange(e, setNumber, setNumberMessage)}
@@ -188,7 +192,7 @@ const ModifyingProfile = () => {
         <span>생년월일</span>
         <input
           type="text"
-          className="w-full bg-gray-100 p-2 rounded-lg"
+          className="w-full bg-gray-100 p-2 rounded-lg outline-none"
           name="birthday"
           value={birthday}
           onChange={(e) =>

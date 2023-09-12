@@ -26,6 +26,6 @@ export default async function profileLayout({
             {children}
           </section>
         </div>
-      </div>    
+      </div>
   );
 }
