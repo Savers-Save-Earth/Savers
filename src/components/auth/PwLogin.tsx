@@ -33,7 +33,7 @@ const PwLogin: React.FC = () => {
     if (error) {
       ToastError("로그인에 실패하였습니다.");
     } else {
-      ToastSuccess("로그인 되었습니다. 🌱");
+      // ToastSuccess("로그인 되었습니다. 🌱");
       router.back();
       loginUpdater();
     }
@@ -139,7 +139,7 @@ const PwLogin: React.FC = () => {
                 {...register("password", {
                   required: "비밀번호를 입력하세요",
                   minLength: {
-                    value: 8,
+                    value: 6,
                     message: "비밀번호는 최소 8자리 이상이어야 합니다",
                   },
                 })}

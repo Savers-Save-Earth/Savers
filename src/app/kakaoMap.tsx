@@ -9,8 +9,8 @@ const KakaoMap = () => {
   const [markerList, setMarkerList] = useState([]); // 마커 리스트 상태 추가
   const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태 추가
   const [userLocation, setUserLocation] = useState({
-    x: 33.450701,
-    y: 126.570667,
+    La: 33.450701,
+    Ma: 126.570667,
   });
   const [error, setError] = useState(false);
 
@@ -47,10 +47,15 @@ const KakaoMap = () => {
                         res(coordinate);
                       });
                     } else {
-                      if (!error) {
-                        rej(ToastError("위치 권한을 허용해주세요"));
-                        setError(true);
-                      }
+                      const coordinate = new kakao.maps.LatLng(
+                        33.450701,
+                        126.570667,
+                      );
+                      searchPlaces(coordinate);
+                      // if (!error) {
+                      //   // rej(ToastError("위치 권한을 허용해주세요"));
+                      //   setError(true);
+                      // }
                     }
                   })
                   .catch((error) => {
@@ -61,7 +66,7 @@ const KakaoMap = () => {
                     );
                   });
               } else {
-                rej(ToastError("위치 권한을 허용해주세요"));
+                rej(ToastError("위치 권한을 허용해주세요b"));
               }
             });
           };
@@ -70,9 +75,11 @@ const KakaoMap = () => {
           const setInitLocation = async () => {
             let locPosition: any = await getCurrentCoordinate();
             map.setCenter(locPosition);
+            const lat = locPosition.getLat(); // 위도
+            const lon = locPosition.getLng(); // 경도
             setUserLocation({
-              x: locPosition.La,
-              y: locPosition.Ma,
+              La: lon,
+              Ma: lat,
             });
             setIsLoading(false);
             //현재 위치에 마커 표시
@@ -92,8 +99,6 @@ const KakaoMap = () => {
           let zoomControl = new kakao.maps.ZoomControl();
           map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
-          //coordinate대신 userlocation사용
-          //이부분 때문에 다시 내위치로 돌아가는거 확인한듯
           const searchPlaces = async (coordinate: any) => {
             const ps = new window.kakao.maps.services.Places();
             const options = {
@@ -189,15 +194,14 @@ const KakaoMap = () => {
             });
             markers = [];
           };
-          let markers: any = [];
+          let markers: string[] = [];
 
           //지도 이동 지역설정
           const mapIdleHandler = () => {
             const latlng = map.getCenter();
-            const coordinate = new window.kakao.maps.LatLng(
-              latlng.getLat(),
-              latlng.getLng(),
-            );
+            const lat = latlng.getLat(); // 위도
+            const lon = latlng.getLng(); // 경도
+            const coordinate = new window.kakao.maps.LatLng(lat, lon);
             searchPlaces(coordinate);
           };
           window.kakao.maps.event.addListener(map, "idle", mapIdleHandler);
