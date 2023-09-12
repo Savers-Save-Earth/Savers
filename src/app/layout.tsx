@@ -7,6 +7,7 @@ import Recoil from "./Recoil";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/ReactToastify.css";
 import HeaderM from "@/components/HeaderM";
+import { RouteChangesProvider } from "./RouteChangeProvider";
 
 export const metadata: Metadata = {
   title: "Savers | 지구를 위한 작은 실천",
@@ -77,10 +78,12 @@ export default function RootLayout({
       <body>
         <Recoil>
           <QueryProvider>
-            <HeaderM />
-            <Header />
-            {children}
-            <ToastContainer />
+            <RouteChangesProvider>
+              <HeaderM />
+              <Header />
+              {children}
+              <ToastContainer />
+            </RouteChangesProvider>
           </QueryProvider>
         </Recoil>
       </body>
