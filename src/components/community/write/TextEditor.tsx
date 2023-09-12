@@ -53,6 +53,7 @@ const TextEditor = ({ content, setContent }: EditorProps) => {
 
           if (res) {
             const imageUrl = res.path;
+            console.log(imageUrl);
 
             const editor = quillInstance.current?.getEditor();
             if (editor) {
@@ -66,7 +67,7 @@ const TextEditor = ({ content, setContent }: EditorProps) => {
             }
           }
         } catch (error) {
-          // console.log(error);
+          console.log(error);
         }
       }
     });
