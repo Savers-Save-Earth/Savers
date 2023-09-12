@@ -120,7 +120,7 @@ const EditPost = () => {
             </button>
           )}
         </div>
-        <div className="w-full xl:h-[850px] h-[390px] mx-auto">
+        <div className="w-full xl:h-[700px] md:h-[600px] h-[320px] mx-auto">
           <TextEditor content={content ?? ""} setContent={setContent} />
         </div>
       </form>

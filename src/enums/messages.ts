@@ -6,6 +6,7 @@ export const COMMUNITY_TOAST_TEXT = {
   POST_EDIT_SUCCESS: "게시글이 정상적으로 수정되었습니다.",
   POST_EDIT_ERROR: "게시글이 정상적으로 수정되지 않았습니다. 다시 시도해주세요!",
 
+  LEAVE_PAGE_CONFIRM: "정말 게시글 작성을 그만두시겠어요? 변경사항은 저장되지 않습니다.",
   IMAGE_UPLOAD_ERROR: "이미지 업로드 중에 에러가 발생하였습니다. 다시 시도해주세요!",
 
   CATEGORY_SELECT_ERROR: "카테고리를 선택해주세요!",
