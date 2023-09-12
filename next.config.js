@@ -10,25 +10,25 @@ module.exports = withImages(
       remotePatterns: [
         {
           protocol: "https",
-          hostname: "etsquekrypszfrqglupe.supabase.co",
+          hostname: process.env.NEXT_PUBLIC_SUPABASE_HOSTNAME,
           port: "",
           pathname: "/storage/v1/object/public/profileImage/**",
         },
         {
           protocol: "https",
-          hostname: "etsquekrypszfrqglupe.supabase.co",
+          hostname: process.env.NEXT_PUBLIC_SUPABASE_HOSTNAME,
           port: "",
           pathname: "/storage/v1/object/public/community/**",
         },
         {
           protocol: "https",
-          hostname: "etsquekrypszfrqglupe.supabase.co",
+          hostname: process.env.NEXT_PUBLIC_SUPABASE_HOSTNAME,
           port: "",
           pathname: "/storage/v1/object/public/badge/**",
         },
         {
           protocol: "https",
-          hostname: process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL,
+          hostname: process.env.NEXT_PUBLIC_SUPABASE_HOSTNAME,
           port: "",
           pathname: "/storage/v1/object/public/missionIcon/**",
         },
