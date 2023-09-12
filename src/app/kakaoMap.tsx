@@ -53,7 +53,7 @@ const KakaoMap = () => {
                       );
                       searchPlaces(coordinate);
                       // if (!error) {
-                      //   rej(ToastError("위치 권한을 허용해주세요a"));
+                      //   // rej(ToastError("위치 권한을 허용해주세요"));
                       //   setError(true);
                       // }
                     }
@@ -99,7 +99,6 @@ const KakaoMap = () => {
           let zoomControl = new kakao.maps.ZoomControl();
           map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
-          //이부분 때문에 다시 내위치로 돌아가는거 확인한듯
           const searchPlaces = async (coordinate: any) => {
             const ps = new window.kakao.maps.services.Places();
             const options = {
