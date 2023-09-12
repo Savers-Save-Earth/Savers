@@ -14,12 +14,9 @@ const ModifyingProfile = () => {
   const [birthday, setBirthday] = useState("");
 
   const searchId = useParams().id;
-  const [EmailExceptUser, setEmailExceptUser] = useState<string[]>([]);
 
-  const [emailMessage, setEmailMessage] = useState(" ");
   const [numberMessage, setNumberMessage] = useState(" ");
   const [birthdayMessage, setBirthdayMessage] = useState(" ");
-  const [emailValid, setEmailValid] = useState(true);
   const [numberValid, setNumberValid] = useState(true);
   const [birthdayValid, setBirthdayValid] = useState(true);
 
@@ -27,12 +24,6 @@ const ModifyingProfile = () => {
     const { data } = await supabase.from("user").select().eq("uid", searchId);
     setUser(data!);
     setUserInfo(data!);
-    const { data: emailData } = await supabase
-      .from("user")
-      .select("email")
-      .neq("uid", searchId);
-    const emailOverlap = emailData?.map((item) => item.email);
-    setEmailExceptUser(emailOverlap!);
   };
   useEffect(() => {
     getUser();
@@ -49,11 +40,7 @@ const ModifyingProfile = () => {
       alert("이메일은 필수정보입니다! 입력 부탁드려요 :)");
       return;
     }
-    if (
-      emailValid === false ||
-      numberValid === false ||
-      birthdayValid === false
-    ) {
+    if (numberValid === false || birthdayValid === false) {
       // if (emailValid || !numberValid || !birthdayValid) {
       alert(
         "입력정보 형식이 잘못되었네요. \n전화번호와 생년월일은 필수기입사항이 아닙니다 :)",
@@ -84,21 +71,6 @@ const ModifyingProfile = () => {
     const currentName = event.target.name;
     const currentValue: string = event.target.value;
     switch (currentName) {
-      case "email":
-        const emailRegExp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        if (currentValue === "") {
-          setEmailMessage(" ");
-        } else if (!emailRegExp.test(currentValue)) {
-          setEmailMessage("*올바른 이메일 형식이 아닙니다.");
-          setEmailValid(false);
-        } else if (EmailExceptUser.includes(email)) {
-          setEmailMessage("*이미 사용중인 이메일입니다.");
-          setEmailValid(false);
-        } else {
-          setEmailMessage("*사용가능한 이메일입니다.");
-          setEmailValid(true);
-        }
-        break;
       case "number":
         const numberRegExp = /^[0-9]{3}-[0-9]{4}-[0-9]{4}$/;
         if (currentValue === "") {
@@ -151,30 +123,14 @@ const ModifyingProfile = () => {
           수정완료
         </button>
       </div>
-      {/* <p className="w-3/4">
-        <span>닉네임</span>
-        <input
-          type="text"
-          value={name}
-          className="w-full bg-gray-100 p-2 rounded-lg"
-          onChange={(e) => setName(e.target.value)}
-        />
-      </p> */}
       <div className="w-3/4">
         <span>이메일</span>
         <input
           type="text"
-          className="w-full bg-gray-100 p-2 rounded-lg outline-none"
-          name="email"
+          className="w-full bg-gray-100 text-gray-400 p-2 rounded-lg outline-none opacity-60 cursor-not-allowed"
+          disabled
           value={email}
-          // onChange={(e) => HandleInputChange(e, setEmail, setEmailMessage)}
-          // onBlur={(e) => HandleInputValidation(e)}
-          // onChange={(e) => setEmail(e.target.value)}
         />
-        <p className="modifyProfileValidationMessage outline-none">
-          {" "}
-          {emailMessage}{" "}
-        </p>
       </div>
       <div className="w-3/4">
         <span>휴대전화</span>

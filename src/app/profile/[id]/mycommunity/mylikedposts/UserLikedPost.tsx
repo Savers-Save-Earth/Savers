@@ -4,14 +4,18 @@ import { Database } from "@/types/supabase";
 import LoadingMyBookmarkedPost from "@/components/profile/ui/LoadingMyBookmarkedPost";
 import { getFirstImage, getImgUrl } from "@/libs/util";
 import { useQuery } from "@tanstack/react-query";
-import { fetchFavoritePosts, fetchPostsByPostUid } from "@/api/profile/fetchCommunityData";
+import {
+  fetchFavoritePosts,
+  fetchPostsByPostUid,
+} from "@/api/profile/fetchCommunityData";
 import { LikePostProps } from "@/types/types";
+import Image from "next/image";
 
 export default function UserLikedPost({ post }: LikePostProps) {
-  const searchId = post.post_uid
+  const searchId = post.post_uid;
   const { data: favoritePostData, isFetching: favoritePostDataFetching } =
     useQuery(["fetchFavoritePostContent", searchId], () =>
-    fetchPostsByPostUid(searchId),
+      fetchPostsByPostUid(searchId),
     );
 
   if (favoritePostDataFetching) {
@@ -49,25 +53,19 @@ export default function UserLikedPost({ post }: LikePostProps) {
               </div>
 
               <div className="flex justify-between items-center self-stretch text-gray-400">
-                {/* <div className="flex items-center gap-2 text-[14px] leading-[14px] font-normal">
-        {userLikedPost[0].title} [{userLikedPost[0].number_comments}]
-      </div> */}
-                <p>등록일&nbsp;{favoritePostData![0].created_date.slice(0, 10)}</p>
+                <p>
+                  등록일&nbsp;{favoritePostData![0].created_date.slice(0, 10)}
+                </p>
               </div>
             </div>
-            
-            <div>
-          {includeImage ? (
-            <div className="flex-shrink-0 w-10 h-10 sm:w-24 sm:h-24 ml-2 bg-gray-50">
-              <img
-                className="flex-shrink-0 w-10 h-10 sm:w-24 sm:h-24 rounded-md"
-                src={firstImgUrl}
-                alt="thumbnail"
-              />
-            </div>
-          ) : null}
-        </div>
 
+            <div>
+              {includeImage ? (
+                <div className="relative flex-shrink-0 w-10 h-10 sm:w-24 sm:h-24 ml-2 bg-gray-50 rounded-md overflow-hidden">
+                  <Image src={firstImgUrl} alt="thumbnail" fill />
+                </div>
+              ) : null}
+            </div>
           </div>
         </>
       ) : (

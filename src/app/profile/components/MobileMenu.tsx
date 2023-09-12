@@ -58,9 +58,9 @@ const MobileMenu = ({
   };
 
   return (
-    <div className="sidebar fixed top-0 bottom-0 right-0 p-2 w-[300px] overflow-y-auto text-center bg-gray-900">
-      <div className="p-2.5 mt-3 flex items-center justify-between rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
-        <p className="text-[15px] ml-4 text-gray-200 font-bold">메뉴</p>
+    <div className="sidebar fixed top-0 bottom-0 right-0 p-2 w-[300px] overflow-y-auto text-center bg-white z-[1]">
+      <div className="p-2.5 mt-3 flex items-center justify-between rounded-md px-4 duration-300 cursor-pointer hover:bg-[#E8FFD4] text-white">
+        <p className="text-[15px] ml-4 text-gray-900 font-bold">메뉴</p>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -80,73 +80,73 @@ const MobileMenu = ({
           />
         </svg>
       </div>
-      <div className="my-4 bg-gray-600 h-[1px]"></div>
+      {/* <div className="my-4 bg-gray-600 h-[1px]"></div> */}
       <button
         value="프로필"
         name="myprofile"
-        className="w-full p-2.5 mt-3 flex items-center justify-between rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white"
+        className="w-full p-2.5 mt-3 flex items-center justify-between rounded-md px-4 duration-300 cursor-pointer hover:bg-[#E8FFD4] text-white"
         onClick={(e) =>
           handleMenuClick(e.currentTarget.value, e.currentTarget.name)
         }
       >
-        <p className="text-[15px] ml-4 text-gray-200 font-bold">프로필</p>
-        <p className="text-[15px] ml-4 text-gray-200 font-bold">{`>`}</p>
+        <p className="text-[15px] ml-4 text-gray-400 font-bold">프로필</p>
+        <p className="text-[15px] ml-4 text-gray-400 font-bold">{`>`}</p>
       </button>
-      <div className="my-4 bg-gray-600 h-[1px]"></div>
+      {/* <div className="my-4 bg-gray-600 h-[1px]"></div> */}
 
       <button
         value="나의 미션"
         name="mymission/missiondoing"
-        className="w-full p-2.5 mt-3 flex items-center justify-between rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white"
+        className="w-full p-2.5 mt-3 flex items-center justify-between rounded-md px-4 duration-300 cursor-pointer hover:bg-[#E8FFD4] text-white"
         onClick={(e) =>
           handleMenuClick(e.currentTarget.value, e.currentTarget.name)
         }
       >
-        <p className="text-[15px] ml-4 text-gray-200 font-bold">나의 미션</p>
-        <p className="text-[15px] ml-4 text-gray-200 font-bold">{`>`}</p>
+        <p className="text-[15px] ml-4 text-gray-400 font-bold">나의 미션</p>
+        <p className="text-[15px] ml-4 text-gray-400 font-bold">{`>`}</p>
       </button>
-      <div className="my-4 bg-gray-600 h-[1px]"></div>
+      {/* <div className="my-4 bg-gray-600 h-[1px]"></div> */}
 
       <button
         value="커뮤니티 활동"
         name="mycommunity/myposts"
-        className="w-full p-2.5 mt-3 flex items-center justify-between rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white"
+        className="w-full p-2.5 mt-3 flex items-center justify-between rounded-md px-4 duration-300 cursor-pointer hover:bg-[#E8FFD4] text-white"
         onClick={(e) =>
           handleMenuClick(e.currentTarget.value, e.currentTarget.name)
         }
       >
-        <p className="text-[15px] ml-4 text-gray-200 font-bold">
+        <p className="text-[15px] ml-4 text-gray-400 font-bold">
           커뮤니티 활동
         </p>
-        <p className="text-[15px] ml-4 text-gray-200 font-bold">{`>`}</p>
+        <p className="text-[15px] ml-4 text-gray-400 font-bold">{`>`}</p>
       </button>
-      <div className="my-4 bg-gray-600 h-[1px]"></div>
+      {/* <div className="my-4 bg-gray-600 h-[1px]"></div> */}
 
       <button
         value="좋아요"
         name="myfavorite/myfavoriteproducts"
-        className="w-full p-2.5 mt-3 flex items-center justify-between rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white"
+        className="w-full p-2.5 mt-3 flex items-center justify-between rounded-md px-4 duration-300 cursor-pointer hover:bg-[#E8FFD4] text-white"
         onClick={(e) =>
           handleMenuClick(e.currentTarget.value, e.currentTarget.name)
         }
       >
-        <p className="text-[15px] ml-4 text-gray-200 font-bold">좋아요</p>
-        <p className="text-[15px] ml-4 text-gray-200 font-bold">{`>`}</p>
+        <p className="text-[15px] ml-4 text-gray-400 font-bold">좋아요</p>
+        <p className="text-[15px] ml-4 text-gray-400 font-bold">{`>`}</p>
       </button>
-      <div className="my-4 bg-gray-600 h-[1px]"></div>
+      {/* <div className="my-4 bg-gray-600 h-[1px]"></div> */}
 
       {currentUser && currentUser.uid == profileDataId && (
         <>
         <button
-          className="w-full p-2.5 mt-3 flex items-center justify-between rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white"
+          className="w-full p-2.5 mt-3 flex items-center justify-between rounded-md px-4 duration-300 cursor-pointer hover:bg-[#E8FFD4] text-white"
           onClick={(e) => setShowModal(true)}
         >
-          <p className="text-[15px] ml-4 text-gray-200 font-bold">
+          <p className="text-[15px] ml-4 text-gray-400 font-bold">
             일일미션 뽑기
           </p>
-          <p className="text-[15px] ml-4 text-gray-200 font-bold">{`>`}</p>
+          <p className="text-[15px] ml-4 text-gray-400 font-bold">{`>`}</p>
         </button>
-        <div className="my-4 bg-gray-600 h-[1px]"></div>
+        {/* <div className="my-4 bg-gray-600 h-[1px]"></div> */}
         </>
       )}
       
@@ -156,26 +156,26 @@ const MobileMenu = ({
         <button
           value="회원정보 수정"
           name="setting"
-          className="w-full p-2.5 mt-3 flex items-center justify-between rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white"
+          className="w-full p-2.5 mt-3 flex items-center justify-between rounded-md px-4 duration-300 cursor-pointer hover:bg-[#E8FFD4] text-white"
           onClick={(e) =>
             handleMenuClick(e.currentTarget.value, e.currentTarget.name)
           }
         >
-          <p className="text-[15px] ml-4 text-gray-200 font-bold">
+          <p className="text-[15px] ml-4 text-gray-400 font-bold">
             회원정보 수정
           </p>
-          <p className="text-[15px] ml-4 text-gray-200 font-bold">{`>`}</p>
+          <p className="text-[15px] ml-4 text-gray-400 font-bold">{`>`}</p>
         </button>
         <div className="my-4 bg-gray-600 h-[1px]"></div>
         </>
       )}
 
       <div
-        className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white"
+        className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-[#E8FFD4] text-white"
         onClick={loginLogoutSwitcher}
       >
         <i className="bi bi-box-arrow-in-right"></i>
-        <span className="text-[15px] ml-4 text-gray-200 font-bold">Logout</span>
+        <span className="text-[15px] ml-4 text-gray-400 font-bold">로그아웃</span>
       </div>
     </div>
   );
