@@ -164,7 +164,8 @@ const ModifyingProfile = () => {
         <span>이메일</span>
         <input
           type="text"
-          className="w-full bg-gray-100 p-2 rounded-lg outline-none"
+          className="w-full bg-gray-100 text-gray-400 p-2 rounded-lg outline-none opacity-60 cursor-not-allowed"
+          disabled
           name="email"
           value={email}
           // onChange={(e) => HandleInputChange(e, setEmail, setEmailMessage)}
