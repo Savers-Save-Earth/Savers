@@ -35,7 +35,7 @@ const Footer = () => {
 
   return (
     <>
-      <footer className="bg-gray-100 relative bottom-0 w-screen left-1/2 -translate-x-1/2 pt-4">
+      <footer className="bg-gray-100 relative bottom-0 w-screen left-1/2 -translate-x-1/2 pt-4 mt-40">
         <div className="max-w-[1200px]  mx-auto">
           <div className="text-center items-center w-full ">
             <div className="xl:flex xl:justify-between w-full">
