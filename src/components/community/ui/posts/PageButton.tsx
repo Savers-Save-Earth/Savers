@@ -9,7 +9,7 @@ const PageButton = ({ reverse, onClick }: PageButtonProps) => {
   return (
     <button
       className={cls(
-        "z-10 absolute top-1/2 p-1.5 rounded-full bg-white text-gray-900 shadow-md duration-150 ease-in-out",
+        "z-10 absolute top-1/2 p-1.5 rounded-full bgWhite text-gray-900 shadow-md duration-150 ease-in-out",
         reverse ? "-right-[32px]" : "-left-[32px]",
       )}
       onClick={onClick}
@@ -20,7 +20,7 @@ const PageButton = ({ reverse, onClick }: PageButtonProps) => {
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
-          stroke-width="1.5"
+          strokeWidth="1.5"
           stroke="currentColor"
           className="w-4 h-4"
         >
@@ -35,7 +35,7 @@ const PageButton = ({ reverse, onClick }: PageButtonProps) => {
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
-          stroke-width="1.5"
+          strokeWidth="1.5"
           stroke="currentColor"
           className="w-4 h-4"
         >

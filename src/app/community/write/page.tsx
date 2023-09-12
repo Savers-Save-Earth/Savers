@@ -1,11 +1,14 @@
 "use client";
-import { NextPage } from "next";
-import AddPost from "@/components/community/write/AddPost";
 import { useEffect, useState } from "react";
-import supabase from "@/libs/supabase";
 import { useRouter } from "next/navigation";
+import supabase from "@/libs/supabase";
 
-const Write: NextPage = () => {
+import AddPost from "@/components/community/write/AddPost";
+
+import useLeaveConfirmation from "@/hooks/useLeaveConfirmation";
+import { COMMUNITY_TOAST_TEXT } from "@/enums/messages";
+
+const Write = () => {
   const router = useRouter();
   const [sessionState, setSessionState] = useState<any>(null);
 
@@ -51,7 +54,7 @@ const Write: NextPage = () => {
   // 뒤로가기 방지
   useEffect(() => {
     const preventGoBack = () => {
-      if (confirm("페이지를 나가시겠습니까?")) {
+      if (confirm(COMMUNITY_TOAST_TEXT.LEAVE_PAGE_CONFIRM)) {
         history.go(-1);
       } else {
         history.pushState(null, "", location.href);
@@ -62,9 +65,12 @@ const Write: NextPage = () => {
     return () => window.removeEventListener("popstate", preventGoBack);
   }, []);
 
+  const { confirmModal } = useLeaveConfirmation(true);
+
   return (
     <>
       <AddPost />
+      {confirmModal}
     </>
   );
 };

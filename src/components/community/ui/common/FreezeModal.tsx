@@ -1,26 +1,20 @@
 "use client";
-
 import { Dispatch, SetStateAction } from "react";
+import { useRouter } from "next/navigation";
 
 interface FreezeModalProps {
   open?: boolean;
   onOpenChange?: Dispatch<SetStateAction<boolean>>;
-  onClose: () => void;
+  onClose?: () => void;
   onClick?: () => void;
 }
 
-const FreezeModal = ({
-  open,
-  onOpenChange,
-  onClose,
-  onClick,
-}: FreezeModalProps) => {
-  console.log("Modal Component open >>> ", open);
+const FreezeModal = ({ open, onOpenChange, onClose, onClick }: FreezeModalProps) => {
   if (open)
     return (
       <div
         id="modal-container"
-        className="fixed top-0 left-0 w-screen h-screen bg-black/30 flex justify-center items-center z-10"
+        className="fixed top-0 left-0 w-screen h-screen bg-black/30 flex justify-center items-center z-50"
       >
         <div
           id="modal-content"
