@@ -33,7 +33,6 @@ const MobileMenu = ({
         setUser(null);
       } else {
         setUser(session.user);
-        console.log("session.user==>",session.user)
       }
     });
   }, [path]);

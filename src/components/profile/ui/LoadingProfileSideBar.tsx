@@ -13,13 +13,6 @@ const LoadingProfilePage = () => {
           <div className="w-2/3 h-6 rounded-md mt-5 bg-gray-200" />
         </div>
       </div>
-      {/* <div className="w-full h-full flex flex-col justify-start">
-        <div className="w-16 h-3 rounded-md mt-5 bg-gray-200" />
-        <div className="w-16 h-3 rounded-md mt-5 bg-gray-200" />
-        <div className="w-16 h-3 rounded-md mt-5 bg-gray-200" />
-        <div className="w-16 h-3 rounded-md mt-5 bg-gray-200" />
-        <div className="w-16 h-3 rounded-md mt-5 bg-gray-200" />
-      </div> */}
     </div>
   );
 };

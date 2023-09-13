@@ -6,7 +6,6 @@ import Image from "next/image";
 const Badges = ({ badgeData, missionDone }: MyBadgeProps) => {
   const [badges, setBadges] = useState<BadgeType[]>([]);
   const [badgesByMissionCount, setBadgesByMissionCount] = useState<number>(0);
-  // const [showExplain, setShowExplain] = useState<boolean>(false)
   const [badgeClickStates, setBadgeClickStates] = useState<{
     [key: string]: boolean;
   }>({});
@@ -135,8 +134,8 @@ const Badges = ({ badgeData, missionDone }: MyBadgeProps) => {
 
   const handleBadgeClick = (badgeName: string) => {
     // 해당 뱃지의 클릭 상태를 토글
-    setBadgeClickStates((prevState) => ({
-      [badgeName]: !prevState[badgeName],
+    setBadgeClickStates((prev) => ({
+      [badgeName]: !prev[badgeName],
     }));
   };
 
