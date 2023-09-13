@@ -49,6 +49,7 @@ export const likeShareMissionHandler = async (
   currentUser: any,
   currentDate: string,
   category: string,
+  setMissionUid: React.Dispatch<React.SetStateAction<string>>,
   bigCategory: string,
 ) => {
   if (!currentUser) {
