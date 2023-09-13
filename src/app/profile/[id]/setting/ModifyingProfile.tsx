@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import supabase from "@/libs/supabase";
 import { useParams } from "next/navigation";
 import { UserType } from "@/types/types";
+import { ToastError, ToastSuccess } from "@/libs/toastifyAlert";
 
 const ModifyingProfile = () => {
   const [user, setUser] = useState<UserType[]>([]);
@@ -37,14 +38,12 @@ const ModifyingProfile = () => {
 
   const handleSubmit = async () => {
     if (!email) {
-      alert("이메일은 필수정보입니다! 입력 부탁드려요 :)");
+      ToastError("이메일은 필수정보입니다! 입력 부탁드려요🌱");
       return;
     }
     if (numberValid === false || birthdayValid === false) {
       // if (emailValid || !numberValid || !birthdayValid) {
-      alert(
-        "입력정보 형식이 잘못되었네요. \n전화번호와 생년월일은 필수기입사항이 아닙니다 :)",
-      );
+      alert(ToastError("입력정보 형식이 잘못되었네요. \n전화번호와 생년월일은 필수기입사항이 아닙니다🌱"))
       return;
     }
     const { error: updateDataError } = await supabase
@@ -52,7 +51,7 @@ const ModifyingProfile = () => {
       .update({ nickname: name, email, number, birthday })
       .eq("uid", searchId);
 
-    alert("수정이 완료되었습니다.");
+      ToastSuccess("수정이 완료되었습니다.");
   };
 
   const HandleInputChange = (
@@ -102,7 +101,6 @@ const ModifyingProfile = () => {
           setBirthdayMessage(" ");
           setBirthdayValid(true);
         }
-
         break;
 
       default:
@@ -118,7 +116,7 @@ const ModifyingProfile = () => {
             handleSubmit();
             e.preventDefault();
           }}
-          className="self-end"
+          className="self-end p-1 rounded-lg border-2 border-[#5FD100] hover:bg-[#5FD100] hover:text-white duration-300"
         >
           수정완료
         </button>

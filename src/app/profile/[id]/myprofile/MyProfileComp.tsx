@@ -31,7 +31,7 @@ const MyProfileComp = ({ id }: { id : string })  =>  {
   return (
     <>
       <div className="flex flex-col md:flex-row w-full h-[70%] items-start gap-5 gap-y-8 self-stretch justify-evenly">
-        <div className="flex flex-col items-start gap-6 flex-[1,0,0%] rounded-xl self-stretch w-[100%] bg-white">
+        <div className="flex h-full flex-col items-start gap-6 flex-[1,0,0%] rounded-xl self-stretch w-[100%] bg-white">
           <p className="self-stretch text-gray-900 text-[24px] non-italic font-semibold leading-6">
             일일미션 완료 현황
           </p>

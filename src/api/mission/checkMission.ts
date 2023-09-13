@@ -19,7 +19,7 @@ export const getMissionHandler = async (
   currentUser: any,
   currentDate: string,
   category: string,
-  setMissionUid: any,
+  setMissionUid: React.Dispatch<React.SetStateAction<string>>,
   bigCategory: string,
 ) => {
   if (!currentUser) {
@@ -49,7 +49,7 @@ export const likeShareMissionHandler = async (
   currentUser: any,
   currentDate: string,
   category: string,
-  setMissionUid: any,
+  setMissionUid: React.Dispatch<React.SetStateAction<string>>,
   bigCategory: string,
 ) => {
   if (!currentUser) {

@@ -1,12 +1,10 @@
 "use client";
-import supabase from "@/libs/supabase";
-import { useParams, usePathname } from "next/navigation";
+import { useParams } from "next/navigation";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import RandomMission from "./RandomMission";
 import EditProfile from "@/components/profile/EditProfile";
-import { Database } from "@/types/supabase";
 import { useAuth } from "@/hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import { fetchProfileData } from "@/api/profile/fetchProfileData";
@@ -28,14 +26,15 @@ const SideBar = () => {
   const searchId = useParams().id as string;
   const router = useRouter();
   const [showModal, setShowModal] = useState(false);
-  // const [profileData, setProfileData] = useState<any>();
-  // const [currentUser, setCurrentUser] = useState<any>()
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isHideProfile, setIsHideProfile] = useState(false);
-
+  const [isBtnFocused, setIsBtnFocused] = useState("");
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+  const webMenuBtn = (e: any) => {
+    setIsBtnFocused(e.target.name);
   };
 
   //모바일 환경에서 프로필 이외의 다른 버튼들 클릭하면 프로필 이미지 등이 가려지게 하기 위함
@@ -124,40 +123,58 @@ const SideBar = () => {
         </div>
 
         {/* 웹 브라우저 환경에서 보여야 하는 버튼들 */}
-        <div className="hidden xl:flex flex-col items-start gap-6">
+        <div className="hidden xl:flex flex-col items-start w-full">
           <button
-            className="btn-sidebar"
-            onClick={() => router.push(`/profile/${searchId}/myprofile`)}
+            name="프로필"
+            className={`btn-sidebar ${
+              isBtnFocused === "프로필" ? "bg-[#E8FFD4] text-[#10C800]" : ""
+            } w-full p-2 text-start rounded-2xl`}
+            onClick={(e) => {
+              router.push(`/profile/${searchId}/myprofile`);
+              webMenuBtn(e);
+            }}
           >
             프로필
           </button>
           <button
-            className="btn-sidebar"
-            onClick={() =>
-              router.push(`/profile/${searchId}/mymission/missiondoing`)
-            }
+            name="나의 미션"
+            className={`btn-sidebar ${
+              isBtnFocused === "나의 미션" ? "bg-[#E8FFD4] text-[#10C800]" : ""
+            } w-full p-2 text-start rounded-2xl`}
+            onClick={(e) => {
+              router.push(`/profile/${searchId}/mymission/missiondoing`);
+              webMenuBtn(e);
+            }}
           >
             나의 미션
           </button>
           <button
-            className="btn-sidebar"
-            onClick={() =>
-              router.push(`/profile/${searchId}/mycommunity/myposts`)
-            }
+            name="커뮤니티 활동"
+            className={`btn-sidebar ${
+              isBtnFocused === "커뮤니티 활동" ? "bg-[#E8FFD4] text-[#10C800]"  : ""
+            } w-full p-2 text-start rounded-2xl`}
+            onClick={(e) => {
+              router.push(`/profile/${searchId}/mycommunity/myposts`);
+              webMenuBtn(e);
+            }}
           >
             커뮤니티 활동
           </button>
           <button
-            className="btn-sidebar"
-            onClick={() =>
-              router.push(`/profile/${searchId}/myfavorite/myfavoriteproducts`)
-            }
+            name="좋아요"
+            className={`btn-sidebar ${
+              isBtnFocused === "좋아요" ? "bg-[#E8FFD4] text-[#10C800]"  : ""
+            } w-full p-2 text-start rounded-2xl`}
+            onClick={(e) => {
+              router.push(`/profile/${searchId}/myfavorite/myfavoriteproducts`);
+              webMenuBtn(e);
+            }}
           >
             좋아요
           </button>
           {currentUser && currentUser.uid == profileData?.uid && (
             <button
-              className="btn-sidebar"
+              className="btn-sidebar w-full p-2 text-start rounded-2xl"
               onClick={() => {
                 setShowModal(true);
               }}
@@ -167,8 +184,14 @@ const SideBar = () => {
           )}
           {currentUser && currentUser.uid == profileData?.uid && (
             <button
-              className="btn-sidebar"
-              onClick={() => router.push(`/profile/${searchId}/setting`)}
+              name="회원정보 수정"
+              className={`btn-sidebar ${
+                isBtnFocused === "회원정보 수정" ? "bg-[#E8FFD4] text-[#10C800]"  : ""
+              } w-full p-2 text-start rounded-2xl`}
+              onClick={(e) => {
+                router.push(`/profile/${searchId}/setting`);
+                webMenuBtn(e);
+              }}
             >
               회원정보 수정
             </button>

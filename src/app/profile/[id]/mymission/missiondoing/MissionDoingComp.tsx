@@ -13,7 +13,7 @@ const MissionDoingComp = ({ id }: { id: string }) => {
   const currentDate = convertDate(new Date());
   const searchId = id;
   const { data: missionDoing, isLoading } = useQuery(
-    ["fetchMissionDoing", searchId],
+    ["missionList", searchId],
     () => fetchMissionDoing(searchId, currentDate),
     { cacheTime: 6000 },
   );

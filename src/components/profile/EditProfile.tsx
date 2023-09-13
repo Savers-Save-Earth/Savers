@@ -1,11 +1,11 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import { useState } from "react";
 import supabase from "@/libs/supabase";
-import { useQuery } from "@tanstack/react-query";
 import { fetchNicknameData } from "@/api/profile/fetchProfileData";
 import { useParams } from "next/navigation";
-import { ToastSuccess, ToastWarn } from "@/libs/toastifyAlert";
+import { ToastWarn } from "@/libs/toastifyAlert";
+import Image from "next/image";
 
 const EditProfile = ({ profileData }: any) => {
   const [nickname, setNickname] = useState<string>(profileData.nickname || "");
@@ -49,7 +49,6 @@ const EditProfile = ({ profileData }: any) => {
     const isNicknameValid = await fetchNicknameData(nickname, userId as string);
 
     if (isNicknameValid) {
-      console.log(nickname);
       ToastWarn("중복된 닉네임 입니다.");
       return;
     }
@@ -95,7 +94,7 @@ const EditProfile = ({ profileData }: any) => {
   return (
     <div>
       <button
-        className="text-gray-400 text-[16px] non-italic font-normal leading-4"
+        className="text-gray-400 text-[16px] non-italic font-normal leading-4 "
         onClick={(e) => profileEditModalHandler(e)}
       >
         프로필 수정
@@ -111,11 +110,16 @@ const EditProfile = ({ profileData }: any) => {
 
             {editImage.length > 0 ? (
               <div className="relative">
-                <img
-                  src={editImage}
-                  alt="기존 프로필이미지"
-                  className="w-[140px] h-[140px] rounded-full object-cover mx-auto"
-                />
+                <div className="relative w-[140px] h-[140px] rounded-full">
+                  <Image
+                    src={editImage}
+                    alt="기존 프로필이미지"
+                    fill
+                    style={{
+                      objectFit: "cover",
+                    }}
+                  />
+                </div>
                 <label
                   htmlFor="input-file"
                   onClick={(e) => fileSelectHandler(e)}
@@ -145,11 +149,16 @@ const EditProfile = ({ profileData }: any) => {
               </div>
             ) : (
               <div className="relative">
-                <img
-                  src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/profileImage/default_profile_image.svg"
-                  alt="프로필 이미지"
-                  className="w-[140px] h-[140px] rounded-full object-cover mx-auto"
-                />
+                <div className="relative w-[140px] h-[140px] rounded-full">
+                  <Image
+                    src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/profileImage/default_profile_image.svg"
+                    alt="기존 프로필이미지"
+                    fill
+                    style={{
+                      objectFit: "cover",
+                    }}
+                  />
+                </div>
                 <label
                   htmlFor="input-file"
                   onClick={fileSelectHandler}

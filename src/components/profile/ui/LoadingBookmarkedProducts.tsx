@@ -2,7 +2,6 @@ const LoadingBookmarkedProducts = () => {
   const test = [1, 2, 3, 4];
   return (
     <div className="space-y-4 w-full">
-      {/* <div className="flex flex-wrap justify-start gap-2 sm:gap-x-10 self-stretch bg-white mx-auto"> */}
       <div className="animate-pulse w-full grid md:grid-cols-4 md:gap-4 sm:grid-cols-3 sm:gap-3 grid-cols-2 gap-2 place-items-center">
         {test.map((item, i) => (
           <div
