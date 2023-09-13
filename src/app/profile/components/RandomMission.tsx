@@ -20,13 +20,9 @@ const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
   const searchId = user?.uid || ("" as string);
   const [dailyMission, setDailyMission] = useState<DailyMission[]>([]);
   const [modalController, setModalController] = useState(showModal);
-  const [renderTrigger, setRenderTrigger] = useState(false);
   const queryClient = useQueryClient();
-  // renderTrigger은 미션뽑기 할 때마다 강제로 useQuery 렌더링 시킴.
-  // 목적 : 한 번 렌더링 하지 않고 계속 뽑기를 하면 미션이 계속해서 뽑아짐.
-  // useQuery는 렌더링이 발생할 때에 실행되기 때문에, 새로 데이터를 불러오려면 강제로 렌더링이 필요하다고 추측.
   const { data: missionListByDateAndUser } = useQuery(
-    ["fetchMissionListDateAndUid", renderTrigger],
+    ["missionList"],
     () => fetchMissionListDateAndUid(searchId, currentDate),
   );
 
@@ -94,7 +90,6 @@ const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
         // console.error("An error occurred:", error);
       }
     }
-    setRenderTrigger(!renderTrigger);
   };
   return (
     <>
@@ -126,7 +121,6 @@ const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
                 className="absolute top-[20px] right-[20px] hover:scale-[120%] cursor-pointer"
                 onClick={() => {
                   setModalController(false);
-                  setRenderTrigger(!renderTrigger);
                   setShowModal(false);
                 }}
               >
