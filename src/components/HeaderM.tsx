@@ -263,7 +263,7 @@ const HeaderM = () => {
                     </Link>
                   </div>
                 ) : (
-                  <div className="justify-between flex text-gray-300 text-[10px] px-10">
+                  <div className="justify-between flex text-gray-300 text-[10px] px-5">
                     <Link href={`/`}>
                       <div className="flex flex-col items-center">
                         <svg
