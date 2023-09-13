@@ -59,7 +59,7 @@ const MobileMenu = ({
 
   return (
     <div className="sidebar fixed top-0 bottom-0 right-0 p-2 w-[300px] overflow-y-auto text-center bg-white z-[1]">
-      <div className="p-2.5 mt-3 flex items-center justify-between rounded-md px-4 duration-300 cursor-pointer hover:bg-[#E8FFD4] text-white">
+      <div className="p-2.5 mt-3 flex items-center justify-between rounded-md px-4 duration-300 cursor-pointer bg-[#cbfaa2] text-white">
         <p className="text-[15px] ml-4 text-gray-900 font-bold">메뉴</p>
         <svg
           xmlns="http://www.w3.org/2000/svg"
