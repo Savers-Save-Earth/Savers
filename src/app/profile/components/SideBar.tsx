@@ -1,12 +1,10 @@
 "use client";
-import supabase from "@/libs/supabase";
-import { useParams, usePathname } from "next/navigation";
+import { useParams, } from "next/navigation";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import RandomMission from "./RandomMission";
 import EditProfile from "@/components/profile/EditProfile";
-import { Database } from "@/types/supabase";
 import { useAuth } from "@/hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import { fetchProfileData } from "@/api/profile/fetchProfileData";
@@ -28,8 +26,6 @@ const SideBar = () => {
   const searchId = useParams().id as string;
   const router = useRouter();
   const [showModal, setShowModal] = useState(false);
-  // const [profileData, setProfileData] = useState<any>();
-  // const [currentUser, setCurrentUser] = useState<any>()
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isHideProfile, setIsHideProfile] = useState(false);
@@ -80,6 +76,7 @@ const SideBar = () => {
               currentUser={currentUser}
               profileDataId={profileData?.uid}
               setShowModal={setShowModal}
+
             />
           )}
         </div>

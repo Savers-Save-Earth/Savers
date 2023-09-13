@@ -95,7 +95,7 @@ const EditProfile = ({ profileData }: any) => {
   return (
     <div>
       <button
-        className="text-gray-400 text-[16px] non-italic font-normal leading-4"
+        className="text-gray-400 text-[16px] non-italic font-normal leading-4 "
         onClick={(e) => profileEditModalHandler(e)}
       >
         프로필 수정
