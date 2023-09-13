@@ -5,17 +5,28 @@ import { Product } from "@/types/types";
 import { useRouter } from "next/navigation";
 import { ToastInfo } from "@/libs/toastifyAlert";
 import { useAuth } from "@/hooks/useAuth";
-import { useQuery } from "@tanstack/react-query";
+import {
+  createLikeProduct,
+  cancelLikeProduct,
+  plusLikeCount,
+  minusLikeCount,
+} from "@/api/product/like";
 import { getProductLikeStatus } from "@/api/product/like";
 import { ProductLikesType } from "@/types/types";
 import { getProducts } from "@/api/product/product";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getThisProductLikeStatus } from "@/api/product/like";
+import LoadingProduct from "./ui/LoadingProduct";
+import { useIsMobile } from "@/hooks/useIsMobile";
+import TopButton from "../community/ui/common/TopButton";
+import Image from "next/image";
 
 const productCategory = [
-  { value: "", label: "전체", img: "assets/product/all.png" },
-  { value: "bath", label: "욕실", img: "assets/product/bath.png" },
-  { value: "kitchen", label: "주방", img: "assets/product/kitchen.png" },
-  { value: "food", label: "식품", img: "assets/product/food.png" },
-  { value: "else", label: "기타", img: "assets/product/else.png" },
+  { value: "", label: "전체", img: "/assets/product/all.png" },
+  { value: "bath", label: "욕실", img: "/assets/product/bath.png" },
+  { value: "kitchen", label: "주방", img: "/assets/product/kitchen.png" },
+  { value: "food", label: "식품", img: "/assets/product/food.png" },
+  { value: "else", label: "기타", img: "/assets/product/else.png" },
 ];
 
 const selectOptions = [
@@ -27,171 +38,163 @@ const selectOptions = [
 ];
 
 const ProductComponent = () => {
-  const [product, setProduct] = useState<Product[]>([]);
+  const [buttonStates, setButtonStates] = useState({});
   const [category, setCategory] = useState("");
   const [search, setSearch] = useState("");
   const [select, setSelect] = useState("sales");
-  const [user, setUser] = useState<any>(null);
   const [likedByUser, setLikedByUser] = useState<ProductLikesType[]>([]);
 
   const router = useRouter();
+  const queryClient = useQueryClient();
 
-  // 물품 리스트 fetch
-  const fetchProduct = async () => {
-    try {
-      const { data } = await supabase.from("product").select();
-      setProduct(data || []);
-    } catch (error) {
-      // console.error("Error fetching products:", error);
-    }
-  };
+  const cancelProductLikeMutation = useMutation(cancelLikeProduct, {
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["userLikeProduct"] });
+    },
+  });
 
-  // 현재 제품 가져오기
-  // const {
-  //   data: products,
-  //   isLoading,
-  //   isError,
-  // } = useQuery<Product[]>(["product"], getProducts);
+  const likeProductMutation = useMutation(createLikeProduct, {
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["userLikeProduct"] });
+    },
+  });
 
-  // if (isLoading) {
-  // }
+  const plusProductLikeMutation = useMutation(plusLikeCount, {
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["product"] });
+    },
+  });
 
-  // if (isError) {
-  // }
+  const minusProductLikeMutation = useMutation(minusLikeCount, {
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["product"] });
+    },
+  });
 
   // 현재 유저정보 가져오기
-  // const currentUser = useAuth();
+  const currentUser = useAuth();
 
-  // 현재 유저정보 fetch
-  const fetchUser = async () => {
-    try {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
+  // 현재 제품 가져오기
+  const {
+    data: products,
+    isLoading,
+    isError,
+  } = useQuery<Product[]>(["product"], getProducts);
 
-      if (!user) {
-        setUser(false);
-      } else {
-        setUser(user);
-        fetchUserLike(user); // 유저 정보를 가져온 후에 fetchUserLike 함수 호출
-      }
-    } catch (error) {
-      // console.error("Error fetching user:", error);
+  // 현재 유저의 좋아요상태 가져오기
+  const { data: likeStatus, isLoading: likeStatusLoading } = useQuery<
+    ProductLikesType[]
+  >(["userLikeProduct"], () => getProductLikeStatus(currentUser!.uid));
+
+  // 유저의 기존 좋아요 목록을 불러오기
+  const getProductLikedStatus = async () => {
+    if (currentUser) {
+      try {
+        const likeStatus = await getProductLikeStatus(currentUser.uid);
+        setLikedByUser(likeStatus);
+      } catch (error) {}
     }
   };
 
-  // 유저의 기존에 있던 좋아요 목록을 불러오는 로직 -> 로그인 이후에 실행되는 함수
-  const fetchUserLike = async (user: any) => {
-    const { data: existingLikeData, error: existingLikeError } = await supabase
-      .from("like_product")
-      .select()
-      .eq("user_id", user.id);
-    setLikedByUser(existingLikeData!);
-  };
-
   useEffect(() => {
-    fetchUser();
-  }, []);
+    getProductLikedStatus();
+  }, [currentUser]);
 
-  // 셀렉트 내용으로 정렬
-
-  let sortedData = product.slice(); // 초기화
-
-  if (select === "expensive") {
-    sortedData = product.slice().sort((a, b) => b.price - a.price);
-  } else if (select === "cheap") {
-    sortedData = product.slice().sort((a, b) => a.price - b.price);
-  } else if (select === "sales") {
-    sortedData = product.slice().sort((a, b) => b.sales - a.sales);
-  } else if (select === "newest") {
-    sortedData = product.slice().sort((a, b) => b.createdAt - a.createdAt);
-  } else if (select === "popular") {
-    sortedData = product.slice().sort((a, b) => b.like_count - a.like_count);
-  }
-
-  // let sortedData: Product[] = products?.slice() || [];
-
-  // if (select === "expensive") {
-  //   sortedData = sortedData.slice().sort((a, b) => b.price - a.price);
-  // } else if (select === "cheap") {
-  //   sortedData = sortedData.slice().sort((a, b) => a.price - b.price);
-  // } else if (select === "sales") {
-  //   sortedData = sortedData.slice().sort((a, b) => b.sales - a.sales);
-  // } else if (select === "newest") {
-  //   sortedData = sortedData.slice().sort((a, b) => b.createdAt - a.createdAt);
-  // } else if (select === "popular") {
-  //   sortedData = sortedData.slice().sort((a, b) => b.like_count - a.like_count);
-  // }
-
-  // 좋아요 눌렀을 때, 물품 및 유저에 좋아요 데이터 업데이트
-
-  const likeHandler = async (
-    id: string,
+  const handleProductLikeClick = async (
+    productId: string,
+    name: string,
     img: string,
     company: string,
-    name: string,
+    currentLikeCount: number,
   ) => {
-    const userId = user.id;
-
-    if (!user) {
+    if (!currentUser) {
       ToastInfo("로그인이 필요한 서비스 입니다.");
-      router.push("/login");
+      setTimeout(() => {
+        router.push("/login");
+      }, 1000);
       return false;
     } else {
-      // 현재 유저가 해당 게시물에 대해 좋아요를 눌렀는지 안눌렀는지에 대한 데이터
-      // => 빈값인경우 좋아요누르면 추가, 데이터가있을경우 좋아요누르면 삭제
-      const { data: existingLikeData, error: existingLikeError } =
-        await supabase
-          .from("like_product")
-          .select()
-          .eq("product_uid", id)
-          .eq("user_id", userId);
+      const currentTime = Date.now();
 
-      // 현재 아이템의 좋아요 수 객체를 가져오는 로직
-      const { data: currentLikeCount } = await supabase
-        .from("product")
-        .select()
-        .eq("id", id);
+      // if (
+      //   !buttonStates[productId] ||
+      //   currentTime - buttonStates[productId] >= 1000
+      // ) {
+      //   // 버튼 상태가 없거나 마지막 클릭이 1초 이상 지난 경우
+      //   setButtonStates({
+      //     ...buttonStates,
+      //     [productId]: currentTime, // 버튼의 마지막 클릭 시간 업데이트
+      //   });
+      // }
 
-      // 좋아요 이미 눌렀으면 삭제하는 로직
-      if (!existingLikeError && existingLikeData.length > 0) {
-        await supabase
-          .from("like_product")
-          .delete()
-          .eq("user_id", userId)
-          .eq("product_uid", id);
+      const likeStatus = await getThisProductLikeStatus(
+        productId,
+        currentUser.uid,
+      );
 
-        // 좋아요 count 내리는 로직
-        const { error: likeCountError } = await supabase
-          .from("product")
-          .update({ like_count: currentLikeCount![0].like_count - 1 })
-          .eq("id", id);
+      if (likeStatus.length > 0) {
+        // 이미 좋아요를 누른 경우 북마크 취소
+        const cancelLike = {
+          product_uid: productId,
+          user_id: currentUser.uid,
+          product_name: name,
+          img: img,
+          product_company: company,
+        };
+
+        const minusLike = {
+          like_count: currentLikeCount,
+          id: productId,
+        };
+
+        setLikedByUser((prevLikedByUser) =>
+          prevLikedByUser.filter((item) => item.product_uid !== productId),
+        );
+
+        minusProductLikeMutation.mutate(minusLike);
+        cancelProductLikeMutation.mutate(cancelLike);
       } else {
-        // 좋아요 구현하는 로직
-        const { error: insertError } = await supabase
-          .from("like_product")
-          .insert({
-            product_uid: id,
-            user_id: userId,
-            img,
-            product_company: company,
-            product_name: name,
-          });
+        // 좋아요를 누르지 않은 경우 북마크 추가
+        const newLike = {
+          product_uid: productId,
+          user_id: currentUser.uid,
+          product_name: name,
+          img: img,
+          product_company: company,
+        };
 
-        // 좋아요 count 올리는 로직
-        const { error: likeCountError } = await supabase
-          .from("product")
-          .update({ like_count: currentLikeCount![0].like_count + 1 })
-          .eq("id", id);
+        const plusLike = {
+          like_count: currentLikeCount,
+          id: productId,
+        };
+
+        // 좋아요 상태를 먼저 업데이트하고 UI에 반영
+        setLikedByUser((prevLikedByUser) => [...prevLikedByUser, newLike]);
+
+        plusProductLikeMutation.mutate(plusLike);
+        likeProductMutation.mutate(newLike);
       }
-      fetchProduct(); // 데이터 갱신 [숫자]
-      fetchUser(); // 데이터 갱신 [좋아요]
     }
   };
 
-  useEffect(() => {
-    fetchProduct();
-  });
+  // 셀렉트 내용으로 정렬
+  let sortedData: Product[] = products?.slice() || [];
+
+  if (select === "expensive") {
+    sortedData = sortedData.slice().sort((a, b) => b.price - a.price);
+  } else if (select === "cheap") {
+    sortedData = sortedData.slice().sort((a, b) => a.price - b.price);
+  } else if (select === "sales") {
+    sortedData = sortedData.slice().sort((a, b) => b.sales - a.sales);
+  } else if (select === "newest") {
+    sortedData = sortedData.slice().sort((a, b) => b.createdAt - a.createdAt);
+  } else if (select === "popular") {
+    sortedData = sortedData.slice().sort((a, b) => b.like_count - a.like_count);
+  }
+
+  if (isLoading) {
+    return <LoadingProduct />;
+  }
 
   return (
     <>
@@ -201,15 +204,25 @@ const ProductComponent = () => {
           <button
             key={category.value}
             onClick={() => setCategory(category.value)}
-            className="flex flex-col items-center space-y-2 m-4"
+            className="flex flex-col items-center space-y-2 xl:m-4 m-2 focus:text-[#5FD100]"
           >
-            <img src={category.img} style={{ width: "96px" }} />
+            <Image
+              src={category.img}
+              width={96}
+              height={96}
+              className="xl:w-[96px] w-[76px]"
+              alt={category.label}
+            />
             <p>{category.label}</p>
           </button>
         ))}
       </div>
       {/* 셀렉트바 선택 로직  */}
-      <select value={select} onChange={(e) => setSelect(e.target.value)}>
+      <select
+        className="outline-none bg-gray-100 py-2 md:px-3 px-1 rounded-lg  text-gray-500"
+        value={select}
+        onChange={(e) => setSelect(e.target.value)}
+      >
         {selectOptions.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
@@ -217,10 +230,7 @@ const ProductComponent = () => {
         ))}
       </select>
 
-      <form
-        className="rounded-lg flex p-2 items-center gap-2 bg-gray-100"
-        style={{ width: "350px", float: "right" }}
-      >
+      <form className="sm:w-[350px] w-[220px] float-right rounded-lg flex p-2 items-center gap-2 bg-gray-100">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="20"
@@ -235,16 +245,25 @@ const ProductComponent = () => {
             fill="#D0D5DD"
           />
         </svg>
-        <input
-          type="text"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className=" bg-gray-100"
-          style={{ width: "300px", outline: "none", display: "flex" }}
-          placeholder="제품명 또는 회사명을 입력해주세요."
-        />
+        {!useIsMobile ? (
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className=" bg-gray-100 w-[300px] outline-none flex"
+            placeholder="제품명 또는 회사명을 입력해주세요."
+          />
+        ) : (
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className=" bg-gray-100 w-[200px] outline-none flex"
+            placeholder="제품명 또는 회사명 입력"
+          />
+        )}
       </form>
-      <div className="mt-8 grid grid-cols-4 gap-4">
+      <div className="mt-8 grid xl:grid-cols-4  xl:gap-4 md:grid-cols-3 md:gap-3 grid-cols-2 gap-2 mb-8">
         {sortedData.filter(
           (item) =>
             item.name.includes(search.trim()) ||
@@ -260,19 +279,31 @@ const ProductComponent = () => {
             .map((item) => (
               <div key={item.id} className=" flex-1 min-w-0 max-w-md mb-9">
                 <div className="relative">
-                  <img
+                  <Image
+                    height={400}
+                    width={400}
                     src={item.img}
                     className="w-full h-auto rounded-md point cursor-pointer"
                     alt={item.name}
                     onClick={() => router.push(`/product/${item.id}`)}
                   />
-                  {likedByUser.find(
+                  {likedByUser?.find(
                     (likedItem) => likedItem.product_uid === item.id,
                   ) ? (
                     <button
                       onClick={() =>
-                        likeHandler(item.id, item.img, item.company, item.name)
+                        handleProductLikeClick(
+                          item.id,
+                          item.name,
+                          item.img,
+                          item.company,
+                          item.like_count,
+                        )
                       }
+                      // disabled={
+                      //   // buttonStates[item.id] &&
+                      //   // Date.now() - buttonStates[item.id] < 1000
+                      // }
                       className="absolute bottom-2 right-2"
                     >
                       <svg
@@ -294,8 +325,18 @@ const ProductComponent = () => {
                   ) : (
                     <button
                       onClick={() =>
-                        likeHandler(item.id, item.img, item.company, item.name)
+                        handleProductLikeClick(
+                          item.id,
+                          item.name,
+                          item.img,
+                          item.company,
+                          item.like_count,
+                        )
                       }
+                      // disabled={
+                      //   // buttonStates[item.id] &&
+                      //   // Date.now() - buttonStates[item.id] < 1000
+                      // }
                       className="absolute bottom-2 right-2"
                     >
                       <svg
@@ -347,6 +388,7 @@ const ProductComponent = () => {
           </div>
         )}
       </div>
+      <TopButton />
     </>
   );
 };

@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Database } from "@/types/supabase";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastInfo } from "@/libs/toastifyAlert";
-import Loading from "@/app/loading";
+import MapListLoading from "./MapListLoading";
 
 interface MarkList {
   id: number;
@@ -14,16 +14,13 @@ interface MarkList {
   bookmarkCount: number;
 }
 
-type LikeType = Database["public"]["Tables"]["like_restaurant"]["Row"];
-type NewLikeType = Database["public"]["Tables"]["like_restaurant"]["Insert"];
-
 const MarkerLists = ({ markerList, currentCategory }: any) => {
   const [markedList, setMarkedList] = useState<MarkList[]>([]);
   const [user, setUser] = useState<any>(null);
   const [markedByUser, setMarkedByUser] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태 추가
+  const [refresh, setRefresh] = useState(false);
 
-  //2.useEffect자리 옮김
   useEffect(() => {
     const { Kakao } = window;
     if (window.Kakao) {
@@ -61,6 +58,7 @@ const MarkerLists = ({ markerList, currentCategory }: any) => {
     } catch (error) {}
   };
 
+  //유저의 모든 북마크 정보 불러오기
   const fetchUserBookmark = async (user: any) => {
     const { data: existingMarkedData, error: existingLikeError } =
       await supabase.from("like_restaurant").select().eq("user_id", user.id);
@@ -157,11 +155,10 @@ const MarkerLists = ({ markerList, currentCategory }: any) => {
   }, []);
 
   return (
-    <div className="overflow-auto h-[33vw]">
-      {/* display:flex; justify-content: center; */}
+    <div className="overflow-auto mapList_scrollbar h-[54vh] lg:h-[33vw] mapList_scrollbar">
       <ul>
         {/* markerList 정보를 사용하여 리스트를 렌더링합니다 */}
-        {isLoading && <Loading />}
+        {isLoading && <MapListLoading />}
         {markerList.map((place: any, index: number) => (
           <div
             key={index}
@@ -264,9 +261,9 @@ const MarkerLists = ({ markerList, currentCategory }: any) => {
               <p className="font-bold">{place.place_name}</p>
               <p>{place.address_name}</p>
               <button
-                onClick={(e) => {
+                onClick={async (e) => {
                   e.preventDefault();
-                  addMarkList(
+                  await addMarkList(
                     place.category_name,
                     place.place_name,
                     place.address_name,

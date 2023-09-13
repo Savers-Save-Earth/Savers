@@ -15,10 +15,13 @@ import { convertTimestamp, removeHtmlTags } from "@/libs/util";
 
 import { EditPostType } from "@/types/types";
 import { ToastError, ToastSuccess, ToastWarn } from "@/libs/toastifyAlert";
+import { useIsLaptop } from "@/hooks/useIsLaptop";
+import { COMMUNITY_TOAST_TEXT } from "@/enums/messages";
 
 const EditPost = () => {
   const currentUser = useAuth();
   const router = useRouter();
+  const isLaptop = useIsLaptop();
   const { postDetail } = useRecoilValue(editPostAtom);
 
   const [category, setCategory] = useState(postDetail?.category ?? "");
@@ -38,12 +41,11 @@ const EditPost = () => {
       queryClient.invalidateQueries({
         queryKey: ["postDetail", postDetail?.post_uid],
       });
-      ToastSuccess("게시글이 정상적으로 수정되었습니다.");
-      location.href = `/community/${postDetail?.post_uid}`;
+      ToastSuccess(COMMUNITY_TOAST_TEXT.POST_EDIT_SUCCESS);
+      router.push(`/community/${postDetail?.post_uid}`);
     },
     onError: (error) => {
-      // console.error("게시글 수정 에러:", error);
-      ToastError("게시글이 정상적으로 수정되지 않았습니다. 다시 시도해주세요!");
+      ToastError(COMMUNITY_TOAST_TEXT.POST_EDIT_ERROR);
     },
   });
 
@@ -63,15 +65,15 @@ const EditPost = () => {
       };
 
       if (category === "") {
-        ToastWarn("카테고리를 선택해주세요!");
+        ToastWarn(COMMUNITY_TOAST_TEXT.CATEGORY_SELECT_ERROR);
         return false;
       }
       if (title === "") {
-        ToastWarn("제목을 입력해주세요!");
+        ToastWarn(COMMUNITY_TOAST_TEXT.TITLE_EMPTY_ERROR);
         return false;
       }
       if (removeHtmlTags(content).length < 1) {
-        ToastWarn("본문을 작성해주세요!");
+        ToastWarn(COMMUNITY_TOAST_TEXT.CONTENT_EMPTY_ERROR);
         return false;
       }
 
@@ -80,15 +82,20 @@ const EditPost = () => {
   };
 
   return (
-    <div className="w-full flex flex-col items-start self-stretch space-y-10">
-      <h1 className="text-2xl font-semibold">작성 글 수정</h1>
-      <form onSubmit={handleSubmit} className="flex flex-col space-y-5 w-full">
-        <div className="flex space-x-2 items-center justify-center">
+    <div className="w-full flex flex-col items-start self-stretch space-y-10 mb-10">
+      {isLaptop ? null : (
+        <h1 className="text-2xl font-semibold">작성 글 수정</h1>
+      )}
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col space-y-5 w-full items-stretch md:h-[970px]"
+      >
+        <div className="w-full flex xl:flex-row xl:space-y-0 space-y-3 flex-col xl:space-x-4 space-x-0 xl:items-center justify-center">
           <select
             name="category"
             value={category}
             onChange={(e) => selectChangeHandler(e, setCategory)}
-            className="w-1/6 p-3 rounded-md focus:outline-none"
+            className="xl:w-1/6 p-4 bg-gray-50 text-sm text-gray-500 rounded-md focus:outline-none"
           >
             <option defaultValue="" disabled>
               카테고리
@@ -102,19 +109,30 @@ const EditPost = () => {
             value={title}
             onChange={(e) => setTitle(e.currentTarget.value)}
             placeholder="제목을 입력해주세요."
-            className="w-full p-2 outline-none border-b text-lg"
+            className="w-full p-4 outline-none text-sm bg-gray-50 rounded-xl"
           />
-          <button
-            type="submit"
-            className="w-1/12 px-3 py-2 rounded-xl bg-gray-950 text-white"
-          >
-            수정
-          </button>
+          {isLaptop ? null : (
+            <button
+              type="submit"
+              className="xl:w-1/12 px-3 py-2 rounded-xl bg-gray-950 text-white"
+            >
+              수정
+            </button>
+          )}
         </div>
-        <div className="w-full h-[850px] mx-auto">
+        <div className="w-full xl:h-[700px] md:h-[600px] h-[320px] mx-auto">
           <TextEditor content={content ?? ""} setContent={setContent} />
         </div>
       </form>
+      {isLaptop ? (
+        <button
+          onClick={handleSubmit}
+          type="submit"
+          className="w-16 mx-auto xl:w-1/12 px-3 py-2 rounded-xl bg-gray-950 text-white"
+        >
+          수정
+        </button>
+      ) : null}
     </div>
   );
 };

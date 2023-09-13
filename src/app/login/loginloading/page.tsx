@@ -21,8 +21,8 @@ const LoginLoading = () => {
 
       await setUser(user);
       await getUserInfo(user);
-      // ToastSuccess("로그인 되었습니다. 🌱");
       router.push("/");
+      ToastSuccess("로그인 되었습니다. 🌱");
     }
     exe();
   });
@@ -52,7 +52,6 @@ const LoginLoading = () => {
   const updateUserInfo = async (user: any) => {
     const generatedNickname = generateNickname();
     // console.log("nickname>>", generatedNickname);
-    // console.log("user가져왔나?>>>", user);
 
     await supabase.from("user").upsert({
       uid: user?.id,

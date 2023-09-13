@@ -3,10 +3,10 @@ import { useMediaQuery } from "react-responsive";
 
 export const useIsMobile = () => {
   const [isMobile, setIsMobile] = useState(false);
-  const mobile = useMediaQuery({ query: "(max-width: 767px" });
+  const mobile = useMediaQuery({ query: "(max-width: 640px" });
   useEffect(() => {
     setIsMobile(mobile);
   }, [mobile]);
-  
+
   return isMobile;
 };

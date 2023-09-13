@@ -2,49 +2,55 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import supabase from "@/libs/supabase";
+import { useQuery } from "@tanstack/react-query";
+import { fetchNicknameData } from "@/api/profile/fetchProfileData";
+import { useParams } from "next/navigation";
+import { ToastSuccess, ToastWarn } from "@/libs/toastifyAlert";
 
-const EditProfile = () => {
-  const [user, setUser] = useState<any>(null);
-  const [nickname, setNickname] = useState<string>();
+const EditProfile = ({ profileData }: any) => {
+  const [nickname, setNickname] = useState<string>(profileData.nickname || "");
   const [selectedFile, setSelectedFile] = useState();
   const [open, setOpen] = useState(false);
-  const [editImage, setEditImage] = useState<string>("");
-  const [editNickname, setEditNickname] = useState("");
+  const [editImage, setEditImage] = useState<string>(
+    profileData.profileImage || "",
+  );
 
-  const fetchUser = async () => {
-    try {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      // console.log(user);
-      setUser(user);
+  const params = useParams();
+  const userId = params.id;
 
-      const { data: userData } = await supabase
-        .from("user")
-        .select()
-        .eq("uid", user?.id);
+  const fileSelectHandler = async (e: any) => {
+    const avatarFile = e.target.files && e.target.files[0];
+    setSelectedFile(avatarFile);
+    const { data, error } = await supabase.storage
+      .from("profileImage")
+      .upload(`avarta_${Date.now()}.png`, avatarFile);
 
-      const userDataTable = userData ? userData[0] : null; // 배열의 첫 번째 요소 또는 null로 설정
-
-      if (userDataTable) {
-        setNickname(userDataTable.nickname);
-        setEditImage(userDataTable.profileImage);
-        setEditNickname(userDataTable.nickname);
-      }
-    } catch (error) {
-      console.error("Error fetching user:", error);
+    if (avatarFile) {
+      setEditImage(
+        `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}/profileImage/${data?.path}`,
+      );
+    } else {
+      setEditImage(
+        profileData.profileImage ||
+          `https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/profileImage/default_profile_image.svg`,
+      );
     }
   };
 
-  const fileSelectHandler = (e: any) => {
-    const avatarFile = e.target.files && e.target.files[0];
-    setSelectedFile(avatarFile);
-  };
-
-  const submitHandler = async (e: any) => {
+  const submitHandler = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
     e.preventDefault();
-    if (!nickname) {
-      alert("변경할 닉네임을 입력해주세요.");
+    if (nickname.length < 1) {
+      ToastWarn("변경할 닉네임을 입력해주세요.");
+      return;
+    }
+
+    const isNicknameValid = await fetchNicknameData(nickname, userId as string);
+
+    if (isNicknameValid) {
+      console.log(nickname);
+      ToastWarn("중복된 닉네임 입니다.");
       return;
     }
 
@@ -59,7 +65,7 @@ const EditProfile = () => {
           nickname,
           profileImage: `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL}/profileImage/${data?.path}`,
         })
-        .eq("uid", user?.id);
+        .eq("uid", profileData?.uid);
 
       alert("수정이 완료되었습니다.");
       setOpen(!open);
@@ -69,28 +75,28 @@ const EditProfile = () => {
         .update({
           nickname,
         })
-        .eq("uid", user?.id);
+        .eq("uid", profileData?.uid);
 
       alert("수정이 완료되었습니다.");
       setOpen(!open);
-      
     }
-    window.location.reload();
-    
   };
-  const profileEditModalHandler = (e: any) => {
+  const profileEditModalHandler = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
     e.preventDefault();
+    setEditImage(
+      profileData.profileImage ||
+        `https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/profileImage/default_profile_image.svg`,
+    );
     setOpen(!open);
   };
 
-  useEffect(() => {
-    fetchUser();
-  }, []);
   return (
     <div>
       <button
         className="text-gray-400 text-[16px] non-italic font-normal leading-4"
-        onClick={profileEditModalHandler}
+        onClick={(e) => profileEditModalHandler(e)}
       >
         프로필 수정
       </button>
@@ -99,11 +105,11 @@ const EditProfile = () => {
           open ? "block" : "hidden"
         }`}
       >
-        <div className="w-[480px] h-[468px] z-10 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl p-8">
+        <div className="w-[400px] h-[400px] sm:w-[480px] sm:h-[468px] z-10 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl p-8">
           <form className="text-center">
             <h1 className="text-xl font-semibold flex">프로필 수정</h1>
 
-            {editImage ? (
+            {editImage.length > 0 ? (
               <div className="relative">
                 <img
                   src={editImage}
@@ -112,7 +118,7 @@ const EditProfile = () => {
                 />
                 <label
                   htmlFor="input-file"
-                  onClick={fileSelectHandler}
+                  onClick={(e) => fileSelectHandler(e)}
                   className="absolute bottom-1 right-32"
                 >
                   <input
@@ -179,10 +185,16 @@ const EditProfile = () => {
             <input
               type="text"
               value={nickname}
-              placeholder={editNickname}
-              onChange={(e) => setNickname(e.target.value)}
+              placeholder={profileData.nickname + " (최대 14글자)"}
+              onChange={(e) => {
+                const inputText = e.target.value;
+                if (inputText.length <= 14) {
+                  setNickname(inputText);
+                }
+              }}
               className="flex h-[48px] p-4 items-center bg-gray-50 rounded-2xl self-stretch w-[320px] outline-none  justify-center mx-auto mb-8"
             />
+
             <button
               onClick={profileEditModalHandler}
               className="w-[156px] m-1 h-[48px] bg-gray-100 rounded-2xl"
@@ -190,7 +202,7 @@ const EditProfile = () => {
               취소
             </button>
             <button
-              onClick={submitHandler}
+              onClick={(e) => submitHandler(e)}
               className="w-[156px] m-1 h-[48px] bg-black rounded-2xl text-white  hover:bg-gray-600"
             >
               제출

@@ -1,10 +1,10 @@
+"use client";
 import supabase from "@/libs/supabase";
 import { UserType } from "@/types/types";
 import { useState, useEffect } from "react";
 
 export const useAuth = (): UserType | null => {
   const [currentUser, setCurrentUser] = useState<UserType | null>(null);
-
   useEffect(() => {
     const fetchAuthData = async () => {
       try {

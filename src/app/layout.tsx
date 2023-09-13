@@ -1,13 +1,13 @@
 import QueryProvider from "./QueryProvider";
 import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import "@/styles/globals.css";
 import type { Metadata } from "next";
 import Script from "next/script";
 import Recoil from "./Recoil";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/ReactToastify.css";
-import { RouteChangesProvider } from "nextjs-router-events";
+import HeaderM from "@/components/HeaderM";
+import { RouteChangesProvider } from "./RouteChangeProvider";
 
 export const metadata: Metadata = {
   title: "Savers | 지구를 위한 작은 실천",
@@ -17,7 +17,48 @@ export const metadata: Metadata = {
     apple: ["apple-touch-icon.png?v=4"],
     shortcut: ["apple-tough-icon.png"],
   },
-  manifest: "site.webmanifest",
+  openGraph: {
+    title: "Savers | 지구를 위한 작은 실천",
+    description: "Savers 세이버스 - 지구를 위한 작은 실천",
+    images: [
+      {
+        url: "/ogImg/chatlink_kakaotalk.png",
+        width: 800,
+        height: 400,
+        alt: "세이버스"
+      },
+      {
+        url: "/ogImg/chatlink_facebook.png",
+        width: 600,
+        height: 315,
+        alt: "세이버스"
+      },
+      {
+        url: "/ogImg/chatlink_twitter.png",
+        width: 1200,
+        height: 630,
+        alt: "세이버스"
+      },
+      {
+        url: "/ogImg/chatlink_instagram.png",
+        width: 320,
+        height: 320,
+        alt: "세이버스"
+      },
+    ],
+    locale: "ko-KR",
+    type: "website",
+  },
+  robots: {
+    index: false,
+    follow: true,
+    nocache: true,
+    googleBot: {
+      index: true,
+      follow: false,
+      noimageindex: true,
+    },
+  },
 };
 
 declare global {
@@ -38,10 +79,10 @@ export default function RootLayout({
         <Recoil>
           <QueryProvider>
             <RouteChangesProvider>
+              <HeaderM />
               <Header />
               {children}
               <ToastContainer />
-              {/* <Footer /> */}
             </RouteChangesProvider>
           </QueryProvider>
         </Recoil>

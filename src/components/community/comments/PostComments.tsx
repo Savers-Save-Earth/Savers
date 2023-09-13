@@ -18,7 +18,7 @@ import {
 } from "@/api/community/reply";
 import { updatePost } from "@/api/community/post";
 
-import CommentTag from "../ui/CommentTag";
+import CommentTag from "../ui/common/CommentTag";
 import {
   CommentType,
   DetailPostProps,
@@ -28,11 +28,12 @@ import {
   NewReplyType,
   ReplyType,
 } from "@/types/types";
-import Image from "next/image";
 
-import { cls, convertTimestamp } from "@/libs/util";
+import { convertTimestamp } from "@/libs/util";
 import { ToastError, ToastSuccess, ToastWarn } from "@/libs/toastifyAlert";
-import ProfileImage from "../ui/ProfileImage";
+import ProfileImage from "../ui/common/ProfileImage";
+import TextArea from "../ui/comments/TextArea";
+import { COMMUNITY_TOAST_TEXT } from "@/enums/messages";
 
 const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
   const router = useRouter();
@@ -67,20 +68,20 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
   const queryClient = useQueryClient();
   const createCommentMutation = useMutation(createComment, {
     onSuccess: () => {
-      ToastSuccess("댓글이 등록되었습니다");
+      ToastSuccess(COMMUNITY_TOAST_TEXT.COMMENT_ADD_SUCCESS);
       queryClient.invalidateQueries({ queryKey: ["comments", postUid] });
       setNewComment("");
     },
     onError: (error) => {
       // console.error("댓글 등록 에러:", error);
-      ToastError("댓글이 정상적으로 등록되지 않았습니다. 다시 시도해주세요!");
+      ToastError(COMMUNITY_TOAST_TEXT.COMMENT_ADD_ERROR);
     },
   });
 
   // 댓글 등록 submit handler
   const handleCommentSubmit = () => {
     if (!currentUser) {
-      ToastWarn("댓글을 등록하려면 로그인 해주세요!");
+      ToastWarn(COMMUNITY_TOAST_TEXT.COMMENT_ADD_AUTH_ERROR);
       router.push("/login");
     }
 
@@ -102,11 +103,11 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
   const deleteCommentMutation = useMutation(deleteComment, {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["comments", postUid] });
-      ToastSuccess("댓글이 정상적으로 삭제되었습니다");
+      ToastSuccess(COMMUNITY_TOAST_TEXT.COMMENT_DELETE_SUCCESS);
     },
     onError: (error) => {
       // console.error("댓글 삭제 에러:", error);
-      Error("댓글이 정상적으로 삭제되지 않았습니다. 다시 시도해주세요!");
+      Error(COMMUNITY_TOAST_TEXT.COMMENT_DELETE_ERROR);
     },
   });
 
@@ -124,7 +125,7 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
     },
     onError: (error) => {
       // console.error("댓글 수정 에러:", error);
-      ToastError("댓글이 정상적으로 수정되지 않았습니다. 다시 시도해주세요!");
+      ToastError(COMMUNITY_TOAST_TEXT.COMMENT_EDIT_ERROR);
     },
   });
 
@@ -167,7 +168,7 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
     },
     onError: (error) => {
       // console.error("대댓글 등록 에러:", error);
-      ToastError("대댓글이 정상적으로 등록되지 않았습니다. 다시 시도해주세요!");
+      ToastError(COMMUNITY_TOAST_TEXT.REPLY_ADD_ERROR);
     },
   });
 
@@ -178,7 +179,7 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
     },
     onError: (error) => {
       // console.error("대댓글 수정 에러:", error);
-      ToastError("대댓글이 정상적으로 수정되지 않았습니다. 다시 시도해주세요!");
+      ToastError(COMMUNITY_TOAST_TEXT.REPLY_EDIT_ERROR);
     },
   });
 
@@ -189,19 +190,19 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
     },
     onError: (error) => {
       // console.error("대댓글 수정 에러:", error);
-      Error("대댓글이 정상적으로 수정되지 않았습니다. 다시 시도해주세요!");
+      ToastError(COMMUNITY_TOAST_TEXT.REPLY_DELETE_ERROR);
     },
   });
 
   // 대댓글 등록 submit handler
   const handleReplySubmit = (commentUid: string) => {
     if (!currentUser) {
-      ToastError("대댓글을 등록하려면 로그인 해주세요!");
+      ToastError(COMMUNITY_TOAST_TEXT.REPLY_ADD_AUTH_ERROR);
       router.push("/login");
     }
 
     if (newReply === "") {
-      ToastWarn("대댓글을 입력해주세요!");
+      ToastWarn(COMMUNITY_TOAST_TEXT.REPLY_EMPTY_ERROR);
       return false;
     }
 
@@ -251,7 +252,7 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
 
   // 대댓글 삭제 submit handler
   const handleDeleteReply = (replyUid: string) => {
-    const ok = window.confirm("댓글을 정말 삭제하시겠어요?");
+    const ok = window.confirm(COMMUNITY_TOAST_TEXT.REPLY_DELETE_CONFIRM);
     if (!ok) return false;
     deleteReplyMutation.mutate(replyUid);
   };
@@ -272,23 +273,28 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
               className="flex flex-col w-full border-b"
               key={comment.comment_uid}
             >
-              <div className="flex items-start space-x-4 p-4 w-full">
+              <div className="flex items-start sm:space-x-4 space-x-2 p-4 w-full">
                 <ProfileImage userUid={comment.writer_uid} />
                 <div className="flex flex-col w-full">
                   <div className="flex flex-col">
                     <div className="flex justify-between">
-                      <div className="flex space-x-1 items-center">
-                        <span className="mr-1">{comment.writer_name}</span>
-                        {postDetail?.author_uid === comment.writer_uid ? (
-                          <CommentTag>작성자</CommentTag>
-                        ) : null}
-                        {currentUser?.uid === comment.writer_uid ? (
-                          <CommentTag>내댓글</CommentTag>
-                        ) : null}
+                      <div className="flex sm:flex-row flex-col space-x-1">
+                        <span className="sm:mr-0 mr-1">{comment.writer_name}</span>
+                        <div className="flex space-x-1">
+                          {postDetail?.author_uid === comment.writer_uid ? (
+                            <CommentTag>작성자</CommentTag>
+                          ) : null}
+                          {currentUser?.uid === comment.writer_uid ? (
+                            <CommentTag>내댓글</CommentTag>
+                          ) : null}
+                        </div>
                       </div>
-                      {editingCommentId ===
-                      comment.comment_uid ? null : currentUser?.uid ===
-                          comment.writer_uid && comment.isDeleted === false ? (
+                      {
+                        editingCommentId === comment.comment_uid
+                          ? null
+                          :
+                          currentUser?.uid === comment.writer_uid && comment.isDeleted === false
+                            ? (
                         <div className="space-x-2 text-sm text-gray-700">
                           <button
                             onClick={() =>
@@ -304,8 +310,9 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
                           >
                             삭제
                           </button>
-                        </div>
-                      ) : null}
+                              </div>)
+                            :
+                            null}
                     </div>
                     <span className="mt-1 text-sm text-gray-400">
                       {comment.updated_date}
@@ -342,7 +349,7 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
                   ) : (
                     <div className="py-2 pr-6 text-gray-700 mt-2">
                       {comment.isDeleted === false ? (
-                        <p>{comment.content}</p>
+                        <p className="break-all">{comment.content}</p>
                       ) : (
                         <p className="text-gray-300">삭제된 댓글입니다.</p>
                       )}
@@ -407,19 +414,21 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
                     className="flex flex-col border-y w-full bg-gray-100 p-4"
                     key={reply.reply_uid}
                   >
-                    <div className="flex items-start space-x-4 pl-14">
+                    <div className="flex items-start sm:space-x-4 space-x-2 pl-14">
                       <ProfileImage userUid={reply.writer_uid} />
                       <div className="flex flex-col w-full">
                         <div className="flex flex-col">
                           <div className="flex justify-between">
-                            <div className="flex space-x-1 items-center">
-                              <span className="mr-1">{reply.writer_name}</span>
-                              {postDetail?.author_uid === reply.writer_uid ? (
-                                <CommentTag>작성자</CommentTag>
-                              ) : null}
-                              {currentUser?.uid === reply.writer_uid ? (
-                                <CommentTag>내댓글</CommentTag>
-                              ) : null}
+                            <div className="flex sm:flex-row flex-col space-x-1">
+                              <span className="sm:mr-0 mr-1">{reply.writer_name}</span>
+                              <div className="flex space-x-1">
+                                {postDetail?.author_uid === reply.writer_uid ? (
+                                  <CommentTag>작성자</CommentTag>
+                                ) : null}
+                                {currentUser?.uid === reply.writer_uid ? (
+                                  <CommentTag>내댓글</CommentTag>
+                                ) : null}
+                              </div>
                             </div>
                             {editingReplyId ===
                             reply.reply_uid ? null : currentUser?.uid ===
@@ -476,7 +485,7 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
                           </div>
                         ) : (
                           <div className="py-2 pr-6 text-gray-700 mt-2">
-                            <p>{reply.content}</p>
+                            <p className="break-all">{reply.content}</p>
                           </div>
                         )}
                       </div>
@@ -487,34 +496,12 @@ const PostComments = ({ postDetail, postUid }: DetailPostProps) => {
           ))}
         </div>
         {/* ------- 새 댓글 등록 textarea -------  */}
-        <div className="relative flex flex-col mt-5">
-          <textarea
-            id="commentInput"
-            placeholder={
-              currentUser
-                ? "댓글을 입력하세요."
-                : "댓글을 등록하려면 로그인 해주세요."
-            }
-            disabled={!currentUser}
-            rows={2}
-            value={newComment}
-            onChange={(e) => setNewComment(e.currentTarget.value)}
-            maxLength={200}
-            className="w-full no-scrollbar mt-2 px-4 pt-3 pb-16 border focus:outline-none resize-none rounded-2xl"
-          />
-          <button
-            onClick={handleCommentSubmit}
-            disabled={newComment.length === 0 || !currentUser}
-            className={cls(
-              "absolute bottom-2 right-1 px-4 py-1 rounded-md",
-              newComment.length === 0 || !currentUser
-                ? "text-gray-200"
-                : "text-mainGreen",
-            )}
-          >
-            등록
-          </button>
-        </div>
+        <TextArea
+          value={newComment}
+          onChange={(e) => setNewComment(e.currentTarget.value)}
+          onClick={handleCommentSubmit}
+          currentUser={currentUser}
+        />
       </div>
     </>
   );

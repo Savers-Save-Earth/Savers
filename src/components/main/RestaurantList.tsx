@@ -43,7 +43,9 @@ const RestaurantList = () => {
           justifyContent: "space-between",
         }}
       >
-        <h1 className="text-2xl mb-6 font-semibold">인기있는 비건식당</h1>
+        <h1 className="sm:text-2xl sm:mb-6 mb-4 font-semibold inline-block text-lg">
+          인기있는 비건식당
+        </h1>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="10"
@@ -65,11 +67,24 @@ const RestaurantList = () => {
         // install Swiper modules
         modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={10}
-        slidesPerView={3}
+        slidesPerView={1}
         navigation
         // navigation={{ prevEl: ".swiper-prev-1", nextEl: ".swiper-next-1" }}
         autoplay={{ delay: 3000 }}
         style={{ width: "100%" }}
+        breakpoints={{
+          // 768px 미만인 경우
+          0: {
+            slidesPerView: 1,
+          },
+          768: {
+            slidesPerView: 2,
+          },
+          // 그 외 화면 너비인 경우
+          1024: {
+            slidesPerView: 3, // 원래 설정 값
+          },
+        }}
       >
         {restaurants
           ?.map((item) => ({
@@ -165,8 +180,8 @@ const RestaurantList = () => {
                 </div>
                 <div style={{ display: "inline-block" }}>
                   <p className="font-bold text-[16px]">
-                    {item.restaurant_name.length > 18
-                      ? `${item.restaurant_name.slice(0, 18) + `...`}`
+                    {item.restaurant_name.length > 14
+                      ? `${item.restaurant_name.slice(0, 14) + `...`}`
                       : item.restaurant_name}
                   </p>
                   <span className="text-sm text-gray-400">
@@ -208,8 +223,7 @@ const RestaurantList = () => {
                       </svg>
                     </span>
                     <span
-                      className="bg-gray-50 ml-2 text-[14px] text-gray-500 rounded-2xl cursor-pointer"
-                      style={{ padding: "8px 10px" }}
+                      className="bg-gray-50 ml-2 text-[14px] text-gray-500 rounded-2xl cursor-pointer  hover:bg-gray-100 py-2 px-[12px]"
                       onClick={() => window.open(`${item?.restaurant_map}`)}
                     >
                       상세보기

@@ -1,11 +1,12 @@
 import dynamic from "next/dynamic";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef } from "react";
 
 import Loading from "@/app/loading";
 import ReactQuill, { ReactQuillProps } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import supabase from "@/libs/supabase";
 import { ToastError } from "@/libs/toastifyAlert";
+import { COMMUNITY_TOAST_TEXT } from "@/enums/messages";
 
 interface ForwardedQuillComponent extends ReactQuillProps {
   forwardedRef: React.Ref<ReactQuill>;
@@ -47,11 +48,12 @@ const TextEditor = ({ content, setContent }: EditorProps) => {
             .upload(`image_${Date.now()}.png`, file);
 
           if (error) {
-            ToastError("이미지 업로드 오류");
+            ToastError(COMMUNITY_TOAST_TEXT.IMAGE_UPLOAD_ERROR);
           }
 
           if (res) {
             const imageUrl = res.path;
+            console.log(imageUrl);
 
             const editor = quillInstance.current?.getEditor();
             if (editor) {
@@ -65,7 +67,7 @@ const TextEditor = ({ content, setContent }: EditorProps) => {
             }
           }
         } catch (error) {
-          // console.log(error);
+          console.log(error);
         }
       }
     });
@@ -120,7 +122,7 @@ const TextEditor = ({ content, setContent }: EditorProps) => {
   return (
     <>
       <QuillWrapper
-        className="h-[800px]"
+        className="md:h-[800px] h-[320px]"
         forwardedRef={quillInstance}
         value={content}
         onChange={setContent}

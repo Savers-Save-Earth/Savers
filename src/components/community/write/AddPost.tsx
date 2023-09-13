@@ -14,6 +14,9 @@ import {
 } from "@/api/mission/checkMission";
 import { NewPostType } from "@/types/types";
 import { ToastError, ToastSuccess, ToastWarn } from "@/libs/toastifyAlert";
+import { useIsLaptop } from "@/hooks/useIsLaptop";
+import { useRouter } from "next/navigation";
+import { COMMUNITY_TOAST_TEXT } from "@/enums/messages";
 
 const currentDate = convertDate(new Date());
 
@@ -21,6 +24,8 @@ const AddPost: NextComponentType = () => {
   const [category, setCategory] = useState("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const isLaptop = useIsLaptop();
+  const router = useRouter();
 
   // 미션 관련 부분(동준님)
   const [missionUid, setMissionUid] = useState<any>("");
@@ -39,21 +44,26 @@ const AddPost: NextComponentType = () => {
   const createMutation = useMutation(createPost, {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["communityAllPosts"] });
-      ToastSuccess("게시글이 정상적으로 등록되었습니다.");
-      location.href = "/community";
+      ToastSuccess(COMMUNITY_TOAST_TEXT.POST_ADD_SUCCESS);
+      router.push("/community")
     },
     onError: (error) => {
-      // console.error("게시글 등록 에러:", error);
-      ToastError("게시글이 정상적으로 등록되지 않았습니다. 다시 시도해주세요!");
+      ToastError(COMMUNITY_TOAST_TEXT.POST_ADD_ERROR);
     },
   });
 
   // 미션 관련 부분(동준님)
   useEffect(() => {
     // 사용함수는 api폴더의 checkMission.ts에 있음
-    if(!currentUser) return
-    getMissionHandler(currentUser, currentDate, category, setMissionUid, bigCategory)
-  },[category])
+    if (!currentUser) return;
+    getMissionHandler(
+      currentUser,
+      currentDate,
+      category,
+      setMissionUid,
+      bigCategory,
+    );
+  }, [category]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -69,37 +79,37 @@ const AddPost: NextComponentType = () => {
     };
 
     if (category === "") {
-      ToastWarn("카테고리를 선택해주세요!");
+      ToastWarn(COMMUNITY_TOAST_TEXT.CATEGORY_SELECT_ERROR);
       return false;
     }
     if (title.length < 1) {
-      ToastWarn("제목을 입력해주세요!");
+      ToastWarn(COMMUNITY_TOAST_TEXT.TITLE_EMPTY_ERROR);
       return false;
     }
     if (removeHtmlTags(content).length < 1) {
-      ToastWarn("본문을 작성해주세요!");
+      ToastWarn(COMMUNITY_TOAST_TEXT.CONTENT_EMPTY_ERROR);
       return false;
     }
     createMutation.mutate(newPost);
   };
 
   return (
-    <div className="w-full flex flex-col items-start self-stretch space-y-10">
-      <h1 className="text-2xl font-semibold">글쓰기</h1>
+    <div className="w-full flex flex-col items-start self-stretch space-y-10 mb-10">
+      {isLaptop ? null : <h1 className="text-2xl font-semibold">글쓰기</h1>}
       <form
         onSubmit={(e) => {
           handleSubmit(e);
           updateMissionHandler(missionUid);
         }}
-        className="flex flex-col space-y-5 w-full"
+        className="flex flex-col space-y-5 w-full items-stretch md:h-[970px]"
       >
-        <div className="flex space-x-2 items-center justify-center">
+        <div className="w-full flex xl:flex-row xl:space-y-0 space-y-3 flex-col xl:space-x-4 space-x-0 xl:items-center justify-center">
           <select
             name="category"
             onChange={(e) => {
               selectChangeHandler(e, setCategory);
             }}
-            className="w-1/6 p-3 rounded-md focus:outline-none"
+            className="xl:w-1/6 p-4 bg-gray-50 text-sm text-gray-500 rounded-md focus:outline-none"
           >
             <option defaultValue="" disabled selected>
               카테고리
@@ -113,19 +123,30 @@ const AddPost: NextComponentType = () => {
             value={title}
             onChange={(e) => setTitle(e.currentTarget.value)}
             placeholder="제목을 입력해주세요."
-            className="w-full p-2 outline-none border-b text-lg"
+            className="w-full p-4 outline-none text-sm bg-gray-50 rounded-xl"
           />
-          <button
-            type="submit"
-            className="w-1/12 px-3 py-2 rounded-xl bg-gray-950 text-white"
-          >
-            등록
-          </button>
+          {isLaptop ? null : (
+            <button
+              type="submit"
+              className="xl:w-1/12 px-3 py-2 rounded-xl bg-gray-950 text-white"
+            >
+              등록
+            </button>
+          )}
         </div>
-        <div className="w-full h-[850px] mx-auto">
+        <div className="w-full xl:h-[850px] h-[390px] mx-auto">
           <TextEditor content={content} setContent={setContent} />
         </div>
       </form>
+      {isLaptop ? (
+        <button
+          onClick={handleSubmit}
+          type="submit"
+          className="w-16 mx-auto xl:w-1/12 px-3 py-2 rounded-xl bg-gray-950 text-white"
+        >
+          등록
+        </button>
+      ) : null}
     </div>
   );
 };
