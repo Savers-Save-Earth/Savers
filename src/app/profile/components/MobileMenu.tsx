@@ -89,6 +89,7 @@ const MobileMenu = ({
       </div>
       {menuList.map((menu) => (
         <button
+        key={menu.btnValue}
         value={menu.btnValue}
         name={menu.btnName}
         className="w-full p-2.5 mt-3 flex items-center justify-between rounded-md px-4 duration-300 cursor-pointer hover:bg-[#E8FFD4] text-white"
