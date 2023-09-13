@@ -166,7 +166,7 @@ const Badges = ({ badgeData, missionDone }: MyBadgeProps) => {
               />
             )}
             <div
-              className={`absolute top-0 ${i%3 === 2 ? "right-0" : ""} z-[2] w-[200px] h-[280px] border-4 ${badge.borderColor} bg-white rounded-xl items-center justify-center transition-opacity
+              className={`absolute ${i>5 ? "bottom-1/4" : i>2 ? "top-0 translate-y-[-30%]" : "top-0"} ${i%3 === 2 ? "right-0" : i%3 === 1 ? "right-0 translate-x-[25%]": ""} z-[2] w-[200px] h-[280px] border-4 ${badge.borderColor} bg-white rounded-xl items-center justify-center transition-opacity
               ${
                 badgeClickStates[badge.name] ? "flex flex-col opacity-100" : "hidden opacity-0"
               }`}
