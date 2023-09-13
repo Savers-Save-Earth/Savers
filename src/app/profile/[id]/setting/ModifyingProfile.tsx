@@ -43,7 +43,7 @@ const ModifyingProfile = () => {
     }
     if (numberValid === false || birthdayValid === false) {
       // if (emailValid || !numberValid || !birthdayValid) {
-      alert(ToastError("입력정보 형식이 잘못되었네요. \n전화번호와 생년월일은 필수기입사항이 아닙니다🌱"))
+      ToastError("입력정보 형식이 잘못되었네요. \n전화번호와 생년월일은 필수기입사항이 아닙니다🌱")
       return;
     }
     const { error: updateDataError } = await supabase
