@@ -46,7 +46,6 @@ const MobileMenu = ({
         router.push("/");
       }
     } else {
-      // const currentUrl = window.location.href;
       router.push("/login");
     }
   };
@@ -57,9 +56,17 @@ const MobileMenu = ({
     router.push(`/profile/${searchId}/${name}`);
   };
 
+  const menuList = [
+    {btnName: 'myprofile', btnValue: '프로필' },
+    {btnName: 'mymission/missiondoing', btnValue: '나의 미션' },
+    {btnName: 'mycommunity/myposts', btnValue: '커뮤니티 활동' },
+    {btnName: 'myfavorite/myfavoriteproducts', btnValue: '좋아요' }
+
+]
+
   return (
     <div className="sidebar fixed top-0 bottom-0 right-0 p-2 w-[300px] overflow-y-auto text-center bg-white z-[1]">
-      <div className="p-2.5 mt-3 flex items-center justify-between rounded-md px-4 duration-300 cursor-pointer bg-[#cbfaa2] text-white">
+      <div className="p-2.5 mt-3 flex items-center justify-between rounded-md px-4 duration-300 cursor-pointer bg-white text-white">
         <p className="text-[15px] ml-4 text-gray-900 font-bold">메뉴</p>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -80,61 +87,20 @@ const MobileMenu = ({
           />
         </svg>
       </div>
-      {/* <div className="my-4 bg-gray-600 h-[1px]"></div> */}
-      <button
-        value="프로필"
-        name="myprofile"
+      {menuList.map((menu) => (
+        <button
+        value={menu.btnValue}
+        name={menu.btnName}
         className="w-full p-2.5 mt-3 flex items-center justify-between rounded-md px-4 duration-300 cursor-pointer hover:bg-[#E8FFD4] text-white"
         onClick={(e) =>
           handleMenuClick(e.currentTarget.value, e.currentTarget.name)
         }
       >
-        <p className="text-[15px] ml-4 text-gray-400 font-bold">프로필</p>
+        <p className="text-[15px] ml-4 text-gray-400 font-bold">{menu.btnValue}</p>
         <p className="text-[15px] ml-4 text-gray-400 font-bold">{`>`}</p>
       </button>
-      {/* <div className="my-4 bg-gray-600 h-[1px]"></div> */}
-
-      <button
-        value="나의 미션"
-        name="mymission/missiondoing"
-        className="w-full p-2.5 mt-3 flex items-center justify-between rounded-md px-4 duration-300 cursor-pointer hover:bg-[#E8FFD4] text-white"
-        onClick={(e) =>
-          handleMenuClick(e.currentTarget.value, e.currentTarget.name)
-        }
-      >
-        <p className="text-[15px] ml-4 text-gray-400 font-bold">나의 미션</p>
-        <p className="text-[15px] ml-4 text-gray-400 font-bold">{`>`}</p>
-      </button>
-      {/* <div className="my-4 bg-gray-600 h-[1px]"></div> */}
-
-      <button
-        value="커뮤니티 활동"
-        name="mycommunity/myposts"
-        className="w-full p-2.5 mt-3 flex items-center justify-between rounded-md px-4 duration-300 cursor-pointer hover:bg-[#E8FFD4] text-white"
-        onClick={(e) =>
-          handleMenuClick(e.currentTarget.value, e.currentTarget.name)
-        }
-      >
-        <p className="text-[15px] ml-4 text-gray-400 font-bold">
-          커뮤니티 활동
-        </p>
-        <p className="text-[15px] ml-4 text-gray-400 font-bold">{`>`}</p>
-      </button>
-      {/* <div className="my-4 bg-gray-600 h-[1px]"></div> */}
-
-      <button
-        value="좋아요"
-        name="myfavorite/myfavoriteproducts"
-        className="w-full p-2.5 mt-3 flex items-center justify-between rounded-md px-4 duration-300 cursor-pointer hover:bg-[#E8FFD4] text-white"
-        onClick={(e) =>
-          handleMenuClick(e.currentTarget.value, e.currentTarget.name)
-        }
-      >
-        <p className="text-[15px] ml-4 text-gray-400 font-bold">좋아요</p>
-        <p className="text-[15px] ml-4 text-gray-400 font-bold">{`>`}</p>
-      </button>
-      {/* <div className="my-4 bg-gray-600 h-[1px]"></div> */}
-
+      ))}
+      
       {currentUser && currentUser.uid == profileDataId && (
         <>
         <button
@@ -146,7 +112,6 @@ const MobileMenu = ({
           </p>
           <p className="text-[15px] ml-4 text-gray-400 font-bold">{`>`}</p>
         </button>
-        {/* <div className="my-4 bg-gray-600 h-[1px]"></div> */}
         </>
       )}
       

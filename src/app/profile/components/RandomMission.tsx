@@ -162,11 +162,6 @@ const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
                                       objectFit: "cover",
                                     }}
                                   />
-                                  {/* <img
-                                    className="w-[32px] h-[32px] sm:w-[52px] sm:h-[52px]"
-                                    src={missionItem.icon}
-                                    alt="아이콘 이미지 없음"
-                                  /> */}
                                 </div>
                                 <h1 className="text-md sm:text-[20px] leading-[25px] font-semibold text-[#4DAB00]">
                                   {missionItem.title}
