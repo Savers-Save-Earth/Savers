@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import ModifyingProfile from "./ModifyingProfile";
+import ModifyingProfile from "../../../../components/profile/setting/ModifyingProfile";
 import Seo from "@/components/Seo";
 
 const setting = () => {

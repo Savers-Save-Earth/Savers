@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import MissionDoingComp from "./MissionDoingComp";
+import MissionDoingComp from "../../../../../components/profile/mymission/missiondoing/MissionDoingComp";
 import Seo from "@/components/Seo";
 
 const MissionDoing = ({ params: { id } }: { params: { id: string } }) => {

@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import FavoriteProductsComp from "./FavoriteProductsComp";
+import FavoriteProductsComp from "../../../../../components/profile/myfavorite/myfavoriteproducts/FavoriteProductsComp";
 import Seo from "@/components/Seo";
 
 export const metadata: Metadata = {
