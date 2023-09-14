@@ -23,7 +23,7 @@ const MissionDoneComp = ({ id }: { id: string }) => {
   }
 
   return (
-    <div className="grid md:grid-cols-4 md:gap-4 grid-cols-2 gap-3 place-items-center">
+    <div className="grid md:grid-cols-4 md:gap-10 grid-cols-2 gap-3 place-items-center">
       {missionDone?.map((mission: MissionListType) => {
         return (
           <div

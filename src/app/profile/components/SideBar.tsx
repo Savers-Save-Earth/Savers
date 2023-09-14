@@ -57,7 +57,7 @@ const SideBar = () => {
 
   return (
     <>
-      <div className="w-full flex flex-col items-start">
+      <div className="w-full flex flex-col items-start gap-10">
         <div className="w-full relative">
           <div className="flex flex-row justify-between text-[18px] font-bold text-gray-700">
             <div>마이페이지</div>
@@ -123,12 +123,10 @@ const SideBar = () => {
         </div>
 
         {/* 웹 브라우저 환경에서 보여야 하는 버튼들 */}
-        <div className="hidden xl:flex flex-col items-start w-full">
+        <div className="hidden xl:flex flex-col items-start w-full gap-2">
           <button
             name="프로필"
-            className={`btn-sidebar ${
-              isBtnFocused === "프로필" ? "bg-[#E8FFD4] text-[#10C800]" : ""
-            } w-full p-2 text-start rounded-2xl`}
+            className={`btn-sidebar w-full p-2 text-start rounded-2xl ${(isBtnFocused === "프로필") ? "text-[#5FD100]" : ""}`}
             onClick={(e) => {
               router.push(`/profile/${searchId}/myprofile`);
               webMenuBtn(e);
@@ -138,9 +136,7 @@ const SideBar = () => {
           </button>
           <button
             name="나의 미션"
-            className={`btn-sidebar ${
-              isBtnFocused === "나의 미션" ? "bg-[#E8FFD4] text-[#10C800]" : ""
-            } w-full p-2 text-start rounded-2xl`}
+            className={`btn-sidebar w-full p-2 text-start rounded-2xl ${(isBtnFocused === "나의 미션") ? "text-[#5FD100]" : ""}`}
             onClick={(e) => {
               router.push(`/profile/${searchId}/mymission/missiondoing`);
               webMenuBtn(e);
@@ -150,9 +146,7 @@ const SideBar = () => {
           </button>
           <button
             name="커뮤니티 활동"
-            className={`btn-sidebar ${
-              isBtnFocused === "커뮤니티 활동" ? "bg-[#E8FFD4] text-[#10C800]"  : ""
-            } w-full p-2 text-start rounded-2xl`}
+            className={`btn-sidebar w-full p-2 text-start rounded-2xl ${(isBtnFocused === "커뮤니티 활동") ? "text-[#5FD100]" : ""}`}
             onClick={(e) => {
               router.push(`/profile/${searchId}/mycommunity/myposts`);
               webMenuBtn(e);
@@ -162,9 +156,7 @@ const SideBar = () => {
           </button>
           <button
             name="좋아요"
-            className={`btn-sidebar ${
-              isBtnFocused === "좋아요" ? "bg-[#E8FFD4] text-[#10C800]"  : ""
-            } w-full p-2 text-start rounded-2xl`}
+            className={`btn-sidebar w-full p-2 text-start rounded-2xl ${(isBtnFocused === "좋아요") ? "text-[#5FD100]" : ""}`}
             onClick={(e) => {
               router.push(`/profile/${searchId}/myfavorite/myfavoriteproducts`);
               webMenuBtn(e);
@@ -185,9 +177,7 @@ const SideBar = () => {
           {currentUser && currentUser.uid == profileData?.uid && (
             <button
               name="회원정보 수정"
-              className={`btn-sidebar ${
-                isBtnFocused === "회원정보 수정" ? "bg-[#E8FFD4] text-[#10C800]"  : ""
-              } w-full p-2 text-start rounded-2xl`}
+              className={`btn-sidebar w-full p-2 text-start rounded-2xl ${(isBtnFocused === "회원정보 수정") ? "text-[#5FD100]" : ""}`}
               onClick={(e) => {
                 router.push(`/profile/${searchId}/setting`);
                 webMenuBtn(e);

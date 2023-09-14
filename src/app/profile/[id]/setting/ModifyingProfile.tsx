@@ -109,32 +109,35 @@ const ModifyingProfile = () => {
   };
   return (
     <form className="flex flex-col items-center">
-      <div className="flex justify-between w-3/4 mb-4">
-        <h1 className="self-start">회원정보 수정</h1>
+      <div className="flex justify-between w-full sm:w-3/4 mb-4">
+        <div className="flex items-center justify-between w-full h-full pt-3">
+
+        <h1 className="self-start text-[24px] font-semibold">회원정보 수정</h1>
         <button
           onClick={(e) => {
             handleSubmit();
             e.preventDefault();
           }}
-          className="self-end p-1 rounded-lg border-2 border-[#5FD100] hover:bg-[#5FD100] hover:text-white duration-300"
+          className="self-end text-[16px] px-6 py-3 rounded-2xl text-white bg-gray-900 hover:bg-gray-600 duration-300"
         >
-          수정완료
+          저장
         </button>
+        </div>
       </div>
-      <div className="w-3/4">
+      <div className="w-full sm:w-3/4 mt-4">
         <span>이메일</span>
         <input
           type="text"
-          className="w-full bg-gray-100 text-gray-400 p-2 rounded-lg outline-none opacity-60 cursor-not-allowed"
+          className="w-full bg-gray-200 text-gray-400 p-2 rounded-lg outline-none opacity-60 cursor-not-allowed"
           disabled
           value={email}
         />
       </div>
-      <div className="w-3/4">
+      <div className="w-full sm:w-3/4 mt-4">
         <span>휴대전화</span>
         <input
           type="text"
-          className="w-full bg-gray-100 p-2 rounded-lg outline-none"
+          className="w-full bg-gray-50 text-gray-600 p-2 rounded-lg outline-none"
           name="number"
           value={number}
           onChange={(e) => HandleInputChange(e, setNumber, setNumberMessage)}
@@ -142,11 +145,11 @@ const ModifyingProfile = () => {
         />
         <p className="modifyProfileValidationMessage"> {numberMessage} </p>
       </div>
-      <div className="w-3/4">
+      <div className="w-full sm:w-3/4 mt-4">
         <span>생년월일</span>
         <input
           type="text"
-          className="w-full bg-gray-100 p-2 rounded-lg outline-none"
+          className="w-full bg-gray-50 text-gray-600 p-2 rounded-lg outline-none"
           name="birthday"
           value={birthday}
           onChange={(e) =>
