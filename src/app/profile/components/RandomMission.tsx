@@ -11,6 +11,7 @@ import {
   fetchMissionListDateAndUid,
 } from "@/api/mission/getMission";
 import Image from "next/image";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 type MissionInsert = Omit<MissionList, "id">;
 
@@ -21,11 +22,10 @@ const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
   const [dailyMission, setDailyMission] = useState<DailyMission[]>([]);
   const [modalController, setModalController] = useState(showModal);
   const queryClient = useQueryClient();
-  const { data: missionListByDateAndUser } = useQuery(
-    ["missionList"],
-    () => fetchMissionListDateAndUid(searchId, currentDate),
+  const { data: missionListByDateAndUser } = useQuery(["missionList"], () =>
+    fetchMissionListDateAndUid(searchId, currentDate),
   );
-
+  const isMobile = useIsMobile();
   const createMissionMutation = useMutation(createMission, {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["missionList"] });
@@ -103,8 +103,8 @@ const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
             className="fixed inset-0 bg-slate-400 bg-opacity-50"
           ></div>
           <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 outline-none focus:outline-none">
-            <div className="relative w-[350px] h-[600px] sm:w-[480px] sm:h-[710px] mt-[0] sm:mt-[50px] bg-white p-2 sm:p-8 flex flex-wrap items-center justify-center rounded-2xl">
-              <div className="flex flex-col gap-1 sm:gap-5 justify-center items-center">
+            <div className="relative w-[350px] h-[600px] sm:w-[480px] sm:h-[750px] mt-[0] sm:mt-[50px] bg-white p-2 sm:p-8 flex flex-col items-center justify-center rounded-2xl">
+              <div className="flex flex-col gap-1 justify-center items-center">
                 <h1 className="text-gray-900 w-full text-lg sm:text-2xl font-semibold leading-6">
                   오늘의 세이버 일일미션 랜덤 뽑기
                 </h1>
@@ -131,11 +131,11 @@ const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
                   fill="#98A2B3"
                 />
               </svg>
-              <div className="w-full h-[80%] grid grid-cols-2 gap-2 place-items-center">
+              <div className="w-[90%] h-[72%] sm:w-full sm:h-[80%] grid grid-cols-2 gap-0 sm:gap-2 place-items-center mt-3">
                 {dailyMission.map((missionItem) => (
                   <div
                     key={missionItem.id}
-                    className="w-[140px] h-[240px] min-w-[140px] min-h-[240px] sm:min-w-[200px] sm:min-h-[270px] bg-transparent cursor-pointer group perspective rounded-2xl "
+                    className="w-[140px] h-[200px] min-w-[140px] min-h-[200px] sm:min-w-[200px] sm:min-h-[270px] bg-transparent cursor-pointer group perspective rounded-2xl "
                   >
                     <div className="w-full h-full relative preserve-3d my-rotate-y-180">
                       <div className="absolute my-rotate-y-180-withoutkey w-full h-full rounded-2xl break-words">
@@ -146,7 +146,7 @@ const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
                           {/* 미션 완료여부에 따라 앞면을 다르게 보여주기 */}
                           {missionItem.doingYn === true ? (
                             <>
-                              <div className="flex flex-col gap-2 items-start self-stretch">
+                              <div className="flex flex-col gap-0 sm:gap-2 items-start self-stretch">
                                 <div className="relative min-w-[32px] min-h-[32px] sm:min-w-[52px] sm:min-h-[52px]">
                                   <Image
                                     src={missionItem.icon}
@@ -249,54 +249,103 @@ const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
                           )}
                         </div>
                       </div>
-                      <div className="border border-[#56BE00] absolute backface-hidden w-[140px] h-[240px] min-w-[140px] min-h-[240px] sm:min-w-[200px] sm:min-h-[270px] rounded-2xl">
+                      <div className="border border-[#56BE00] absolute backface-hidden w-[140px] h-[200px] min-w-[140px] min-h-[200px] sm:min-w-[200px] sm:min-h-[270px] rounded-2xl">
                         {/* 카드 뒷면 */}
-                        <svg
-                          width="100%"
-                          height="100%"
-                          viewBox="0 0 100% 100%"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <rect
-                            width="100%"
-                            height="100%"
-                            rx="16"
-                            fill="#56BE00"
-                          />
-                          <path
-                            d="M80.2876 161.888C80.2876 161.888 98.9123 160.641 102.986 147.546C107.061 134.45 108.225 120.107 128.596 112C127.431 119.483 127.781 124.659 128.479 130.895C129.178 137.069 129.469 143.243 127.839 149.292C126.209 155.528 122.426 160.828 116.955 163.759C100.658 172.49 84.3617 165.63 80.2876 161.888Z"
-                            fill="url(#paint0_linear_1308_24651)"
-                          />
-                          <path
-                            d="M119.712 161.888C119.712 161.888 101.071 160.641 96.9933 147.546C92.9155 134.45 91.7504 120.107 71.3614 112C72.5265 119.483 72.177 124.659 71.4779 130.895C70.8372 137.007 70.5459 143.18 72.1187 149.229C73.8081 155.528 77.5364 160.828 83.0123 163.759C99.3235 172.49 115.635 165.63 119.712 161.888Z"
-                            fill="url(#paint1_linear_1308_24651)"
-                          />
-                          <defs>
-                            <linearGradient
-                              id="paint0_linear_1308_24651"
-                              x1="100.507"
-                              y1="112"
-                              x2="100.507"
-                              y2="168"
-                              gradientUnits="userSpaceOnUse"
-                            >
-                              <stop stopColor="#66AB28" />
-                              <stop offset="1" stopColor="#4F891C" />
-                            </linearGradient>
-                            <linearGradient
-                              id="paint1_linear_1308_24651"
-                              x1="95.3377"
-                              y1="112"
-                              x2="95.3377"
-                              y2="168"
-                              gradientUnits="userSpaceOnUse"
-                            >
-                              <stop stopColor="#8AE63F" />
-                              <stop offset="1" stopColor="#77CA33" />
-                            </linearGradient>
-                          </defs>
-                        </svg>
+                        {isMobile ? (
+                          <svg
+                            width="140"
+                            height="200"
+                            viewBox="0 0 140 200"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <rect
+                              width="140"
+                              height="200"
+                              rx="16"
+                              fill="#56BE00"
+                            />
+                            <path
+                              d="M57.7803 113.68C57.7803 113.68 69.3258 112.901 71.8513 104.716C74.3769 96.5311 75.0985 87.5668 87.7263 82.5C87.0047 87.177 87.2212 90.412 87.6541 94.3095C88.0871 98.1681 88.2675 102.027 87.2573 105.807C86.247 109.705 83.9019 113.018 80.5104 114.85C70.4081 120.306 60.3059 116.019 57.7803 113.68Z"
+                              fill="url(#paint0_linear_2414_6109)"
+                            />
+                            <path
+                              d="M82.2197 113.68C82.2197 113.68 70.664 112.901 68.1361 104.716C65.6083 96.5311 64.8861 87.5668 52.247 82.5C52.9693 87.177 52.7526 90.412 52.3192 94.3095C51.922 98.1291 51.7415 101.988 52.7165 105.768C53.7637 109.705 56.0749 113.018 59.4694 114.85C69.5806 120.306 79.6919 116.019 82.2197 113.68Z"
+                              fill="url(#paint1_linear_2414_6109)"
+                            />
+                            <defs>
+                              <linearGradient
+                                id="paint0_linear_2414_6109"
+                                x1="70.3141"
+                                y1="82.5"
+                                x2="70.3141"
+                                y2="117.5"
+                                gradientUnits="userSpaceOnUse"
+                              >
+                                <stop stop-color="#66AB28" />
+                                <stop offset="1" stop-color="#4F891C" />
+                              </linearGradient>
+                              <linearGradient
+                                id="paint1_linear_2414_6109"
+                                x1="67.1098"
+                                y1="82.5"
+                                x2="67.1098"
+                                y2="117.5"
+                                gradientUnits="userSpaceOnUse"
+                              >
+                                <stop stop-color="#8AE63F" />
+                                <stop offset="1" stop-color="#77CA33" />
+                              </linearGradient>
+                            </defs>
+                          </svg>
+                        ) : (
+                          <svg
+                            width="200"
+                            height="280"
+                            viewBox="0 0 200 280"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <rect
+                              width="200"
+                              height="280"
+                              rx="16"
+                              fill="#56BE00"
+                            />
+                            <path
+                              d="M80.2876 161.888C80.2876 161.888 98.9123 160.641 102.986 147.546C107.061 134.45 108.225 120.107 128.596 112C127.431 119.483 127.781 124.659 128.479 130.895C129.178 137.069 129.469 143.243 127.839 149.292C126.209 155.528 122.426 160.828 116.955 163.759C100.658 172.49 84.3617 165.63 80.2876 161.888Z"
+                              fill="url(#paint0_linear_1308_24651)"
+                            />
+                            <path
+                              d="M119.712 161.888C119.712 161.888 101.071 160.641 96.9933 147.546C92.9155 134.45 91.7504 120.107 71.3614 112C72.5265 119.483 72.177 124.659 71.4779 130.895C70.8372 137.007 70.5459 143.18 72.1187 149.229C73.8081 155.528 77.5364 160.828 83.0123 163.759C99.3235 172.49 115.635 165.63 119.712 161.888Z"
+                              fill="url(#paint1_linear_1308_24651)"
+                            />
+                            <defs>
+                              <linearGradient
+                                id="paint0_linear_1308_24651"
+                                x1="100.507"
+                                y1="112"
+                                x2="100.507"
+                                y2="168"
+                                gradientUnits="userSpaceOnUse"
+                              >
+                                <stop stop-color="#66AB28" />
+                                <stop offset="1" stop-color="#4F891C" />
+                              </linearGradient>
+                              <linearGradient
+                                id="paint1_linear_1308_24651"
+                                x1="95.3377"
+                                y1="112"
+                                x2="95.3377"
+                                y2="168"
+                                gradientUnits="userSpaceOnUse"
+                              >
+                                <stop stop-color="#8AE63F" />
+                                <stop offset="1" stop-color="#77CA33" />
+                              </linearGradient>
+                            </defs>
+                          </svg>
+                        )}
                       </div>
                     </div>
                   </div>

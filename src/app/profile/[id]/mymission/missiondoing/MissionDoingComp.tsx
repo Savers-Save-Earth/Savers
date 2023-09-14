@@ -23,7 +23,7 @@ const MissionDoingComp = ({ id }: { id: string }) => {
     return <NoListToShown listProp={"noMissionDoing"} />;
   }
   return (
-    <div className="grid md:grid-cols-4 md:gap-4 grid-cols-2 gap-3 place-items-center">
+    <div className="grid md:grid-cols-4 md:gap-10 grid-cols-2 gap-3 place-items-center">
       {missionDoing?.map((mission: MissionListType) => {
         return (
           <div

@@ -153,6 +153,7 @@ const Badges = ({ badgeData, missionDone }: MyBadgeProps) => {
                 height={88}
                 quality={100}
                 onClick={() => handleBadgeClick(badge.name)}
+                className="hover: cursor-pointer"
               />
             ) : (
               <Image
@@ -162,6 +163,7 @@ const Badges = ({ badgeData, missionDone }: MyBadgeProps) => {
                 height={88}
                 quality={100}
                 onClick={() => handleBadgeClick(badge.name)}
+                className="hover: cursor-pointer"
               />
             )}
             <div

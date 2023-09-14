@@ -22,7 +22,7 @@ export default async function profileLayout({
           <div className="xl:sticky xl:top-20 w-full xl:w-[30%] xl:h-[70%] xl:min-h-[508px] flex flex-col justify-center items-center xl:shadow-xl shadow-black/20 rounded-2xl xl:p-6 xl:border-t-2 z-10">
             <SideBar />
           </div>
-          <section className="w-full xl:w-[70%] flex flex-col shrink-0 self-stretch bg-white xl:shadow-xl shadow-black/20 rounded-2xl p-6 xl:border-t-2 cursor-default">
+          <section className="w-full xl:w-[70%] flex flex-col shrink-0 self-stretch bg-white xl:shadow-xl shadow-black/20 rounded-2xl p-6 sm:p-12 xl:border-t-2 cursor-default">
             {children}
           </section>
         </div>
