@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import MyProfileComp from "./MyProfileComp";
+import MyProfileComp from "../../../../components/profile/myprofile/MyProfileComp";
 import Seo from "@/components/Seo";
 
 const MyProfile = ({ params: { id } }: { params: { id: string } }) => {

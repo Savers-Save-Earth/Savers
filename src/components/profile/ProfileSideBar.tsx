@@ -1,7 +1,7 @@
 "use client";
-import { useParams } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import RandomMission from "./RandomMission";
 import EditProfile from "@/components/profile/EditProfile";
@@ -22,20 +22,18 @@ type ProfileType = {
   uid: string;
 } | null;
 
-const SideBar = () => {
+const ProfileSideBar = () => {
   const searchId = useParams().id as string;
   const router = useRouter();
   const [showModal, setShowModal] = useState(false);
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isHideProfile, setIsHideProfile] = useState(false);
-  const [isBtnFocused, setIsBtnFocused] = useState("");
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
-  const webMenuBtn = (e: any) => {
-    setIsBtnFocused(e.target.name);
-  };
+
+  const pathName = usePathname().split("/")[3];
 
   //모바일 환경에서 프로필 이외의 다른 버튼들 클릭하면 프로필 이미지 등이 가려지게 하기 위함
   const hideProfile = (value: string) => {
@@ -54,7 +52,6 @@ const SideBar = () => {
   );
 
   if (isLoading) return <LoadingProfileSideBar />;
-
   return (
     <>
       <div className="w-full flex flex-col items-start gap-10">
@@ -88,7 +85,6 @@ const SideBar = () => {
             isHideProfile && window.innerWidth < 768 ? "hidden" : "flex"
           } justify-center items-center gap-6 self-stretch leading-none`}
         >
-          {/* <div className="hidden flex-col justify-center items-center gap-6 self-stretch leading-none"> */}
           <div className="relative w-[8.75rem] h-[8.75rem] aspect-w-1 aspect-h-1 object-contain rounded-full overflow-hidden mx-auto">
             {profileData?.profileImage ? (
               <Image
@@ -125,48 +121,52 @@ const SideBar = () => {
         {/* 웹 브라우저 환경에서 보여야 하는 버튼들 */}
         <div className="hidden xl:flex flex-col items-start w-full gap-2">
           <button
-            name="프로필"
-            className={`btn-sidebar w-full p-2 text-start rounded-2xl ${(isBtnFocused === "프로필") ? "text-[#5FD100]" : ""}`}
-            onClick={(e) => {
+            value="프로필"
+            className={`btn-sidebar ${
+              pathName === "myprofile" ? "text-[#5FD100]" : ""
+            }`}
+            onClick={() => {
               router.push(`/profile/${searchId}/myprofile`);
-              webMenuBtn(e);
             }}
           >
             프로필
           </button>
           <button
             name="나의 미션"
-            className={`btn-sidebar w-full p-2 text-start rounded-2xl ${(isBtnFocused === "나의 미션") ? "text-[#5FD100]" : ""}`}
-            onClick={(e) => {
+            className={`btn-sidebar ${
+              pathName === "mymission" ? "text-[#5FD100]" : ""
+            }`}
+            onClick={() => {
               router.push(`/profile/${searchId}/mymission/missiondoing`);
-              webMenuBtn(e);
             }}
           >
             나의 미션
           </button>
           <button
             name="커뮤니티 활동"
-            className={`btn-sidebar w-full p-2 text-start rounded-2xl ${(isBtnFocused === "커뮤니티 활동") ? "text-[#5FD100]" : ""}`}
-            onClick={(e) => {
+            className={`btn-sidebar ${
+              pathName === "mycommunity" ? "text-[#5FD100]" : ""
+            }`}
+            onClick={() => {
               router.push(`/profile/${searchId}/mycommunity/myposts`);
-              webMenuBtn(e);
             }}
           >
             커뮤니티 활동
           </button>
           <button
             name="좋아요"
-            className={`btn-sidebar w-full p-2 text-start rounded-2xl ${(isBtnFocused === "좋아요") ? "text-[#5FD100]" : ""}`}
-            onClick={(e) => {
+            className={`btn-sidebar ${
+              pathName === "myfavorite" ? "text-[#5FD100]" : ""
+            }`}
+            onClick={() => {
               router.push(`/profile/${searchId}/myfavorite/myfavoriteproducts`);
-              webMenuBtn(e);
             }}
           >
             좋아요
           </button>
           {currentUser && currentUser.uid == profileData?.uid && (
             <button
-              className="btn-sidebar w-full p-2 text-start rounded-2xl"
+              className="btn-sidebar"
               onClick={() => {
                 setShowModal(true);
               }}
@@ -177,10 +177,11 @@ const SideBar = () => {
           {currentUser && currentUser.uid == profileData?.uid && (
             <button
               name="회원정보 수정"
-              className={`btn-sidebar w-full p-2 text-start rounded-2xl ${(isBtnFocused === "회원정보 수정") ? "text-[#5FD100]" : ""}`}
-              onClick={(e) => {
+              className={`btn-sidebar ${
+                pathName === "setting" ? "text-[#5FD100]" : ""
+              }`}
+              onClick={() => {
                 router.push(`/profile/${searchId}/setting`);
-                webMenuBtn(e);
               }}
             >
               회원정보 수정
@@ -197,4 +198,4 @@ const SideBar = () => {
     </>
   );
 };
-export default SideBar;
+export default ProfileSideBar;

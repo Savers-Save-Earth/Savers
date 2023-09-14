@@ -1,4 +1,4 @@
-import SideBar from "./components/SideBar";
+import ProfileSideBar from "@/components/profile/ProfileSideBar";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -20,7 +20,7 @@ export default async function profileLayout({
       <div className="flex h-full">
         <div className="relative mt-5 xl:mt-[6rem] w-full max-w-[1200px] h-full flex flex-col xl:flex-row xl:items-start gap-y-8 gap-x-8 bg-lightgreen">
           <div className="xl:sticky xl:top-20 w-full xl:w-[30%] xl:h-[70%] xl:min-h-[508px] flex flex-col justify-center items-center xl:shadow-xl shadow-black/20 rounded-2xl xl:p-6 xl:border-t-2 z-10">
-            <SideBar />
+            <ProfileSideBar />
           </div>
           <section className="w-full xl:w-[70%] flex flex-col shrink-0 self-stretch bg-white xl:shadow-xl shadow-black/20 rounded-2xl p-6 sm:p-12 xl:border-t-2 cursor-default">
             {children}

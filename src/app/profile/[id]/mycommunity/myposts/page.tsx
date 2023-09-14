@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import MyPostsComp from "./MyPostsComp";
+import MyPostsComp from "../../../../../components/profile/mycommunity/myposts/MyPostsComp";
 import Seo from "@/components/Seo";
 
 const MissionDone = ({ params: { id } }: { params: { id: string } }) => {
