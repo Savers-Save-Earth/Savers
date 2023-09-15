@@ -15,7 +15,7 @@ import { useIsMobile } from "@/hooks/useIsMobile";
 
 type MissionInsert = Omit<MissionList, "id">;
 
-const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
+const RandomMission = ({ user, showModal, setShowModal}: any) => {
   const currentDate = convertDate(new Date());
   const currentDateModify = currentDate.replaceAll("-", ".") as string;
   const searchId = user?.uid || ("" as string);
@@ -71,7 +71,7 @@ const RandomMission = ({ user, showModal, setShowModal, profile }: any) => {
 
         const newMissions: MissionInsert[] = randomMissions.map((mission) => ({
           missionUid: mission.uid as string,
-          userId: profile.nickname as string,
+          userId: user.nickname as string,
           createdAt: convertDate(new Date()),
           title: mission.title as string,
           content: mission.content as string,

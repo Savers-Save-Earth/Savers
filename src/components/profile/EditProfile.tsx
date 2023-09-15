@@ -17,7 +17,6 @@ const EditProfile = ({ profileData }: any) => {
 
   const params = useParams();
   const userId = params.id;
-
   const fileSelectHandler = async (e: any) => {
     const avatarFile = e.target.files && e.target.files[0];
     setSelectedFile(avatarFile);

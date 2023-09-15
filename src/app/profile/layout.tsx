@@ -15,7 +15,9 @@ export default async function profileLayout({
   children,
 }: {
   children: React.ReactNode;
-}) {
+}
+) {
+  
   return (
       <div className="flex h-full">
         <div className="relative mt-5 xl:mt-[6rem] w-full max-w-[1200px] h-full flex flex-col xl:flex-row xl:items-start gap-y-8 gap-x-8 bg-lightgreen">
