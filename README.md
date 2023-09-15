@@ -31,8 +31,8 @@
 
 ## 🌿 주요 기능 소개
 ![02](https://github.com/Savers-Save-Earth/Savers/assets/124491335/640ce48f-b0ad-45fe-b968-e3faf9a7586d)
-![03](https://github.com/Savers-Save-Earth/Savers/assets/124491335/46bdc293-8340-494e-94da-9fab45025778)
 ![04](https://github.com/Savers-Save-Earth/Savers/assets/124491335/8079ac59-5486-4f58-9b02-ee4c65c08cb3)
+![03](https://github.com/Savers-Save-Earth/Savers/assets/124491335/46bdc293-8340-494e-94da-9fab45025778)
 
 ### ✨ 메인 페이지
 
@@ -87,7 +87,7 @@
 |:---:|:---:|--------------|------|-------|
 | 이은한 | 리더 | [TerryEHLee](https://github.com/TerryEHLee) | [Tistory](https://terryehlee.tistory.com/) | terryehlee@gmail.com |
 | 이우정 | 부리더 | [Passionhruit](https://github.com/Passionhruit) | [Tistory](https://passionfruit6.tistory.com/) | korea_stan@naver.com |    
-| 박지원 | 팀원 | [xoxojw](https://github.com/xoxojw) | [Tistroy](https://xoxojw.tistory.com/) | xoxojw.dev@gmail.com |
+| 박지원 | 팀원 | [xoxojw](https://github.com/xoxojw) | [Tistory](https://xoxojw.tistory.com/) | xoxojw.dev@gmail.com |
 | 이동준 | 팀원 | [podoDJ](https://github.com/podoDJ) | [Notion](https://florentine-shawl-685.notion.site/2f0a4e2eb99e46e984b0eb3cf8f4f9ca?v=e2972c99943a4bdab5f4251b20db3546&pvs=4) | leedj1345@naver.com |
 | 최다연 | 팀원 | [cheddaryeon](https://github.com/cheddaryeon) |  | cheddaryeon@gmail.com |
 | 한지희 | 디자이너 | - | [Portfolio - Google Drive](https://drive.google.com/file/d/12_woSM0IkUmUxK3ryJ5dpC7rXAspT7Uc/view?usp=sharing) | jeheem@naver.com |
