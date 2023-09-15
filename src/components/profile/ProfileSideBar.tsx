@@ -37,7 +37,6 @@ const ProfileSideBar = () => {
   };
 
   const pathName = usePathname().split("/")[3];
-  console.log("rendering1")
   useEffect(() => {
     const getUser = async () => {
       const {
@@ -50,7 +49,6 @@ const ProfileSideBar = () => {
       }
     };
     getUser()
-    console.log("rendering2")
   },[])
   //모바일 환경에서 프로필 이외의 다른 버튼들 클릭하면 프로필 이미지 등이 가려지게 하기 위함
   const hideProfile = (value: string) => {
@@ -67,7 +65,6 @@ const ProfileSideBar = () => {
     () => fetchProfileData(searchId),
   );
   if (isLoading) return <LoadingProfileSideBar />;
-  console.log("rendering3")
   return (
     <>
       <div className="w-full flex flex-col items-start gap-10">
