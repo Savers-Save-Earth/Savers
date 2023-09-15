@@ -37,6 +37,10 @@ export const createMission = async (newMissions: MissionInsert[]) => {
   if (error) return error;
  };
 
+ export const updateMission = async (updatedMission: any[]) => {
+  const { error } = await supabase.from("missionList").update({ doingYn: "false"}).eq('id', "updatedMission.id");
+ }
+
  export const fetchMissionListDateAndUid = async (
   searchId: string, currentDate: string,
 ): Promise<DailyMission[] | null> => {
