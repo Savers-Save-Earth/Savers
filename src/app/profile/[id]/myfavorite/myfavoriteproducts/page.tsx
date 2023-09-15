@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import FavoriteProductsComp from "../../../../../components/profile/myfavorite/myfavoriteproducts/FavoriteProductsComp";
-import Seo from "@/components/Seo";
+import Seo from "@/components/common/Seo";
 
 export const metadata: Metadata = {
   title: "북마크 제품 | Savers",
