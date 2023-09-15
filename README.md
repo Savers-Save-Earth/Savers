@@ -1,8 +1,10 @@
-# 🌏 Savers - 지구를 위한 작은 실천 🍀
-
 <div align="center">
   <img src="https://github.com/Savers-Save-Earth/Savers/assets/124491335/efbc8fa1-6226-4935-b671-41f4f9d4173e" />
 </div>
+
+<br />
+
+# 🌏 Savers - 지구를 위한 작은 실천 🍀
 
 ### 당신의 작은 참여가 지구를 지킵니다. 다만 어떻게 시작해야 할지 모르겠다면?
 
