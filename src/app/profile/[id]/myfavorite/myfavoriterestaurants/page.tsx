@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import FavoriteRestaurantsComp from "../../../../../components/profile/myfavorite/myfavoriterestaurants/FavoriteRestaurantsComp";
-import Seo from "@/components/Seo";
+import Seo from "@/components/common/Seo";
 
 const MyFavoriteRestaurants = ({ params: { id } }: { params: { id: string } }) => {
   return (

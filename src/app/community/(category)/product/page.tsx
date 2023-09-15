@@ -1,6 +1,5 @@
-import Seo from '@/components/Seo';
-import GetPosts from '@/components/community/posts/GetPosts';
-import { Metadata } from 'next';
+import Seo from "@/components/common/Seo";
+import GetPosts from "@/components/community/posts/GetPosts";
 
 const CommunityProduct = () => {
   return (
