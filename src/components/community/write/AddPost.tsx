@@ -17,6 +17,7 @@ import { ToastError, ToastSuccess, ToastWarn } from "@/libs/toastifyAlert";
 import { useIsLaptop } from "@/hooks/useIsLaptop";
 import { useRouter } from "next/navigation";
 import { COMMUNITY_TOAST_TEXT } from "@/enums/messages";
+import { updateMission } from "@/api/mission/getMission";
 
 const currentDate = convertDate(new Date());
 
@@ -49,6 +50,15 @@ const AddPost: NextComponentType = () => {
     },
     onError: (error) => {
       ToastError(COMMUNITY_TOAST_TEXT.POST_ADD_ERROR);
+    },
+  });
+
+  const updateMissionMutation = useMutation(updateMissionHandler, {
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["missionList"] });
+    },
+    onError: (error) => {
+      console.error("게시글 등록 에러:", error);
     },
   });
 
@@ -99,7 +109,8 @@ const AddPost: NextComponentType = () => {
       <form
         onSubmit={(e) => {
           handleSubmit(e);
-          updateMissionHandler(missionUid);
+          // updateMissionHandler(missionUid);
+          updateMissionMutation.mutate(missionUid)
         }}
         className="flex flex-col space-y-5 w-full items-stretch md:h-[970px]"
       >

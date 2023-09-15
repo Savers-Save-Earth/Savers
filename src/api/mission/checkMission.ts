@@ -1,5 +1,6 @@
 import supabase from "@/libs/supabase";
 import { Database } from "@/types/supabase";
+import { UserType } from "@/types/types";
 
 // 게시글 수정
 export const updateMissionHandler = async (missionId: string) => {
@@ -16,7 +17,7 @@ export const updateMissionHandler = async (missionId: string) => {
 };
 
 export const getMissionHandler = async (
-  currentUser: any,
+  currentUser: UserType | null,
   currentDate: string,
   category: string,
   setMissionUid: React.Dispatch<React.SetStateAction<string>>,
@@ -29,7 +30,7 @@ export const getMissionHandler = async (
     .from("missionList")
     .select("*")
     .eq("createdAt", currentDate)
-    .eq("user_uid", currentUser?.uid || currentUser?.id)
+    .eq("user_uid", currentUser?.uid)
     .eq("bigCategory", bigCategory)
     .eq("smallCategory", category)
     .eq("doingYn", true);

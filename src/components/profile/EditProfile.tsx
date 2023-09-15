@@ -7,6 +7,17 @@ import { useParams } from "next/navigation";
 import { ToastWarn } from "@/libs/toastifyAlert";
 import Image from "next/image";
 
+type ProfileType = {
+  activePoint: number;
+  birthday: string;
+  email: string;
+  nickname: string;
+  number: string;
+  profileImage: string;
+  provider: string;
+  uid: string;
+} | null;
+
 const EditProfile = ({ profileData }: any) => {
   const [nickname, setNickname] = useState<string>(profileData.nickname || "");
   const [selectedFile, setSelectedFile] = useState();
