@@ -1,7 +1,7 @@
 "use client";
 import { useParams, usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import RandomMission from "./RandomMission";
 import EditProfile from "@/components/profile/EditProfile";
@@ -10,6 +10,8 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchProfileData } from "@/api/profile/fetchProfileData";
 import MobileMenu from "./MobileMenu";
 import LoadingProfileSideBar from "@/components/profile/ui/LoadingProfileSideBar";
+import supabase from "@/libs/supabase";
+import { User } from "@supabase/supabase-js";
 
 type ProfileType = {
   activePoint: number;
@@ -26,6 +28,7 @@ const ProfileSideBar = () => {
   const searchId = useParams().id as string;
   const router = useRouter();
   const [showModal, setShowModal] = useState(false);
+  const [currentUser, setCurrentUser] = useState<User|null>(null);
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isHideProfile, setIsHideProfile] = useState(false);
@@ -34,7 +37,21 @@ const ProfileSideBar = () => {
   };
 
   const pathName = usePathname().split("/")[3];
-
+  console.log("rendering1")
+  useEffect(() => {
+    const getUser = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) {
+        setCurrentUser(null);
+      } else {
+        setCurrentUser(user);
+      }
+    };
+    getUser()
+    console.log("rendering2")
+  },[])
   //모바일 환경에서 프로필 이외의 다른 버튼들 클릭하면 프로필 이미지 등이 가려지게 하기 위함
   const hideProfile = (value: string) => {
     window.innerWidth >= 768
@@ -44,14 +61,13 @@ const ProfileSideBar = () => {
       : setIsHideProfile(true);
   };
 
-  const currentUser = useAuth();
+  // const currentUser2 = useAuth();
   const { data: profileData, isLoading } = useQuery<ProfileType>(
     ["fetchProfileData", searchId],
     () => fetchProfileData(searchId),
-    { cacheTime: 30000 },
   );
-
   if (isLoading) return <LoadingProfileSideBar />;
+  console.log("rendering3")
   return (
     <>
       <div className="w-full flex flex-col items-start gap-10">
@@ -71,10 +87,7 @@ const ProfileSideBar = () => {
           {isMobileMenuOpen && (
             <MobileMenu
               toggleMobileMenu={toggleMobileMenu}
-              searchId={searchId}
               hideProfile={hideProfile}
-              currentUser={currentUser}
-              profileDataId={profileData?.uid}
               setShowModal={setShowModal}
             />
           )}
@@ -110,7 +123,7 @@ const ProfileSideBar = () => {
             <p className="text-gray-900 text-[24px] non-italic font-semibold leading-7">
               {profileData?.nickname}
             </p>
-            {searchId == currentUser?.uid ? (
+            {searchId == currentUser?.id ? (
               <EditProfile profileData={profileData} />
             ) : (
               ""
@@ -164,7 +177,7 @@ const ProfileSideBar = () => {
           >
             좋아요
           </button>
-          {currentUser && currentUser.uid == profileData?.uid && (
+          {currentUser && currentUser.id == profileData?.uid && (
             <button
               className="btn-sidebar"
               onClick={() => {
@@ -174,7 +187,7 @@ const ProfileSideBar = () => {
               일일미션 뽑기
             </button>
           )}
-          {currentUser && currentUser.uid == profileData?.uid && (
+          {currentUser && currentUser.id == profileData?.uid && (
             <button
               name="회원정보 수정"
               className={`btn-sidebar ${
@@ -192,7 +205,6 @@ const ProfileSideBar = () => {
           showModal={showModal}
           user={profileData}
           setShowModal={setShowModal}
-          profile={profileData}
         />
       </div>
     </>

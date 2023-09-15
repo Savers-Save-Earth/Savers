@@ -24,7 +24,7 @@ const Badges = ({ badgeData, missionDone }: MyBadgeProps) => {
   const initializeBadgeList = () => {
     const shareBadge = badges.find((item) => item.badge_title === "share");
     const threeShareBadge =
-      badges.filter((item) => item.badge_title === "share").length >= 30;
+      badges.filter((item) => item.badge_title === "share").length >= 3;
 
     const likeBadge = badges.find((item) => item.badge_title === "like");
     const threeLikeBadge =

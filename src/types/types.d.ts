@@ -110,4 +110,19 @@ export interface MyBadgeProps {
   missionDone: MissionListType[]
 }
 
+export type ProfileType = {
+  activePoint: number|null
+  birthday: string;
+  email: string;
+  nickname: string;
+  number: string;
+  profileImage: string;
+  provider: string;
+  uid: string;
+}|null
+
+export interface EditProfileProps {
+  profileData: ProfileType[] 
+}
+
 

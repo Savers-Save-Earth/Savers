@@ -1,31 +1,28 @@
 "use client";
 
+import { useAuth } from "@/hooks/useAuth";
 import supabase from "@/libs/supabase";
 import { UserType } from "@/types/types";
-import { usePathname, useRouter } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { Dispatch, SetStateAction } from "react";
 
 type MobileMenuProps = {
   toggleMobileMenu: () => void;
-  searchId: string;
   hideProfile: (value: string) => void;
-  currentUser: UserType | null;
-  profileDataId: string | undefined;
   setShowModal: Dispatch<SetStateAction<boolean>>;
 };
 
 const MobileMenu = ({
   toggleMobileMenu,
-  searchId,
   hideProfile,
-  currentUser,
-  profileDataId,
   setShowModal,
 }: MobileMenuProps) => {
   const router = useRouter();
   const [user, setUser] = useState<any>(null); //편의상 any로 썼는데, 만약 타입정의가 필요하다면 다음 링크 참조: https://github.com/orgs/supabase/discussions/2222
   const path = usePathname();
+  const currentUser = useAuth()
+  const searchId = useParams().id
 
   useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
@@ -102,7 +99,7 @@ const MobileMenu = ({
         </button>
       ))}
 
-      {currentUser && currentUser.uid == profileDataId && (
+      {currentUser && currentUser.uid == searchId && (
         <>
           <button
             className="w-full p-2.5 mt-3 flex items-center justify-between rounded-md px-4 duration-300 cursor-pointer hover:bg-[#E8FFD4] text-white"
@@ -116,7 +113,7 @@ const MobileMenu = ({
         </>
       )}
 
-      {currentUser && currentUser.uid == profileDataId && (
+      {currentUser && currentUser.uid == searchId && (
         <>
           <button
             value="회원정보 수정"

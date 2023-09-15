@@ -14,7 +14,7 @@ const MissionDoneComp = ({ id }: { id: string }) => {
   const { data: missionDone, isLoading } = useQuery(
     ["fetchMissionDone", searchId],
     () => fetchMissionDone(searchId),
-    { cacheTime: 6000 },
+    // { cacheTime: 6000000000 },
   );
   if (isLoading) return <LoadingMission />;
 
