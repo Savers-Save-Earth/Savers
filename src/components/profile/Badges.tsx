@@ -28,7 +28,7 @@ const Badges = ({ badgeData, missionDone }: MyBadgeProps) => {
 
     const likeBadge = badges.find((item) => item.badge_title === "like");
     const threeLikeBadge =
-      badges.filter((item) => item.badge_title === "like").length >= 30;
+      badges.filter((item) => item.badge_title === "like").length >= 3;
 
     const firstMission = badgesByMissionCount >= 1;
     const bronzeTrophy = badgesByMissionCount >= 10;
