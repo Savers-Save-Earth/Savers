@@ -170,7 +170,7 @@ body {
 
 @layer components {
   .btn-sidebar {
-    @apply text-gray-400 font-normal leading-6 hover:text-[#10C800] focus:text-[#10C800];
+    @apply text-gray-400 font-normal leading-6 hover:text-[#5FD100] p-2 text-start rounded-2xl;
   }
 }
 

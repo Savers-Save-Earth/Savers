@@ -1,7 +1,7 @@
 "use client";
-import { useParams } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import RandomMission from "./RandomMission";
 import EditProfile from "@/components/profile/EditProfile";
@@ -10,6 +10,8 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchProfileData } from "@/api/profile/fetchProfileData";
 import MobileMenu from "./MobileMenu";
 import LoadingProfileSideBar from "@/components/profile/ui/LoadingProfileSideBar";
+import supabase from "@/libs/supabase";
+import { User } from "@supabase/supabase-js";
 
 type ProfileType = {
   activePoint: number;
@@ -22,21 +24,34 @@ type ProfileType = {
   uid: string;
 } | null;
 
-const SideBar = () => {
+const ProfileSideBar = () => {
   const searchId = useParams().id as string;
   const router = useRouter();
   const [showModal, setShowModal] = useState(false);
+  const [currentUser, setCurrentUser] = useState<User|null>(null);
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isHideProfile, setIsHideProfile] = useState(false);
-  const [isBtnFocused, setIsBtnFocused] = useState("");
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
-  const webMenuBtn = (e: any) => {
-    setIsBtnFocused(e.target.name);
-  };
 
+  const pathName = usePathname().split("/")[3];
+  console.log("rendering1")
+  useEffect(() => {
+    const getUser = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) {
+        setCurrentUser(null);
+      } else {
+        setCurrentUser(user);
+      }
+    };
+    getUser()
+    console.log("rendering2")
+  },[])
   //모바일 환경에서 프로필 이외의 다른 버튼들 클릭하면 프로필 이미지 등이 가려지게 하기 위함
   const hideProfile = (value: string) => {
     window.innerWidth >= 768
@@ -46,18 +61,16 @@ const SideBar = () => {
       : setIsHideProfile(true);
   };
 
-  const currentUser = useAuth();
+  // const currentUser2 = useAuth();
   const { data: profileData, isLoading } = useQuery<ProfileType>(
     ["fetchProfileData", searchId],
     () => fetchProfileData(searchId),
-    { cacheTime: 30000 },
   );
-
   if (isLoading) return <LoadingProfileSideBar />;
-
+  console.log("rendering3")
   return (
     <>
-      <div className="w-full flex flex-col items-start">
+      <div className="w-full flex flex-col items-start gap-10">
         <div className="w-full relative">
           <div className="flex flex-row justify-between text-[18px] font-bold text-gray-700">
             <div>마이페이지</div>
@@ -74,10 +87,7 @@ const SideBar = () => {
           {isMobileMenuOpen && (
             <MobileMenu
               toggleMobileMenu={toggleMobileMenu}
-              searchId={searchId}
               hideProfile={hideProfile}
-              currentUser={currentUser}
-              profileDataId={profileData?.uid}
               setShowModal={setShowModal}
             />
           )}
@@ -88,7 +98,6 @@ const SideBar = () => {
             isHideProfile && window.innerWidth < 768 ? "hidden" : "flex"
           } justify-center items-center gap-6 self-stretch leading-none`}
         >
-          {/* <div className="hidden flex-col justify-center items-center gap-6 self-stretch leading-none"> */}
           <div className="relative w-[8.75rem] h-[8.75rem] aspect-w-1 aspect-h-1 object-contain rounded-full overflow-hidden mx-auto">
             {profileData?.profileImage ? (
               <Image
@@ -114,7 +123,7 @@ const SideBar = () => {
             <p className="text-gray-900 text-[24px] non-italic font-semibold leading-7">
               {profileData?.nickname}
             </p>
-            {searchId == currentUser?.uid ? (
+            {searchId == currentUser?.id ? (
               <EditProfile profileData={profileData} />
             ) : (
               ""
@@ -123,15 +132,14 @@ const SideBar = () => {
         </div>
 
         {/* 웹 브라우저 환경에서 보여야 하는 버튼들 */}
-        <div className="hidden xl:flex flex-col items-start w-full">
+        <div className="hidden xl:flex flex-col items-start w-full gap-2">
           <button
-            name="프로필"
+            value="프로필"
             className={`btn-sidebar ${
-              isBtnFocused === "프로필" ? "bg-[#E8FFD4] text-[#10C800]" : ""
-            } w-full p-2 text-start rounded-2xl`}
-            onClick={(e) => {
+              pathName === "myprofile" ? "text-[#5FD100]" : ""
+            }`}
+            onClick={() => {
               router.push(`/profile/${searchId}/myprofile`);
-              webMenuBtn(e);
             }}
           >
             프로필
@@ -139,11 +147,10 @@ const SideBar = () => {
           <button
             name="나의 미션"
             className={`btn-sidebar ${
-              isBtnFocused === "나의 미션" ? "bg-[#E8FFD4] text-[#10C800]" : ""
-            } w-full p-2 text-start rounded-2xl`}
-            onClick={(e) => {
+              pathName === "mymission" ? "text-[#5FD100]" : ""
+            }`}
+            onClick={() => {
               router.push(`/profile/${searchId}/mymission/missiondoing`);
-              webMenuBtn(e);
             }}
           >
             나의 미션
@@ -151,11 +158,10 @@ const SideBar = () => {
           <button
             name="커뮤니티 활동"
             className={`btn-sidebar ${
-              isBtnFocused === "커뮤니티 활동" ? "bg-[#E8FFD4] text-[#10C800]"  : ""
-            } w-full p-2 text-start rounded-2xl`}
-            onClick={(e) => {
+              pathName === "mycommunity" ? "text-[#5FD100]" : ""
+            }`}
+            onClick={() => {
               router.push(`/profile/${searchId}/mycommunity/myposts`);
-              webMenuBtn(e);
             }}
           >
             커뮤니티 활동
@@ -163,18 +169,17 @@ const SideBar = () => {
           <button
             name="좋아요"
             className={`btn-sidebar ${
-              isBtnFocused === "좋아요" ? "bg-[#E8FFD4] text-[#10C800]"  : ""
-            } w-full p-2 text-start rounded-2xl`}
-            onClick={(e) => {
+              pathName === "myfavorite" ? "text-[#5FD100]" : ""
+            }`}
+            onClick={() => {
               router.push(`/profile/${searchId}/myfavorite/myfavoriteproducts`);
-              webMenuBtn(e);
             }}
           >
             좋아요
           </button>
-          {currentUser && currentUser.uid == profileData?.uid && (
+          {currentUser && currentUser.id == profileData?.uid && (
             <button
-              className="btn-sidebar w-full p-2 text-start rounded-2xl"
+              className="btn-sidebar"
               onClick={() => {
                 setShowModal(true);
               }}
@@ -182,15 +187,14 @@ const SideBar = () => {
               일일미션 뽑기
             </button>
           )}
-          {currentUser && currentUser.uid == profileData?.uid && (
+          {currentUser && currentUser.id == profileData?.uid && (
             <button
               name="회원정보 수정"
               className={`btn-sidebar ${
-                isBtnFocused === "회원정보 수정" ? "bg-[#E8FFD4] text-[#10C800]"  : ""
-              } w-full p-2 text-start rounded-2xl`}
-              onClick={(e) => {
+                pathName === "setting" ? "text-[#5FD100]" : ""
+              }`}
+              onClick={() => {
                 router.push(`/profile/${searchId}/setting`);
-                webMenuBtn(e);
               }}
             >
               회원정보 수정
@@ -201,10 +205,9 @@ const SideBar = () => {
           showModal={showModal}
           user={profileData}
           setShowModal={setShowModal}
-          profile={profileData}
         />
       </div>
     </>
   );
 };
-export default SideBar;
+export default ProfileSideBar;

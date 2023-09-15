@@ -4,7 +4,7 @@ import { BadgeType, MissionListType, UserType } from "@/types/types";
 
 // 유저 프로필 데이터 조회
 export const fetchProfileData = async (
-  searchId: string,
+  searchId: string|string[],
 ): Promise<UserType|null> => {
   try {
     const { data: profileData } = await supabase

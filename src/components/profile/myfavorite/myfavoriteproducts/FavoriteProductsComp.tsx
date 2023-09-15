@@ -63,7 +63,7 @@ const FavoriteProductsComp = ({ id }: { id: string }) => {
             className="w-full flex flex-col items-center gap-[0.5rem] cursor-pointer h-full"
             key={product.like_id}
           >
-            <div className="relative object-contain w-full min-h-[135px] sm:min-h-[168px] h-3/4 rounded-2xl shrink-0 border-2 overflow-hidden">
+            <div className="relative object-contain w-full min-h-[135px] sm:min-h-[168px] h-3/4 rounded-2xl shrink-0 overflow-hidden">
               <Image src={product.img || ""} alt="Product" fill />
             </div>
             <p className="truncate text-gray-300 text-ellipsis not-italic font-normal leading-[14px]">

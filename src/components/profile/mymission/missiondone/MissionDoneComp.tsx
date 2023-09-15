@@ -14,7 +14,7 @@ const MissionDoneComp = ({ id }: { id: string }) => {
   const { data: missionDone, isLoading } = useQuery(
     ["fetchMissionDone", searchId],
     () => fetchMissionDone(searchId),
-    { cacheTime: 6000 },
+    // { cacheTime: 6000000000 },
   );
   if (isLoading) return <LoadingMission />;
 
@@ -23,7 +23,7 @@ const MissionDoneComp = ({ id }: { id: string }) => {
   }
 
   return (
-    <div className="grid md:grid-cols-4 md:gap-4 grid-cols-2 gap-3 place-items-center">
+    <div className="grid md:grid-cols-4 md:gap-10 grid-cols-2 gap-3 place-items-center">
       {missionDone?.map((mission: MissionListType) => {
         return (
           <div

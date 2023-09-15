@@ -20,7 +20,6 @@ export const useAuth = (): UserType | null => {
             .select("*")
             .eq("uid", userUid)
             .single();
-
           if (error) {
             // console.error("사용자 정보 로딩 에러 >> ", error);
             setCurrentUser(null);

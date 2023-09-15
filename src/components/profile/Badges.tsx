@@ -24,11 +24,11 @@ const Badges = ({ badgeData, missionDone }: MyBadgeProps) => {
   const initializeBadgeList = () => {
     const shareBadge = badges.find((item) => item.badge_title === "share");
     const threeShareBadge =
-      badges.filter((item) => item.badge_title === "share").length >= 30;
+      badges.filter((item) => item.badge_title === "share").length >= 3;
 
     const likeBadge = badges.find((item) => item.badge_title === "like");
     const threeLikeBadge =
-      badges.filter((item) => item.badge_title === "like").length >= 30;
+      badges.filter((item) => item.badge_title === "like").length >= 3;
 
     const firstMission = badgesByMissionCount >= 1;
     const bronzeTrophy = badgesByMissionCount >= 10;
@@ -153,6 +153,7 @@ const Badges = ({ badgeData, missionDone }: MyBadgeProps) => {
                 height={88}
                 quality={100}
                 onClick={() => handleBadgeClick(badge.name)}
+                className="hover: cursor-pointer"
               />
             ) : (
               <Image
@@ -162,6 +163,7 @@ const Badges = ({ badgeData, missionDone }: MyBadgeProps) => {
                 height={88}
                 quality={100}
                 onClick={() => handleBadgeClick(badge.name)}
+                className="hover: cursor-pointer"
               />
             )}
             <div

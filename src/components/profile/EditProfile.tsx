@@ -17,7 +17,6 @@ const EditProfile = ({ profileData }: any) => {
 
   const params = useParams();
   const userId = params.id;
-
   const fileSelectHandler = async (e: any) => {
     const avatarFile = e.target.files && e.target.files[0];
     setSelectedFile(avatarFile);
@@ -104,22 +103,19 @@ const EditProfile = ({ profileData }: any) => {
           open ? "block" : "hidden"
         }`}
       >
-        <div className="w-[400px] h-[400px] sm:w-[480px] sm:h-[468px] z-10 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl p-8">
+        <div className="w-[400px] h-[400px] sm:w-[480px] sm:h-[468px] z-10 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl p-12">
           <form className="text-center">
-            <h1 className="text-xl font-semibold flex">프로필 수정</h1>
+            <h1 className="text-[24px] font-semibold flex">프로필 수정</h1>
 
             {editImage.length > 0 ? (
-              <div className="relative">
-                <div className="relative w-[140px] h-[140px] rounded-full">
-                  <Image
-                    src={editImage}
-                    alt="기존 프로필이미지"
-                    fill
-                    style={{
-                      objectFit: "cover",
-                    }}
-                  />
-                </div>
+              <div className="relative pt-8">
+                <Image
+                  src={editImage}
+                  alt="기존 프로필이미지"
+                  width={140}
+                  height={140}
+                  className="w-[140px] h-[140px] rounded-full object-cover mx-auto"
+                />
                 <label
                   htmlFor="input-file"
                   onClick={(e) => fileSelectHandler(e)}
@@ -148,17 +144,14 @@ const EditProfile = ({ profileData }: any) => {
                 </label>
               </div>
             ) : (
-              <div className="relative">
-                <div className="relative w-[140px] h-[140px] rounded-full">
-                  <Image
-                    src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/profileImage/default_profile_image.svg"
-                    alt="기존 프로필이미지"
-                    fill
-                    style={{
-                      objectFit: "cover",
-                    }}
-                  />
-                </div>
+              <div className="relative pt-8">
+                <Image
+                  src="https://etsquekrypszfrqglupe.supabase.co/storage/v1/object/public/profileImage/default_profile_image.svg"
+                  alt="기존 프로필이미지"
+                  width={140}
+                  height={140}
+                  className="w-[140px] h-[140px] rounded-full object-cover mx-auto"
+                />
                 <label
                   htmlFor="input-file"
                   onClick={fileSelectHandler}

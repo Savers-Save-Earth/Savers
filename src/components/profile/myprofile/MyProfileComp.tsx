@@ -11,19 +11,19 @@ const MyProfileComp = ({ id }: { id : string })  =>  {
   const { data: profileData, isFetching: profileDataFetching } = useQuery(
     ["fetchProfileData", searchId],
     () => fetchProfileData(searchId),
-    { cacheTime: 6000 },
+    // { cacheTime: 6000 },
   );
 
   const { data: missionDone, isFetching: missionDoneFetching } = useQuery(
     ["fetchMissionDone", searchId],
     () => fetchMissionDone(searchId),
-    { cacheTime: 6000 },
+    // { cacheTime: 6000 },
   );
 
   const { data: badgeData, isFetching: badgeDataFetching } = useQuery(
     ["fetchBadges", searchId],
     () => fetchBadges(searchId),
-    { cacheTime: 6000 },
+    // { cacheTime: 6000 },
   );
   if (profileDataFetching || missionDoneFetching || badgeDataFetching) {
     return <LoadingProfilePage />;
