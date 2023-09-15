@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Header from "@/components/Header";
 import supabase from "@/libs/supabase";
 import { useRouter } from "next/navigation";
 import NicknameMaker from "@/components/auth/NicknameMaker";

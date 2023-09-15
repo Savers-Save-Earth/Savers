@@ -1,12 +1,12 @@
 import QueryProvider from "./QueryProvider";
-import Header from "@/components/Header";
 import "@/styles/globals.css";
 import type { Metadata } from "next";
 import Script from "next/script";
 import Recoil from "./Recoil";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/ReactToastify.css";
-import HeaderM from "@/components/HeaderM";
+import Header from "@/components/common/Header";
+import HeaderM from "@/components/common/HeaderM";
 import { RouteChangesProvider } from "./RouteChangeProvider";
 
 export const metadata: Metadata = {

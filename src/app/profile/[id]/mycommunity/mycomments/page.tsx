@@ -1,6 +1,5 @@
-import { Metadata } from "next";
 import MyCommentsComp from "../../../../../components/profile/mycommunity/mycomments/MyCommentsComp";
-import Seo from "@/components/Seo";
+import Seo from "@/components/common/Seo";
 
 const MyComments = ({ params: { id } }: { params: { id: string } }) => {
   return (
