@@ -96,6 +96,7 @@ const DetailPost = ({ postDetail, postUid }: DetailPostProps) => {
     },
     onError: (error) => {
       // console.log("북마크 등록 에러:", error);
+      ToastError(COMMUNITY_TOAST_TEXT.BOOKMARK_ADD_ERROR)
     },
   });
 
@@ -106,6 +107,7 @@ const DetailPost = ({ postDetail, postUid }: DetailPostProps) => {
     },
     onError: (error) => {
       // console.log("북마크 취소 에러:", error);
+      ToastError(COMMUNITY_TOAST_TEXT.BOOKMARK_REMOVE_ERROR)
     },
   });
 
