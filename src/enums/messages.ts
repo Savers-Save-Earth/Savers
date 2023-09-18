@@ -17,6 +17,9 @@ export const COMMUNITY_TOAST_TEXT = {
   POST_DELETE_ERROR: "게시글이 정상적으로 삭제되지 않았습니다. 다시 시도해주세요!",
   POST_DELETE_CONFIRM: "게시글을 정말 삭제하시겠습니까?",
 
+  BOOKMARK_ADD_ERROR: "북마크 도중에 문제가 발생했습니다. 다시 시도해주세요!",
+  BOOKMARK_REMOVE_ERROR: "북마크 제거 도중에 문제가 발생했습니다. 다시 시도해주세요!",
+
   AUTH_ALERT: "로그인이 필요한 서비스 입니다.",
   COPY_LINK_SUCCESS: "링크가 복사되었습니다!",
   COPY_LINK_FAILURE: "링크 복사에 실패했습니다. 다시 시도해주세요!",

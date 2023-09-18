@@ -53,7 +53,6 @@ const TextEditor = ({ content, setContent }: EditorProps) => {
 
           if (res) {
             const imageUrl = res.path;
-            console.log(imageUrl);
 
             const editor = quillInstance.current?.getEditor();
             if (editor) {
