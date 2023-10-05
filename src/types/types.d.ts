@@ -125,4 +125,10 @@ export interface EditProfileProps {
   profileData: ProfileType[] 
 }
 
+export type initialMission = Database["public"]["Tables"]["mission"]["Row"];
+
+export interface initialMissionProps {
+  arr: initialMission[]
+}
+
 

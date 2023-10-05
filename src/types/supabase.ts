@@ -273,7 +273,7 @@ export interface Database {
           createdAt: string | null;
           doingYn: boolean | null;
           id: string;
-          missionUid: string | null;
+          missionUid: number | null;
           point: number | null;
           smallCategory: string | null;
           title: string | null;
