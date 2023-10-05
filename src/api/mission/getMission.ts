@@ -7,7 +7,7 @@ export type MissionList = {
   createdAt: string;
   doingYn: boolean;
   id: string;
-  missionUid: string;
+  missionUid: number;
   point: number;
   smallCategory: string;
   title: string;
