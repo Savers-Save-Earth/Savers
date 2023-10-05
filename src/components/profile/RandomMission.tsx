@@ -12,6 +12,7 @@ import {
 } from "@/api/mission/getMission";
 import Image from "next/image";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { fyShuffle } from "./Shuffle";
 
 type MissionInsert = Omit<MissionList, "id">;
 
@@ -59,18 +60,15 @@ const RandomMission = ({ user, showModal, setShowModal}: any) => {
         const { data: missions, error } = await supabase
           .from("mission")
           .select("*");
-
         if (error) {
           console.error("Error fetching mission data:", error);
           return;
         }
 
-        const randomMissions = missions
-          .sort(() => Math.random() - 0.5)
-          .slice(0, 4);
+        const randomMissions = fyShuffle(missions)
 
         const newMissions: MissionInsert[] = randomMissions.map((mission) => ({
-          missionUid: mission.uid as string,
+          missionUid: mission.uid as number,
           userId: user.nickname as string,
           createdAt: convertDate(new Date()),
           title: mission.title as string,
@@ -282,8 +280,8 @@ const RandomMission = ({ user, showModal, setShowModal}: any) => {
                                 y2="117.5"
                                 gradientUnits="userSpaceOnUse"
                               >
-                                <stop stop-color="#66AB28" />
-                                <stop offset="1" stop-color="#4F891C" />
+                                <stop stopColor="#66AB28" />
+                                <stop offset="1" stopColor="#4F891C" />
                               </linearGradient>
                               <linearGradient
                                 id="paint1_linear_2414_6109"
@@ -293,8 +291,8 @@ const RandomMission = ({ user, showModal, setShowModal}: any) => {
                                 y2="117.5"
                                 gradientUnits="userSpaceOnUse"
                               >
-                                <stop stop-color="#8AE63F" />
-                                <stop offset="1" stop-color="#77CA33" />
+                                <stop stopColor="#8AE63F" />
+                                <stop offset="1" stopColor="#77CA33" />
                               </linearGradient>
                             </defs>
                           </svg>
@@ -329,8 +327,8 @@ const RandomMission = ({ user, showModal, setShowModal}: any) => {
                                 y2="168"
                                 gradientUnits="userSpaceOnUse"
                               >
-                                <stop stop-color="#66AB28" />
-                                <stop offset="1" stop-color="#4F891C" />
+                                <stop stopColor="#66AB28" />
+                                <stop offset="1" stopColor="#4F891C" />
                               </linearGradient>
                               <linearGradient
                                 id="paint1_linear_1308_24651"
@@ -340,8 +338,8 @@ const RandomMission = ({ user, showModal, setShowModal}: any) => {
                                 y2="168"
                                 gradientUnits="userSpaceOnUse"
                               >
-                                <stop stop-color="#8AE63F" />
-                                <stop offset="1" stop-color="#77CA33" />
+                                <stop stopColor="#8AE63F" />
+                                <stop offset="1" stopColor="#77CA33" />
                               </linearGradient>
                             </defs>
                           </svg>

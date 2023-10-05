@@ -64,6 +64,7 @@ const ProfileSideBar = () => {
     ["fetchProfileData", searchId],
     () => fetchProfileData(searchId),
   );
+  // console.log("searchId", searchId || "서치아이디 없음");
   if (isLoading) return <LoadingProfileSideBar />;
   return (
     <>
